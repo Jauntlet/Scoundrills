@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -18,12 +18,26 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\MainGame.cpp" />
+    <ClCompile Include="src\Navigation.cpp" />
+    <ClCompile Include="src\Pathfinding.cpp" />
+    <ClCompile Include="src\Player.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\MainGame.h" />
+    <ClInclude Include="src\Navigation.h" />
+    <ClInclude Include="src\Pathfinding.h" />
+    <ClInclude Include="src\Player.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{156b034e-9779-46d1-8373-3ee153ff7545}</ProjectGuid>
-    <RootNamespace>Scoundrills</RootNamespace>
+    <ProjectGuid>{5CF0BE33-26F7-471D-B928-576A4DA19BAD}</ProjectGuid>
+    <RootNamespace>Jauntlet</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Jauntlet Engine</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -74,29 +88,23 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(SolutionDir)dependencies\include;$(SolutionDir);$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)dependencies\lib;$(SolutionDir)build;$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)Scoundrills\build</OutDir>
-    <IntDir>build\</IntDir>
+    <OutDir>$(SolutionDir)build\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)dependencies\include;$(SolutionDir);$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)dependencies\lib;$(SolutionDir)build;$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)Scoundrills\build</OutDir>
-    <IntDir>build\</IntDir>
+    <IncludePath>$(SolutionDir)dependencies\include;$(SolutionDir);$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)build</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(SolutionDir)dependencies\include;$(SolutionDir);$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)dependencies\lib;$(SolutionDir)build;$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)Scoundrills\build</OutDir>
-    <IntDir>build\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)dependencies\include;$(SolutionDir);$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)dependencies\lib;$(SolutionDir)build;$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)Scoundrills\build</OutDir>
-    <IntDir>build\</IntDir>
+    <IncludePath>$(SolutionDir)dependencies\include;$(SolutionDir);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -107,9 +115,12 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;opengl32.lib;glew32.lib;Jauntlet.lib;freetype.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;opengl32.lib;glew32.lib;Jauntlet.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <Lib>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;opengl32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -125,7 +136,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;opengl32.lib;glew32.lib;Jauntlet.lib;freetype.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;opengl32.lib;glew32.lib;Jauntlet.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -138,8 +149,11 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;opengl32.lib;glew32.lib;Jauntlet.lib;freetype.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;opengl32.lib;glew32.lib;Jauntlet.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <Lib>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;opengl32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -155,22 +169,9 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;opengl32.lib;glew32.lib;Jauntlet.lib;freetype.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;opengl32.lib;glew32.lib;Jauntlet.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\MainGame.cpp" />
-    <ClCompile Include="src\Navigation.cpp" />
-    <ClCompile Include="src\Pathfinding.cpp" />
-    <ClCompile Include="src\Player.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\MainGame.h" />
-    <ClInclude Include="src\Navigation.h" />
-    <ClInclude Include="src\Pathfinding.h" />
-    <ClInclude Include="src\Player.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

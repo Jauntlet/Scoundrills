@@ -21,13 +21,13 @@
     <ClCompile Include="src\MainGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\Navigation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Pathfinding.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -35,13 +35,13 @@
     <ClInclude Include="src\MainGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\Navigation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Pathfinding.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
