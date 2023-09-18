@@ -17,6 +17,8 @@ std::string _fpsText = "bruh"; // #TODO: DELTEME
 glm::vec2 _fpsPosition; // #TODO: DELTEME
 
 void MainGame::run() {
+	initSystems();
+
 	Jauntlet::Color _fpsColor = Jauntlet::Color(0,255,0,255); // #TODO: DELTEME
 
 	_uiManager = Jauntlet::UIManager(&_hudCamera, &_HUDSpriteBatch); // #TODO: DELTEME
@@ -24,8 +26,8 @@ void MainGame::run() {
 	Jauntlet::UITextElement* _fpsCounter = new Jauntlet::UITextElement(&_spriteFont, &_fpsText, &_fpsColor, &_fpsPosition); // #TODO: DELTEME
 
 	_uiManager.addElement(_fpsCounter); // #TODO: DELTEME
-	
-	initSystems();
+
+	_uiManager.setScale((_screenHeight / 1080.0f) * (_screenWidth / 1920.0f));
 
 	gameLoop();
 }
