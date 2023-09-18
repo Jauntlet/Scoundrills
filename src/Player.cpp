@@ -15,13 +15,6 @@ Player::Player(float x, float y) : collider(Jauntlet::CircleCollider2D(16.0f, gl
 
 void Player::update(Jauntlet::InputManager& inputManager) {
 	
-	if (inputManager.isKeyDown(SDLK_LSHIFT) || inputManager.isKeyDown(SDL_CONTROLLER_BUTTON_A)) {
-		setSpeed(300);
-	}
-	else {
-		setSpeed(200);
-	}
-	
 	// we have a path to follow
 	if (!_path.empty()) {
 		glm::vec2 direction = glm::sign(glm::vec2(_path[0].x - _position.x, _path[0].y - _position.y));

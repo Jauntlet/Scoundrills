@@ -29,5 +29,5 @@ private:
 	glm::vec2 _position = glm::vec2(0,0);
 	std::vector<glm::vec2> _path;
 
-	float _speed = 120;
+	float _speed = 200;
 };
