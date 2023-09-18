@@ -1,0 +1,10 @@
+# other
+*.tlog
+*.pdb
+*.app
+*.log
+*.recipe
+*.ilk
+*.idb
+*.iobj
+*.ipdb
