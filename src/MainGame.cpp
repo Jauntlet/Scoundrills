@@ -10,9 +10,6 @@ MainGame::MainGame() :
 	_window() {
 }
 
-std::string _fpsText = "bruh"; // #TODO: DELTEME
-glm::vec2 _fpsPosition; // #TODO: DELTEME
-
 void MainGame::run() {
 	initSystems();
 
