@@ -8,3 +8,7 @@
 *.idb
 *.iobj
 *.ipdb
+
+
+Release/
+Debug/
