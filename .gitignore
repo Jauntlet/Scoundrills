@@ -53,6 +53,7 @@ build/compile_commands.json
 *.idb
 *.iobj
 *.ipdb
+*.obj
 
 # Jauntlet Build related
 build/Jauntlet.lib
@@ -61,4 +62,6 @@ Release/
 Scoundrills/
 
 ./x64/
-Jauntlet/Debug/Jauntlet.vcxproj.FileListAbsolute.txt
+
+build/*.exe
+*.vcxproj.FileListAbsolute.txt

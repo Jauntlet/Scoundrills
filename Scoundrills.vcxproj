@@ -37,7 +37,7 @@
     <ProjectGuid>{5CF0BE33-26F7-471D-B928-576A4DA19BAD}</ProjectGuid>
     <RootNamespace>Jauntlet</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>Jauntlet Engine</ProjectName>
+    <ProjectName>Scoundrills</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -89,12 +89,14 @@
     <IncludePath>$(SolutionDir)dependencies\include;$(SolutionDir);$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)dependencies\lib;$(SolutionDir)build;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)build\</OutDir>
+    <IntDir>build\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>$(SolutionDir)dependencies\lib;$(SolutionDir)build;$(LibraryPath)</LibraryPath>
     <IncludePath>$(SolutionDir)dependencies\include;$(SolutionDir);$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)build</OutDir>
+    <IntDir>build\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
