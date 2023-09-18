@@ -11,7 +11,7 @@ class Player
 public:
 	Player(float x, float y);
 
-	void update();
+	void update(Jauntlet::InputManager& inputManager);
 	void draw(Jauntlet::SpriteBatch& spriteBatch);
 	// Navigate through a tilemap to a position.
 	void navigateTo(Jauntlet::TileMap& map, glm::vec2 position);
