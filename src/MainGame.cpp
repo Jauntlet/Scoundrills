@@ -3,9 +3,6 @@
 
 #include "MainGame.h"
 
-// defines scale of movement for the camera. if set to 1, the camera will follow the mouse, if set to 0, the mouse has no control over the camera.
-const float _CAMERA_MOVEMENT_SCALE =  0.5f; // DO NOT DEFINE IN HEADER, BREAKS CONST -jk
-
 MainGame::MainGame() :
 	_level(_textureCache, 32),
 	_bricks("Textures/FullTileset.png"),
@@ -17,6 +14,8 @@ std::string _fpsText = "bruh"; // #TODO: DELTEME
 glm::vec2 _fpsPosition; // #TODO: DELTEME
 
 void MainGame::run() {
+	initSystems();
+
 	Jauntlet::Color _fpsColor = Jauntlet::Color(0,255,0,255); // #TODO: DELTEME
 
 	_uiManager = Jauntlet::UIManager(&_hudCamera, &_HUDSpriteBatch); // #TODO: DELTEME
@@ -24,8 +23,8 @@ void MainGame::run() {
 	Jauntlet::UITextElement* _fpsCounter = new Jauntlet::UITextElement(&_spriteFont, &_fpsText, &_fpsColor, &_fpsPosition); // #TODO: DELTEME
 
 	_uiManager.addElement(_fpsCounter); // #TODO: DELTEME
-	
-	initSystems();
+
+	_uiManager.setScale((_screenHeight / 1080.0f) * (_screenWidth / 1920.0f));
 
 	gameLoop();
 }
