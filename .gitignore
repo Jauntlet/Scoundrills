@@ -1,3 +1,48 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+
+# Executables
+*.exe
+*.out
+*.appa
+
+# Visual studio
+.vs/
+.cache/
+
+# build cmake files
+build/CMakeFiles/*
+build/CMakeCache.txt
+build/cmake_install.cmake
+build/Makefile
+build/game
+
+#remove clangd files
+build/compile_commands.json
+
 # other
 *.tlog
 *.pdb
@@ -8,3 +53,12 @@
 *.idb
 *.iobj
 *.ipdb
+
+# Jauntlet Build related
+build/Jauntlet.lib
+Debug/
+Release/
+Scoundrills/
+
+x64/
+Jauntlet/Debug/Jauntlet.vcxproj.FileListAbsolute.txt
