@@ -5,15 +5,15 @@
 #include <SDL/SDL.h>
 #include <algorithm>
 
-#include "Pathfinding.h"
+#include "../Pathfinding.h"
 #include "Player.h"
 
 #include <iostream> // remove when done debugging
-Player::Player(float x, float y) : collider(Jauntlet::CircleCollider2D(16.0f, glm::vec2(x,y))) {
+Player::Player(float x, float y) : collider(Jauntlet::BoxCollider2D(glm::vec2(32), glm::vec2(x,y))) {
 	_position = glm::vec2(x, y);
 }
 
-void Player::update(Jauntlet::InputManager& inputManager) {
+void Player::update() {
 	
 	// we have a path to follow
 	if (!_path.empty()) {

@@ -11,7 +11,7 @@ class Player
 public:
 	Player(float x, float y);
 
-	void update(Jauntlet::InputManager& inputManager);
+	void update();
 	void draw(Jauntlet::SpriteBatch& spriteBatch);
 	// Navigate through a tilemap to a position.
 	void navigateTo(Jauntlet::TileMap& map, glm::vec2 position);
@@ -24,7 +24,7 @@ public:
 
 	glm::vec2 getPosition();
 
-	Jauntlet::CircleCollider2D collider;
+	Jauntlet::BoxCollider2D collider;
 private:
 	glm::vec2 _position = glm::vec2(0,0);
 	std::vector<glm::vec2> _path;

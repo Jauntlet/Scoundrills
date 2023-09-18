@@ -23,13 +23,15 @@
     <ClCompile Include="src\MainGame.cpp" />
     <ClCompile Include="src\Navigation.cpp" />
     <ClCompile Include="src\Pathfinding.cpp" />
-    <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\players\Player.cpp" />
+    <ClCompile Include="src\players\PlayerManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\MainGame.h" />
     <ClInclude Include="src\Navigation.h" />
     <ClInclude Include="src\Pathfinding.h" />
-    <ClInclude Include="src\Player.h" />
+    <ClInclude Include="src\players\Player.h" />
+    <ClInclude Include="src\players\PlayerManager.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
