@@ -76,7 +76,7 @@ void MainGame::gameLoop() {
 
 		processInput();
 
-		_player.update();
+		_player.update(_inputManager);
 
 		_camera.update();
 		_hudCamera.update();
@@ -95,13 +95,6 @@ void MainGame::processInput() {
 	}
 
 	_selectedTilePos = _level.RoundWorldPos(_camera.convertScreenToWorld(_inputManager.getMouseCoords()));
-
-	if (_inputManager.isKeyDown(SDLK_LSHIFT) || _inputManager.isKeyDown(SDL_CONTROLLER_BUTTON_A)) {
-		_player.setSpeed(300);
-	}
-	else {
-		_player.setSpeed(120);
-	}
 
 	if (_inputManager.isKeyDown(SDLK_r)) {
 		_camera.transitionToPosition(glm::vec2(0));

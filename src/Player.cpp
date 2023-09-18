@@ -13,7 +13,8 @@ Player::Player(float x, float y) : collider(Jauntlet::CircleCollider2D(16.0f, gl
 	_position = glm::vec2(x, y);
 }
 
-void Player::update() {
+void Player::update(Jauntlet::InputManager& inputManager) {
+	
 	// we have a path to follow
 	if (!_path.empty()) {
 		glm::vec2 direction = glm::sign(glm::vec2(_path[0].x - _position.x, _path[0].y - _position.y));
