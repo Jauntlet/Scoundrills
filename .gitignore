@@ -60,5 +60,5 @@ Debug/
 Release/
 Scoundrills/
 
-x64/
+./x64/
 Jauntlet/Debug/Jauntlet.vcxproj.FileListAbsolute.txt

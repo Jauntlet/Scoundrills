@@ -1,0 +1,1 @@
+This folder is for switching .libs for x64 support. This folder is not used by default and will have to be setup manually for builds. This folder simply exists to make lives a little bit easier by not making you search the archives of the internet for these files.
