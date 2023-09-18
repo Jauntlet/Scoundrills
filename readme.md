@@ -4,7 +4,7 @@
 
 <h3>windows</h3>
 
-currently working on compiling using cmake with windows, but for now you can open up the solution with visual studio 2019 and compile. eventually, this will be unsupported in favor of a cross platform cmake solution.
+currently working on compiling using cmake with windows, for now the visual studio project is entirely broken after changing the root folders name. stay tuned for more information on windows!
 
 <h3>linux</h3>
 
@@ -13,6 +13,11 @@ to compile on debian:
 get dependencies
 ```
 sudo apt install make cmake libglm-dev libsdl2-dev libglew-dev g++
+```
+clone and enter the repository
+```
+git clone https://github.com/XanderMooney/Scoundrills
+cd Scoundrills
 ```
 
 from here you have two options. either run the compile.sh file in the root of the program (`bash compile.sh`), or you can manually do the following:
