@@ -63,4 +63,7 @@ private:
 
 	Navigation _navigation;
 	std::vector<std::vector<int>> _navPoints;
+
+	// defines scale of movement for the camera. if set to 1, the camera will follow the mouse, if set to 0, the mouse has no control over the camera.
+	const float _CAMERA_MOVEMENT_SCALE =  0.5f;
 };
