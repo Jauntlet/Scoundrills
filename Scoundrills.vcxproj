@@ -89,26 +89,34 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(SolutionDir)dependencies\include;$(SolutionDir);$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)dependencies\lib;$(SolutionDir)build;$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)build\</OutDir>
+    <LibraryPath>$(SolutionDir)dependencies\lib;$(SolutionDir)build;$(SolutionDir)dependencies\x32;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)build</OutDir>
     <IntDir>build\</IntDir>
+    <ExecutablePath>$(SolutionDir)dependencies/x32;$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <LibraryPath>$(SolutionDir)dependencies\lib;$(SolutionDir)build;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)dependencies\lib;$(SolutionDir)build;$(SolutionDir)dependencies\x32;$(LibraryPath)</LibraryPath>
     <IncludePath>$(SolutionDir)dependencies\include;$(SolutionDir);$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)build</OutDir>
     <IntDir>build\</IntDir>
+    <ExecutablePath>$(SolutionDir)dependencies/x32;$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(SolutionDir)dependencies\include;$(SolutionDir);$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)dependencies\lib;$(SolutionDir)build;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)dependencies\lib;$(SolutionDir)build;$(SolutionDir)dependencies\x64;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)build</OutDir>
+    <IntDir>build\</IntDir>
+    <ExecutablePath>$(SolutionDir)dependencies/x64;$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <LibraryPath>$(SolutionDir)dependencies\lib;$(SolutionDir)build;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)dependencies\lib;$(SolutionDir)build;$(SolutionDir)dependencies\x64;$(LibraryPath)</LibraryPath>
     <IncludePath>$(SolutionDir)dependencies\include;$(SolutionDir);$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)build</OutDir>
+    <IntDir>build\</IntDir>
+    <ExecutablePath>$(SolutionDir)dependencies/x64;$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
