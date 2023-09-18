@@ -124,7 +124,15 @@ void MainGame::processInput() {
 
 	if (_inputManager.deltaScroll != 0) {
 		_camera.clearTransitions();
-		_camera.multiplyScale(pow(1.2f, _inputManager.deltaScroll));
+		
+		float zoom = pow(1.25f, _inputManager.deltaScroll);
+		
+		glm::vec2 mouse = _camera.convertScreenToWorldDisreguardPosition(_inputManager.getMouseCoords());
+
+		_camera.translate(mouse);
+		_camera.multiply(zoom);
+		_camera.translate(-mouse);
+
 		_inputManager.deltaScroll = 0;
 	}
 
