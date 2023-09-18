@@ -6,7 +6,7 @@
 MainGame::MainGame() :
 	_level(_textureCache, 32),
 	_bricks("Textures/FullTileset.png"),
-	_player(32, -32),
+	_players(8),
 	_window() {
 }
 
@@ -76,7 +76,7 @@ void MainGame::gameLoop() {
 
 		processInput();
 
-		_player.update(_inputManager);
+		_players.update(_inputManager, _camera, _level);
 
 		_camera.update();
 		_hudCamera.update();
@@ -143,8 +143,6 @@ void MainGame::processInput() {
 	//test for collider-position code
 	if (_inputManager.isKeyPressed(SDL_BUTTON_RIGHT)) {
 		Jauntlet::Collision2D data = Jauntlet::Collision2D();
-		//Player moves on right click
-		_player.navigateTo(_level, _selectedTilePos);
 
 		if (_navigation.isNavOpen()) { //Nav Collision on right click
 			for (int j = 0; j < _navigation.getColliders().size(); j++) {
@@ -187,7 +185,7 @@ void MainGame::drawGame() {
 	_level.draw();
 	// Draw the player using a spriteBatch
 	_playerSpriteBatch.begin();
-	_player.draw(_playerSpriteBatch);
+	_players.draw(_playerSpriteBatch);
 
 	// draw the selected tile sprite
 	_playerSpriteBatch.draw({_selectedTilePos.x, _selectedTilePos.y, 32, 32}, { 0,0,1,1 }, Jauntlet::ResourceManager::getTexture("Textures/WhiteSquare.png").id, 0, Jauntlet::Color(255, 255, 255, 255));

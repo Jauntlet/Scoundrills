@@ -8,7 +8,7 @@
 #include <SDL/SDL.h>
 
 #include "Navigation.h"
-#include "Player.h"
+#include "players/PlayerManager.h"
 #include "glm/fwd.hpp"
 
 enum class GameState {
@@ -58,7 +58,7 @@ private:
 
 	Jauntlet::UIManager _uiManager;
 	
-	Player _player;
+	PlayerManager _players;
 	glm::vec2 _selectedTilePos = glm::vec2(0);
 
 	Navigation _navigation;
