@@ -1,8 +1,6 @@
 #include "PlayerManager.h"
 #include <Jauntlet/Collision/Collision2D.h>
 
-#include <iostream> // remove when done debugging
-
 PlayerManager::PlayerManager(int initialPlayers) {
 	for (int i = 0; i < initialPlayers; i++) {
 		_players.emplace_back(32 * (i + 1), -32);
@@ -29,10 +27,13 @@ void PlayerManager::update(Jauntlet::InputManager& inputManager, Jauntlet::Camer
 			}
 		}
 		else { // we have selected a position for the player to move to.
-			std::cout << "try to navigate" << std::endl;
 			_players[_selectedPlayer].navigateTo(navTileMap, navTileMap.RoundWorldPos(activeCamera.convertScreenToWorld(inputManager.getMouseCoords())));
 			_selectedPlayer = -1;
 		}
+	}
+
+	for (int i = 0; i < _players.size(); i++) {
+		_players[i].update();
 	}
 }
 
