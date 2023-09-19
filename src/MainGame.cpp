@@ -119,20 +119,6 @@ void MainGame::processInput() {
 		_navigation.toggleNav();
 	}
 
-	//test for collider-position code
-	if (_inputManager.isKeyPressed(SDL_BUTTON_RIGHT)) {
-		Jauntlet::Collision2D data = Jauntlet::Collision2D();
-
-		if (_navigation.isNavOpen()) { //Nav Collision on right click
-			for (int j = 0; j < _navigation.getColliders().size(); j++) {
-				Jauntlet::BoxCollider2D adjustedCollider = Jauntlet::BoxCollider2D(_navigation.getColliders()[j].GetSize(), glm::vec2(_screenWidth / 2 + _navigation.getColliders()[j].position.x, _screenHeight / 2 - _navigation.getColliders()[j].position.y + 16));
-				if (data.getCollision(&adjustedCollider, _inputManager.getMouseCoords())) {
-					std::cout << "Right clicked collider: " << j << std::endl;
-				}
-			}
-		}
-	}
-
 	//mouse hover over navigation
 	if (_navigation.isNavOpen()) {
 		Jauntlet::Collision2D data = Jauntlet::Collision2D();
