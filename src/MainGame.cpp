@@ -38,6 +38,8 @@ void MainGame::initSystems() {
 	_camera.init(_screenWidth, _screenHeight);
 	_hudCamera.init(_screenWidth, _screenHeight);
 
+	_cameraManager.init(&_camera, &_inputManager);
+
 	// initialize player spriteBatch
 	_playerSpriteBatch.init();
 	_HUDSpriteBatch.init();
@@ -69,7 +71,7 @@ void MainGame::initShaders() {
 }
 
 void MainGame::gameLoop() {
-	Jauntlet::Time::setMaxFPS(60);
+	Jauntlet::Time::setMaxFPS(-1);
 
 	while (_gameState == GameState::PLAY) {
 		Jauntlet::Time::beginFrame();
@@ -96,38 +98,7 @@ void MainGame::processInput() {
 
 	_selectedTilePos = _level.RoundWorldPos(_camera.convertScreenToWorld(_inputManager.getMouseCoords()));
 
-	if (_inputManager.isKeyDown(SDLK_r)) {
-		_camera.transitionToPosition(glm::vec2(0));
-		_camera.transitionToScale(1);
-	}
-
-	if (_inputManager.isKeyDown(SDL_BUTTON_LEFT)) {
-		_camera.clearTransitions();
-		_deltaMouse = glm::vec2(_oldMouse.x - _inputManager.getMouseCoords().x, _inputManager.getMouseCoords().y - _oldMouse.y);
-	} else {
-		_deltaMouse -= _deltaMouse * (Jauntlet::Time::getDeltaTime() * 10);
-	}
-
-	_camera.translate(_deltaMouse);
-
-	glm::vec2 rStick = _inputManager.getControllerAxis(Jauntlet::Axis::RightStick);
-	if (glm::abs(rStick.x) > .2 || glm::abs(rStick.y) > .2) {
-		_camera.translate(glm::vec2(rStick.x, -rStick.y) * (250.0f * Jauntlet::Time::getDeltaTime()));
-	}
-
-	if (_inputManager.deltaScroll != 0) {
-		_camera.clearTransitions();
-		
-		float zoom = pow(1.25f, _inputManager.deltaScroll);
-		
-		glm::vec2 mouse = _camera.convertScreenToWorldDisreguardPosition(_inputManager.getMouseCoords());
-
-		_camera.translate(mouse);
-		_camera.multiply(zoom);
-		_camera.translate(-mouse);
-
-		_inputManager.deltaScroll = 0;
-	}
+	_cameraManager.processInput();
 
 	if (_inputManager.isKeyPressed(SDLK_F11) || (_inputManager.isKeyDown(SDLK_LALT) || _inputManager.isKeyDown(SDLK_RALT)) && _inputManager.isKeyPressed(SDLK_RETURN)) {
 		_window.toggleFullscreen();
@@ -172,8 +143,6 @@ void MainGame::processInput() {
 			}
 		}
 	}
-
-	_oldMouse = _inputManager.getMouseCoords(); // the old mouse position is now the current mouse position
 }
 
 void MainGame::drawGame() {
