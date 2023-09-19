@@ -57,7 +57,7 @@ void MainGame::initSystems() {
 
 	_navPoints = _navigation.genNav();
 
-	glUniformMatrix4fv(_colorProgram.getUniformLocation("Projection"), 1, GL_FALSE, &_hudCamera.getCameraMatrix()[0][0]); // #TODO: DELETEME
+	_hudCamera.setActiveCamera(&_colorProgram); // #TODO: DELETEME
 	_fpsPosition = glm::vec2(0, 0); // #TODO: DELTEME
 	_uiManager.resolvePositions(); // #TODO: DELETEME
 }
@@ -71,7 +71,7 @@ void MainGame::initShaders() {
 }
 
 void MainGame::gameLoop() {
-	Jauntlet::Time::setMaxFPS(-1);
+	Jauntlet::Time::setMaxFPS(60);
 
 	while (_gameState == GameState::PLAY) {
 		Jauntlet::Time::beginFrame();
@@ -142,7 +142,7 @@ void MainGame::drawGame() {
 
 	// Reading information into shaders
 	glUniform1i(_colorProgram.getUniformLocation("imageTexture"), 0);
-	glUniformMatrix4fv(_colorProgram.getUniformLocation("Projection"), 1, GL_FALSE, &_camera.getCameraMatrix()[0][0]);
+	_camera.setActiveCamera(&_colorProgram);
 
 	// Draw Level
 	_level.draw();
@@ -164,7 +164,7 @@ void MainGame::drawGame() {
 }
 
 void MainGame::drawHUD() {
-	glUniformMatrix4fv(_colorProgram.getUniformLocation("Projection"), 1, GL_FALSE, &_hudCamera.getCameraMatrix()[0][0]);
+	_hudCamera.setActiveCamera(&_colorProgram);
 
 	_HUDSpriteBatch.begin();
 
