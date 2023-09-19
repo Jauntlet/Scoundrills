@@ -7,6 +7,7 @@
 #include <Jauntlet/UI/UITextElement.h>
 #include <SDL/SDL.h>
 
+#include "CameraManager.h"
 #include "Navigation.h"
 #include "players/PlayerManager.h"
 #include "glm/fwd.hpp"
@@ -35,6 +36,7 @@ private:
 	
 	Jauntlet::Camera2D _camera;
 	Jauntlet::Camera2D _hudCamera;
+	CameraManager _cameraManager;
 	
 	Jauntlet::InputManager _inputManager;
 
@@ -44,9 +46,6 @@ private:
 
 	int _screenWidth = 1024, _screenHeight = 768;
 	float _fps = 0;
-
-	glm::vec2 _oldMouse = glm::vec2(0);
-	glm::vec2 _deltaMouse = glm::vec2(0);
 
 	Jauntlet::SpriteBatch _playerSpriteBatch;
 

@@ -38,6 +38,8 @@ void MainGame::initSystems() {
 	_camera.init(_screenWidth, _screenHeight);
 	_hudCamera.init(_screenWidth, _screenHeight);
 
+	_cameraManager.init(&_camera, &_inputManager);
+
 	// initialize player spriteBatch
 	_playerSpriteBatch.init();
 	_HUDSpriteBatch.init();
@@ -55,7 +57,7 @@ void MainGame::initSystems() {
 
 	_navPoints = _navigation.genNav();
 
-	glUniformMatrix4fv(_colorProgram.getUniformLocation("Projection"), 1, GL_FALSE, &_hudCamera.getCameraMatrix()[0][0]); // #TODO: DELETEME
+	_hudCamera.setActiveCamera(&_colorProgram); // #TODO: DELETEME
 	_fpsPosition = glm::vec2(0, 0); // #TODO: DELTEME
 	_uiManager.resolvePositions(); // #TODO: DELETEME
 }
@@ -96,38 +98,7 @@ void MainGame::processInput() {
 
 	_selectedTilePos = _level.RoundWorldPos(_camera.convertScreenToWorld(_inputManager.getMouseCoords()));
 
-	if (_inputManager.isKeyDown(SDLK_r)) {
-		_camera.transitionToPosition(glm::vec2(0));
-		_camera.transitionToScale(1);
-	}
-
-	if (_inputManager.isKeyDown(SDL_BUTTON_LEFT)) {
-		_camera.clearTransitions();
-		_deltaMouse = glm::vec2(_oldMouse.x - _inputManager.getMouseCoords().x, _inputManager.getMouseCoords().y - _oldMouse.y);
-	} else {
-		_deltaMouse -= _deltaMouse * (Jauntlet::Time::getDeltaTime() * 10);
-	}
-
-	_camera.translate(_deltaMouse);
-
-	glm::vec2 rStick = _inputManager.getControllerAxis(Jauntlet::Axis::RightStick);
-	if (glm::abs(rStick.x) > .2 || glm::abs(rStick.y) > .2) {
-		_camera.translate(glm::vec2(rStick.x, -rStick.y) * (250.0f * Jauntlet::Time::getDeltaTime()));
-	}
-
-	if (_inputManager.deltaScroll != 0) {
-		_camera.clearTransitions();
-		
-		float zoom = pow(1.25f, _inputManager.deltaScroll);
-		
-		glm::vec2 mouse = _camera.convertScreenToWorldDisreguardPosition(_inputManager.getMouseCoords());
-
-		_camera.translate(mouse);
-		_camera.multiply(zoom);
-		_camera.translate(-mouse);
-
-		_inputManager.deltaScroll = 0;
-	}
+	_cameraManager.processInput();
 
 	if (_inputManager.isKeyPressed(SDLK_F11) || (_inputManager.isKeyDown(SDLK_LALT) || _inputManager.isKeyDown(SDLK_RALT)) && _inputManager.isKeyPressed(SDLK_RETURN)) {
 		_window.toggleFullscreen();
@@ -148,20 +119,6 @@ void MainGame::processInput() {
 		_navigation.toggleNav();
 	}
 
-	//test for collider-position code
-	if (_inputManager.isKeyPressed(SDL_BUTTON_RIGHT)) {
-		Jauntlet::Collision2D data = Jauntlet::Collision2D();
-
-		if (_navigation.isNavOpen()) { //Nav Collision on right click
-			for (int j = 0; j < _navigation.getColliders().size(); j++) {
-				Jauntlet::BoxCollider2D adjustedCollider = Jauntlet::BoxCollider2D(_navigation.getColliders()[j].GetSize(), glm::vec2(_screenWidth / 2 + _navigation.getColliders()[j].position.x, _screenHeight / 2 - _navigation.getColliders()[j].position.y + 16));
-				if (data.getCollision(&adjustedCollider, _inputManager.getMouseCoords())) {
-					std::cout << "Right clicked collider: " << j << std::endl;
-				}
-			}
-		}
-	}
-
 	//mouse hover over navigation
 	if (_navigation.isNavOpen()) {
 		Jauntlet::Collision2D data = Jauntlet::Collision2D();
@@ -172,8 +129,6 @@ void MainGame::processInput() {
 			}
 		}
 	}
-
-	_oldMouse = _inputManager.getMouseCoords(); // the old mouse position is now the current mouse position
 }
 
 void MainGame::drawGame() {
@@ -187,7 +142,7 @@ void MainGame::drawGame() {
 
 	// Reading information into shaders
 	glUniform1i(_colorProgram.getUniformLocation("imageTexture"), 0);
-	glUniformMatrix4fv(_colorProgram.getUniformLocation("Projection"), 1, GL_FALSE, &_camera.getCameraMatrix()[0][0]);
+	_camera.setActiveCamera(&_colorProgram);
 
 	// Draw Level
 	_level.draw();
@@ -198,8 +153,7 @@ void MainGame::drawGame() {
 	// draw the selected tile sprite
 	_playerSpriteBatch.draw({_selectedTilePos.x, _selectedTilePos.y, 32, 32}, { 0,0,1,1 }, Jauntlet::ResourceManager::getTexture("Textures/WhiteSquare.png").id, 0, Jauntlet::Color(255, 255, 255, 255));
 
-	_playerSpriteBatch.end();
-	_playerSpriteBatch.renderBatch();
+	_playerSpriteBatch.endAndRenderBatch();
 
 	_colorProgram.unuse();
 	
@@ -209,7 +163,7 @@ void MainGame::drawGame() {
 }
 
 void MainGame::drawHUD() {
-	glUniformMatrix4fv(_colorProgram.getUniformLocation("Projection"), 1, GL_FALSE, &_hudCamera.getCameraMatrix()[0][0]);
+	_hudCamera.setActiveCamera(&_colorProgram);
 
 	_HUDSpriteBatch.begin();
 
@@ -219,6 +173,5 @@ void MainGame::drawHUD() {
 
 	_navigation.drawNav(_navPoints, _spriteFont, _HUDSpriteBatch);
 
-	_HUDSpriteBatch.end();
-	_HUDSpriteBatch.renderBatch();
+	_HUDSpriteBatch.endAndRenderBatch();
 }
