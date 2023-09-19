@@ -153,8 +153,7 @@ void MainGame::drawGame() {
 	// draw the selected tile sprite
 	_playerSpriteBatch.draw({_selectedTilePos.x, _selectedTilePos.y, 32, 32}, { 0,0,1,1 }, Jauntlet::ResourceManager::getTexture("Textures/WhiteSquare.png").id, 0, Jauntlet::Color(255, 255, 255, 255));
 
-	_playerSpriteBatch.end();
-	_playerSpriteBatch.renderBatch();
+	_playerSpriteBatch.endAndRenderBatch();
 
 	_colorProgram.unuse();
 	
@@ -174,6 +173,5 @@ void MainGame::drawHUD() {
 
 	_navigation.drawNav(_navPoints, _spriteFont, _HUDSpriteBatch);
 
-	_HUDSpriteBatch.end();
-	_HUDSpriteBatch.renderBatch();
+	_HUDSpriteBatch.endAndRenderBatch();
 }
