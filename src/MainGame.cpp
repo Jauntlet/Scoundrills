@@ -150,7 +150,7 @@ void MainGame::drawGame() {
 	_players.draw(_playerSpriteBatch);
 
 	// draw the selected tile sprite
-	_playerSpriteBatch.draw({_selectedTilePos.x, _selectedTilePos.y, 32, 32}, { 0,0,1,1 }, Jauntlet::ResourceManager::getTexture("Textures/WhiteSquare.png").id, 0, Jauntlet::Color(255, 255, 255, 255));
+	_playerSpriteBatch.draw({_selectedTilePos.x, _selectedTilePos.y, 32, 32}, Jauntlet::ResourceManager::getTexture("Textures/WhiteSquare.png").id, 0);
 
 	_playerSpriteBatch.endAndRenderBatch();
 

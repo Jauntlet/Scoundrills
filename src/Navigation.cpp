@@ -70,7 +70,7 @@ void Navigation::drawNav(std::vector<std::vector<int>>& navPoints, Jauntlet::Spr
 	}*/
 
 	//only one background variation for testing
-	spriteBatch.draw(glm::vec4(-320, -320, 640, 640), glm::vec4(0, 0, 1, 1), Jauntlet::ResourceManager::getTexture(bgTextures[0]).id, 1, Jauntlet::Color(255, 255, 255, 255));
+	spriteBatch.draw(glm::vec4(-320, -320, 640, 640), Jauntlet::ResourceManager::getTexture(bgTextures[0]).id, 1);
 
 	//Render navPoints
 	int layersHeight = navPoints.size(); //store the total height of the "layers"
