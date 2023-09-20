@@ -5,7 +5,7 @@
 
 MainGame::MainGame() :
 	_level(_textureCache, 32),
-	_bricks("Textures/FullTileset.png"),
+	_bricks("Textures/Drill Walls.png"),
 	_players(8),
 	_window() {
 }
@@ -47,9 +47,9 @@ void MainGame::initSystems() {
 	// initializes spritefont
 	_spriteFont.init(&_hudCamera, "Fonts/HandelGo.ttf", 256);
 
-	// Temporary level loading
-	_bricks.addConnectionRule(Jauntlet::TileSet::ConnectionRules::TILES);
-	_level.registerTileSet('T', _bricks, Jauntlet::TileCollision::SQUARE);
+	// level loading
+	_level.registerTileSet('W', _bricks, Jauntlet::TileCollision::SQUARE);
+	_level.registerTile('F', "Textures/DrillFloor.png");
 
 	_level.loadTileMap("Levels/level0.txt");
 	//_level.loadTileMap("Levels/testAllTiles.txt");
