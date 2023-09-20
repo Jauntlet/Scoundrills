@@ -34,8 +34,7 @@ private:
 
 	Jauntlet::GLSLProgram _colorProgram;
 	
-	Jauntlet::Camera2D _camera;
-	Jauntlet::Camera2D _hudCamera;
+	Jauntlet::Camera2D _camera, _hudCamera;
 	CameraManager _cameraManager;
 	
 	Jauntlet::InputManager _inputManager;
@@ -67,5 +66,5 @@ private:
 	const float _CAMERA_MOVEMENT_SCALE =  0.5f;
 
 	std::string _fpsText = "bruh"; // #TODO: DELTEME
-	glm::vec2 _fpsPosition; // #TODO: DELTEME
+	glm::vec2 _fpsPosition = glm::vec2(0); // #TODO: DELTEME
 };
