@@ -4,7 +4,7 @@
 #include "MainGame.h"
 
 MainGame::MainGame() :
-	_level(_textureCache, 32),
+	_level(_textureCache, 64),
 	_bricks("Textures/Drill Walls.png"),
 	_players(3),
 	_window() {
@@ -147,10 +147,10 @@ void MainGame::drawGame() {
 	_level.draw();
 	// Draw the player using a spriteBatch
 	_playerSpriteBatch.begin();
-	_players.draw(_playerSpriteBatch);
-
 	// draw the selected tile sprite
-	_playerSpriteBatch.draw({_selectedTilePos.x, _selectedTilePos.y, 32, 32}, Jauntlet::ResourceManager::getTexture("Textures/WhiteSquare.png").id, 0);
+	_playerSpriteBatch.draw({_selectedTilePos.x, _selectedTilePos.y, 64, 64}, Jauntlet::ResourceManager::getTexture("Textures/WhiteSquare.png").id, 0);
+	
+	_players.draw(_playerSpriteBatch);
 
 	_playerSpriteBatch.endAndRender();
 

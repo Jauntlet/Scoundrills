@@ -40,7 +40,6 @@ void CameraManager::processInput() {
 			_camera->clearTransitions();
 			_deltaMouse = glm::vec2(_oldMouse.x - _inputManager->getMouseCoords().x, _inputManager->getMouseCoords().y - _oldMouse.y);
 		}
-		std::cout << _clickOnPlayers << std::endl;
 	}
 	else {
 		_deltaMouse -= _deltaMouse * (Jauntlet::Time::getDeltaTime() * 10);
