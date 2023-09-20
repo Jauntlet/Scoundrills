@@ -51,8 +51,8 @@ void MainGame::initSystems() {
 	_level.registerTileSet('W', _bricks, Jauntlet::TileCollision::SQUARE);
 	_level.registerTile('F', "Textures/DrillFloor.png");
 
-	//_level.loadTileMap("Levels/level0.txt");
-	_level.loadTileMap("Levels/testAllTiles.txt");
+	_level.loadTileMap("Levels/level0.txt");
+	//_level.loadTileMap("Levels/testAllTiles.txt");
 
 
 	_navPoints = _navigation.genNav();
