@@ -14,7 +14,7 @@ public:
 	void update();
 	void draw(Jauntlet::SpriteBatch& spriteBatch);
 	// Navigate through a tilemap to a position.
-	void navigateTo(Jauntlet::TileMap& map, glm::vec2 position);
+	void navigateTo(Jauntlet::TileMap* map, glm::vec2 position);
 
 
 	void setPosition(float x, float y);

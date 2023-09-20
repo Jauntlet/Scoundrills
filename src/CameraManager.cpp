@@ -1,13 +1,18 @@
 #include "CameraManager.h"
+#include "Jauntlet/TileMap.h"
+#include "src/players/PlayerManager.h"
 #include <Jauntlet/Time.h>
 
 CameraManager::CameraManager() {
 	// Empty
 }
 
-void CameraManager::init(Jauntlet::Camera2D* camera, Jauntlet::InputManager* inputManager) {
+void CameraManager::init(Jauntlet::Camera2D* camera, Jauntlet::InputManager* inputManager, PlayerManager* players, Jauntlet::TileMap* level) {
 	_camera = camera;
 	_inputManager = inputManager;
+
+	_players = players;
+	_level = level;
 
 	_moveDown.init(inputManager);
 	_moveLeft.init(inputManager);
@@ -26,9 +31,11 @@ void CameraManager::processInput() {
 		_camera->transitionToScale(1);
 	}
 
-	if (_inputManager->isKeyDown(SDL_BUTTON_RIGHT)) {
-		_camera->clearTransitions();
-		_deltaMouse = glm::vec2(_oldMouse.x - _inputManager->getMouseCoords().x, _inputManager->getMouseCoords().y - _oldMouse.y);
+	if (_inputManager->isKeyDown(SDL_BUTTON_LEFT)) {
+		if (!_inputManager->isKeyPressed(SDL_BUTTON_LEFT) || !_players->processInput(_inputManager, _camera, _level)) {
+			_camera->clearTransitions();
+			_deltaMouse = glm::vec2(_oldMouse.x - _inputManager->getMouseCoords().x, _inputManager->getMouseCoords().y - _oldMouse.y);
+		}
 	}
 	else {
 		_deltaMouse -= _deltaMouse * (Jauntlet::Time::getDeltaTime() * 10);

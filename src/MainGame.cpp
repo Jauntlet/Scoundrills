@@ -38,7 +38,7 @@ void MainGame::initSystems() {
 	_camera.init(_screenWidth, _screenHeight);
 	_hudCamera.init(_screenWidth, _screenHeight);
 
-	_cameraManager.init(&_camera, &_inputManager);
+	_cameraManager.init(&_camera, &_inputManager, &_players, &_level);
 
 	// initialize player spriteBatch
 	_playerSpriteBatch.init();
@@ -78,8 +78,7 @@ void MainGame::gameLoop() {
 
 		processInput();
 
-		_players.update(_inputManager, _camera, _level);
-
+		_players.update();
 		_camera.update();
 		_hudCamera.update();
 

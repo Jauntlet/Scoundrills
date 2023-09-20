@@ -13,8 +13,11 @@ public:
 	// creates a new player and places it into the player manager
 	void createPlayer(int x, int y);
 	
+	// processes a click to see if we operate on the players, returns true if we are, false if we arent.
+	bool processInput(Jauntlet::InputManager* inputManager, Jauntlet::Camera2D* activeCamera, Jauntlet::TileMap* navTileMap);
+
 	// updates the state of players
-	void update(Jauntlet::InputManager& inputManager, Jauntlet::Camera2D& activeCamera, Jauntlet::TileMap& navTileMap);
+	void update();
 	// draw all players
 	void draw(Jauntlet::SpriteBatch& spriteBatch);
 private:

@@ -1,5 +1,6 @@
-#include "Pathfinding.h"
 #include <Jauntlet/JMath.h>
+
+#include "Pathfinding.h"
 
 std::vector<cell> Pathfinding::_openList;
 std::vector<cell> Pathfinding::_closedList;
@@ -7,16 +8,16 @@ std::vector<cell> Pathfinding::_closedList;
 Pathfinding::Pathfinding() {
 	// Empty
 }
-std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap& map, glm::vec2 start, glm::vec2 destination, bool allowDiagonals /*= true*/) {	
+std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, glm::vec2 start, glm::vec2 destination, bool allowDiagonals /*= true*/) {	
 	// translate world coords to tilemap coords.
-	destination = map.WorldPosToTilePos(destination);
-	start = map.WorldPosToTilePos(start);
+	destination = map->WorldPosToTilePos(destination);
+	start = map->WorldPosToTilePos(start);
 
 	_openList.emplace_back(start, glm::vec2(NULL));
 
 	if (start == destination) {
 		_openList.clear();
-		return { map.TilePosToWorldPos(start) };
+		return { map->TilePosToWorldPos(start) };
 	}
 
 	bool foundDest = false;
@@ -53,7 +54,7 @@ std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap& map, glm::vec2 s
 				}
 
 				// Position has collision, and therefore is not a valid position to check for navigation.
-				if (map.tileHasCollision(currentNode.position)) {
+				if (map->tileHasCollision(currentNode.position)) {
 					continue;
 				}
 
@@ -115,12 +116,12 @@ std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap& map, glm::vec2 s
 		}
 		
 		// we do the thing labelled by the big comment below here too.
-		output.push_back(map.TilePosToWorldPos(_closedList[bestCellIndex].position));
-		output.push_back(map.TilePosToWorldPos(_closedList[bestCellIndex].position));
+		output.push_back(map->TilePosToWorldPos(_closedList[bestCellIndex].position));
+		output.push_back(map->TilePosToWorldPos(_closedList[bestCellIndex].position));
 
 		for (int i = bestCellIndex - 1; i > 0; i--) {
 			if (_closedList[i].position == _closedList[bestCellIndex].prevPos) {
-				output.push_back(map.TilePosToWorldPos(_closedList[i].position));
+				output.push_back(map->TilePosToWorldPos(_closedList[i].position));
 				bestCellIndex = i;
 			}
 		}
@@ -139,31 +140,31 @@ std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap& map, glm::vec2 s
 
 	cell Node = _closedList.back();
 
-	if (!map.tileHasCollision(destination)) {
+	if (!map->tileHasCollision(destination)) {
 		// add destination to final pos in output
-		output.push_back(map.TilePosToWorldPos(destination));
+		output.push_back(map->TilePosToWorldPos(destination));
 		/* I push the final destination to the output vector twice here. Why?
 		* Well, for some reason the Player navigation just *deletes* the last element in the array when pathfinding. 
 		* There are 0 locations where elements are removed from the vector besides when I push an element to the back of the vector
 		* and delete it. Using testing I can confirm the last element remains until it is sent out of this method, and then it just *vanishes*
 		* If you could locate where that happens, that would be fantastic, but I've spent a full day on this bug and I frankly am just gonna do the easy fix.
 		* -xm */
-		output.push_back(map.TilePosToWorldPos(destination));
+		output.push_back(map->TilePosToWorldPos(destination));
 	}
 	else {
 		// same thing as big comment above, but with the next-best tile.
-		output.push_back(map.TilePosToWorldPos(_closedList.back().position));
+		output.push_back(map->TilePosToWorldPos(_closedList.back().position));
 	}
 
 	// push the first node to the list of outputs
-	output.push_back(map.TilePosToWorldPos(_closedList.back().position));
+	output.push_back(map->TilePosToWorldPos(_closedList.back().position));
 
 	// work backwards through the vector to find the path via previously stored position.
 	for (int i = _closedList.size() - 2; i > -1; i--) {
 		if (_closedList[i].position == Node.prevPos) {
 			Node = _closedList[i];
 		
-			output.push_back(map.TilePosToWorldPos(Node.position));
+			output.push_back(map->TilePosToWorldPos(Node.position));
 		}
 	}
 	// reverse the list
