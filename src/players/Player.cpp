@@ -8,7 +8,6 @@
 #include "../Pathfinding.h"
 #include "Player.h"
 
-#include <iostream> // remove when done debugging
 Player::Player(float x, float y) : collider(Jauntlet::BoxCollider2D(glm::vec2(32), glm::vec2(x,y))) {
 	_position = glm::vec2(x, y);
 }
