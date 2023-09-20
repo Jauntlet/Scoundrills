@@ -1,8 +1,9 @@
+#include <iostream> // remove when done debugging
+#include <Jauntlet/Time.h>
+
 #include "CameraManager.h"
 #include "Jauntlet/TileMap.h"
 #include "src/players/PlayerManager.h"
-#include <Jauntlet/Time.h>
-#include <iostream>
 
 CameraManager::CameraManager() {
 	// Empty

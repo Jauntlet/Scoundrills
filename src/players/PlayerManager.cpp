@@ -34,7 +34,6 @@ bool PlayerManager::processInput(Jauntlet::InputManager* inputManager, Jauntlet:
 	} else if (_selectedPlayer != -1) {
 		return true;
 	}
-
 	return false;
 }
 

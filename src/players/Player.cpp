@@ -8,7 +8,6 @@
 #include "../Pathfinding.h"
 #include "Player.h"
 
-#include <iostream> // remove when done debugging
 Player::Player(float x, float y) : collider(Jauntlet::BoxCollider2D(glm::vec2(32), glm::vec2(x,y))) {
 	_position = glm::vec2(x, y);
 }
@@ -45,7 +44,7 @@ void Player::update() {
 void Player::draw(Jauntlet::SpriteBatch& spriteBatch) {
 	glm::vec4 destRect = glm::vec4(_position.x, _position.y, 32, 32);
 
-	spriteBatch.draw(destRect, glm::vec4(0,0,1,1), Jauntlet::ResourceManager::getTexture("Textures/Craig.png").id, 0, Jauntlet::Color(255, 255, 255, 255));
+	spriteBatch.draw(destRect, Jauntlet::ResourceManager::getTexture("Textures/Craig.png").id, 0);
 }
 
 void Player::navigateTo(Jauntlet::TileMap* map, glm::vec2 position) {
