@@ -13,7 +13,7 @@ std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, glm::vec2 s
 	destination = map->WorldPosToTilePos(destination);
 	start = map->WorldPosToTilePos(start);
 
-	_openList.emplace_back(start, glm::vec2(NULL));
+	_openList.emplace_back(start, glm::vec2(0));
 
 	if (start == destination) {
 		_openList.clear();
