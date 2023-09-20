@@ -2,6 +2,7 @@
 #include "Jauntlet/TileMap.h"
 #include "src/players/PlayerManager.h"
 #include <Jauntlet/Time.h>
+#include <iostream>
 
 CameraManager::CameraManager() {
 	// Empty
@@ -32,10 +33,13 @@ void CameraManager::processInput() {
 	}
 
 	if (_inputManager->isKeyDown(SDL_BUTTON_LEFT)) {
-		if (!_inputManager->isKeyPressed(SDL_BUTTON_LEFT) || !_players->processInput(_inputManager, _camera, _level)) {
+		bool _clickOnPlayers = _players->processInput(_inputManager, _camera, _level);
+		
+		if (!_clickOnPlayers) {
 			_camera->clearTransitions();
 			_deltaMouse = glm::vec2(_oldMouse.x - _inputManager->getMouseCoords().x, _inputManager->getMouseCoords().y - _oldMouse.y);
 		}
+		std::cout << _clickOnPlayers << std::endl;
 	}
 	else {
 		_deltaMouse -= _deltaMouse * (Jauntlet::Time::getDeltaTime() * 10);
