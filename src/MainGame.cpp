@@ -5,7 +5,7 @@
 
 MainGame::MainGame() :
 	_level(_textureCache, 32),
-	_bricks("Textures/FullTileset.png"),
+	_bricks("Textures/Drill Walls.png"),
 	_players(8),
 	_window() {
 }
@@ -47,9 +47,9 @@ void MainGame::initSystems() {
 	// initializes spritefont
 	_spriteFont.init(&_hudCamera, "Fonts/HandelGo.ttf", 256);
 
-	// Temporary level loading
-	_bricks.addConnectionRule(Jauntlet::TileSet::ConnectionRules::TILES);
-	_level.registerTileSet('T', _bricks, Jauntlet::TileCollision::SQUARE);
+	// level loading
+	_level.registerTileSet('W', _bricks, Jauntlet::TileCollision::SQUARE);
+	_level.registerTile('F', "Textures/DrillFloor.png");
 
 	_level.loadTileMap("Levels/level0.txt");
 	//_level.loadTileMap("Levels/testAllTiles.txt");
@@ -57,7 +57,7 @@ void MainGame::initSystems() {
 
 	_navPoints = _navigation.genNav();
 
-	glUniformMatrix4fv(_colorProgram.getUniformLocation("Projection"), 1, GL_FALSE, &_hudCamera.getCameraMatrix()[0][0]); // #TODO: DELETEME
+	_hudCamera.setActiveCamera(&_colorProgram); // #TODO: DELETEME
 	_fpsPosition = glm::vec2(0, 0); // #TODO: DELTEME
 	_uiManager.resolvePositions(); // #TODO: DELETEME
 }
@@ -71,7 +71,7 @@ void MainGame::initShaders() {
 }
 
 void MainGame::gameLoop() {
-	Jauntlet::Time::setMaxFPS(-1);
+	Jauntlet::Time::setMaxFPS(60);
 
 	while (_gameState == GameState::PLAY) {
 		Jauntlet::Time::beginFrame();
@@ -119,20 +119,6 @@ void MainGame::processInput() {
 		_navigation.toggleNav();
 	}
 
-	//test for collider-position code
-	if (_inputManager.isKeyPressed(SDL_BUTTON_RIGHT)) {
-		Jauntlet::Collision2D data = Jauntlet::Collision2D();
-
-		if (_navigation.isNavOpen()) { //Nav Collision on right click
-			for (int j = 0; j < _navigation.getColliders().size(); j++) {
-				Jauntlet::BoxCollider2D adjustedCollider = Jauntlet::BoxCollider2D(_navigation.getColliders()[j].GetSize(), glm::vec2(_screenWidth / 2 + _navigation.getColliders()[j].position.x, _screenHeight / 2 - _navigation.getColliders()[j].position.y + 16));
-				if (data.getCollision(&adjustedCollider, _inputManager.getMouseCoords())) {
-					std::cout << "Right clicked collider: " << j << std::endl;
-				}
-			}
-		}
-	}
-
 	//mouse hover over navigation
 	if (_navigation.isNavOpen()) {
 		Jauntlet::Collision2D data = Jauntlet::Collision2D();
@@ -156,7 +142,7 @@ void MainGame::drawGame() {
 
 	// Reading information into shaders
 	glUniform1i(_colorProgram.getUniformLocation("imageTexture"), 0);
-	glUniformMatrix4fv(_colorProgram.getUniformLocation("Projection"), 1, GL_FALSE, &_camera.getCameraMatrix()[0][0]);
+	_camera.setActiveCamera(&_colorProgram);
 
 	// Draw Level
 	_level.draw();
@@ -167,8 +153,7 @@ void MainGame::drawGame() {
 	// draw the selected tile sprite
 	_playerSpriteBatch.draw({_selectedTilePos.x, _selectedTilePos.y, 32, 32}, { 0,0,1,1 }, Jauntlet::ResourceManager::getTexture("Textures/WhiteSquare.png").id, 0, Jauntlet::Color(255, 255, 255, 255));
 
-	_playerSpriteBatch.end();
-	_playerSpriteBatch.renderBatch();
+	_playerSpriteBatch.endAndRenderBatch();
 
 	_colorProgram.unuse();
 	
@@ -178,7 +163,7 @@ void MainGame::drawGame() {
 }
 
 void MainGame::drawHUD() {
-	glUniformMatrix4fv(_colorProgram.getUniformLocation("Projection"), 1, GL_FALSE, &_hudCamera.getCameraMatrix()[0][0]);
+	_hudCamera.setActiveCamera(&_colorProgram);
 
 	_HUDSpriteBatch.begin();
 
@@ -188,6 +173,5 @@ void MainGame::drawHUD() {
 
 	_navigation.drawNav(_navPoints, _spriteFont, _HUDSpriteBatch);
 
-	_HUDSpriteBatch.end();
-	_HUDSpriteBatch.renderBatch();
+	_HUDSpriteBatch.endAndRenderBatch();
 }
