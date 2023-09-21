@@ -2,6 +2,7 @@
 #include <Jauntlet/Time.h>
 
 #include "CameraManager.h"
+#include "Jauntlet/Camera2D.h"
 #include "Jauntlet/TileMap.h"
 #include "src/players/PlayerManager.h"
 
@@ -47,15 +48,19 @@ void CameraManager::processInput() {
 
 	if (_moveLeft.isDown()) {
 		_camera->translate(glm::vec2(-300 * Jauntlet::Time::getDeltaTime(), 0));
+		_camera->clearTransition(Jauntlet::Camera2D::TRANSITION_TYPE::POSITION);
 	}
 	if (_moveRight.isDown()) {
 		_camera->translate(glm::vec2(300 * Jauntlet::Time::getDeltaTime(), 0));
+		_camera->clearTransition(Jauntlet::Camera2D::TRANSITION_TYPE::POSITION);
 	}
 	if (_moveUp.isDown()) {
 		_camera->translate(glm::vec2(0, 300 * Jauntlet::Time::getDeltaTime()));
+		_camera->clearTransition(Jauntlet::Camera2D::TRANSITION_TYPE::POSITION);
 	}
 	if (_moveDown.isDown()) {
 		_camera->translate(glm::vec2(0, -300 * Jauntlet::Time::getDeltaTime()));
+		_camera->clearTransition(Jauntlet::Camera2D::TRANSITION_TYPE::POSITION);
 	}
 
 
