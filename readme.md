@@ -1,12 +1,12 @@
-# game
+# Scoundrills
 
-<h2>compilation</h2>
+<h2>Compilation</h2>
 
-<h3>windows</h3>
+<h3>Windows</h3>
 
 Windows compilation currently entirely depends on Visual Studio 2019, so compilation is done through VS instead of CMake. We have every intention of eventually changing that in favor of CMake.
 
-<h3>linux</h3>
+<h3>Linux</h3>
 
 to compile on Debian:
 
@@ -37,6 +37,6 @@ the executable is called "game", so run this command to launch it
 ./game
 ```
 
-<h3>macos</h3>
+<h3>MacOS</h3>
 
-macos is currently unsupported, although eventually cmake will be changed to work with mac as well. none of us currently own a computer running macos, so this may take some time.
+macOS is currently unsupported, although eventually CMake will be changed to work with mac as well. none of us currently own a computer running macOS, so this may take some time.
