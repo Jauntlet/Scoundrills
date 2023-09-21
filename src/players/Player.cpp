@@ -8,7 +8,7 @@
 #include "../Pathfinding.h"
 #include "Player.h"
 
-Player::Player(float x, float y) : collider(Jauntlet::BoxCollider2D(glm::vec2(32), glm::vec2(x,y))) {
+Player::Player(float x, float y) : collider(Jauntlet::BoxCollider2D(glm::vec2(64), glm::vec2(x,y))) {
 	_position = glm::vec2(x, y);
 }
 
@@ -42,7 +42,7 @@ void Player::update() {
 }
 
 void Player::draw(Jauntlet::SpriteBatch& spriteBatch) {
-	glm::vec4 destRect = glm::vec4(_position.x, _position.y, 32, 32);
+	glm::vec4 destRect = glm::vec4(_position.x, _position.y, 64, 64);
 
 	spriteBatch.draw(destRect, Jauntlet::ResourceManager::getTexture("Textures/Craig.png").id, 0);
 }

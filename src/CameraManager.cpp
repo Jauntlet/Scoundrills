@@ -40,23 +40,22 @@ void CameraManager::processInput() {
 			_camera->clearTransitions();
 			_deltaMouse = glm::vec2(_oldMouse.x - _inputManager->getMouseCoords().x, _inputManager->getMouseCoords().y - _oldMouse.y);
 		}
-		std::cout << _clickOnPlayers << std::endl;
 	}
 	else {
 		_deltaMouse -= _deltaMouse * (Jauntlet::Time::getDeltaTime() * 10);
 	}
 
 	if (_moveLeft.isDown()) {
-		_deltaMouse.x -= 3 * Jauntlet::Time::getDeltaTime();
+		_camera->translate(glm::vec2(-300 * Jauntlet::Time::getDeltaTime(), 0));
 	}
 	if (_moveRight.isDown()) {
-		_deltaMouse.x += 3 * Jauntlet::Time::getDeltaTime();
+		_camera->translate(glm::vec2(300 * Jauntlet::Time::getDeltaTime(), 0));
 	}
 	if (_moveUp.isDown()) {
-		_deltaMouse.y += 3 * Jauntlet::Time::getDeltaTime();
+		_camera->translate(glm::vec2(0, 300 * Jauntlet::Time::getDeltaTime()));
 	}
 	if (_moveDown.isDown()) {
-		_deltaMouse.y -= 3 * Jauntlet::Time::getDeltaTime();
+		_camera->translate(glm::vec2(0, -300 * Jauntlet::Time::getDeltaTime()));
 	}
 
 
