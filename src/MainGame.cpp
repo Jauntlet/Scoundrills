@@ -164,11 +164,11 @@ void MainGame::drawGame() {
 void MainGame::drawHUD() {
 	_hudCamera.setActiveCamera(&_colorProgram);
 
-	_HUDSpriteBatch.begin();
-
 	_fpsText = std::to_string((int)_fps); // #TODO: DELTEME
 
 	_uiManager.draw();
+
+	_HUDSpriteBatch.begin();
 
 	_navigation.drawNav(_navPoints, _spriteFont, _HUDSpriteBatch);
 
