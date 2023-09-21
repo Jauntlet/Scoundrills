@@ -4,11 +4,11 @@
 
 <h3>windows</h3>
 
-currently working on compiling using cmake with windows, for now the visual studio project is entirely broken after changing the root folders name. stay tuned for more information on windows!
+Windows compilation currently entirely depends on Visual Studio 2019, so compilation is done through VS instead of CMake. We have every intention of eventually changing that in favor of CMake.
 
 <h3>linux</h3>
 
-to compile on debian:
+to compile on Debian:
 
 get dependencies
 ```
@@ -22,12 +22,12 @@ cd Scoundrills
 
 from here you have two options. either run the compile.sh file in the root of the program (`bash compile.sh`), or you can manually do the following:
 
-create and move into "build" folder
+create and move into the "build" folder
 ```
 mkdir build
 cd build
 ```
-compile using cmake (run in build folder). we export the compile commands for clangd, you can skip that argument step if you dont use anything like that.
+compile using CMake (run in the build folder). we export the compile commands for clangd, you can skip that argument step if you don't use anything like that.
 ```
 cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=1
 make
