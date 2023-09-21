@@ -15,7 +15,7 @@ void MainGame::run() {
 
 	Jauntlet::Color _fpsColor = Jauntlet::Color(0,255,0,255); // #TODO: DELTEME
 
-	_uiManager = Jauntlet::UIManager(&_hudCamera, &_HUDSpriteBatch); // #TODO: DELTEME
+	_uiManager = Jauntlet::UIManager(&_hudCamera); // #TODO: DELTEME
 
 	Jauntlet::UITextElement* _fpsCounter = new Jauntlet::UITextElement(&_spriteFont, &_fpsText, &_fpsColor, &_fpsPosition); // #TODO: DELTEME
 
