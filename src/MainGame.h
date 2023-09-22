@@ -3,14 +3,11 @@
 #include <Jauntlet/Jauntlet.h>
 #include <Jauntlet/Time.h>
 #include <Jauntlet/Window.h>
-#include <Jauntlet/UI/UIManager.h>
-#include <Jauntlet/UI/UITextElement.h>
-#include <SDL/SDL.h>
 
-#include "CameraManager.h"
-#include "Navigation.h"
-#include "players/PlayerManager.h"
 #include "glm/fwd.hpp"
+#include <Jauntlet/Rendering/GLSLProgram.h>
+#include <Jauntlet/Camera2D.h>
+#include <Jauntlet/InputManager.h>
 
 enum class GameState {
 	PLAY, EXIT
@@ -28,43 +25,17 @@ private:
 	void gameLoop();
 	void processInput();
 	void drawGame();
-	void drawHUD();
 
 	Jauntlet::Window _window;
 
 	Jauntlet::GLSLProgram _colorProgram;
 	
-	Jauntlet::Camera2D _camera, _hudCamera;
-	CameraManager _cameraManager;
-	
-	Jauntlet::InputManager _inputManager;
+	Jauntlet::Camera2D _camera;
 
-	Jauntlet::TextureCache _textureCache;
+	Jauntlet::InputManager _inputManager;
 
 	GameState _gameState = GameState::PLAY;
 
 	int _screenWidth = 1024, _screenHeight = 768;
 	float _fps = 0;
-
-	Jauntlet::SpriteBatch _playerSpriteBatch;
-
-	Jauntlet::TileMap _level;
-	Jauntlet::TileSet _bricks;
-
-	Jauntlet::SpriteBatch _HUDSpriteBatch;
-	Jauntlet::SpriteFont _spriteFont;
-
-	Jauntlet::UIManager _uiManager;
-	
-	PlayerManager _players;
-	glm::vec2 _selectedTilePos = glm::vec2(0);
-
-	Navigation _navigation;
-	std::vector<std::vector<int>> _navPoints;
-
-	// defines scale of movement for the camera. if set to 1, the camera will follow the mouse, if set to 0, the mouse has no control over the camera.
-	const float _CAMERA_MOVEMENT_SCALE =  0.5f;
-
-	std::string _fpsText = "bruh"; // #TODO: DELTEME
-	glm::vec2 _fpsPosition = glm::vec2(0); // #TODO: DELTEME
 };
