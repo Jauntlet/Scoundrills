@@ -2,12 +2,14 @@
 
 #include <chrono>
 #include <Jauntlet/Rendering/ResourceManager.h>
+#include <Jauntlet/UI/UITextElement.h>
 #include <random>
 
 const std::string bgTextures[] = {"Textures/NavGround1.png", "Textures/NavGround2.png", "Textures.NavGround3.png", "Textures.NavGround4.png"};
-
+const GLuint bgTextureIDs[] = { Jauntlet::ResourceManager::getTexture(bgTextures[0]).id, Jauntlet::ResourceManager::getTexture(bgTextures[1]).id, Jauntlet::ResourceManager::getTexture(bgTextures[2]).id, Jauntlet::ResourceManager::getTexture(bgTextures[3]).id };
 const int outcoveAmt = 4;
 const int layerAmt = 3;
+static std::string strX = "X";
 static int seed = std::chrono::system_clock::now().time_since_epoch().count(); //temp
 
 Navigation::Navigation() {
@@ -46,7 +48,7 @@ std::vector<std::vector<int>> Navigation::genNav() {
 	return map;
 }
 
-void Navigation::drawNav(std::vector<std::vector<int>>& navPoints, Jauntlet::SpriteFont& font, Jauntlet::SpriteBatch& spriteBatch) {
+void Navigation::drawNav(std::vector<std::vector<int>>& navPoints, Jauntlet::UIManager& UI, Jauntlet::SpriteFont* spriteFont) {
 	//If the navigation menu isn't meant to be open, simply don't render it.
 	if (!_navOpen) {
 		return;
@@ -70,9 +72,12 @@ void Navigation::drawNav(std::vector<std::vector<int>>& navPoints, Jauntlet::Spr
 	}*/
 
 	//only one background variation for testing
-	spriteBatch.draw(glm::vec4(-320, -320, 640, 640), Jauntlet::ResourceManager::getTexture(bgTextures[0]).id, 1);
+	//spriteBatch.draw(glm::vec4(-320, -320, 640, 640), bgTextureIDs[0], 1);
 
 	//Render navPoints
+	//Make a vector to store all the UI elements to render
+	std::vector<Jauntlet::UITextElement> elements = std::vector<Jauntlet::UITextElement>();
+
 	int layersHeight = navPoints.size(); //store the total height of the "layers"
 
 	for (int y = 0; y < navPoints.size(); y++) {
@@ -81,17 +86,20 @@ void Navigation::drawNav(std::vector<std::vector<int>>& navPoints, Jauntlet::Spr
 		
 		for (int x = 0; x < navPoints[y].size(); x++) {
 			int point = navPoints[y][x]; //
-
+			glm::vec2 placePos = glm::vec2((layerSpan * -40) + (x * 80), (layersHeight * -50) + (y * 100));
 			if (point == 0) { // white X
-				font.draw(spriteBatch, "X", glm::vec2((layerSpan * -40) + (x * 80), (layersHeight * -50) + (y * 100)), glm::vec2(.2), 0, Jauntlet::Color(255, 255, 255, 255));
+				Jauntlet::Color white = Jauntlet::Color(255, 255, 255, 255);
+				elements.push_back(Jauntlet::UITextElement(spriteFont, &strX, &white, &placePos ));
 				continue;
 			}
 			if (point == 1) { // blue X
-				font.draw(spriteBatch, "X", glm::vec2((layerSpan * -40) + (x * 80), (layersHeight * -50) + (y * 100)), glm::vec2(.2), 0, Jauntlet::Color(0, 0, 255, 255));
+				Jauntlet::Color blue = Jauntlet::Color(55, 55, 255, 255);
+				elements.push_back(Jauntlet::UITextElement(spriteFont, &strX, &blue, &placePos ));
 				continue;
 			}
 			if (point == 2) { // orange X
-				font.draw(spriteBatch, "X", glm::vec2((layerSpan * -40) + (x * 80), (layersHeight * -50) + (y * 100)), glm::vec2(.2), 0, Jauntlet::Color(255, 165, 0, 255));
+				Jauntlet::Color orange = Jauntlet::Color(255, 155, 55, 255);
+				elements.push_back(Jauntlet::UITextElement(spriteFont, &strX, &orange, &placePos ));
 				continue;
 			}
 		}

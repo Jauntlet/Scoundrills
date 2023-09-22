@@ -170,7 +170,7 @@ void MainGame::drawHUD() {
 
 	_HUDSpriteBatch.begin();
 
-	_navigation.drawNav(_navPoints, _spriteFont, _HUDSpriteBatch);
+	_navigation.drawNav(_navPoints, _uiManager, &_spriteFont);
 
 	_HUDSpriteBatch.endAndRender();
 }

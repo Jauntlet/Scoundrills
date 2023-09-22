@@ -1,8 +1,8 @@
 #pragma once
 
 #include <Jauntlet/Collision/Collision2D.h>
-#include <Jauntlet/Rendering/SpriteBatch.h>
 #include <Jauntlet/Rendering/SpriteFont.h>
+#include <Jauntlet/UI/UIManager.h>
 #include <vector>
 
 class Navigation {
@@ -11,7 +11,7 @@ public:
 
 	std::vector<std::vector<int>> genNav(); //new nav positions
 
-	void drawNav(std::vector<std::vector<int>>& navPoints, Jauntlet::SpriteFont& font, Jauntlet::SpriteBatch& spriteBatch);
+	void drawNav(std::vector<std::vector<int>>& navPoints, Jauntlet::UIManager& UI, Jauntlet::SpriteFont* spriteFont);
 
 	void toggleNav();
 	bool isNavOpen();
