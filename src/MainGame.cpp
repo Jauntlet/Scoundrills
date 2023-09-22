@@ -16,7 +16,7 @@ void MainGame::run() {
 void MainGame::initSystems() {
 	Jauntlet::init();
 
-	_window.create("Jauntlet Game Engine", _screenWidth, _screenHeight, Jauntlet::WindowFlags::RESIZEABLE);
+	_window.create("Jauntlet Game Engine", _screenWidth, _screenHeight, 0);
 
 	initShaders();
 
@@ -52,10 +52,6 @@ void MainGame::processInput() {
 
 	if (_inputManager.quitGameCalled()) {
 		_gameState = GameState::EXIT;
-	}
-
-	if (_inputManager.isKeyPressed(SDLK_F11) || (_inputManager.isKeyDown(SDLK_LALT) || _inputManager.isKeyDown(SDLK_RALT)) && _inputManager.isKeyPressed(SDLK_RETURN)) {
-		_window.toggleFullscreen();
 	}
 
 	if (_inputManager.windowResized()) {
