@@ -3,31 +3,8 @@
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MainGame.cpp" />
-    <ClCompile Include="src\Navigation.cpp" />
-    <ClCompile Include="src\Pathfinding.cpp" />
-    <ClCompile Include="src\players\Player.cpp">
-      <Filter>players</Filter>
-    </ClCompile>
-    <ClCompile Include="src\players\PlayerManager.cpp">
-      <Filter>players</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CameraManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\MainGame.h" />
-    <ClInclude Include="src\Navigation.h" />
-    <ClInclude Include="src\Pathfinding.h" />
-    <ClInclude Include="src\players\Player.h">
-      <Filter>players</Filter>
-    </ClInclude>
-    <ClInclude Include="src\players\PlayerManager.h">
-      <Filter>players</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CameraManager.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="players">
-      <UniqueIdentifier>{751ce89e-2a6b-4583-8d29-b7665321c6cf}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
 </Project>
