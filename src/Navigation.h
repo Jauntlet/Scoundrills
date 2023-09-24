@@ -9,14 +9,13 @@ class Navigation {
 public:
 	Navigation();
 
-	std::vector<std::vector<int>> genNav(); //new nav positions
-
-	void drawNav(std::vector<std::vector<int>>& navPoints, Jauntlet::UIManager& UI, Jauntlet::SpriteFont* spriteFont);
+	void genNav(Jauntlet::UIManager& UIM, Jauntlet::SpriteFont* spriteFont); //new nav positions
 
 	void toggleNav();
 	bool isNavOpen();
 	std::vector<Jauntlet::BoxCollider2D> getColliders();
 private:
+	std::vector<GLuint> _navTextures;
 	bool _navOpen = false;
 	std::vector<Jauntlet::BoxCollider2D> _navColliders;
 };

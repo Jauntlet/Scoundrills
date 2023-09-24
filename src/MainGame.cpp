@@ -54,12 +54,11 @@ void MainGame::initSystems() {
 	_level.loadTileMap("Levels/level0.txt");
 	//_level.loadTileMap("Levels/testAllTiles.txt");
 
-
-	_navPoints = _navigation.genNav();
-
 	_hudCamera.setActiveCamera(&_colorProgram); // #TODO: DELETEME
 	_fpsPosition = glm::vec2(0, 0); // #TODO: DELTEME
 	_uiManager.resolvePositions(); // #TODO: DELETEME
+
+	_navigation.genNav(_uiManager, &_spriteFont);
 }
 
 void MainGame::initShaders() {
@@ -169,8 +168,6 @@ void MainGame::drawHUD() {
 	_uiManager.draw();
 
 	_HUDSpriteBatch.begin();
-
-	_navigation.drawNav(_navPoints, _uiManager, &_spriteFont);
 
 	_HUDSpriteBatch.endAndRender();
 }

@@ -5,21 +5,30 @@
 #include <Jauntlet/UI/UITextElement.h>
 #include <random>
 
-const std::string bgTextures[] = {"Textures/NavGround1.png", "Textures/NavGround2.png", "Textures.NavGround3.png", "Textures.NavGround4.png"};
-const GLuint bgTextureIDs[] = { Jauntlet::ResourceManager::getTexture(bgTextures[0]).id, Jauntlet::ResourceManager::getTexture(bgTextures[1]).id, Jauntlet::ResourceManager::getTexture(bgTextures[2]).id, Jauntlet::ResourceManager::getTexture(bgTextures[3]).id };
+const std::string bgTextures[] = {"Textures/NavGround1.png", "Textures/NavGround2.png", "Textures/NavGround3.png", "Textures/NavGround4.png"};
 const int outcoveAmt = 4;
 const int layerAmt = 3;
 static std::string strX = "X";
+static Jauntlet::Color white = Jauntlet::Color(255, 255, 255, 255);
+static Jauntlet::Color blue = Jauntlet::Color(55, 55, 255, 255);
+static Jauntlet::Color orange = Jauntlet::Color(255, 155, 55, 255);
 static int seed = std::chrono::system_clock::now().time_since_epoch().count(); //temp
 
 Navigation::Navigation() {
 	// Empty
 }
 
-std::vector<std::vector<int>> Navigation::genNav() {
+void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::SpriteFont* spriteFont) {
+	//read in textures
+	for (int i = 0; i < 4; i++) {
+		_navTextures.push_back(Jauntlet::ResourceManager::getTexture(bgTextures[i]).id);
+	}
+
+	//generate some randomness
 	std::vector<std::vector<int>> map = std::vector<std::vector<int>>();
 	std::mt19937 r = std::mt19937(seed);
 
+	//create navPoints
 	for (int y = 0; y < layerAmt; y++) {
 		std::vector<int> layer = std::vector<int>();
 
@@ -31,10 +40,41 @@ std::vector<std::vector<int>> Navigation::genNav() {
 		map.push_back(layer);
 	}
 
+	//draw background
+	Jauntlet::UIElement background = Jauntlet::UIElement(); //when jack implements a constructor for UI elements via sprites rather than text, i'll do this part.
+	std::vector<Jauntlet::UITextElement> points = std::vector<Jauntlet::UITextElement>();
+
+	std::vector<glm::vec2> positions = std::vector<glm::vec2>();
+
+	int layersHeight = map.size(); //store the total height of the "layers"
+
+	for (int y = 0; y < map.size(); y++) {
+
+		int layerSpan = map[y].size(); //store the "span" (width) of all the points on this "layer"
+
+		for (int x = 0; x < map[y].size(); x++) {
+			int point = map[y][x]; //
+			positions.push_back(glm::vec2((layerSpan * -40) + (x * 80), (layersHeight * -50) + (y * 100)));
+			if (point == 0) { // white X
+				points.push_back(Jauntlet::UITextElement(spriteFont, &strX, &white, &positions[points.size()]));
+				continue;
+			}
+			if (point == 1) { // blue X
+				points.push_back(Jauntlet::UITextElement(spriteFont, &strX, &blue, &positions[points.size()]));
+				continue;
+			}
+			if (point == 2) { // orange X
+				points.push_back(Jauntlet::UITextElement(spriteFont, &strX, &orange, &positions[points.size()]));
+				continue;
+			}
+		}
+	}
+
+	for (int i = 0; i < points.size(); i++) {
+		UIM.addElement(&points[i]);
+	}
 	//generate hitboxes on screenspace for hover/click interactions
 	_navColliders.clear();
-
-	int layersHeight = map.size();
 
 	for (int y = 0; y < map.size(); y++) {
 	
@@ -42,66 +82,6 @@ std::vector<std::vector<int>> Navigation::genNav() {
 
 		for (int x = 0; x < map[y].size(); x++) {
 			_navColliders.push_back( Jauntlet::BoxCollider2D( glm::vec2(32), glm::vec2( (layerSpan * -40) + (x * 80), (layersHeight * -50) + (y * 100) ) ));
-		}
-	}
-
-	return map;
-}
-
-void Navigation::drawNav(std::vector<std::vector<int>>& navPoints, Jauntlet::UIManager& UI, Jauntlet::SpriteFont* spriteFont) {
-	//If the navigation menu isn't meant to be open, simply don't render it.
-	if (!_navOpen) {
-		return;
-	}
-
-	//Render Background
-	/*int frame = std::mt19937(seed)() % 16;
-	switch (frame) {
-	case 0: //render one of the nonblank backgrounds
-		spriteBatch.draw(glm::vec4(-320, -320, 640, 640), glm::vec4(0, 0, 1, 1), Jauntlet::ResourceManager::getTexture(bgTextures[1]).id, 1, Jauntlet::Color(255, 255, 255, 255));
-		break;
-	case 1: //render one of the nonblank backgrounds
-		spriteBatch.draw(glm::vec4(-320, -320, 640, 640), glm::vec4(0, 0, 1, 1), Jauntlet::ResourceManager::getTexture(bgTextures[2]).id, 1, Jauntlet::Color(255, 255, 255, 255));
-		break;
-	case 2: //render one of the nonblank backgrounds
-		spriteBatch.draw(glm::vec4(-320, -320, 640, 640), glm::vec4(0, 0, 1, 1), Jauntlet::ResourceManager::getTexture(bgTextures[3]).id, 1, Jauntlet::Color(255, 255, 255, 255));
-		break;
-	default: //render "blank" background
-		spriteBatch.draw(glm::vec4(-320, -320, 640, 640), glm::vec4(0, 0, 1, 1), Jauntlet::ResourceManager::getTexture(bgTextures[0]).id, 1, Jauntlet::Color(255, 255, 255, 255));
-		break;
-	}*/
-
-	//only one background variation for testing
-	//spriteBatch.draw(glm::vec4(-320, -320, 640, 640), bgTextureIDs[0], 1);
-
-	//Render navPoints
-	//Make a vector to store all the UI elements to render
-	std::vector<Jauntlet::UITextElement> elements = std::vector<Jauntlet::UITextElement>();
-
-	int layersHeight = navPoints.size(); //store the total height of the "layers"
-
-	for (int y = 0; y < navPoints.size(); y++) {
-
-		int layerSpan = navPoints[y].size(); //store the "span" (width) of all the points on this "layer"
-		
-		for (int x = 0; x < navPoints[y].size(); x++) {
-			int point = navPoints[y][x]; //
-			glm::vec2 placePos = glm::vec2((layerSpan * -40) + (x * 80), (layersHeight * -50) + (y * 100));
-			if (point == 0) { // white X
-				Jauntlet::Color white = Jauntlet::Color(255, 255, 255, 255);
-				elements.push_back(Jauntlet::UITextElement(spriteFont, &strX, &white, &placePos ));
-				continue;
-			}
-			if (point == 1) { // blue X
-				Jauntlet::Color blue = Jauntlet::Color(55, 55, 255, 255);
-				elements.push_back(Jauntlet::UITextElement(spriteFont, &strX, &blue, &placePos ));
-				continue;
-			}
-			if (point == 2) { // orange X
-				Jauntlet::Color orange = Jauntlet::Color(255, 155, 55, 255);
-				elements.push_back(Jauntlet::UITextElement(spriteFont, &strX, &orange, &placePos ));
-				continue;
-			}
 		}
 	}
 }
