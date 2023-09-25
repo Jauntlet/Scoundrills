@@ -3,8 +3,6 @@
 #include <Jauntlet/Errors.h>
 #include <sstream>
 
-#include <iostream> // REMOVE
-
 TileHandler::TileHandler() : _tileMap(_textureCache, 64) {
 
 }
