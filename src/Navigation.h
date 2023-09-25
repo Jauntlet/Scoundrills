@@ -3,6 +3,7 @@
 #include <Jauntlet/Collision/Collision2D.h>
 #include <Jauntlet/Rendering/SpriteFont.h>
 #include <Jauntlet/UI/UIManager.h>
+#include <Jauntlet/UI/UITextElement.h>
 #include <vector>
 
 class Navigation {
@@ -18,4 +19,5 @@ private:
 	std::vector<GLuint> _navTextures;
 	bool _navOpen = false;
 	std::vector<Jauntlet::BoxCollider2D> _navColliders;
+	std::vector<Jauntlet::UITextElement> _points;
 };

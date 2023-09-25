@@ -17,6 +17,8 @@ void MainGame::run() {
 
 	_uiManager = Jauntlet::UIManager(&_hudCamera); // #TODO: DELTEME
 
+	_navigation.genNav(_uiManager, &_spriteFont);
+
 	Jauntlet::UITextElement* _fpsCounter = new Jauntlet::UITextElement(&_spriteFont, &_fpsText, &_fpsColor, &_fpsPosition); // #TODO: DELTEME
 
 	_uiManager.addElement(_fpsCounter); // #TODO: DELTEME
@@ -57,8 +59,6 @@ void MainGame::initSystems() {
 	_hudCamera.setActiveCamera(&_colorProgram); // #TODO: DELETEME
 	_fpsPosition = glm::vec2(0, 0); // #TODO: DELTEME
 	_uiManager.resolvePositions(); // #TODO: DELETEME
-
-	_navigation.genNav(_uiManager, &_spriteFont);
 }
 
 void MainGame::initShaders() {

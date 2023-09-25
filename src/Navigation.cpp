@@ -2,7 +2,6 @@
 
 #include <chrono>
 #include <Jauntlet/Rendering/ResourceManager.h>
-#include <Jauntlet/UI/UITextElement.h>
 #include <random>
 
 const std::string bgTextures[] = {"Textures/NavGround1.png", "Textures/NavGround2.png", "Textures/NavGround3.png", "Textures/NavGround4.png"};
@@ -42,8 +41,6 @@ void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::SpriteFont* spriteFo
 
 	//draw background
 	Jauntlet::UIElement background = Jauntlet::UIElement(); //when jack implements a constructor for UI elements via sprites rather than text, i'll do this part.
-	std::vector<Jauntlet::UITextElement> points = std::vector<Jauntlet::UITextElement>();
-
 	std::vector<glm::vec2> positions = std::vector<glm::vec2>();
 
 	int layersHeight = map.size(); //store the total height of the "layers"
@@ -54,24 +51,24 @@ void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::SpriteFont* spriteFo
 
 		for (int x = 0; x < map[y].size(); x++) {
 			int point = map[y][x]; //
-			positions.push_back(glm::vec2((layerSpan * -40) + (x * 80), (layersHeight * -50) + (y * 100)));
+			positions.push_back(glm::vec2((layerSpan * 40) + (x * 80), (layersHeight * 50) + (y * 100)));
 			if (point == 0) { // white X
-				points.push_back(Jauntlet::UITextElement(spriteFont, &strX, &white, &positions[points.size()]));
+				_points.push_back(Jauntlet::UITextElement(spriteFont, &strX, &white, &positions[_points.size()]));
 				continue;
 			}
 			if (point == 1) { // blue X
-				points.push_back(Jauntlet::UITextElement(spriteFont, &strX, &blue, &positions[points.size()]));
+				_points.push_back(Jauntlet::UITextElement(spriteFont, &strX, &blue, &positions[_points.size()]));
 				continue;
 			}
 			if (point == 2) { // orange X
-				points.push_back(Jauntlet::UITextElement(spriteFont, &strX, &orange, &positions[points.size()]));
+				_points.push_back(Jauntlet::UITextElement(spriteFont, &strX, &orange, &positions[_points.size()]));
 				continue;
 			}
 		}
 	}
 
-	for (int i = 0; i < points.size(); i++) {
-		UIM.addElement(&points[i]);
+	for (int i = 0; i < _points.size(); i++) {
+		UIM.addElement(&_points[i]);
 	}
 	//generate hitboxes on screenspace for hover/click interactions
 	_navColliders.clear();
