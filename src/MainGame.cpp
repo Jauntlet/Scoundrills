@@ -22,7 +22,7 @@ void MainGame::initSystems() {
 
 	_camera.init(_screenWidth, _screenHeight);
 
-	_tileHandler.loadLevel("Levels/csv.txt");
+	_tileHandler.loadFile("Levels/csv.txt");
 }
 
 void MainGame::initShaders() {
