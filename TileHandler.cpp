@@ -1,17 +1,21 @@
 #include "TileHandler.h"
 
-TileHandler::TileHandler() : _currentChar(0), _tileMap(_textureCache, 64) {
+TileHandler::TileHandler() : _tileMap(_textureCache, 64) {
 
 }
 
 void TileHandler::addTile(std::string filePath) {
-	_tileMap.registerTile(_currentChar, filePath);
-	_currentChar++;
+	_tileMap.Register(filePath);
 }
 void TileHandler::addTileSet(std::string filePath) {
-
-//	_tileMap.registerTileSet(_currentChar, );
+	Jauntlet::TileSet newSet = Jauntlet::TileSet(filePath);
+	_tileMap.Register(newSet);
 }
-void TileHandler::addFunction(std::function<void(int, int)> function) {
 
+void TileHandler::loadLevel(std::string filePath) {
+	_tileMap.loadTileMap(filePath);
+}
+
+void TileHandler::draw() {
+	_tileMap.draw();
 }

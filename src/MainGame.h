@@ -8,6 +8,9 @@
 #include <Jauntlet/Rendering/GLSLProgram.h>
 #include <Jauntlet/Camera2D.h>
 #include <Jauntlet/InputManager.h>
+#include <Jauntlet/TileMap.h>
+
+#include "TileHandler.h"
 
 enum class GameState {
 	PLAY, EXIT
@@ -38,4 +41,6 @@ private:
 
 	int _screenWidth = 1024, _screenHeight = 768;
 	float _fps = 0;
+
+	TileHandler _tileHandler;
 };

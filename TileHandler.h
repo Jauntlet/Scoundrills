@@ -8,10 +8,11 @@ public:
 
 	void addTile(std::string filePath);
 	void addTileSet(std::string filePath);
-	void addFunction(std::function<void(int, int)> function);
+
+	void loadLevel(std::string filePath);
+
+	void draw();
 private:
-	int _currentChar;
-	
 	Jauntlet::TileMap _tileMap;
 
 	// required to compule tilemap

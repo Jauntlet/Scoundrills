@@ -21,6 +21,8 @@ void MainGame::initSystems() {
 	initShaders();
 
 	_camera.init(_screenWidth, _screenHeight);
+
+	_tileHandler.loadLevel("Levels/csv.txt");
 }
 
 void MainGame::initShaders() {
@@ -78,6 +80,8 @@ void MainGame::drawGame() {
 	// Reading information into shaders
 	glUniform1i(_colorProgram.getUniformLocation("imageTexture"), 0);
 	_camera.setActiveCamera(&_colorProgram);
+
+	_tileHandler.draw();
 
 	_colorProgram.unuse();
 	
