@@ -7,7 +7,7 @@ CameraManager::CameraManager() : _camera() {
 }
 
 void CameraManager::init(glm::ivec2 windowSize, Jauntlet::InputManager* inputManager) {
-	_camera.init(windowSize.x, windowSize.y);
+	camera.init(windowSize.x, windowSize.y);
 	
 	_moveDown.init(inputManager);
 	_moveLeft.init(inputManager);
@@ -22,25 +22,25 @@ void CameraManager::init(glm::ivec2 windowSize, Jauntlet::InputManager* inputMan
 
 void CameraManager::Update() {
 	if (_moveDown.isDown()) {
-		_camera.translate(glm::vec2(0, -400 * Jauntlet::Time::getDeltaTime()));
+		camera.translate(glm::vec2(0, -400 * Jauntlet::Time::getDeltaTime()));
 	}
 	if (_moveUp.isDown()) {
-		_camera.translate(glm::vec2(0, 400 * Jauntlet::Time::getDeltaTime()));
+		camera.translate(glm::vec2(0, 400 * Jauntlet::Time::getDeltaTime()));
 	}
 	if (_moveLeft.isDown()) {
-		_camera.translate(glm::vec2(-400 * Jauntlet::Time::getDeltaTime(), 0));
+		camera.translate(glm::vec2(-400 * Jauntlet::Time::getDeltaTime(), 0));
 	}
 	if (_moveRight.isDown()) {
-		_camera.translate(glm::vec2(400 * Jauntlet::Time::getDeltaTime(), 0));
+		camera.translate(glm::vec2(400 * Jauntlet::Time::getDeltaTime(), 0));
 	}
 
-	_camera.update();
+	camera.update();
 }
 
 void CameraManager::ActivateCamera(Jauntlet::GLSLProgram* glslProgram) {
-	_camera.setActiveCamera(glslProgram); 
+	camera.setActiveCamera(glslProgram); 
 }
 
 void CameraManager::updateCameraSize(int width, int height) {
-	_camera.updateCameraSize(width, height);
+	camera.updateCameraSize(width, height);
 }

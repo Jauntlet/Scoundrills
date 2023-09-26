@@ -10,8 +10,9 @@ public:
 	void Update();
 	void ActivateCamera(Jauntlet::GLSLProgram* glslProgram);
 	void updateCameraSize(int width, int height);
+	
+	Jauntlet::Camera2D camera;
 private:
-	Jauntlet::Camera2D _camera;
 
 	Jauntlet::InputKey _moveUp;
 	Jauntlet::InputKey _moveDown;
