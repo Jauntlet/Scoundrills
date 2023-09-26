@@ -43,6 +43,10 @@ void TileHandler::draw() {
 	_tileMap.draw();
 }
 
+void TileHandler::updateTile(glm::ivec2 position, unsigned int newID) {
+	_tileMap.UpdateTile(position, newID);
+}
+
 glm::ivec2 TileHandler::WorldPosToTilePos(glm::vec2 position) {
 	return _tileMap.WorldPosToTilePos(position);
 }
