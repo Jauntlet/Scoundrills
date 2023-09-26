@@ -6,12 +6,16 @@ class TileHandler
 public:
 	TileHandler();
 
-	void addTile(std::string filePath);
-	void addTileSet(std::string filePath);
+	void addTile(std::string filePath, bool hasCollision);
+	void addTileSet(std::string filePath, bool hasCollision);
 
 	void loadFile(std::string filePath);
 
 	void draw();
+
+	// The following functions are to use tilemap functions, but targetting only the active tilemap.
+	// Currently multiple tilemaps aren't implemented but they will be shortly - xm
+	glm::vec2 RoundWorldPos(glm::vec2 position);
 private:
 	Jauntlet::TileMap _tileMap;
 

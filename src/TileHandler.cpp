@@ -7,12 +7,14 @@ TileHandler::TileHandler() : _tileMap(_textureCache, 64) {
 
 }
 
-void TileHandler::addTile(std::string filePath) {
+void TileHandler::addTile(std::string filePath, bool hasCollision) {
 	_tileMap.Register(filePath);
+	_tileInfo.push_back("tile" + filePath + (hasCollision ? " collision" : ""));
 }
-void TileHandler::addTileSet(std::string filePath) {
+void TileHandler::addTileSet(std::string filePath, bool hasCollision) {
 	Jauntlet::TileSet newSet = Jauntlet::TileSet(filePath);
 	_tileMap.Register(newSet);
+	_tileInfo.push_back("tileSet" + filePath + (hasCollision ? " collision" : ""));
 }
 
 void TileHandler::loadFile(std::string filePath) {
@@ -39,4 +41,8 @@ void TileHandler::loadFile(std::string filePath) {
 
 void TileHandler::draw() {
 	_tileMap.draw();
+}
+
+glm::vec2 TileHandler::RoundWorldPos(glm::vec2 position) {
+	return _tileMap.RoundWorldPos(position);
 }
