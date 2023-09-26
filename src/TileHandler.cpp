@@ -43,6 +43,10 @@ void TileHandler::draw() {
 	_tileMap.draw();
 }
 
+glm::ivec2 TileHandler::WorldPosToTilePos(glm::vec2 position) {
+	return _tileMap.WorldPosToTilePos(position);
+}
+
 glm::vec2 TileHandler::RoundWorldPos(glm::vec2 position) {
 	return _tileMap.RoundWorldPos(position);
 }

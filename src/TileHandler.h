@@ -11,10 +11,13 @@ public:
 
 	void loadFile(std::string filePath);
 
+	void updateTile(glm::ivec2 position);
+
 	void draw();
 
 	// The following functions are to use tilemap functions, but targetting only the active tilemap.
 	// Currently multiple tilemaps aren't implemented but they will be shortly - xm
+	glm::ivec2 WorldPosToTilePos(glm::vec2 position);
 	glm::vec2 RoundWorldPos(glm::vec2 position);
 private:
 	Jauntlet::TileMap _tileMap;

@@ -53,6 +53,12 @@ void MainGame::gameLoop() {
 void MainGame::processInput() {
 	_inputManager.processInput();
 
+	_selectedTilePos = _tileHandler.RoundWorldPos(_cameraManager.camera.convertScreenToWorld(_inputManager.getMouseCoords()));
+
+	if (_inputManager.isKeyDown(SDL_BUTTON_LEFT)) {
+		_tileHandler.updateTile()
+	}
+
 	if (_inputManager.quitGameCalled()) {
 		_gameState = GameState::EXIT;
 	}
@@ -85,8 +91,7 @@ void MainGame::drawGame() {
 	_tileHandler.draw();
 
 	_selectedTileBatch.begin();
-	glm::vec2 selectedTilePos = _tileHandler.RoundWorldPos(_cameraManager.camera.convertScreenToWorld(_inputManager.getMouseCoords()));
-	_selectedTileBatch.draw({ selectedTilePos.x, selectedTilePos.y, 64, 64 }, Jauntlet::ResourceManager::getTexture("Textures/WhiteSquare.png").id, 0);
+	_selectedTileBatch.draw({ _selectedTilePos.x, _selectedTilePos.y, 64, 64 }, Jauntlet::ResourceManager::getTexture("Textures/WhiteSquare.png").id, 0);
 	_selectedTileBatch.endAndRender();
 
 	_colorProgram.unuse();
