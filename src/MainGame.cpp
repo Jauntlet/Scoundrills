@@ -23,6 +23,7 @@ void MainGame::initSystems() {
 	_cameraManager.init(glm::vec2(_screenWidth, _screenHeight), &_inputManager);
 
 	_tileHandler.loadFile("Levels/csv.txt");
+	_selectedTileBatch.init();
 }
 
 void MainGame::initShaders() {
@@ -82,6 +83,11 @@ void MainGame::drawGame() {
 	_cameraManager.ActivateCamera(&_colorProgram);
 
 	_tileHandler.draw();
+
+	_selectedTileBatch.begin();
+	glm::vec2 selectedTilePos = _tileHandler.RoundWorldPos(_cameraManager.camera.convertScreenToWorld(_inputManager.getMouseCoords()));
+	_selectedTileBatch.draw({ selectedTilePos.x, selectedTilePos.y, 64, 64 }, Jauntlet::ResourceManager::getTexture("Textures/WhiteSquare.png").id, 0);
+	_selectedTileBatch.endAndRender();
 
 	_colorProgram.unuse();
 	

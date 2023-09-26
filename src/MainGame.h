@@ -44,4 +44,5 @@ private:
 	float _fps = 0;
 
 	TileHandler _tileHandler;
+	Jauntlet::SpriteBatch _selectedTileBatch;
 };
