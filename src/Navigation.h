@@ -10,7 +10,7 @@ class Navigation {
 public:
 	Navigation();
 
-	void genNav(Jauntlet::UIManager& UIM, Jauntlet::SpriteFont* spriteFont); //new nav positions
+	void genNav(Jauntlet::UIManager& UIM, Jauntlet::SpriteFont* spriteFont, int* screenWidth, int* screenheight); //new nav positions
 
 	void toggleNav();
 	bool isNavOpen();
@@ -20,4 +20,5 @@ private:
 	bool _navOpen = false;
 	std::vector<Jauntlet::BoxCollider2D> _navColliders;
 	std::vector<Jauntlet::UITextElement> _points;
+	std::vector<glm::vec2> _positions;
 };

@@ -17,7 +17,13 @@ Navigation::Navigation() {
 	// Empty
 }
 
-void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::SpriteFont* spriteFont) {
+void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::SpriteFont* spriteFont, int* screenWidth, int* screenHeight) {
+	//clear stuff
+	_navTextures.clear();
+	_points.clear();
+	_positions.clear();
+	_navColliders.clear();
+
 	//read in textures
 	for (int i = 0; i < 4; i++) {
 		_navTextures.push_back(Jauntlet::ResourceManager::getTexture(bgTextures[i]).id);
@@ -41,7 +47,7 @@ void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::SpriteFont* spriteFo
 
 	//draw background
 	Jauntlet::UIElement background = Jauntlet::UIElement(); //when jack implements a constructor for UI elements via sprites rather than text, i'll do this part.
-	std::vector<glm::vec2> positions = std::vector<glm::vec2>();
+	
 
 	int layersHeight = map.size(); //store the total height of the "layers"
 
@@ -51,17 +57,17 @@ void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::SpriteFont* spriteFo
 
 		for (int x = 0; x < map[y].size(); x++) {
 			int point = map[y][x]; //
-			positions.push_back(glm::vec2((layerSpan * 40) + (x * 80), (layersHeight * 50) + (y * 100)));
+			_positions.push_back(glm::vec2((*screenWidth / 2) + (layerSpan * -40) + (x * 80), (*screenHeight / 2) + (layersHeight * -50) + (y * 100)));
 			if (point == 0) { // white X
-				_points.push_back(Jauntlet::UITextElement(spriteFont, &strX, &white, &positions[_points.size()]));
+				_points.push_back(Jauntlet::UITextElement(spriteFont, &strX, &white, &_positions[_points.size()]));
 				continue;
 			}
 			if (point == 1) { // blue X
-				_points.push_back(Jauntlet::UITextElement(spriteFont, &strX, &blue, &positions[_points.size()]));
+				_points.push_back(Jauntlet::UITextElement(spriteFont, &strX, &blue, &_positions[_points.size()]));
 				continue;
 			}
 			if (point == 2) { // orange X
-				_points.push_back(Jauntlet::UITextElement(spriteFont, &strX, &orange, &positions[_points.size()]));
+				_points.push_back(Jauntlet::UITextElement(spriteFont, &strX, &orange, &_positions[_points.size()]));
 				continue;
 			}
 		}
