@@ -44,7 +44,13 @@ void TileHandler::draw() {
 }
 
 void TileHandler::updateTile(glm::ivec2 position, unsigned int newID) {
-	_tileMap.UpdateTile(position, newID);
+	if (position.x < 0 || position.y < 0) {
+		// we have to shift the tilemap to account for this scenario.
+	}
+	
+	if (_tileMap.getTileID(position) != newID) {
+		_tileMap.UpdateTile(position, newID);
+	}
 }
 
 glm::ivec2 TileHandler::WorldPosToTilePos(glm::vec2 position) {
