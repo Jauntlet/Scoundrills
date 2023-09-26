@@ -17,6 +17,8 @@ void MainGame::run() {
 
 	_uiManager = Jauntlet::UIManager(&_hudCamera); // #TODO: DELTEME
 
+	_navigation.genNav(_uiManager, &_spriteFont, &_screenWidth, &_screenHeight); //#TODO: Find a better spot for this.
+
 	Jauntlet::UITextElement* _fpsCounter = new Jauntlet::UITextElement(&_spriteFont, &_fpsText, &_fpsColor, &_fpsPosition); // #TODO: DELTEME
 
 	_uiManager.addElement(_fpsCounter); // #TODO: DELTEME
@@ -53,9 +55,6 @@ void MainGame::initSystems() {
 
 	_level.loadTileMap("Levels/level0.txt");
 	//_level.loadTileMap("Levels/testAllTiles.txt");
-
-
-	_navPoints = _navigation.genNav();
 
 	_hudCamera.setActiveCamera(&_colorProgram); // #TODO: DELETEME
 	_fpsPosition = glm::vec2(0, 0); // #TODO: DELTEME
@@ -109,6 +108,7 @@ void MainGame::processInput() {
 		_screenHeight = _window.getWindowHeight();
 		_camera.updateCameraSize(_screenWidth, _screenHeight);
 		_hudCamera.updateCameraSize(_screenWidth, _screenHeight);
+		_navigation.genNav(_uiManager, &_spriteFont, &_screenWidth, &_screenHeight);
 		_uiManager.resolvePositions();
 		_uiManager.setScale((_screenHeight / 1080.0f) * (_screenWidth / 1920.0f));
 	}
@@ -169,8 +169,6 @@ void MainGame::drawHUD() {
 	_uiManager.draw();
 
 	_HUDSpriteBatch.begin();
-
-	_navigation.drawNav(_navPoints, _spriteFont, _HUDSpriteBatch);
 
 	_HUDSpriteBatch.endAndRender();
 }
