@@ -2,7 +2,7 @@
 
 #include <Jauntlet/Time.h>
 
-CameraManager::CameraManager() : _camera() {
+CameraManager::CameraManager() {
 	// Empty
 }
 
