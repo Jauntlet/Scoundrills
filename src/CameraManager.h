@@ -1,0 +1,21 @@
+#pragma once
+#include <Jauntlet/Camera2D.h>
+#include <Jauntlet/InputKey.h>
+class CameraManager
+{
+public:
+	CameraManager();
+	void init(glm::ivec2 windowSize, Jauntlet::InputManager* inputManager);
+
+	void Update();
+	void ActivateCamera(Jauntlet::GLSLProgram* glslProgram);
+	void updateCameraSize(int width, int height);
+private:
+	Jauntlet::Camera2D _camera;
+
+	Jauntlet::InputKey _moveUp;
+	Jauntlet::InputKey _moveDown;
+	Jauntlet::InputKey _moveLeft;
+	Jauntlet::InputKey _moveRight;
+};
+

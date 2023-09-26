@@ -19,13 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\CameraManager.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MainGame.cpp" />
-    <ClCompile Include="TileHandler.cpp" />
+    <ClCompile Include="src\TileHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\CameraManager.h" />
     <ClInclude Include="src\MainGame.h" />
-    <ClInclude Include="TileHandler.h" />
+    <ClInclude Include="src\TileHandler.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -20,7 +20,7 @@ void MainGame::initSystems() {
 
 	initShaders();
 
-	_camera.init(_screenWidth, _screenHeight);
+	_cameraManager.init(glm::vec2(_screenWidth, _screenHeight), &_inputManager);
 
 	_tileHandler.loadFile("Levels/csv.txt");
 }
@@ -41,7 +41,7 @@ void MainGame::gameLoop() {
 
 		processInput();
 
-		_camera.update();
+		_cameraManager.Update();
 
 		drawGame();
 
@@ -64,7 +64,7 @@ void MainGame::processInput() {
 		_window.getWindowSize(); // This not only gets the window size, but also recalculates it incase of window resizing going unchecked.
 		_screenWidth = _window.getWindowWidth();
 		_screenHeight = _window.getWindowHeight();
-		_camera.updateCameraSize(_screenWidth, _screenHeight);
+		_cameraManager.updateCameraSize(_screenWidth, _screenHeight);
 	}
 }
 
@@ -79,7 +79,7 @@ void MainGame::drawGame() {
 
 	// Reading information into shaders
 	glUniform1i(_colorProgram.getUniformLocation("imageTexture"), 0);
-	_camera.setActiveCamera(&_colorProgram);
+	_cameraManager.ActivateCamera(&_colorProgram);
 
 	_tileHandler.draw();
 

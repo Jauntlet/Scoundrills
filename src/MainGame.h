@@ -11,6 +11,7 @@
 #include <Jauntlet/TileMap.h>
 
 #include "TileHandler.h"
+#include "CameraManager.h"
 
 enum class GameState {
 	PLAY, EXIT
@@ -33,7 +34,7 @@ private:
 
 	Jauntlet::GLSLProgram _colorProgram;
 	
-	Jauntlet::Camera2D _camera;
+	CameraManager _cameraManager;
 
 	Jauntlet::InputManager _inputManager;
 
