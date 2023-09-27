@@ -19,11 +19,18 @@ public:
 	glm::ivec2 WorldPosToTilePos(glm::vec2 position);
 	glm::vec2 RoundWorldPos(glm::vec2 position);
 private:
+	// shift the entire X axis of the tilemap by amount.
+	void shiftX(unsigned int amount);
+	// Shift the entire Y axis of the tilemap by amount.
+	void shiftY(unsigned int amount);
+	// Reads all the data from the level data in TileHandler and force feeds it to the tileMap.
+	void forceUpdateTileMap();
+	
 	Jauntlet::TileMap _tileMap;
 
 	// stored for saving the map at the end.
 	std::vector<std::string> _tileInfo;
-	std::vector<std::vector<std::string>> _levelInfo;
+	std::vector<std::vector<unsigned int>> _levelInfo;
 
 	// required to compile tilemap
 	Jauntlet::TextureCache _textureCache;
