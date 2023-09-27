@@ -93,10 +93,8 @@ void TileHandler::shiftX(unsigned int amount) {
 void TileHandler::shiftY(unsigned int amount) {
 	_tileMap.AddOffset(glm::vec2(0, 32 * amount));
 
-	while (amount > 0) {
+	for (; amount > 0; amount--) {
 		_levelInfo.insert(_levelInfo.begin(), std::vector<unsigned int>(0));
-
-		amount--;
 	}
 
 	// we make i-nth element the same size as the next i-nth element so that when we update the tilemap,
