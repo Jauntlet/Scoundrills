@@ -57,14 +57,11 @@ void TileHandler::draw() {
 }
 
 void TileHandler::updateTile(glm::ivec2 position, unsigned int newID) {
-	std::cout << "Position: " << position.x << ", " << position.y << std::endl;
 
 	if (position.x < 0) {
-		std::cout << "Ran shiftX" << std::endl;
 		shiftX(std::abs(position.x));
 	}
 	if (position.y < 0) {
-		std::cout << "Ran shiftY" << std::endl;
 		shiftY(std::abs(position.y));
 	}
 	
@@ -83,15 +80,17 @@ glm::vec2 TileHandler::RoundWorldPos(glm::vec2 position) {
 }
 
 void TileHandler::shiftX(unsigned int amount) {
-	_tileMap.AddOffset(glm::vec2(-64 * amount, 0));
+	_tileMap.AddOffset(glm::vec2(-64 * (int)amount, 0));
 
 	for (int y = 0; y < _levelInfo.size(); y++) {
-		_levelInfo[y].insert(_levelInfo[y].begin(), 0);
+		for (int i = 0; i < amount; i++) {
+			_levelInfo[y].insert(_levelInfo[y].begin(), 0);
+		}
 	}
 	forceUpdateTileMap();
 }
 void TileHandler::shiftY(unsigned int amount) {
-	_tileMap.AddOffset(glm::vec2(0, 32 * amount));
+	_tileMap.AddOffset(glm::vec2(0, 64 * amount));
 
 	for (; amount > 0; amount--) {
 		_levelInfo.insert(_levelInfo.begin(), std::vector<unsigned int>(0));

@@ -9,7 +9,7 @@ public:
 	void addTile(std::string filePath, bool hasCollision);
 	void addTileSet(std::string filePath, bool hasCollision);
 
-	void loadFile(std::string filePath);
+	void loadFile(std::string filePath, glm::vec2 offset = glm::vec2(0));
 
 	void draw();
 
