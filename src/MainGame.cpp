@@ -55,7 +55,7 @@ void MainGame::processInput() {
 
 	_selectedTilePos = _tileHandler.RoundWorldPos(_cameraManager.camera.convertScreenToWorld(_inputManager.getMouseCoords()));
 
-	if (_inputManager.isKeyDown(SDL_BUTTON_LEFT)) {
+	if (_inputManager.isKeyPressed(SDL_BUTTON_LEFT)) {
 		_tileHandler.updateTile(_tileHandler.WorldPosToTilePos(_selectedTilePos), 0);
 	}
 
