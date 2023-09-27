@@ -19,7 +19,7 @@ void TileHandler::addTileSet(std::string filePath, bool hasCollision) {
 	_tileInfo.push_back("tileSet" + filePath + (hasCollision ? " collision" : ""));
 }
 
-void TileHandler::loadFile(std::string filePath) {
+void TileHandler::loadFile(std::string filePath, glm::vec2 offset /*= glm::vec2(0)*/) {
 
 	std::ifstream file;
 	file.open(filePath);
@@ -49,7 +49,7 @@ void TileHandler::loadFile(std::string filePath) {
 
 	file.close();
 
-	_tileMap.loadTileMap(filePath);
+	_tileMap.loadTileMap(filePath, offset.x, offset.y);
 }
 
 void TileHandler::draw() {
