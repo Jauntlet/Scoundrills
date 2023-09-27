@@ -1,6 +1,8 @@
 #include <Jauntlet/Rendering/ResourceManager.h>
 #include <iostream>
 
+#include "Jauntlet/Rendering/TextureCache.h"
+#include "Jauntlet/UI/UIElement.h"
 #include "MainGame.h"
 
 MainGame::MainGame() :
@@ -8,6 +10,10 @@ MainGame::MainGame() :
 	_bricks("Textures/Drill Walls.png"),
 	_players(3),
 	_window() {
+}
+
+void _bruh() {
+	std::cout << "bruh" << std::endl;
 }
 
 void MainGame::run() {
@@ -22,6 +28,16 @@ void MainGame::run() {
 	Jauntlet::UITextElement* _fpsCounter = new Jauntlet::UITextElement(&_spriteFont, &_fpsText, &_fpsColor, &_fpsPosition); // #TODO: DELTEME
 
 	_uiManager.addElement(_fpsCounter); // #TODO: DELTEME
+
+
+	GLuint _buttonTexture = Jauntlet::ResourceManager::getTexture("Textures/button.png").id;
+
+	glm::vec2* _buttonPos = new glm::vec2(10,10);
+	glm::vec2* _buttonSize = new glm::vec2(128,128);
+
+	Jauntlet::UIButtonElement* _button = new Jauntlet::UIButtonElement(&_inputManager, _bruh, _buttonTexture, _buttonPos, _buttonSize, Jauntlet::UIElement::PIN_POSITION::TOP_LEFT);
+
+	_uiManager.addElement(_button);
 
 	_uiManager.setScale((_screenHeight / 1080.0f) * (_screenWidth / 1920.0f));
 

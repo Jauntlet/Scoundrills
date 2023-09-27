@@ -2,9 +2,10 @@
 
 #include <Jauntlet/Jauntlet.h>
 #include <Jauntlet/Time.h>
-#include <Jauntlet/Window.h>
+#include <Jauntlet/UI/UIButtonElement.h>
 #include <Jauntlet/UI/UIManager.h>
 #include <Jauntlet/UI/UITextElement.h>
+#include <Jauntlet/Window.h>
 #include <SDL/SDL.h>
 
 #include "CameraManager.h"
