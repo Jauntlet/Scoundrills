@@ -40,7 +40,7 @@ private:
 
 	GameState _gameState = GameState::PLAY;
 
-	int _screenWidth = 1024, _screenHeight = 768;
+	int _screenWidth = 1280, _screenHeight = 960;
 	float _fps = 0;
 
 	TileHandler _tileHandler;

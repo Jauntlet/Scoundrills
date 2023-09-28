@@ -176,7 +176,15 @@ void TileHandler::cleanTileMap() {
 		if (clean) {
 			_tileMap.AddOffset(glm::vec2(64, 0));
 			for (int y = 0; y < _levelInfo.size(); y++) {
-				_levelInfo[y].erase(_levelInfo[y].begin());
+				if (_levelInfo[y].size() > 0) {
+					_levelInfo[y].erase(_levelInfo[y].begin());
+				}
+				else {
+					_levelInfo.erase(_levelInfo.begin() + y);
+					if (_levelInfo.size() == 0) {
+						return;
+					}
+				}
 			}
 		}
 	}
@@ -192,7 +200,15 @@ void TileHandler::cleanTileMap() {
 		}
 		if (clean) {
 			for (int y = 0; y < _levelInfo.size(); y++) {
-				_levelInfo[y].pop_back();
+				if (_levelInfo[y].size() > 0) {
+					_levelInfo[y].pop_back();
+				}
+				else {
+					_levelInfo.erase(_levelInfo.begin() + y);
+					if (_levelInfo.size() == 0) {
+						return;
+					}
+				}
 			}
 		}
 	}
