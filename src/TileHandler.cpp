@@ -57,17 +57,47 @@ void TileHandler::draw() {
 }
 
 void TileHandler::updateTile(glm::ivec2 position, unsigned int newID) {
+void TileHandler::changeSelectedTile(int changeAmount) {
+	// this could be changed to a while statement if we were expecting changes of more than one. -xm
+	if ((int)_selectedTileID - changeAmount < 0) {
+		_selectedTileID = _tileInfo.size();
+		changeAmount--;
+	}
+
+	_selectedTileID += changeAmount;
+
+	if (_selectedTileID > _tileInfo.size()) {
+		_selectedTileID -= _tileInfo.size();
+	}
+}
+
+void TileHandler::updateTile(glm::ivec2 position) {
 
 	if (position.x < 0) {
 		shiftX(std::abs(position.x));
+		position.x = 0;
 	}
 	if (position.y < 0) {
 		shiftY(std::abs(position.y));
+		position.y = 0;
 	}
 	
 	if (_tileMap.getTileID(position) != newID) {
 		_levelInfo[position.y][position.x] = newID;
 		_tileMap.UpdateTile(position, newID);
+	if (_tileMap.getTileID(position) != _selectedTileID) {
+
+		while (position.y >= _levelInfo.size() - 1) {
+			_levelInfo.push_back(std::vector<unsigned int>());
+			_levelInfo[_levelInfo.size() - 1].push_back(0);
+		}
+
+		while (position.x >= _levelInfo[position.y].size()) {
+			_levelInfo[position.y].push_back(0);
+		}
+
+		_levelInfo[position.y][position.x] = _selectedTileID;
+		_tileMap.UpdateTile(position, _selectedTileID);
 	}
 }
 

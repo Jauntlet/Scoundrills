@@ -22,7 +22,7 @@ void MainGame::initSystems() {
 
 	_cameraManager.init(glm::vec2(_screenWidth, _screenHeight), &_inputManager);
 
-	_tileHandler.loadFile("Levels/csv.txt");
+	_tileHandler.loadFile("Levels/newLevel.jml");
 	_selectedTileBatch.init();
 }
 
@@ -57,6 +57,9 @@ void MainGame::processInput() {
 
 	if (_inputManager.isKeyPressed(SDL_BUTTON_LEFT)) {
 		_tileHandler.updateTile(_tileHandler.WorldPosToTilePos(_selectedTilePos), 0);
+	if (_inputManager.deltaScroll != 0) {
+		_tileHandler.changeSelectedTile(_inputManager.deltaScroll);
+	}
 	}
 
 	if (_inputManager.quitGameCalled()) {
