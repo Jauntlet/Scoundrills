@@ -78,7 +78,6 @@ void TileHandler::draw() {
 	_tileMap.draw();
 }
 
-void TileHandler::updateTile(glm::ivec2 position, unsigned int newID) {
 void TileHandler::changeSelectedTile(int changeAmount) {
 	// this could be changed to a while statement if we were expecting changes of more than one. -xm
 	if ((int)_selectedTileID - changeAmount < 0) {
@@ -104,9 +103,6 @@ void TileHandler::updateTile(glm::ivec2 position) {
 		position.y = 0;
 	}
 	
-	if (_tileMap.getTileID(position) != newID) {
-		_levelInfo[position.y][position.x] = newID;
-		_tileMap.UpdateTile(position, newID);
 	if (_tileMap.getTileID(position) != _selectedTileID) {
 
 		while (position.y >= _levelInfo.size() - 1) {
