@@ -80,16 +80,17 @@ void TileHandler::draw() {
 
 void TileHandler::changeSelectedTile(int changeAmount) {
 	// this could be changed to a while statement if we were expecting changes of more than one. -xm
-	if ((int)_selectedTileID - changeAmount < 0) {
+	changeAmount = std::max(-1, std::min(changeAmount, 1));
+
+	if (_selectedTileID == 0 && changeAmount == -1) {
 		_selectedTileID = _tileInfo.size();
-		changeAmount--;
+		return;
 	}
-
+	if (_selectedTileID == _tileInfo.size() && changeAmount == 1) {
+		_selectedTileID = 0;
+		return;
+	}
 	_selectedTileID += changeAmount;
-
-	if (_selectedTileID > _tileInfo.size()) {
-		_selectedTileID -= _tileInfo.size();
-	}
 }
 
 void TileHandler::updateTile(glm::ivec2 position) {
