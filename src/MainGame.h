@@ -45,5 +45,5 @@ private:
 
 	TileHandler _tileHandler;
 	Jauntlet::SpriteBatch _selectedTileBatch;
-	glm::vec2 _selectedTilePos;
+	glm::vec2 _selectedTilePos = glm::vec2(0);
 };

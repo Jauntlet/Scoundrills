@@ -57,9 +57,16 @@ void MainGame::processInput() {
 
 	if (_inputManager.isKeyPressed(SDL_BUTTON_LEFT)) {
 		_tileHandler.updateTile(_tileHandler.WorldPosToTilePos(_selectedTilePos), 0);
+	if (_inputManager.isKeyDown(SDL_BUTTON_LEFT)) {
+		_tileHandler.updateTile(_tileHandler.WorldPosToTilePos(_selectedTilePos));
+	}
+
 	if (_inputManager.deltaScroll != 0) {
 		_tileHandler.changeSelectedTile(_inputManager.deltaScroll);
 	}
+
+	if (_inputManager.isKeyDown(SDLK_s) && _inputManager.isKeyDown(SDLK_LCTRL)) {
+		_tileHandler.saveFile("Levels/newLevel.jml");
 	}
 
 	if (_inputManager.quitGameCalled()) {

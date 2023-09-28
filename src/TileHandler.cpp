@@ -51,7 +51,29 @@ void TileHandler::loadFile(std::string filePath, glm::vec2 offset /*= glm::vec2(
 
 	_tileMap.loadTileMap(filePath, offset.x, offset.y);
 }
+void TileHandler::saveFile(std::string filePath) {
+	// start by cleaning the tilemap
+	cleanTileMap();
+	
+	std::ofstream file(filePath);
 
+	for (int i = 0; i < _tileInfo.size(); i++) {
+		file << _tileInfo[i] << std::endl;
+	}
+	file << "ENDDEC" << std::endl;
+	for (int y = 0; y < _levelInfo.size(); y++) {
+		for (int x = 0; x < _levelInfo[y].size(); x++) {
+			if (x + 1 == _levelInfo[y].size()) {
+				file << _levelInfo[y][x] << std::endl;
+			}
+			else {
+				file << _levelInfo[y][x] << ",";
+			}
+		}
+	}
+
+	file.close();
+}
 void TileHandler::draw() {
 	_tileMap.draw();
 }
@@ -140,6 +162,68 @@ void TileHandler::forceUpdateTileMap() {
 	for (int y = 0; y < _levelInfo.size(); y++) {
 		for (int x = 0; x < _levelInfo[y].size(); x++) {
 			_tileMap.UpdateTile(glm::vec2(x, y), _levelInfo[y][x]);
+		}
+	}
+}
+
+void TileHandler::cleanTileMap() {
+	// check beginning of X axis
+	int clean = true;
+	while (clean) {
+		for (int y = 0; y < _levelInfo.size(); y++) {
+			if (_levelInfo[y][0] != 0) {
+				clean = false;
+				break;
+			}
+		}
+		if (clean) {
+			_tileMap.AddOffset(glm::vec2(64, 0));
+			for (int y = 0; y < _levelInfo.size(); y++) {
+				_levelInfo[y].erase(_levelInfo[y].begin());
+			}
+		}
+	}
+
+	// check end of X axis
+	clean = true;
+	while (clean) {
+		for (int y = 0; y < _levelInfo.size(); y++) {
+			if (_levelInfo[y][_levelInfo[y].size() - 1] != 0) {
+				clean = false;
+				break;
+			}
+		}
+		if (clean) {
+			for (int y = 0; y < _levelInfo.size(); y++) {
+				_levelInfo[y].pop_back();
+			}
+		}
+	}
+	// check beginning of Y axis
+	clean = true;
+	while (clean) {
+		for (int x = 0; x < _levelInfo[0].size(); x++) {
+			if (_levelInfo[0][x] != 0) {
+				clean = false;
+				break;
+			}
+		}
+		if (clean) {
+			_levelInfo.erase(_levelInfo.begin());
+		}
+	}
+
+	// check end of Y axis
+	clean = true;
+	while (clean) {
+		for (int x = 0; x < _levelInfo[_levelInfo.size() - 1].size(); x++) {
+			if (_levelInfo[_levelInfo.size() - 1][x] != 0) {
+				clean = false;
+				break;
+			}
+		}
+		if (clean) {
+			_levelInfo.pop_back();
 		}
 	}
 }
