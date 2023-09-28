@@ -168,7 +168,7 @@ void TileHandler::cleanTileMap() {
 	int clean = true;
 	while (clean) {
 		for (int y = 0; y < _levelInfo.size(); y++) {
-			if (_levelInfo[y][0] != 0) {
+			if (_levelInfo[y].size() > 0 && _levelInfo[y][0] != 0) {
 				clean = false;
 				break;
 			}
@@ -185,7 +185,7 @@ void TileHandler::cleanTileMap() {
 	clean = true;
 	while (clean) {
 		for (int y = 0; y < _levelInfo.size(); y++) {
-			if (_levelInfo[y][_levelInfo[y].size() - 1] != 0) {
+			if (_levelInfo[y].size() > 0 && _levelInfo[y][_levelInfo[y].size() - 1] != 0) {
 				clean = false;
 				break;
 			}
