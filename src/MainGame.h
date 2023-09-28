@@ -50,7 +50,6 @@ private:
 	Jauntlet::SpriteBatch _playerSpriteBatch;
 
 	Jauntlet::TileMap _level;
-	Jauntlet::TileSet _bricks;
 
 	Jauntlet::SpriteBatch _HUDSpriteBatch;
 	Jauntlet::SpriteFont _spriteFont;
