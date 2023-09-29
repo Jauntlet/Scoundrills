@@ -14,6 +14,8 @@ public:
 
 	void draw();
 
+	void setSelectedTile(unsigned int index);//set the tile rather than change it -teehee aa
+
 	// increases what index of tile is selected by amount; can be negative.
 	void changeSelectedTile(int changeAmount);
 

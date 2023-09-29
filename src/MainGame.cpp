@@ -59,7 +59,11 @@ void MainGame::processInput() {
 	if (_inputManager.isKeyDown(SDL_BUTTON_LEFT)) {
 		_tileHandler.updateTile(_tileHandler.WorldPosToTilePos(_selectedTilePos));
 	}
-
+	if (_inputManager.isKeyDown(SDL_BUTTON_RIGHT)) {
+		_tileHandler.setSelectedTile(0);
+		_tileHandler.updateTile(_tileHandler.WorldPosToTilePos(_selectedTilePos));
+		_tileHandler.changeSelectedTile(_inputManager.deltaScroll);
+	}
 	if (_inputManager.deltaScroll != 0) {
 		_tileHandler.changeSelectedTile(_inputManager.deltaScroll);
 	}

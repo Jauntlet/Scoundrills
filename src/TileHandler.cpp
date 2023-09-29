@@ -77,7 +77,9 @@ void TileHandler::saveFile(std::string filePath) {
 void TileHandler::draw() {
 	_tileMap.draw();
 }
-
+void TileHandler::setSelectedTile(unsigned int index) {
+	 (index > _tileInfo.size())? _selectedTileID = _tileInfo.size(): _selectedTileID = index;
+}
 void TileHandler::changeSelectedTile(int changeAmount) {
 	// this could be changed to a while statement if we were expecting changes of more than one. -xm
 	changeAmount = std::max(-1, std::min(changeAmount, 1));
