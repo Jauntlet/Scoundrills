@@ -3,8 +3,6 @@
 #include <Jauntlet/Jauntlet.h>
 #include <Jauntlet/Time.h>
 #include <Jauntlet/Window.h>
-
-#include "glm/fwd.hpp"
 #include <Jauntlet/Rendering/GLSLProgram.h>
 #include <Jauntlet/Camera2D.h>
 #include <Jauntlet/InputManager.h>
