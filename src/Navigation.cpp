@@ -4,13 +4,15 @@
 #include <Jauntlet/Rendering/ResourceManager.h>
 #include <random>
 
+#include <iostream>
+
 const std::string bgTextures[] = {"Textures/NavGround1.png", "Textures/NavGround2.png", "Textures/NavGround3.png", "Textures/NavGround4.png"};
 const int outcoveAmt = 4;
 const int layerAmt = 3;
 static std::string strX = "X";
-static Jauntlet::Color white = Jauntlet::Color(255, 255, 255, 255);
-static Jauntlet::Color blue = Jauntlet::Color(55, 55, 255, 255);
-static Jauntlet::Color orange = Jauntlet::Color(255, 155, 55, 255);
+static Jauntlet::Color white = Jauntlet::Color(0, 0, 0, 0);
+static Jauntlet::Color blue = Jauntlet::Color(0, 0, 0, 0);
+static Jauntlet::Color orange = Jauntlet::Color(0, 0, 0, 0);
 static int seed = std::chrono::system_clock::now().time_since_epoch().count(); //temp
 
 Navigation::Navigation() {
@@ -23,6 +25,9 @@ void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::SpriteFont* spriteFo
 	_points.clear();
 	_positions.clear();
 	_navColliders.clear();
+
+	//set stuff
+	UIManager = UIM;
 
 	//read in textures
 	for (int i = 0; i < 4; i++) {
@@ -76,6 +81,7 @@ void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::SpriteFont* spriteFo
 	for (int i = 0; i < _points.size(); i++) {
 		UIM.addElement(&_points[i]);
 	}
+
 	//generate hitboxes on screenspace for hover/click interactions
 	_navColliders.clear();
 
@@ -91,6 +97,19 @@ void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::SpriteFont* spriteFo
 
 void Navigation::toggleNav() {
 	_navOpen = !_navOpen;
+	if (!_navOpen) {
+		//make stuff visible
+		white = Jauntlet::Color(0, 0, 0, 0);
+		blue = Jauntlet::Color(0, 0, 0, 0);
+		orange = Jauntlet::Color(0, 0, 0, 0);
+	}
+	else
+	{
+		//make stuff invis
+		white = Jauntlet::Color(255, 255, 255, 255);
+		blue = Jauntlet::Color(55, 55, 255, 255);
+		orange = Jauntlet::Color(255, 155, 55, 255);
+	}
 }
 
 bool Navigation::isNavOpen() {

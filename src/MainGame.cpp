@@ -45,6 +45,7 @@ void MainGame::initSystems() {
 
 	_window.create("Jauntlet Game Engine", _screenWidth, _screenHeight, Jauntlet::WindowFlags::RESIZEABLE);
 	_window.setBackgroundColor(Jauntlet::Color(76, 24, 32));
+	_window.setWindowIcon("Textures/Icon.png");
 
 	SDL_ShowCursor(1); // show the mouse cursor. can be set to 0 later for replacements.
 
@@ -63,7 +64,6 @@ void MainGame::initSystems() {
 	_spriteFont.init(&_hudCamera, "Fonts/HandelGo.ttf", 256);
 
 	_level.loadTileMap("Levels/level0.jml");
-
 	//_level.loadTileMap("Levels/testAllTiles.jml");
 
 	_hudCamera.setActiveCamera(&_colorProgram); // #TODO: DELETEME
