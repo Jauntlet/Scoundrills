@@ -18,6 +18,7 @@ public:
 private:
 	std::vector<GLuint> _navTextures;
 	bool _navOpen = false;
+	Jauntlet::UIManager UIManager;
 	std::vector<Jauntlet::BoxCollider2D> _navColliders;
 	std::vector<Jauntlet::UITextElement> _points;
 	std::vector<glm::vec2> _positions;
