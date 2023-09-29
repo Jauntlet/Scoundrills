@@ -44,6 +44,7 @@ void MainGame::initSystems() {
 	Jauntlet::init();
 
 	_window.create("Jauntlet Game Engine", _screenWidth, _screenHeight, Jauntlet::WindowFlags::RESIZEABLE);
+	_window.setBackgroundColor(Jauntlet::Color(76, 24, 32));
 
 	SDL_ShowCursor(1); // show the mouse cursor. can be set to 0 later for replacements.
 
@@ -112,7 +113,7 @@ void MainGame::processInput() {
 	}
 
 	if (_inputManager.windowResized()) {
-		_window.getWindowSize(); // This not only gets the window size, but also recalculates it incase of window resizing going unchecked.
+		_window.resolveWindowSize();
 		_screenWidth = _window.getWindowWidth();
 		_screenHeight = _window.getWindowHeight();
 		_camera.updateCameraSize(_screenWidth, _screenHeight);
@@ -141,8 +142,7 @@ void MainGame::processInput() {
 
 void MainGame::drawGame() {
 	// Reset screen
-	glClearDepth(1.0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	_window.clearScreen();
 	
 	_colorProgram.use();
 	
