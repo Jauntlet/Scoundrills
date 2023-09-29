@@ -71,7 +71,7 @@ void MainGame::processInput() {
 		_tileHandler.changeSelectedTile(_inputManager.deltaScroll);
 	}
 
-	if (_inputManager.isKeyDown(SDLK_s) && _inputManager.isKeyDown(SDLK_LCTRL)) {
+	if (_inputManager.isKeyPressed(SDLK_s) && _inputManager.isKeyDown(SDLK_LCTRL)) {
 		_tileHandler.saveFile("Levels/newLevel.jml");
 	}
 
