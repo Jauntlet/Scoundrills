@@ -1,67 +1,48 @@
-# Prerequisites
-*.d
-
-# Compiled Object files
-*.slo
-*.lo
+# C/C++ Build Artifacts
+#*.d
+#*.slo
+#*.lo
 *.o
 *.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
+#*.gch
+#*.pch
 *.so
-*.dylib
+#*.dylib
 
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-
-# Executables
+# Executable and Output Files
 *.exe
-*.out
-*.appa
+#*.out
+#*.appa
 
-# Visual studio
+# Visual Studio
 .vs/
 .cache/
 
-# build cmake files
-build/CMakeFiles/*
+# CMake Build Files
+build/CMakeFiles/
 build/CMakeCache.txt
 build/cmake_install.cmake
 build/Makefile
-build/scoundrills
-
-#remove clangd files
 build/compile_commands.json
 
-# other
+# Build Log Files
 *.tlog
 *.pdb
-*.app
 *.log
 *.recipe
 *.ilk
 *.idb
 *.iobj
 *.ipdb
-*.obj
 
-# Jauntlet Build related
+# Compiled Jauntlet Library Files
 build/Jauntlet.lib
-Debug/
-Release/
-Scoundrills/
+dependencies/lib/libjauntlet.a
 
-./x64/
+# Linux Executable
+build/scoundrills
 
-build/*.exe
-*.vcxproj.FileListAbsolute.txt
+# Profiler Files
+callgrind.out.*
+
+#*.vcxproj.FileListAbsolute.txt
