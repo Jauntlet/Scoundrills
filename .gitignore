@@ -1,67 +1,37 @@
-# Prerequisites
-*.d
-
-# Compiled Object files
-*.slo
-*.lo
+# C/C++ Build Artifacts
 *.o
 *.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
 *.so
-*.dylib
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
 
 # Executables
 *.exe
-*.out
-*.appa
+build/game
 
-# Visual studio
+# Visual Studio
 .vs/
 .cache/
+*.vcxproj.FileListAbsolute.txt
 
-# build cmake files
-build/CMakeFiles/*
+# CMake Build Files
+build/CMakeFiles/
 build/CMakeCache.txt
 build/cmake_install.cmake
 build/Makefile
-build/game
-
-#remove clangd files
 build/compile_commands.json
 
-# other
+# Build Log Files
 *.tlog
 *.pdb
-*.app
 *.log
 *.recipe
 *.ilk
 *.idb
 *.iobj
 *.ipdb
-*.obj
 
-# Jauntlet Build related
+# Compiled Jauntlet Library Files
 build/Jauntlet.lib
-Debug/
-Release/
-Scoundrills/
+dependencies/lib/libjauntlet.a
 
-./x64/
-
-build/*.exe
-*.vcxproj.FileListAbsolute.txt
+# Profiler Output Files
+callgrind.out.*
