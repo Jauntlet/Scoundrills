@@ -12,7 +12,7 @@ to compile on Debian:
 
 get dependencies
 ```
-sudo apt install make cmake libglm-dev libsdl2-dev libglew-dev g++
+sudo apt install make cmake libglm-dev libsdl2-dev libglew-dev g++ libfreetype-dev
 ```
 clone and enter the repository
 ```
@@ -32,9 +32,9 @@ compile using CMake (run in the build folder). we export the compile commands fo
 cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=1
 make
 ```
-the executable is called "game", so run this command to launch it
+the executable is called "scoundrills", so run this command to launch it
 ```
-./game
+./scoundrills
 ```
 
 <h3>MacOS</h3>
