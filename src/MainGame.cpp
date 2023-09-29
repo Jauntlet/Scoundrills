@@ -22,9 +22,10 @@ void MainGame::initSystems() {
 	initShaders();
 
 	_cameraManager.init(glm::vec2(_screenWidth, _screenHeight), &_inputManager);
+	_hudCamera.init(_screenWidth, _screenHeight);
 
 	_tileHandler.loadFile("Levels/newLevel.jml");
-	_selectedTileBatch.init();
+	_spriteBatch.init();
 }
 
 void MainGame::initShaders() {
@@ -43,7 +44,10 @@ void MainGame::gameLoop() {
 
 		processInput();
 
-		_cameraManager.Update();
+		if (!_inputManager.isKeyDown(SDLK_LCTRL)) {
+			_cameraManager.Update();
+		}
+		_hudCamera.update();
 
 		drawGame();
 
@@ -85,6 +89,7 @@ void MainGame::processInput() {
 		_screenWidth = _window.getWindowWidth();
 		_screenHeight = _window.getWindowHeight();
 		_cameraManager.updateCameraSize(_screenWidth, _screenHeight);
+		_hudCamera.updateCameraSize(_screenWidth, _screenHeight);
 	}
 }
 
@@ -93,8 +98,8 @@ void MainGame::drawGame() {
 	_window.clearScreen();
 	
 	_colorProgram.use();
-	
-	glActiveTexture(GL_TEXTURE0);
+
+	//glActiveTexture(GL_TEXTURE0);
 
 	// Reading information into shaders
 	glUniform1i(_colorProgram.getUniformLocation("imageTexture"), 0);
@@ -102,9 +107,16 @@ void MainGame::drawGame() {
 
 	_tileHandler.draw();
 
-	_selectedTileBatch.begin();
-	_selectedTileBatch.draw({ _selectedTilePos.x, _selectedTilePos.y, 64, 64 }, Jauntlet::ResourceManager::getTexture("Textures/WhiteSquare.png").id, 0);
-	_selectedTileBatch.endAndRender();
+	_spriteBatch.begin();
+	_spriteBatch.draw({ _selectedTilePos.x, _selectedTilePos.y, 64, 64 }, Jauntlet::ResourceManager::getTexture("Textures/WhiteSquare.png").id, 0);
+	
+	_spriteBatch.endAndRender();
+	
+	_hudCamera.setActiveCamera(&_colorProgram);
+
+	_spriteBatch.begin();
+	_spriteBatch.draw({ -_screenWidth/2,-_screenHeight/2, 80,80 }, Jauntlet::ResourceManager::getTexture(_tileHandler.getSelectedTileTexture()).id, 0);
+	_spriteBatch.endAndRender();
 
 	_colorProgram.unuse();
 	

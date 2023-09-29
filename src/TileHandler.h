@@ -18,6 +18,8 @@ public:
 
 	// increases what index of tile is selected by amount; can be negative.
 	void changeSelectedTile(int changeAmount);
+	// gets the filepath of the selected texture
+	std::string getSelectedTileTexture();
 
 	// The following functions are to use tilemap functions, but targetting only the active tilemap.
 	// Currently multiple tilemaps aren't implemented but they will be shortly - xm

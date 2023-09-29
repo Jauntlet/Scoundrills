@@ -35,15 +35,16 @@ private:
 	Jauntlet::GLSLProgram _colorProgram;
 	
 	CameraManager _cameraManager;
+	Jauntlet::Camera2D _hudCamera;
 
 	Jauntlet::InputManager _inputManager;
 
 	GameState _gameState = GameState::PLAY;
 
-	int _screenWidth = 1280, _screenHeight = 960;
+	int _screenWidth = 1024, _screenHeight = 768;
 	float _fps = 0;
 
 	TileHandler _tileHandler;
-	Jauntlet::SpriteBatch _selectedTileBatch;
+	Jauntlet::SpriteBatch _spriteBatch;
 	glm::vec2 _selectedTilePos = glm::vec2(0);
 };

@@ -3,7 +3,7 @@
 #include <Jauntlet/Errors.h>
 #include <sstream>
 
-#include <iostream> // REMOVE
+#include <Jauntlet/JMath.h>
 
 TileHandler::TileHandler() : _tileMap(_textureCache, 64) {
 
@@ -93,6 +93,13 @@ void TileHandler::changeSelectedTile(int changeAmount) {
 		return;
 	}
 	_selectedTileID += changeAmount;
+}
+std::string TileHandler::getSelectedTileTexture() {
+	if (_selectedTileID == 0) {
+		return "Textures/WhiteSquare.png";
+	}
+	
+	return JMath::Split(_tileInfo[_selectedTileID - 1], ' ')[1];
 }
 
 void TileHandler::updateTile(glm::ivec2 position) {
