@@ -38,7 +38,7 @@ build/CMakeFiles/*
 build/CMakeCache.txt
 build/cmake_install.cmake
 build/Makefile
-build/game
+build/scoundrills
 
 #remove clangd files
 build/compile_commands.json
