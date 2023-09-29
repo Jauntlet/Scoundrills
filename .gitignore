@@ -1,22 +1,16 @@
 # C/C++ Build Artifacts
-#*.d
-#*.slo
-#*.lo
 *.o
 *.obj
-#*.gch
-#*.pch
 *.so
-#*.dylib
 
-# Executable and Output Files
+# Executables
 *.exe
-#*.out
-#*.appa
+build/scoundrills
 
 # Visual Studio
 .vs/
 .cache/
+*.vcxproj.FileListAbsolute.txt
 
 # CMake Build Files
 build/CMakeFiles/
@@ -39,10 +33,5 @@ build/compile_commands.json
 build/Jauntlet.lib
 dependencies/lib/libjauntlet.a
 
-# Linux Executable
-build/scoundrills
-
-# Profiler Files
+# Profiler Output Files
 callgrind.out.*
-
-#*.vcxproj.FileListAbsolute.txt
