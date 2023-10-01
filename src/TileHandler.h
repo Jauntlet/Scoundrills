@@ -34,16 +34,17 @@ private:
 	// Reads all the data from the level data in TileHandler and force feeds it to the tileMap.
 	void forceUpdateTileMap();
 	// Clean empty rows from tilemap
-	void cleanTileMap();
+	void cleanTileMaps();
 	
-	Jauntlet::TileMap _tileMap;
+	std::vector<Jauntlet::TileMap> _tileMaps;
 
 	// stored for saving the map at the end.
 	std::vector<std::string> _tileInfo;
-	std::vector<std::vector<unsigned int>> _levelInfo;
+	std::vector<std::vector<std::vector<unsigned int>>> _levelInfos; // totally not me making a 4D array to hold level information -xm
 
 	// for use by user
-	unsigned int _selectedTileID;
+	unsigned int _selectedTileMap = 0;
+	unsigned int _selectedTileID = 1;
 
 	// required to compile tilemap
 	Jauntlet::TextureCache _textureCache;
