@@ -16,52 +16,51 @@ static Jauntlet::Color orange = Jauntlet::Color(0, 0, 0, 0);
 static int seed = std::chrono::system_clock::now().time_since_epoch().count(); //temp
 
 Navigation::Navigation() {
-	// Empty
+	if (_map.empty()) { //map not generated (so generate it)
+		//generate some randomness
+		std::mt19937 r = std::mt19937(seed);
+
+		//create navPoints
+		for (int y = 0; y < layerAmt; y++) {
+			std::vector<int> layer = std::vector<int>();
+
+			int temp = outcoveAmt + (r() % 2 - 1); //outcoveAmt - 1, outcoveAmt, outcoveAmt + 1
+			for (int x = 0; x < temp; x++) {
+				layer.push_back(r() % 3); //0, 1, 2
+			}
+
+			_map.push_back(layer);
+		}
+	}
 }
 
 void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::SpriteFont* spriteFont, int* screenWidth, int* screenHeight) {
+	//set stuff
+	UIManager = UIM;
+
 	//clear stuff
 	_navTextures.clear();
 	_points.clear();
 	_positions.clear();
 	_navColliders.clear();
 
-	//set stuff
-	UIManager = UIM;
-
 	//read in textures
 	for (int i = 0; i < 4; i++) {
 		_navTextures.push_back(Jauntlet::ResourceManager::getTexture(bgTextures[i]).id);
-	}
-
-	//generate some randomness
-	std::vector<std::vector<int>> map = std::vector<std::vector<int>>();
-	std::mt19937 r = std::mt19937(seed);
-
-	//create navPoints
-	for (int y = 0; y < layerAmt; y++) {
-		std::vector<int> layer = std::vector<int>();
-
-		int temp = outcoveAmt + (r() % 2 - 1); //outcoveAmt - 1, outcoveAmt, outcoveAmt + 1
-		for (int x = 0; x < temp; x++) {
-			layer.push_back(r() % 3); //0, 1, 2
-		}
-
-		map.push_back(layer);
 	}
 
 	//draw background
 	Jauntlet::UIElement background = Jauntlet::UIElement(); //when jack implements a constructor for UI elements via sprites rather than text, i'll do this part.
 	
 
-	int layersHeight = map.size(); //store the total height of the "layers"
+	int layersHeight = _map.size(); //store the total height of the "layers"
 
-	for (int y = 0; y < map.size(); y++) {
+	for (int y = 0; y < _map.size(); y++) {
 
-		int layerSpan = map[y].size(); //store the "span" (width) of all the points on this "layer"
+		int layerSpan = _map[y].size(); //store the "span" (width) of all the points on this "layer"
 
-		for (int x = 0; x < map[y].size(); x++) {
-			int point = map[y][x]; //
+		for (int x = 0; x < _map[y].size(); x++) {
+			int point = _map[y][x]; //
 			_positions.push_back(glm::vec2((*screenWidth / 2) + (layerSpan * -40) + (x * 80), (*screenHeight / 2) + (layersHeight * -50) + (y * 100)));
 			if (point == 0) { // white X
 				_points.push_back(Jauntlet::UITextElement(spriteFont, &strX, &white, &_positions[_points.size()]));
@@ -85,11 +84,11 @@ void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::SpriteFont* spriteFo
 	//generate hitboxes on screenspace for hover/click interactions
 	_navColliders.clear();
 
-	for (int y = 0; y < map.size(); y++) {
+	for (int y = 0; y < _map.size(); y++) {
 	
-		int layerSpan = map[y].size();
+		int layerSpan = _map[y].size();
 
-		for (int x = 0; x < map[y].size(); x++) {
+		for (int x = 0; x < _map[y].size(); x++) {
 			_navColliders.push_back( Jauntlet::BoxCollider2D( glm::vec2(32), glm::vec2( (layerSpan * -40) + (x * 80), (layersHeight * -50) + (y * 100) ) ));
 		}
 	}

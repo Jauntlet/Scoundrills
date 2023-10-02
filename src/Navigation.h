@@ -22,4 +22,5 @@ private:
 	std::vector<Jauntlet::BoxCollider2D> _navColliders;
 	std::vector<Jauntlet::UITextElement> _points;
 	std::vector<glm::vec2> _positions;
+	std::vector<std::vector<int>> _map;
 };
