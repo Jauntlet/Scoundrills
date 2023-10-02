@@ -130,13 +130,13 @@ void TileHandler::saveSelectedTileMapAs() {
 	}
 	file << "ENDDEC" << std::endl;
 
-	for (int y = 0; y < _levelInfos[_selectedTileID].size(); y++) {
-		for (int x = 0; x < _levelInfos[_selectedTileID][y].size(); x++) {
-			if (x + 1 == _levelInfos[_selectedTileID][y].size()) {
-				file << _levelInfos[_selectedTileID][y][x] << std::endl;
+	for (int y = 0; y < _levelInfos[_selectedTileMap].size(); y++) {
+		for (int x = 0; x < _levelInfos[_selectedTileMap][y].size(); x++) {
+			if (x + 1 == _levelInfos[_selectedTileMap][y].size()) {
+				file << _levelInfos[_selectedTileMap][y][x] << std::endl;
 			}
 			else {
-				file << _levelInfos[_selectedTileID][y][x] << ",";
+				file << _levelInfos[_selectedTileMap][y][x] << ",";
 			}
 		}
 	}
@@ -269,28 +269,14 @@ void TileHandler::cleanTileMaps() {
 		}
 
 		// check end of X axis
-		clean = true;
-		while (clean) {
-			for (int y = 0; y < _levelInfos[i].size(); y++) {
-				if (_levelInfos[i][y].size() > 0 && _levelInfos[i][y][_levelInfos[i][y].back()] != 0) {
-					clean = false;
-					break;
-				}
-			}
-			if (clean) {
-				for (int y = 0; y < _levelInfos[i].size(); y++) {
-					if (_levelInfos[i][y].size() > 0) {
-						_levelInfos[i][y].pop_back();
-					}
-					else {
-						_levelInfos[i].erase(_levelInfos[i].begin() + y);
-						if (_levelInfos[i].size() == 0) {
-							return;
-						}
-					}
-				}
+		// This is much simplier than the other axis's, because this data is junk data, whilst the other
+		// data is padding that needs to be removed only if the entire axis is empty. -xm
+		for (int y = 0; y < _levelInfos[i].size(); y++) {
+			while (_levelInfos[i][y].size() > 0 && _levelInfos[i][y].back() == 0) {
+				_levelInfos[i][y].pop_back();
 			}
 		}
+		
 		// check beginning of Y axis
 		clean = true;
 		while (clean) {
