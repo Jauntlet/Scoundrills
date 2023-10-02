@@ -25,8 +25,8 @@ find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 
 # Add SDL2_mixer library
-find_package(SDL2_mixer REQUIRED)
-include_directories(${SDL_MIXER_INCLUDE_DIRS})
+#find_package(SDL2_mixer REQUIRED)
+#include_directories(${SDL_MIXER_INCLUDE_DIRS})
 
 # Find and configure GLEW
 find_package(GLEW REQUIRED)
@@ -47,7 +47,7 @@ add_library(jauntlet ${JAUNTLET_FILES})
 target_include_directories(jauntlet PUBLIC "${CMAKE_SOURCE_DIR}/dependencies/include")
 
 # Create an executable from the "src" source files
-add_executable(game ${SRC_FILES})
+add_executable(scoundrills ${SRC_FILES})
 
 if(WIN32)
     # On Windows, use MSVC
@@ -58,19 +58,19 @@ elseif(UNIX)
 endif()
 
 # On all platforms, link the jauntlet library with our executable.
-target_link_libraries(game PRIVATE jauntlet)
+target_link_libraries(scoundrills PRIVATE jauntlet)
 
 if(WIN32)
     # On Windows, link with .lib files in [project root]/dependencies/lib/
     file(GLOB WIN_LIB_FILES "${CMAKE_SOURCE_DIR}/dependencies/lib/*.lib")
-    target_link_libraries(game PRIVATE ${WIN_LIB_FILES})
+    target_link_libraries(scoundrills PRIVATE ${WIN_LIB_FILES})
 elseif(UNIX)
     # On Unix, use SDL2::SDL2, GLEW::GLEW, OpenGL::OpenGL, and Freetype::Freetype
-    target_link_libraries(game PRIVATE SDL2::SDL2 SDL2_mixer::SDL2_mixer GLEW::GLEW OpenGL::OpenGL Freetype::Freetype)
+    target_link_libraries(scoundrills PRIVATE SDL2::SDL2 GLEW::GLEW OpenGL::OpenGL Freetype::Freetype)
 endif()
 
 # Specify include directories for the "Jauntlet" directory (outside of it)
-target_include_directories(game PRIVATE "${CMAKE_SOURCE_DIR}")
+target_include_directories(scoundrills PRIVATE "${CMAKE_SOURCE_DIR}")
 
 # Generate compile_commands.json
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
