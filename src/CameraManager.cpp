@@ -18,6 +18,12 @@ void CameraManager::init(glm::ivec2 windowSize, Jauntlet::InputManager* inputMan
 	_moveLeft.addKey(SDLK_a);
 	_moveUp.addKey(SDLK_w);
 	_moveRight.addKey(SDLK_d);
+
+	_zoomIn.init(inputManager);
+	_zoomOut.init(inputManager);
+
+	_zoomIn.addKey(SDLK_q);
+	_zoomOut.addKey(SDLK_e);
 }
 
 void CameraManager::Update() {
@@ -32,6 +38,15 @@ void CameraManager::Update() {
 	}
 	if (_moveRight.isDown()) {
 		camera.translate(glm::vec2(400 * Jauntlet::Time::getDeltaTime(), 0));
+	}
+
+	if (_zoomIn.isDown()) {
+		camera.multiplyScale(0.975);
+		camera.translate(glm::vec2(0));
+	}
+	if (_zoomOut.isDown()) {
+		camera.multiplyScale(1.025);
+		camera.translate(glm::vec2(0));
 	}
 
 	camera.update();

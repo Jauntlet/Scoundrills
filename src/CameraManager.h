@@ -13,10 +13,12 @@ public:
 	
 	Jauntlet::Camera2D camera;
 private:
-
 	Jauntlet::InputKey _moveUp;
 	Jauntlet::InputKey _moveDown;
 	Jauntlet::InputKey _moveLeft;
 	Jauntlet::InputKey _moveRight;
+
+	Jauntlet::InputKey _zoomIn;
+	Jauntlet::InputKey _zoomOut;
 };
 

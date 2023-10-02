@@ -85,10 +85,10 @@ void MainGame::processInput() {
 		_tileHandler.loadFile();
 	}
 
-	if (_inputManager.isKeyPressed(SDLK_q) || _inputManager.isKeyPressed(SDLK_DOWN)) {
+	if (_inputManager.isKeyPressed(SDLK_DOWN)) {
 		_tileHandler.changeSelectedTileMap(-1);
 	}
-	if (_inputManager.isKeyPressed(SDLK_e) || _inputManager.isKeyPressed(SDLK_UP)) {
+	if (_inputManager.isKeyPressed(SDLK_UP)) {
 		_tileHandler.changeSelectedTileMap(1);
 	}
 
