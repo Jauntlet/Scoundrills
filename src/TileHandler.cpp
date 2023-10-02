@@ -130,13 +130,13 @@ void TileHandler::saveSelectedTileMapAs() {
 	}
 	file << "ENDDEC" << std::endl;
 
-	for (int y = 0; y < _levelInfos[_selectedTileID].size(); y++) {
-		for (int x = 0; x < _levelInfos[_selectedTileID][y].size(); x++) {
-			if (x + 1 == _levelInfos[_selectedTileID][y].size()) {
-				file << _levelInfos[_selectedTileID][y][x] << std::endl;
+	for (int y = 0; y < _levelInfos[_selectedTileMap].size(); y++) {
+		for (int x = 0; x < _levelInfos[_selectedTileMap][y].size(); x++) {
+			if (x + 1 == _levelInfos[_selectedTileMap][y].size()) {
+				file << _levelInfos[_selectedTileMap][y][x] << std::endl;
 			}
 			else {
-				file << _levelInfos[_selectedTileID][y][x] << ",";
+				file << _levelInfos[_selectedTileMap][y][x] << ",";
 			}
 		}
 	}
