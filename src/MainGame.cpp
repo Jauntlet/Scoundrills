@@ -1,6 +1,7 @@
 #include <Jauntlet/Rendering/ResourceManager.h>
 #include <iostream>
-
+#include <Jauntlet/tinyfiledialogs.h>
+#include <Jauntlet/Errors.h>
 #include "MainGame.h"
 
 MainGame::MainGame() {
@@ -24,7 +25,7 @@ void MainGame::initSystems() {
 	_cameraManager.init(glm::vec2(_screenWidth, _screenHeight), &_inputManager);
 	_hudCamera.init(_screenWidth, _screenHeight);
 
-	_tileHandler.loadFile("Levels/newLevel.jml");
+	_tileHandler.loadFile();
 	_spriteBatch.init();
 }
 
@@ -72,7 +73,12 @@ void MainGame::processInput() {
 	}
 
 	if (_inputManager.isKeyPressed(SDLK_s) && _inputManager.isKeyDown(SDLK_LCTRL)) {
-		_tileHandler.saveFile("Levels/newLevel.jml");
+		if (_inputManager.isKeyDown(SDLK_LSHIFT)) {
+			_tileHandler.saveSelectedTileMapAs();
+		}
+		else {
+			_tileHandler.saveAllFiles();
+		}
 	}
 
 	if (_inputManager.quitGameCalled()) {

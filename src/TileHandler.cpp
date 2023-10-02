@@ -3,6 +3,7 @@
 #include <iostream>
 #include <Jauntlet/Errors.h>
 #include <Jauntlet/JMath.h>
+#include <Jauntlet/tinyfiledialogs.h>
 #include <sstream>
 
 
@@ -10,15 +11,12 @@ TileHandler::TileHandler() {
 }
 
 void TileHandler::addTile(std::string filePath, bool hasCollision) {
-	// TODO: Optimize so this function adds to all tilemaps, but only includes them at save if they were used on the tilemap.
 	for (int i = 0; i < _tileMaps.size(); i++) {
 		_tileMaps[i].Register(filePath);
 	}
 	_tileInfo.push_back("tile" + filePath + (hasCollision ? " collision" : ""));
 }
 void TileHandler::addTileSet(std::string filePath, bool hasCollision) {
-	// TODO: Optimize so this function adds to all tilemaps, but only includes them at save if they were used on the tilemap.
-	// this one is ESPECIALLY inefficent as it copies this tileset a bunch until it is eventually stored inside of the tilemap.
 	Jauntlet::TileSet newSet = Jauntlet::TileSet(filePath);
 	for (int i = 0; i < _tileMaps.size(); i++) {
 		_tileMaps[i].Register(newSet);
@@ -26,13 +24,15 @@ void TileHandler::addTileSet(std::string filePath, bool hasCollision) {
 	_tileInfo.push_back("tileSet" + filePath + (hasCollision ? " collision" : ""));
 }
 
-void TileHandler::loadFile(std::string filePath, glm::vec2 offset /*= glm::vec2(0)*/) {
-	_tileMaps.emplace_back(_textureCache, 64);
-	_levelInfos.push_back(std::vector<std::vector<unsigned int>>());
-	_selectedTileMap = _tileMaps.size() - 1;
+void TileHandler::loadFile() {
+	char const* filter[1] = { "*.JML" };
+	char const* filePath = tinyfd_openFileDialog("Select file to open", NULL, 1, filter, "Jauntlet Map Loader File (JML)", 0);
+	// the user cancelled the selection
+	if (filePath == NULL) {
+		return;
+	}
 
 	std::ifstream file;
-
 	file.open(filePath);
 
 	if (file.fail()) {
@@ -41,12 +41,33 @@ void TileHandler::loadFile(std::string filePath, glm::vec2 offset /*= glm::vec2(
 		return;
 	}
 
+	_tileMapfilePath.push_back(filePath);
+	_tileMaps.emplace_back(_textureCache, 64);
+	_levelInfos.push_back(std::vector<std::vector<unsigned int>>());
+	_selectedTileMap = _tileMaps.size() - 1;
+
 	std::string line;
 	while (std::getline(file, line, '\n')) {
 		if (line == "ENDDEC") {
 			break;
 		}
+		// check for duplicates
+		bool duplicate = false;
+		for (int i = 0; i < _tileInfo.size(); i++) {
+			if (line == _tileInfo[i]) {
+				duplicate = true;
+				break;
+			}
+		}
+		if (duplicate) {
+			continue;
+		}
+
 		_tileInfo.push_back(line);
+		// add newly found tile information to old tilemaps
+		for (int i = 0; i < _tileMaps.size() - 1; i++) {
+			_tileMaps[i].Register(line);
+		}
 	}
 
 	int y = 0;
@@ -62,31 +83,64 @@ void TileHandler::loadFile(std::string filePath, glm::vec2 offset /*= glm::vec2(
 
 	file.close();
 
-	_tileMaps[_selectedTileMap].loadTileMap(filePath, offset.x, offset.y);
+	_tileMaps[_selectedTileMap].loadTileMap(filePath, 0, 0); // currently we do not use offset. -xm
 }
-void TileHandler::saveFile(std::string filePath) {
-	// start by cleaning the tilemap
+void TileHandler::saveAllFiles() {
+	// start by cleaning the tilemaps
 	cleanTileMaps();
 	
-	/*std::ofstream file(filePath);
+	std::ofstream file;
+
+	for (int i = 0; i < _tileMapfilePath.size(); i++) {
+		file.open(_tileMapfilePath[i]);
+
+		// TODO: remove unused tiles from each file
+		for (int i = 0; i < _tileInfo.size(); i++) {
+			file << _tileInfo[i] << std::endl;
+		}
+		file << "ENDDEC" << std::endl;
+
+		for (int y = 0; y < _levelInfos[i].size(); y++) {
+			for (int x = 0; x < _levelInfos[i][y].size(); x++) {
+				if (x + 1 == _levelInfos[i][y].size()) {
+					file << _levelInfos[i][y][x] << std::endl;
+				}
+				else {
+					file << _levelInfos[i][y][x] << ",";
+				}
+			}
+		}
+
+		file.close();
+	}
+}
+void TileHandler::saveSelectedTileMapAs() {
+	char const* filter[1] = { "*.JML" };
+	char const* filePath = tinyfd_saveFileDialog("Select file to open", NULL, 1, filter, "Jauntlet Map Loader File (JML)");
+	// the user cancelled the selection
+	if (filePath == NULL) {
+		return;
+	}
+
+	std::ofstream file(filePath);
 
 	for (int i = 0; i < _tileInfo.size(); i++) {
 		file << _tileInfo[i] << std::endl;
 	}
 	file << "ENDDEC" << std::endl;
-	for (int y = 0; y < _levelInfo.size(); y++) {
-		for (int x = 0; x < _levelInfo[y].size(); x++) {
-			if (x + 1 == _levelInfo[y].size()) {
-				file << _levelInfo[y][x] << std::endl;
+
+	for (int y = 0; y < _levelInfos[_selectedTileID].size(); y++) {
+		for (int x = 0; x < _levelInfos[_selectedTileID][y].size(); x++) {
+			if (x + 1 == _levelInfos[_selectedTileID][y].size()) {
+				file << _levelInfos[_selectedTileID][y][x] << std::endl;
 			}
 			else {
-				file << _levelInfo[y][x] << ",";
+				file << _levelInfos[_selectedTileID][y][x] << ",";
 			}
 		}
-	}*/
-
-	/*file.close();*/
+	}
 }
+
 void TileHandler::draw() {
 	for (int i = 0; i < _tileMaps.size(); i++) {
 		_tileMaps[i].draw();

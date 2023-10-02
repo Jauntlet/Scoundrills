@@ -9,8 +9,9 @@ public:
 	void addTile(std::string filePath, bool hasCollision);
 	void addTileSet(std::string filePath, bool hasCollision);
 
-	void loadFile(std::string filePath, glm::vec2 offset = glm::vec2(0));
-	void saveFile(std::string filePath);
+	void loadFile();
+	void saveAllFiles();
+	void saveSelectedTileMapAs();
 
 	void draw();
 
@@ -40,6 +41,7 @@ private:
 
 	// stored for saving the map at the end.
 	std::vector<std::string> _tileInfo;
+	std::vector<std::string> _tileMapfilePath;
 	std::vector<std::vector<std::vector<unsigned int>>> _levelInfos; // totally not me making a 4D array to hold level information -xm
 
 	// for use by user
