@@ -116,7 +116,8 @@ void TileHandler::saveAllFiles() {
 }
 void TileHandler::saveSelectedTileMapAs() {
 	char const* filter[1] = { "*.JML" };
-	char const* filePath = tinyfd_saveFileDialog("Select file to open", NULL, 1, filter, "Jauntlet Map Loader File (JML)");
+	char const* filePath = tinyfd_saveFileDialog("Select where to save file", 
+	NULL, 1, filter, "Jauntlet Map Loader (JML)");
 	// the user cancelled the selection
 	if (filePath == NULL) {
 		return;
