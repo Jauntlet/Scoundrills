@@ -19,6 +19,8 @@ public:
 
 	// increases what index of tile is selected by amount; can be negative.
 	void changeSelectedTile(int changeAmount);
+	// increases the index of what tilemap is selected; can be negative.
+	void changeSelectedTileMap(int changeAmount);
 	// gets the filepath of the selected texture
 	std::string getSelectedTileTexture();
 

@@ -84,6 +84,9 @@ void TileHandler::loadFile() {
 	file.close();
 
 	_tileMaps[_selectedTileMap].loadTileMap(filePath, 0, 0); // currently we do not use offset. -xm
+
+	// bit of a hack, but we change the color scale of all tilemaps this way. -xm
+	changeSelectedTileMap(0);
 }
 void TileHandler::saveAllFiles() {
 	// start by cleaning the tilemaps
@@ -163,6 +166,29 @@ void TileHandler::changeSelectedTile(int changeAmount) {
 		return;
 	}
 	_selectedTileID += changeAmount;
+}
+void TileHandler::changeSelectedTileMap(int changeAmount) {
+	// this could be changed to a while statement if we were expecting changes of more than one. -xm
+	changeAmount = std::max(-1, std::min(changeAmount, 1));
+
+	if (_selectedTileMap == 0 && changeAmount == -1) {
+		_selectedTileMap = _tileInfo.size() - 1;
+		return;
+	}
+	if (_selectedTileMap == _tileInfo.size() - 1 && changeAmount == 1) {
+		_selectedTileMap = 0;
+		return;
+	}
+	_selectedTileMap += changeAmount;
+
+	for (int i = 0; i < _tileMaps.size(); i++) {
+		if (i == _selectedTileMap) {
+			_tileMaps[i].changeDrawColor({ 255, 255, 255 });
+		}
+		else {
+			_tileMaps[i].changeDrawColor({ 50, 50, 50 });
+		}
+	}
 }
 std::string TileHandler::getSelectedTileTexture() {
 	if (_selectedTileID == 0) {

@@ -81,6 +81,17 @@ void MainGame::processInput() {
 		}
 	}
 
+	if (_inputManager.isKeyPressed(SDLK_l) && _inputManager.isKeyDown(SDLK_LCTRL)) {
+		_tileHandler.loadFile();
+	}
+
+	if (_inputManager.isKeyPressed(SDLK_q) || _inputManager.isKeyPressed(SDLK_LEFT)) {
+		_tileHandler.changeSelectedTileMap(-1);
+	}
+	if (_inputManager.isKeyPressed(SDLK_e) || _inputManager.isKeyPressed(SDLK_RIGHT)) {
+		_tileHandler.changeSelectedTileMap(1);
+	}
+
 	if (_inputManager.quitGameCalled()) {
 		_gameState = GameState::EXIT;
 	}
