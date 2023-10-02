@@ -5,7 +5,7 @@
 
 # Executables
 *.exe
-build/scoundrills
+build/visualizer
 
 # Visual Studio
 .vs/
