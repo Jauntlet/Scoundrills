@@ -200,7 +200,6 @@ std::string TileHandler::getSelectedTileTexture() {
 }
 
 void TileHandler::updateTile(glm::ivec2 position) {
-
 	if (position.x < 0) {
 		shiftX(std::abs(position.x));
 		position.x = 0;
@@ -223,6 +222,31 @@ void TileHandler::updateTile(glm::ivec2 position) {
 
 		_levelInfos[_selectedTileMap][position.y][position.x] = _selectedTileID;
 		_tileMaps[_selectedTileMap].UpdateTile(position, _selectedTileID);
+	}
+}
+void TileHandler::updateTile(glm::ivec2 position, unsigned int newID) {
+	if (position.x < 0) {
+		shiftX(std::abs(position.x));
+		position.x = 0;
+	}
+	if (position.y < 0) {
+		shiftY(std::abs(position.y));
+		position.y = 0;
+	}
+
+	if (_tileMaps[_selectedTileMap].getTileID(position) != newID) {
+
+		while (position.y >= _levelInfos[_selectedTileMap].size() - 1) {
+			_levelInfos[_selectedTileMap].push_back(std::vector<unsigned int>());
+			_levelInfos[_selectedTileMap][_levelInfos[_selectedTileMap].size() - 1].push_back(0);
+		}
+
+		while (position.x >= _levelInfos[_selectedTileMap][position.y].size()) {
+			_levelInfos[_selectedTileMap][position.y].push_back(0);
+		}
+
+		_levelInfos[_selectedTileMap][position.y][position.x] = newID;
+		_tileMaps[_selectedTileMap].UpdateTile(position, newID);
 	}
 }
 

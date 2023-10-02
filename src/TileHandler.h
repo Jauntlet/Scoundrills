@@ -24,9 +24,10 @@ public:
 	// gets the filepath of the selected texture
 	std::string getSelectedTileTexture();
 
-	// The following functions are to use tilemap functions, but targetting only the active tilemap.
-	// Currently multiple tilemaps aren't implemented but they will be shortly - xm
+	// update the tile on the currently selected tilemap to the selected tileID
 	void updateTile(glm::ivec2 position);
+	// update the tile on the currently selected tilemap to the specified tileID
+	void updateTile(glm::ivec2 position, unsigned int newID);
 	glm::ivec2 WorldPosToTilePos(glm::vec2 position);
 	glm::vec2 RoundWorldPos(glm::vec2 position);
 private:
