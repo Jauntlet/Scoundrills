@@ -12,6 +12,7 @@
       <Filter>players</Filter>
     </ClCompile>
     <ClCompile Include="src\CameraManager.cpp" />
+    <ClCompile Include="src\PlayerResources.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\MainGame.h" />
@@ -24,6 +25,7 @@
       <Filter>players</Filter>
     </ClInclude>
     <ClInclude Include="src\CameraManager.h" />
+    <ClInclude Include="src\PlayerResources.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="players">
