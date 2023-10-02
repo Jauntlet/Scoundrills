@@ -14,10 +14,10 @@ void CameraManager::init(glm::ivec2 windowSize, Jauntlet::InputManager* inputMan
 	_moveUp.init(inputManager);
 	_moveRight.init(inputManager);
 
-	_moveDown.addKey(SDLK_s, SDLK_DOWN);
-	_moveLeft.addKey(SDLK_a, SDLK_LEFT);
-	_moveUp.addKey(SDLK_w, SDLK_UP);
-	_moveRight.addKey(SDLK_d, SDLK_RIGHT);
+	_moveDown.addKey(SDLK_s);
+	_moveLeft.addKey(SDLK_a);
+	_moveUp.addKey(SDLK_w);
+	_moveRight.addKey(SDLK_d);
 }
 
 void CameraManager::Update() {
