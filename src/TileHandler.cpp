@@ -26,64 +26,68 @@ void TileHandler::addTileSet(std::string filePath, bool hasCollision) {
 
 void TileHandler::loadFile() {
 	char const* filter[1] = { "*.JML" };
-	char const* filePath = tinyfd_openFileDialog("Select file to open", NULL, 1, filter, "Jauntlet Map Loader File (JML)", 0);
+	char const* filePath = tinyfd_openFileDialog("Select file to open", NULL, 1, filter, "Jauntlet Map Loader File (JML)", 1);
 	// the user cancelled the selection
 	if (filePath == NULL) {
 		return;
 	}
 
+	std::vector<std::string> files = JMath::Split(filePath, '|');
+
 	std::ifstream file;
-	file.open(filePath);
+	for (int i = 0; i < files.size(); i++) {
+		file.open(files[i]);
 
-	if (file.fail()) {
-		std::cout << "Failed to open TileMap " << filePath << std::endl;
-		file.close();
-		return;
-	}
-
-	_tileMapfilePath.push_back(filePath);
-	_tileMaps.emplace_back(_textureCache, 64);
-	_levelInfos.push_back(std::vector<std::vector<unsigned int>>());
-	_selectedTileMap = _tileMaps.size() - 1;
-
-	std::string line;
-	while (std::getline(file, line, '\n')) {
-		if (line == "ENDDEC") {
-			break;
+		if (file.fail()) {
+			std::cout << "Failed to open TileMap " << files[i] << std::endl;
+			file.close();
+			return;
 		}
-		// check for duplicates
-		bool duplicate = false;
-		for (int i = 0; i < _tileInfo.size(); i++) {
-			if (line == _tileInfo[i]) {
-				duplicate = true;
+
+		_tileMapfilePath.push_back(files[i]);
+		_tileMaps.emplace_back(_textureCache, 64);
+		_levelInfos.push_back(std::vector<std::vector<unsigned int>>());
+		_selectedTileMap = _tileMaps.size() - 1;
+
+		std::string line;
+		while (std::getline(file, line, '\n')) {
+			if (line == "ENDDEC") {
 				break;
 			}
-		}
-		if (duplicate) {
-			continue;
+			// check for duplicates
+			bool duplicate = false;
+			for (int i = 0; i < _tileInfo.size(); i++) {
+				if (line == _tileInfo[i]) {
+					duplicate = true;
+					break;
+				}
+			}
+			if (duplicate) {
+				continue;
+			}
+
+			_tileInfo.push_back(line);
+			// add newly found tile information to old tilemaps
+			for (int i = 0; i < _tileMaps.size() - 1; i++) {
+				_tileMaps[i].Register(line);
+			}
 		}
 
-		_tileInfo.push_back(line);
-		// add newly found tile information to old tilemaps
-		for (int i = 0; i < _tileMaps.size() - 1; i++) {
-			_tileMaps[i].Register(line);
-		}
-	}
-
-	int y = 0;
-	_levelInfos[_selectedTileMap].push_back(std::vector<unsigned int>());
-	while (std::getline(file, line, '\n')) {
-		std::stringstream ss(line);
-		while (std::getline(ss, line, ',')) {
-			_levelInfos[_selectedTileMap][y].push_back(stoi(line));
-		}
-		y++;
+		int y = 0;
 		_levelInfos[_selectedTileMap].push_back(std::vector<unsigned int>());
+		while (std::getline(file, line, '\n')) {
+			std::stringstream ss(line);
+			while (std::getline(ss, line, ',')) {
+				_levelInfos[_selectedTileMap][y].push_back(stoi(line));
+			}
+			y++;
+			_levelInfos[_selectedTileMap].push_back(std::vector<unsigned int>());
+		}
+
+		file.close();
+
+		_tileMaps[_selectedTileMap].loadTileMap(files[i], 0, 0); // currently we do not use offset. -xm
 	}
-
-	file.close();
-
-	_tileMaps[_selectedTileMap].loadTileMap(filePath, 0, 0); // currently we do not use offset. -xm
 
 	// bit of a hack, but we change the color scale of all tilemaps this way. -xm
 	changeSelectedTileMap(0);
