@@ -172,11 +172,9 @@ void TileHandler::changeSelectedTileMap(int changeAmount) {
 	changeAmount = std::max(-1, std::min(changeAmount, 1));
 
 	if (_selectedTileMap == 0 && changeAmount == -1) {
-		_selectedTileMap = _tileInfo.size() - 1;
 		return;
 	}
 	if (_selectedTileMap == _tileInfo.size() - 1 && changeAmount == 1) {
-		_selectedTileMap = 0;
 		return;
 	}
 	_selectedTileMap += changeAmount;
