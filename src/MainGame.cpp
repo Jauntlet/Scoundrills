@@ -22,8 +22,6 @@ void MainGame::run() {
 
 	_uiManager = Jauntlet::UIManager(&_hudCamera); // #TODO: DELTEME
 
-	_navigation.genNav(_uiManager, &_spriteFont, &_screenWidth, &_screenHeight); //#TODO: Find a better spot for this.
-
 	Jauntlet::UITextElement* _fpsCounter = new Jauntlet::UITextElement(&_spriteFont, &_fpsText, &_fpsColor, &_fpsPosition); // #TODO: DELTEME
 
 	_uiManager.addElement(_fpsCounter); // #TODO: DELTEME
@@ -36,6 +34,9 @@ void MainGame::run() {
 	_uiManager.addElement(_button);
 
 	_uiManager.setScale((_screenHeight / 1080.0f) * (_screenWidth / 1920.0f));
+
+	_navigation.genNav(_uiManager, &_spriteFont, &_screenWidth, &_screenHeight);
+	_navigation.genNav(_uiManager, &_spriteFont, &_screenWidth, &_screenHeight);
 
 	gameLoop();
 }
