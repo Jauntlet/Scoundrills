@@ -2,19 +2,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "compile",
-            "type": "node",
-            "request": "launch",
-            "program": "bash", 
-            "args": ["compile.sh", "--no-launch"],
-        },
-        {
             "name": "Launch",
             "type": "lldb",
             "request": "launch",
             "program": "${workspaceFolder}/build/scoundrills",
             "args": [],
             "cwd": "${workspaceFolder}/build",
+            "preLaunchTask": "build",
         }
     ]
 }
