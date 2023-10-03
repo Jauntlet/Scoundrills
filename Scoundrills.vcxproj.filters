@@ -13,6 +13,12 @@
     </ClCompile>
     <ClCompile Include="src\CameraManager.cpp" />
     <ClCompile Include="src\PlayerResources.cpp" />
+    <ClCompile Include="src\drill\DrillAssetRenderer.cpp">
+      <Filter>drill</Filter>
+    </ClCompile>
+    <ClCompile Include="src\drill\DrillManager.cpp">
+      <Filter>drill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\MainGame.h" />
@@ -26,10 +32,19 @@
     </ClInclude>
     <ClInclude Include="src\CameraManager.h" />
     <ClInclude Include="src\PlayerResources.h" />
+    <ClInclude Include="src\drill\DrillAssetRenderer.h">
+      <Filter>drill</Filter>
+    </ClInclude>
+    <ClInclude Include="src\drill\DrillManager.h">
+      <Filter>drill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="players">
       <UniqueIdentifier>{751ce89e-2a6b-4583-8d29-b7665321c6cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="drill">
+      <UniqueIdentifier>{758a71ed-bb0a-4bdd-9865-ae370068a4b0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

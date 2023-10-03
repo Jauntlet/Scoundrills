@@ -1,5 +1,4 @@
-tile "Textures/DrillFloor.png" collision
-tileSet "Textures/DrillWalls.png" collison
+tile "Textures/DrillFloor.png"
 ENDDEC
 0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1

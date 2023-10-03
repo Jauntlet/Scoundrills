@@ -6,7 +6,6 @@
 #include "MainGame.h"
 
 MainGame::MainGame() :
-	_level(_textureCache, 64),
 	_players(3),
 	_window() {
 }
@@ -59,7 +58,7 @@ void MainGame::initSystems() {
 	_camera.init(_screenWidth, _screenHeight);
 	_hudCamera.init(_screenWidth, _screenHeight);
 
-	_cameraManager.init(&_camera, &_inputManager, &_players, &_level);
+	_cameraManager.init(&_camera, &_inputManager, &_players, &_drill.drillWalls);
 
 	// initialize player spriteBatch
 	_playerSpriteBatch.init();
@@ -68,9 +67,8 @@ void MainGame::initSystems() {
 	// initializes spritefont
 	_spriteFont.init(&_hudCamera, "Fonts/HandelGo.ttf", 256);
 
-	_level.loadTileMap("Levels/level0.jml");
-	//_level.loadTileMap("Levels/testAllTiles.jml");
-
+	_drill.init();
+	
 	_hudCamera.setActiveCamera(&_colorProgram); // #TODO: DELETEME
 	_fpsPosition = glm::vec2(0, 0); // #TODO: DELTEME
 }
@@ -108,7 +106,7 @@ void MainGame::processInput() {
 		_gameState = GameState::EXIT;
 	}
 
-	_selectedTilePos = _level.RoundWorldPos(_camera.convertScreenToWorld(_inputManager.getMouseCoords()));
+	_selectedTilePos = _drill.drillWalls.RoundWorldPos(_camera.convertScreenToWorld(_inputManager.getMouseCoords()));
 
 	_cameraManager.processInput();
 
@@ -156,17 +154,16 @@ void MainGame::drawGame() {
 	glUniform1i(_colorProgram.getUniformLocation("imageTexture"), 0);
 	_camera.setActiveCamera(&_colorProgram);
 
-	// Draw Level
-	_level.draw();
+	_drill.draw();
+
 	// Draw the player using a spriteBatch
 	_playerSpriteBatch.begin();
 	// draw the selected tile sprite
 	_playerSpriteBatch.draw({_selectedTilePos.x, _selectedTilePos.y, 64, 64}, Jauntlet::ResourceManager::getTexture("Textures/WhiteSquare.png").id, 0);
 	
 	_players.draw(_playerSpriteBatch);
-
 	_playerSpriteBatch.endAndRender();
-
+	
 	_colorProgram.unuse();
 	
 	drawHUD();
