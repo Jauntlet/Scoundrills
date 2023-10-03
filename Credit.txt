@@ -1,7 +1,0 @@
--- General Use / Engine --
-SDL2 - https://github.com/libsdl-org/SDL/releases/tag/release-2.26.5
-GLEW - https://glew.sourceforge.net/
--- Image Loading --
-picoPNG - https://lodev.org/lodepng/
--- Font Rendering --
-freeType - https://freetype.org/download.html
