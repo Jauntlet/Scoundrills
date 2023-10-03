@@ -23,6 +23,8 @@ public:
 	void changeSelectedTileMap(int changeAmount);
 	// gets the filepath of the selected texture
 	std::string getSelectedTileTexture();
+	// toggles gray-scaling inactive tilemap layers.
+	void toggleShadedTileMapView();
 
 	// update the tile on the currently selected tilemap to the selected tileID
 	void updateTile(glm::ivec2 position);
@@ -50,7 +52,7 @@ private:
 	// for use by user
 	unsigned int _selectedTileMap = 0;
 	unsigned int _selectedTileID = 1;
-
+	bool _shadeUnselectedMaps = true;
 	// required to compile tilemap
 	Jauntlet::TextureCache _textureCache;
 };

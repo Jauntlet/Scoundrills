@@ -182,6 +182,7 @@ void TileHandler::changeSelectedTileMap(int changeAmount) {
 		return;
 	}
 	_selectedTileMap += changeAmount;
+	_shadeUnselectedMaps = true;
 
 	for (int i = 0; i < _tileMaps.size(); i++) {
 		if (i == _selectedTileMap) {
@@ -197,6 +198,20 @@ std::string TileHandler::getSelectedTileTexture() {
 		return "Textures/WhiteSquare.png";
 	}
 	return JMath::Split(_tileInfo[_selectedTileID - 1], '"')[1];
+}
+void TileHandler::toggleShadedTileMapView() {
+	_shadeUnselectedMaps = !_shadeUnselectedMaps;
+
+	for (int i = 0; i < _tileMaps.size(); i++) {
+		if (i != _selectedTileMap) {
+			if (_shadeUnselectedMaps) {
+				_tileMaps[i].changeDrawColor({ 50, 50, 50 });
+			}
+			else {
+				_tileMaps[i].changeDrawColor({ 255, 255, 255 });
+			}
+		}
+	}
 }
 
 void TileHandler::updateTile(glm::ivec2 position) {
