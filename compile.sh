@@ -21,7 +21,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 # Run the build steps based on the conditions
-mkdir build
+mkdir -p build
 cd build && cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -DCMAKE_BUILD_TYPE=$build_type && make
 
 # Check the exit status of make
