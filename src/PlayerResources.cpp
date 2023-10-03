@@ -18,7 +18,7 @@ unsigned int PlayerResources::getFood() {
 }
 
 unsigned int PlayerResources::getCopper() {
-	return _copper;
+	return _5opper;
 }
 
 unsigned int PlayerResources::getParts() {
