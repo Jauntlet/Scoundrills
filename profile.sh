@@ -5,8 +5,7 @@
 # once you close kcachegrind you can continue with your life.
 # please note: this WILL remove every callgrind in the build folder before generating a new one, so dont even think about saving them.
 
-cd build
-rm callgrind.out.*
+cd build && rm callgrind.out.*
 valgrind --tool=callgrind ./scoundrills
 cd ..
 kcachegrind build/callgrind.out.*
