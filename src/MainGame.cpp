@@ -29,11 +29,15 @@ void MainGame::run() {
 
 	GLuint _buttonTexture = Jauntlet::ResourceManager::getTexture("Textures/button.png").id;
 
-	Jauntlet::UIButtonElement* _button = new Jauntlet::UIButtonElement(&_inputManager, _bruh, _buttonTexture, glm::vec2(10,10), glm::vec2(128,128), Jauntlet::UIElement::ORIGIN_PIN_POSITION::TOP_LEFT);
+	glm::vec2* buttonPos = new glm::vec2(10,10);
+
+	Jauntlet::UIButtonElement* _button = new Jauntlet::UIButtonElement(&_inputManager, _bruh, _buttonTexture, buttonPos, glm::vec2(512,512), Jauntlet::UIElement::ORIGIN_PIN::TOP_LEFT);
 
 	_uiManager.addElement(_button);
 
-	_uiManager.setScale((_screenHeight / 1080.0f) * (_screenWidth / 1920.0f));
+	_uiManager.setScale((_screenHeight / 1080.0f) * (_screenWidth / 1920.0f));; // #TODO: DELETEME
+
+	_uiManager.resolvePositions(); // #TODO: DELETEME
 
 	_navigation.genNav(_uiManager, &_spriteFont, &_screenWidth, &_screenHeight);
 	_navigation.genNav(_uiManager, &_spriteFont, &_screenWidth, &_screenHeight);
@@ -69,7 +73,6 @@ void MainGame::initSystems() {
 
 	_hudCamera.setActiveCamera(&_colorProgram); // #TODO: DELETEME
 	_fpsPosition = glm::vec2(0, 0); // #TODO: DELTEME
-	_uiManager.resolvePositions(); // #TODO: DELETEME
 }
 
 void MainGame::initShaders() {
