@@ -1,4 +1,12 @@
 tile "Textures/DrillFloor.png"
+tile "Textures/DrillFloor1.png"
+tile "Textures/DrillFloor2.png"
+tile "Textures/DrillFloor3.png"
+tile "Textures/DrillFloor4.png"
+tile "Textures/DrillFloor5.png"
+tile "Textures/DrillFloor6.png"
+tile "Textures/DrillFloor7.png"
+tileSet "Textures/DrillWalls.png" collision
 ENDDEC
 0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
