@@ -9,6 +9,7 @@
 #include <SDL/SDL.h>
 
 #include "CameraManager.h"
+#include "drill/DrillManager.h"
 #include "Navigation.h"
 #include "players/PlayerManager.h"
 #include "PlayerResources.h"
@@ -41,16 +42,12 @@ private:
 	
 	Jauntlet::InputManager _inputManager;
 
-	Jauntlet::TextureCache _textureCache;
-
 	GameState _gameState = GameState::PLAY;
 
 	int  _screenWidth = 1024, _screenHeight = 768;
 	float _fps = 0;
 
 	Jauntlet::SpriteBatch _playerSpriteBatch;
-
-	Jauntlet::TileMap _level;
 
 	Jauntlet::SpriteBatch _HUDSpriteBatch;
 	Jauntlet::SpriteFont _spriteFont;
@@ -60,6 +57,7 @@ private:
 	PlayerManager _players;
 	glm::vec2 _selectedTilePos = glm::vec2(0);
 
+	DrillManager _drill;
 	PlayerResources _resources;
 
 	Navigation _navigation;

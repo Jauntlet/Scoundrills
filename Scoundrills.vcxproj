@@ -20,6 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CameraManager.cpp" />
+    <ClCompile Include="src\drill\DrillAssetRenderer.cpp" />
+    <ClCompile Include="src\drill\DrillManager.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MainGame.cpp" />
     <ClCompile Include="src\Navigation.cpp" />
@@ -30,6 +32,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CameraManager.h" />
+    <ClInclude Include="src\drill\DrillAssetRenderer.h" />
+    <ClInclude Include="src\drill\DrillManager.h" />
     <ClInclude Include="src\MainGame.h" />
     <ClInclude Include="src\Navigation.h" />
     <ClInclude Include="src\Pathfinding.h" />
