@@ -71,17 +71,25 @@ void MainGame::processInput() {
 		_tileHandler.changeSelectedTile(_inputManager.deltaScroll);
 	}
 
-	if (_inputManager.isKeyPressed(SDLK_s) && _inputManager.isKeyDown(SDLK_LCTRL)) {
-		if (_inputManager.isKeyDown(SDLK_LSHIFT)) {
-			_tileHandler.saveSelectedTileMapAs();
+	if (_inputManager.isKeyDown(SDLK_LCTRL)) {
+		if (_inputManager.isKeyPressed(SDLK_s)) {
+			if (_inputManager.isKeyDown(SDLK_LSHIFT)) {
+				// user is pressing CTRL+SHIFT+S
+				_tileHandler.saveSelectedTileMapAs();
+			}
+			else {
+				// user is pressing CTRL+S
+				_tileHandler.saveAllFiles();
+			}
 		}
-		else {
-			_tileHandler.saveAllFiles();
+		else if (_inputManager.isKeyPressed(SDLK_l)) {
+			// user is pressing CTRL+L
+			_tileHandler.loadFile();
 		}
 	}
-
-	if (_inputManager.isKeyPressed(SDLK_l) && _inputManager.isKeyDown(SDLK_LCTRL)) {
-		_tileHandler.loadFile();
+	else if (_inputManager.isKeyPressed(SDLK_LSHIFT)) {
+		// user is pressing shift and not ctrl
+		_tileHandler.toggleShadedTileMapView();
 	}
 
 	if (_inputManager.isKeyPressed(SDLK_DOWN)) {
