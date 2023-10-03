@@ -31,11 +31,13 @@ void MainGame::run() {
 
 	GLuint _buttonTexture = Jauntlet::ResourceManager::getTexture("Textures/button.png").id;
 
-	Jauntlet::UIButtonElement* _button = new Jauntlet::UIButtonElement(&_inputManager, _bruh, _buttonTexture, glm::vec2(10,10), glm::vec2(128,128), Jauntlet::UIElement::ORIGIN_PIN::LEFT);
+	glm::vec2* buttonPos = new glm::vec2(10,10);
+
+	Jauntlet::UIButtonElement* _button = new Jauntlet::UIButtonElement(&_inputManager, _bruh, _buttonTexture, buttonPos, glm::vec2(512,512), Jauntlet::UIElement::ORIGIN_PIN::TOP_LEFT);
 
 	_uiManager.addElement(_button);
 
-	_uiManager.setScale((_screenHeight / 1080.0f) * (_screenWidth / 1920.0f));
+	_uiManager.setScale((_screenHeight / 1080.0f) * (_screenWidth / 1920.0f));; // #TODO: DELETEME
 
 	_uiManager.resolvePositions(); // #TODO: DELETEME
 
