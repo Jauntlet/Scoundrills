@@ -4,7 +4,7 @@
 
 PlayerManager::PlayerManager(int initialPlayers) {
 	for (int i = 0; i < initialPlayers; i++) {
-		_players.emplace_back(64 * (i + 1), -64);
+		_players.emplace_back(64 * (i + 1) + 320, -64);
 	}
 }
 void PlayerManager::addPlayer(Player& player) {
