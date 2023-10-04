@@ -14,16 +14,17 @@ void DrillManager::init() {
 }
 
 void DrillManager::draw() {
-	_drillAssets.draw(_drillOn);
+	_drillAssets.draw();
 	drillFloor.draw();
 	drillWalls.draw();
 }
 
 void DrillManager::on() {
 	_drillOn = true;
-
+	_drillAssets.startAnimation();
 }
 
 void DrillManager::off() {
 	_drillOn = false;
+	_drillAssets.stopAnimation();
 }
