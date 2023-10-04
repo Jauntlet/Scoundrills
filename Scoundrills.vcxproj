@@ -29,6 +29,7 @@
     <ClCompile Include="src\PlayerResources.cpp" />
     <ClCompile Include="src\players\Player.cpp" />
     <ClCompile Include="src\players\PlayerManager.cpp" />
+    <ClCompile Include="src\UICoordinator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CameraManager.h" />
@@ -40,6 +41,7 @@
     <ClInclude Include="src\PlayerResources.h" />
     <ClInclude Include="src\players\Player.h" />
     <ClInclude Include="src\players\PlayerManager.h" />
+    <ClInclude Include="src\UICoordinator.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

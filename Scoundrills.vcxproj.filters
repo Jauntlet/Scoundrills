@@ -19,6 +19,7 @@
     <ClCompile Include="src\drill\DrillManager.cpp">
       <Filter>drill</Filter>
     </ClCompile>
+    <ClCompile Include="src\UICoordinator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\MainGame.h" />
@@ -38,6 +39,7 @@
     <ClInclude Include="src\drill\DrillManager.h">
       <Filter>drill</Filter>
     </ClInclude>
+    <ClInclude Include="src\UICoordinator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="players">

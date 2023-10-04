@@ -17,30 +17,6 @@ void _bruh() {
 void MainGame::run() {
 	initSystems();
 
-	Jauntlet::Color _fpsColor = Jauntlet::Color(0,255,0,255); // #TODO: DELTEME
-
-	_uiManager = Jauntlet::UIManager(&_hudCamera); // #TODO: DELTEME
-
-	Jauntlet::UITextElement* _fpsCounter = new Jauntlet::UITextElement(&_spriteFont, &_fpsText, &_fpsColor, &_fpsPosition); // #TODO: DELTEME
-
-	_uiManager.addElement(_fpsCounter); // #TODO: DELTEME
-
-
-	GLuint _buttonTexture = Jauntlet::ResourceManager::getTexture("Textures/button.png").id;
-
-	glm::vec2* buttonPos = new glm::vec2(10,10);
-
-	Jauntlet::UIButtonElement* _button = new Jauntlet::UIButtonElement(&_inputManager, _bruh, _buttonTexture, buttonPos, glm::vec2(512,512), Jauntlet::UIElement::ORIGIN_PIN::TOP_LEFT);
-
-	_uiManager.addElement(_button);
-
-	_uiManager.setScale((_screenHeight / 1080.0f) * (_screenWidth / 1920.0f));; // #TODO: DELETEME
-
-	_uiManager.resolvePositions(); // #TODO: DELETEME
-
-	_navigation.genNav(_uiManager, &_spriteFont, &_screenWidth, &_screenHeight);
-	_navigation.genNav(_uiManager, &_spriteFont, &_screenWidth, &_screenHeight);
-
 	gameLoop();
 }
 
@@ -58,6 +34,8 @@ void MainGame::initSystems() {
 	_camera.init(_screenWidth, _screenHeight);
 	_hudCamera.init(_screenWidth, _screenHeight);
 
+	// damn you chris
+	_uiCoordinator.init(glm::ivec2(_screenWidth, _screenHeight), &_hudCamera, &_spriteFont, &_inputManager);
 	_cameraManager.init(&_camera, &_inputManager, &_players, &_drill.drillWalls);
 
 	// initialize player spriteBatch
@@ -68,9 +46,6 @@ void MainGame::initSystems() {
 	_spriteFont.init(&_hudCamera, "Fonts/HandelGo.ttf", 256);
 
 	_drill.init();
-	
-	_hudCamera.setActiveCamera(&_colorProgram); // #TODO: DELETEME
-	_fpsPosition = glm::vec2(0, 0); // #TODO: DELTEME
 }
 
 void MainGame::initShaders() {
@@ -120,21 +95,19 @@ void MainGame::processInput() {
 		_screenHeight = _window.getWindowHeight();
 		_camera.updateCameraSize(_screenWidth, _screenHeight);
 		_hudCamera.updateCameraSize(_screenWidth, _screenHeight);
-		_navigation.genNav(_uiManager, &_spriteFont, &_screenWidth, &_screenHeight);
-		_uiManager.resolvePositions();
-		_uiManager.setScale((_screenHeight / 1080.0f) * (_screenWidth / 1920.0f));
+		_uiCoordinator.applyNewScreenSize(glm::ivec2(_screenWidth, _screenHeight));
 	}
 
 	//open nav
 	if (_inputManager.isKeyPressed(SDLK_EQUALS)) {
-		_navigation.toggleNav();
+		_uiCoordinator.navigation.toggleNav();
 	}
 
 	//mouse hover over navigation
-	if (_navigation.isNavOpen()) {
+	if (_uiCoordinator.navigation.isNavOpen()) {
 		Jauntlet::Collision2D data = Jauntlet::Collision2D();
-		for (int j = 0; j < _navigation.getColliders().size(); j++) {
-			Jauntlet::BoxCollider2D adjustedCollider = Jauntlet::BoxCollider2D(_navigation.getColliders()[j].GetSize(), glm::vec2(_screenWidth / 2.0f + _navigation.getColliders()[j].position.x, _screenHeight / 2.0f - _navigation.getColliders()[j].position.y + 16));
+		for (int j = 0; j < _uiCoordinator.navigation.getColliders().size(); j++) {
+			Jauntlet::BoxCollider2D adjustedCollider = Jauntlet::BoxCollider2D(_uiCoordinator.navigation.getColliders()[j].GetSize(), glm::vec2(_screenWidth / 2.0f + _uiCoordinator.navigation.getColliders()[j].position.x, _screenHeight / 2.0f - _uiCoordinator.navigation.getColliders()[j].position.y + 16));
 			if (data.getCollision(&adjustedCollider, _inputManager.getMouseCoords())) {
 				std::cout << "hovered over collider: " << j << std::endl;
 			}
@@ -174,9 +147,9 @@ void MainGame::drawGame() {
 void MainGame::drawHUD() {
 	_hudCamera.setActiveCamera(&_colorProgram);
 
-	_fpsText = std::to_string((int)_fps); // #TODO: DELTEME
+	_uiCoordinator.fpsText = std::to_string((int)_fps); // #TODO: DELTEME
 
-	_uiManager.draw();
+	_uiCoordinator.draw();
 
 	_HUDSpriteBatch.begin();
 

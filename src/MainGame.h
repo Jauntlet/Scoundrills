@@ -14,6 +14,7 @@
 #include "players/PlayerManager.h"
 #include "PlayerResources.h"
 #include "glm/fwd.hpp"
+#include "UICoordinator.h"
 
 enum class GameState {
 	PLAY, EXIT
@@ -51,20 +52,14 @@ private:
 
 	Jauntlet::SpriteBatch _HUDSpriteBatch;
 	Jauntlet::SpriteFont _spriteFont;
-
-	Jauntlet::UIManager _uiManager;
 	
 	PlayerManager _players;
 	glm::vec2 _selectedTilePos = glm::vec2(0);
 
 	DrillManager _drill;
+	UICoordinator _uiCoordinator;
 	PlayerResources _resources;
-
-	Navigation _navigation;
 
 	// defines scale of movement for the camera. if set to 1, the camera will follow the mouse, if set to 0, the mouse has no control over the camera.
 	const float _CAMERA_MOVEMENT_SCALE =  0.5f;
-
-	std::string _fpsText = "bruh"; // #TODO: DELTEME
-	glm::vec2 _fpsPosition = glm::vec2(0); // #TODO: DELTEME
 };
