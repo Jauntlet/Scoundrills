@@ -34,8 +34,6 @@ void MainGame::initSystems() {
 	_camera.init(_screenWidth, _screenHeight);
 	_hudCamera.init(_screenWidth, _screenHeight);
 
-	// damn you chris
-	_uiCoordinator.init(glm::ivec2(_screenWidth, _screenHeight), &_hudCamera, &_spriteFont, &_inputManager);
 	_cameraManager.init(&_camera, &_inputManager, &_players, &_drill.drillWalls);
 
 	// initialize player spriteBatch
@@ -45,6 +43,8 @@ void MainGame::initSystems() {
 	// initializes spritefont
 	_spriteFont.init(&_hudCamera, "Fonts/HandelGo.ttf", 256);
 
+	_uiCoordinator.init(glm::ivec2(_screenWidth, _screenHeight), &_hudCamera, &_spriteFont, &_inputManager);
+	
 	_drill.init();
 }
 
