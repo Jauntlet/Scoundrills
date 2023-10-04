@@ -1,8 +1,8 @@
-#include "DrillAssetRenderer.h"
 #include <Jauntlet/Time.h>
 #include <cstdlib>
 #include <iostream>
 
+#include "DrillAssetRenderer.h"
 
 const float SHAKE_AMOUNT = 10.0f;
 
