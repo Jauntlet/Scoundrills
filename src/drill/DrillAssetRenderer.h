@@ -7,7 +7,7 @@ public:
 	// initialize the drill renderer
 	void init();
 	// draw the assets on screen
-	void draw();
+	void draw(bool isOn);
 private:
 	Jauntlet::SpriteBatch _spriteBatch;
 };
