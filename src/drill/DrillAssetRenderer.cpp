@@ -24,7 +24,10 @@ void DrillAssetRenderer::draw() {
 	_spriteBatch.end();
 
 	_spriteBatch.render();
-	_drillAnimation.update();
+	
+	if (_shake) {
+		_drillAnimation.update();
+	}
 }
 
 void DrillAssetRenderer::stopAnimation() {
