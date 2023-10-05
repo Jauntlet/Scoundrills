@@ -31,6 +31,8 @@ void MainGame::initSystems() {
 
 	initShaders();
 
+	Jauntlet::ResourceManager::setMissingTexture("Textures/Icon.png");
+
 	_camera.init(_screenWidth, _screenHeight);
 	_hudCamera.init(_screenWidth, _screenHeight);
 
