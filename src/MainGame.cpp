@@ -116,7 +116,7 @@ void MainGame::drawGame() {
 	_window.clearScreen();
 	
 	_colorProgram.use();
-	_camera.setActiveCamera(&_colorProgram);
+	_camera.setActiveCamera();
 
 	_drill.draw();
 
@@ -136,7 +136,7 @@ void MainGame::drawGame() {
 }
 
 void MainGame::drawHUD() {
-	_hudCamera.setActiveCamera(&_colorProgram);
+	_hudCamera.setActiveCamera();
 
 	_uiCoordinator.fpsText = std::to_string((int)_fps); // #TODO: DELTEME
 
