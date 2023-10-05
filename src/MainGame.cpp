@@ -79,7 +79,7 @@ void MainGame::drawGame() {
 	// activate shaders
 	_colorProgram.use();
 	// activate camera
-	_camera.setActiveCamera(&_colorProgram);
+	_camera.setActiveCamera();
 
 	// --> Draw things you want to render here <--
 
