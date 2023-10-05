@@ -6,6 +6,7 @@
 
 MainGame::MainGame() {
 	// Empty
+
 }
 
 void MainGame::run() {
@@ -21,7 +22,7 @@ void MainGame::initSystems() {
 	_window.setBackgroundColor(Jauntlet::Color(76, 24, 32));
 
 	initShaders();
-
+	Jauntlet::ResourceManager::setMissingTexture("Textures/Icon.png");
 	_cameraManager.init(glm::vec2(_screenWidth, _screenHeight), &_inputManager);
 	_hudCamera.init(_screenWidth, _screenHeight);
 
