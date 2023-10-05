@@ -121,8 +121,6 @@ void MainGame::drawGame() {
 	
 	_colorProgram.use();
 	
-	glActiveTexture(GL_TEXTURE0);
-
 	// Reading information into shaders
 	glUniform1i(_colorProgram.getUniformLocation("imageTexture"), 0);
 	_camera.setActiveCamera(&_colorProgram);
@@ -132,7 +130,7 @@ void MainGame::drawGame() {
 	// Draw the player using a spriteBatch
 	_playerSpriteBatch.begin();
 	// draw the selected tile sprite
-	_playerSpriteBatch.draw({_selectedTilePos.x, _selectedTilePos.y, 64, 64}, Jauntlet::ResourceManager::getTexture("Textures/WhiteSquare.png").id, 0);
+	_playerSpriteBatch.draw({_selectedTilePos.x, _selectedTilePos.y, 64, 64}, Jauntlet::ResourceManager::getTexture("Textures/WhiteSquare.png").id);
 	
 	_players.draw(_playerSpriteBatch);
 	_playerSpriteBatch.endAndRender();
