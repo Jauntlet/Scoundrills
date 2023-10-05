@@ -6,7 +6,6 @@ MainGame::MainGame() {
 
 void MainGame::run() {
 	initSystems();
-
 	gameLoop();
 }
 
@@ -18,7 +17,11 @@ void MainGame::initSystems() {
 	_window.create("Jauntlet Game Engine", _screenWidth, _screenHeight, 0);
 	_window.setBackgroundColor(Jauntlet::Color(76, 24, 32));
 	_window.setWindowIcon("Textures/Icon.png");
-
+	
+	// set default missing Texture
+	Jauntlet::ResourceManager::setMissingTexture("Textures/Icon.png");
+	
+	// initialize shaders
 	initShaders();
 	// initialize camera
 	_camera.init(_screenWidth, _screenHeight);
@@ -40,13 +43,12 @@ void MainGame::gameLoop() {
 	while (_gameState == GameState::PLAY) {
 		// start a frame
 		Jauntlet::Time::beginFrame();
-
+		// process user inputs
 		processInput();
-
+		// update the camera
 		_camera.update();
-
+		// draw the game
 		drawGame();
-
 		// end a frame. This returns the FPS of the game
 		_fps = Jauntlet::Time::endFrame();
 	}
@@ -76,18 +78,13 @@ void MainGame::drawGame() {
 	_window.clearScreen();
 	// activate shaders
 	_colorProgram.use();
-	
-	glActiveTexture(GL_TEXTURE0);
-
-	// Reading information into shaders
-	glUniform1i(_colorProgram.getUniformLocation("imageTexture"), 0);
+	// activate camera
 	_camera.setActiveCamera(&_colorProgram);
 
-	// -> Draw things you want to render here <-
+	// --> Draw things you want to render here <--
 
 	// disables shaders
 	_colorProgram.unuse();
-	
 	// put the newly rendered objects on screen
 	_window.swapBuffer();
 }

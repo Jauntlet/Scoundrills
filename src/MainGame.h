@@ -1,9 +1,9 @@
 #pragma once
-
 #include <Jauntlet/Jauntlet.h>
 #include <Jauntlet/Time.h>
 #include <Jauntlet/Window.h>
 #include <Jauntlet/Rendering/GLSLProgram.h>
+#include <Jauntlet/Rendering/ResourceManager.h>
 #include <Jauntlet/Camera2D.h>
 #include <Jauntlet/InputManager.h>
 
