@@ -8,7 +8,7 @@ public:
 	void init(glm::ivec2 windowSize, Jauntlet::InputManager* inputManager);
 
 	void Update();
-	void ActivateCamera(Jauntlet::GLSLProgram* glslProgram);
+	void ActivateCamera();
 	void updateCameraSize(int width, int height);
 	
 	Jauntlet::Camera2D camera;

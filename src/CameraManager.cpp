@@ -52,8 +52,8 @@ void CameraManager::Update() {
 	camera.update();
 }
 
-void CameraManager::ActivateCamera(Jauntlet::GLSLProgram* glslProgram) {
-	camera.setActiveCamera(glslProgram); 
+void CameraManager::ActivateCamera() {
+	camera.setActiveCamera(); 
 }
 
 void CameraManager::updateCameraSize(int width, int height) {

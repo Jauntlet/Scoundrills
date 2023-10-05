@@ -122,12 +122,7 @@ void MainGame::drawGame() {
 	_window.clearScreen();
 	
 	_colorProgram.use();
-
-	//glActiveTexture(GL_TEXTURE0);
-
-	// Reading information into shaders
-	glUniform1i(_colorProgram.getUniformLocation("imageTexture"), 0);
-	_cameraManager.ActivateCamera(&_colorProgram);
+	_cameraManager.ActivateCamera();
 
 	_tileHandler.draw();
 
@@ -136,7 +131,7 @@ void MainGame::drawGame() {
 	
 	_spriteBatch.endAndRender();
 	
-	_hudCamera.setActiveCamera(&_colorProgram);
+	_hudCamera.setActiveCamera();
 
 	_spriteBatch.begin();
 	_spriteBatch.draw({ -_screenWidth/2,-_screenHeight/2, 80,80 }, Jauntlet::ResourceManager::getTexture(_tileHandler.getSelectedTileTexture()).id, 0);
