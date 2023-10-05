@@ -116,9 +116,6 @@ void MainGame::drawGame() {
 	_window.clearScreen();
 	
 	_colorProgram.use();
-
-	// Reading information into shaders
-	glUniform1i(_colorProgram.getUniformLocation("imageTexture"), 0);
 	_camera.setActiveCamera(&_colorProgram);
 
 	_drill.draw();
