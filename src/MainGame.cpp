@@ -105,13 +105,7 @@ void MainGame::processInput() {
 
 	//mouse hover over navigation
 	if (_uiCoordinator.navigation.isNavOpen()) {
-		Jauntlet::Collision2D data = Jauntlet::Collision2D();
-		for (int j = 0; j < _uiCoordinator.navigation.getColliders().size(); j++) {
-			Jauntlet::BoxCollider2D adjustedCollider = Jauntlet::BoxCollider2D(_uiCoordinator.navigation.getColliders()[j].GetSize(), glm::vec2(_screenWidth / 2.0f + _uiCoordinator.navigation.getColliders()[j].position.x, _screenHeight / 2.0f - _uiCoordinator.navigation.getColliders()[j].position.y + 16));
-			if (data.getCollision(&adjustedCollider, _inputManager.getMouseCoords())) {
-				std::cout << "hovered over collider: " << j << std::endl;
-			}
-		}
+		//real
 	}
 }
 
@@ -120,7 +114,7 @@ void MainGame::drawGame() {
 	_window.clearScreen();
 	
 	_colorProgram.use();
-	
+
 	// Reading information into shaders
 	glUniform1i(_colorProgram.getUniformLocation("imageTexture"), 0);
 	_camera.setActiveCamera(&_colorProgram);

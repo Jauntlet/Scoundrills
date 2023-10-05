@@ -34,7 +34,8 @@ Navigation::Navigation() {
 	}
 }
 
-void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::SpriteFont* spriteFont, int* screenWidth, int* screenHeight) {
+void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::InputManager* inManager, int* screenWidth, int* screenHeight) {
+	_xTure = Jauntlet::ResourceManager::getTexture("Textures/xmark.png").id;
 	//set stuff
 	UIManager = UIM;
 
@@ -42,7 +43,6 @@ void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::SpriteFont* spriteFo
 	_navTextures.clear();
 	_points.clear();
 	_positions.clear();
-	_navColliders.clear();
 
 	//read in textures
 	for (int i = 0; i < 4; i++) {
@@ -63,15 +63,15 @@ void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::SpriteFont* spriteFo
 			int point = _map[y][x]; //
 			_positions.push_back(glm::vec2((*screenWidth / 2) + (layerSpan * -40) + (x * 80), (*screenHeight / 2) + (layersHeight * -50) + (y * 100)));
 			if (point == 0) { // white X
-				_points.push_back(Jauntlet::UITextElement(spriteFont, &strX, &white, &_positions[_points.size()]));
+				_points.push_back(Jauntlet::UIButtonElement(inManager, [&]() -> void { selectNav(_points.size()); }, _xTure, &_positions[_points.size()], glm::vec2(.5), Jauntlet::UIElement::ORIGIN_PIN::CENTER));
 				continue;
 			}
 			if (point == 1) { // blue X
-				_points.push_back(Jauntlet::UITextElement(spriteFont, &strX, &blue, &_positions[_points.size()]));
+				_points.push_back(Jauntlet::UIButtonElement(inManager, [&]() -> void { selectNav(_points.size()); }, _xTure, &_positions[_points.size()], glm::vec2(.5), Jauntlet::UIElement::ORIGIN_PIN::CENTER));
 				continue;
 			}
 			if (point == 2) { // orange X
-				_points.push_back(Jauntlet::UITextElement(spriteFont, &strX, &orange, &_positions[_points.size()]));
+				_points.push_back(Jauntlet::UIButtonElement(inManager, [&]() -> void { selectNav(_points.size()); }, _xTure, &_positions[_points.size()], glm::vec2(.5), Jauntlet::UIElement::ORIGIN_PIN::CENTER));
 				continue;
 			}
 		}
@@ -79,18 +79,6 @@ void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::SpriteFont* spriteFo
 
 	for (int i = 0; i < _points.size(); i++) {
 		UIM.addElement(&_points[i]);
-	}
-
-	//generate hitboxes on screenspace for hover/click interactions
-	_navColliders.clear();
-
-	for (int y = 0; y < _map.size(); y++) {
-	
-		int layerSpan = _map[y].size();
-
-		for (int x = 0; x < _map[y].size(); x++) {
-			_navColliders.push_back( Jauntlet::BoxCollider2D( glm::vec2(32), glm::vec2( (layerSpan * -40) + (x * 80), (layersHeight * -50) + (y * 100) ) ));
-		}
 	}
 }
 
@@ -115,6 +103,6 @@ bool Navigation::isNavOpen() {
 	return _navOpen;
 }
 
-std::vector<Jauntlet::BoxCollider2D> Navigation::getColliders() {
-	return _navColliders;
+void Navigation::selectNav(int id) {
+	destination = id;
 }
