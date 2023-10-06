@@ -10,10 +10,6 @@ MainGame::MainGame() :
 	_window() {
 }
 
-void _bruh() {
-	std::cout << "bruh" << std::endl;
-}
-
 void MainGame::run() {
 	initSystems();
 
@@ -45,7 +41,7 @@ void MainGame::initSystems() {
 	// initializes spritefont
 	_spriteFont.init(&_hudCamera, "Fonts/HandelGo.ttf", 256);
 
-	_uiCoordinator.init(glm::ivec2(_screenWidth, _screenHeight), &_hudCamera, &_spriteFont, &_inputManager);
+	_uiCoordinator.init(glm::ivec2(_screenWidth, _screenHeight), &_hudCamera, &_spriteFont, &_inputManager, &_drill);
 	
 	_drill.init();
 }
