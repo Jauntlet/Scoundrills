@@ -37,6 +37,10 @@ bool PlayerManager::processInput(Jauntlet::InputManager* inputManager, Jauntlet:
 	return false;
 }
 
+bool PlayerManager::isPlayerSelected() {
+	return _selectedPlayer != -1;
+}
+
 void PlayerManager::update() {
 	for (int i = 0; i < _players.size(); i++) {
 		_players[i].update();

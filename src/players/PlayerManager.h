@@ -16,6 +16,9 @@ public:
 	// processes a click to see if we operate on the players, returns true if we are, false if we arent.
 	bool processInput(Jauntlet::InputManager* inputManager, Jauntlet::Camera2D* activeCamera, Jauntlet::TileMap* navTileMap);
 
+	// returns true if a player is selected
+	bool isPlayerSelected();
+
 	// updates the state of players
 	void update();
 	// draw all players
