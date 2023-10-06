@@ -31,7 +31,7 @@ void DrillAssetRenderer::draw() {
 }
 
 void DrillAssetRenderer::stopAnimation() {
-	_drillAnimation.stop();
+	_drillAnimation.pause();
 	_shake = false;
 }
 
