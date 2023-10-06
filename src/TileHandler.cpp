@@ -10,20 +10,6 @@
 TileHandler::TileHandler() {
 }
 
-void TileHandler::addTile(std::string filePath, bool hasCollision) {
-	for (int i = 0; i < _tileMaps.size(); i++) {
-		_tileMaps[i].Register(filePath);
-	}
-	_tileInfo.push_back("tile" + filePath + (hasCollision ? " collision" : ""));
-}
-void TileHandler::addTileSet(std::string filePath, bool hasCollision) {
-	Jauntlet::TileSet newSet = Jauntlet::TileSet(filePath);
-	for (int i = 0; i < _tileMaps.size(); i++) {
-		_tileMaps[i].Register(newSet);
-	}
-	_tileInfo.push_back("tileSet" + filePath + (hasCollision ? " collision" : ""));
-}
-
 void TileHandler::loadFile() {
 	char const* filter[1] = { "*.JML" };
 	char const* filePath = tinyfd_openFileDialog("Select file to open", NULL, 1, filter, "Jauntlet Map Loader File (JML)", 1);
@@ -33,6 +19,11 @@ void TileHandler::loadFile() {
 	}
 
 	std::vector<std::string> files = JMath::Split(filePath, '|');
+
+	// remove empty string if only one file is selected
+	if (files.back().empty()) {
+		files.pop_back();
+	}
 
 	std::ifstream file;
 	for (int i = 0; i < files.size(); i++) {
@@ -53,6 +44,9 @@ void TileHandler::loadFile() {
 		while (std::getline(file, line, '\n')) {
 			if (line == "ENDDEC") {
 				break;
+			}
+			if (JMath::Split(line, ' ')[0] == "offset") {
+				continue;
 			}
 			// check for duplicates
 			bool duplicate = false;
@@ -122,6 +116,8 @@ void TileHandler::saveAllFiles() {
 	}
 }
 void TileHandler::saveSelectedTileMapAs() {
+	cleanTileMaps();
+
 	char const* filter[1] = { "*.JML" };
 	char const* filePath = tinyfd_saveFileDialog("Select where to save file", 
 	NULL, 1, filter, "Jauntlet Map Loader (JML)");
@@ -214,6 +210,14 @@ void TileHandler::toggleShadedTileMapView() {
 	}
 }
 
+void TileHandler::resetTileMaps() {
+	cleanTileMaps();
+	for (int i = 0; i < _tileMaps.size(); i++) {
+		_tileMaps[i].resetOffset();
+	}
+	forceUpdateTileMaps();
+}
+
 void TileHandler::updateTile(glm::ivec2 position) {
 	if (position.x < 0) {
 		shiftX(std::abs(position.x));
@@ -304,6 +308,22 @@ void TileHandler::forceUpdateTileMap() {
 	for (int y = 0; y < _levelInfos[_selectedTileMap].size(); y++) {
 		for (int x = 0; x < _levelInfos[_selectedTileMap][y].size(); x++) {
 			_tileMaps[_selectedTileMap].UpdateTile(glm::vec2(x, y), _levelInfos[_selectedTileMap][y][x]);
+		}
+	}
+}
+void TileHandler::forceUpdateTileMap(unsigned int mapIndex) {
+	for (int y = 0; y < _levelInfos[mapIndex].size(); y++) {
+		for (int x = 0; x < _levelInfos[mapIndex][y].size(); x++) {
+			_tileMaps[mapIndex].UpdateTile(glm::vec2(x, y), _levelInfos[mapIndex][y][x]);
+		}
+	}
+}
+void TileHandler::forceUpdateTileMaps() {
+	for (int i = 0; i < _levelInfos.size(); i++) {
+		for (int y = 0; y < _levelInfos[i].size(); y++) {
+			for (int x = 0; x < _levelInfos[i][y].size(); x++) {
+				_tileMaps[i].UpdateTile(glm::vec2(x, y), _levelInfos[i][y][x]);
+			}
 		}
 	}
 }

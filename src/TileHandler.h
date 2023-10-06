@@ -6,9 +6,6 @@ class TileHandler
 public:
 	TileHandler();
 
-	void addTile(std::string filePath, bool hasCollision);
-	void addTileSet(std::string filePath, bool hasCollision);
-
 	void loadFile();
 	void saveAllFiles();
 	void saveSelectedTileMapAs();
@@ -26,6 +23,9 @@ public:
 	// toggles gray-scaling inactive tilemap layers.
 	void toggleShadedTileMapView();
 
+	// Reset the positions on all tilesets.
+	void resetTileMaps();
+
 	// update the tile on the currently selected tilemap to the selected tileID
 	void updateTile(glm::ivec2 position);
 	// update the tile on the currently selected tilemap to the specified tileID
@@ -37,8 +37,12 @@ private:
 	void shiftX(unsigned int amount);
 	// Shift the entire Y axis of the tilemap by amount.
 	void shiftY(unsigned int amount);
-	// Reads all the data from the level data in TileHandler and force feeds it to the tileMap.
+	// Reads all the data from the level data in TileHandler and force feeds it to the currently selected tileMap.
 	void forceUpdateTileMap();
+	// Reads all the data from the level data in TileHandler and force feeds it to the specified tilemap index.
+	void forceUpdateTileMap(unsigned int mapIndex);
+	// Reads all the data from the level data in TileHandler and force feeds it to all the tileMaps.
+	void forceUpdateTileMaps();
 	// Clean empty rows from tilemap
 	void cleanTileMaps();
 	
@@ -56,4 +60,3 @@ private:
 	// required to compile tilemap
 	Jauntlet::TextureCache _textureCache;
 };
-
