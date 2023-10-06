@@ -20,6 +20,7 @@
       <Filter>drill</Filter>
     </ClCompile>
     <ClCompile Include="src\UICoordinator.cpp" />
+    <ClCompile Include="src\SelectedTileRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\MainGame.h" />
@@ -40,6 +41,7 @@
       <Filter>drill</Filter>
     </ClInclude>
     <ClInclude Include="src\UICoordinator.h" />
+    <ClInclude Include="src\SelectedTileRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="players">

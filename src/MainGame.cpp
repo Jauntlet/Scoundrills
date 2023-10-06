@@ -44,6 +44,7 @@ void MainGame::initSystems() {
 	_uiCoordinator.init(glm::ivec2(_screenWidth, _screenHeight), &_hudCamera, &_spriteFont, &_inputManager, &_drill);
 	
 	_drill.init();
+	_selectedTile.init(&_drill.drillFloor);
 }
 
 void MainGame::initShaders() {
@@ -78,8 +79,6 @@ void MainGame::processInput() {
 	if (_inputManager.quitGameCalled()) {
 		_gameState = GameState::EXIT;
 	}
-
-	_selectedTilePos = _drill.drillWalls.RoundWorldPos(_camera.convertScreenToWorld(_inputManager.getMouseCoords()));
 
 	_cameraManager.processInput();
 
@@ -118,12 +117,12 @@ void MainGame::drawGame() {
 
 	// Draw the player using a spriteBatch
 	_playerSpriteBatch.begin();
-	// draw the selected tile sprite
-	_playerSpriteBatch.draw({_selectedTilePos.x, _selectedTilePos.y, 64, 64}, Jauntlet::ResourceManager::getTexture("Textures/WhiteSquare.png").id);
 	
 	_players.draw(_playerSpriteBatch);
 	_playerSpriteBatch.endAndRender();
 	
+	_selectedTile.draw(&_camera, &_inputManager);
+
 	_colorProgram.unuse();
 	
 	drawHUD();

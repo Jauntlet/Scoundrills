@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Jauntlet/Rendering/ResourceManager.h>
-#include <Jauntlet/Rendering/Vertex.h>
 #include <Jauntlet/UI/UIButtonElement.h>
 #include <Jauntlet/UI/UIManager.h>
 #include <Jauntlet/UI/UITextElement.h>
