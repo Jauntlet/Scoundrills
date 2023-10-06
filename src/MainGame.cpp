@@ -10,10 +10,6 @@ MainGame::MainGame() :
 	_window() {
 }
 
-void _bruh() {
-	std::cout << "bruh" << std::endl;
-}
-
 void MainGame::run() {
 	initSystems();
 
@@ -45,9 +41,10 @@ void MainGame::initSystems() {
 	// initializes spritefont
 	_spriteFont.init(&_hudCamera, "Fonts/HandelGo.ttf", 256);
 
-	_uiCoordinator.init(glm::ivec2(_screenWidth, _screenHeight), &_hudCamera, &_spriteFont, &_inputManager);
+	_uiCoordinator.init(glm::ivec2(_screenWidth, _screenHeight), &_hudCamera, &_spriteFont, &_inputManager, &_drill);
 	
 	_drill.init();
+	_selectedTile.init(&_drill.drillFloor);
 }
 
 void MainGame::initShaders() {
@@ -83,8 +80,6 @@ void MainGame::processInput() {
 		_gameState = GameState::EXIT;
 	}
 
-	_selectedTilePos = _drill.drillWalls.RoundWorldPos(_camera.convertScreenToWorld(_inputManager.getMouseCoords()));
-
 	_cameraManager.processInput();
 
 	if (_inputManager.isKeyPressed(SDLK_F11) || (_inputManager.isKeyDown(SDLK_LALT) || _inputManager.isKeyDown(SDLK_RALT)) && _inputManager.isKeyPressed(SDLK_RETURN)) {
@@ -116,18 +111,18 @@ void MainGame::drawGame() {
 	_window.clearScreen();
 	
 	_colorProgram.use();
-	_camera.setActiveCamera(&_colorProgram);
+	_camera.setActiveCamera();
 
 	_drill.draw();
 
 	// Draw the player using a spriteBatch
 	_playerSpriteBatch.begin();
-	// draw the selected tile sprite
-	_playerSpriteBatch.draw({_selectedTilePos.x, _selectedTilePos.y, 64, 64}, Jauntlet::ResourceManager::getTexture("Textures/WhiteSquare.png").id);
 	
 	_players.draw(_playerSpriteBatch);
 	_playerSpriteBatch.endAndRender();
 	
+	_selectedTile.draw(&_camera, &_inputManager);
+
 	_colorProgram.unuse();
 	
 	drawHUD();
@@ -136,7 +131,7 @@ void MainGame::drawGame() {
 }
 
 void MainGame::drawHUD() {
-	_hudCamera.setActiveCamera(&_colorProgram);
+	_hudCamera.setActiveCamera();
 
 	_uiCoordinator.fpsText = std::to_string((int)_fps); // #TODO: DELTEME
 

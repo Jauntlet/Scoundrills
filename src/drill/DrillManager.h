@@ -1,6 +1,9 @@
-#include "DrillAssetRenderer.h"
+#pragma once
 
 #include <Jauntlet/TileMap.h>
+
+#include "DrillAssetRenderer.h"
+
 class DrillManager {
 public:
 	DrillManager();
@@ -14,6 +17,9 @@ public:
 	void on();
 	// turn off the drill
 	void off();
+
+	// toggle the drill
+	void toggle();
 
 	Jauntlet::TileMap drillWalls;
 	Jauntlet::TileMap drillFloor;

@@ -10,10 +10,11 @@
 
 #include "CameraManager.h"
 #include "drill/DrillManager.h"
+#include "glm/fwd.hpp"
 #include "Navigation.h"
 #include "players/PlayerManager.h"
 #include "PlayerResources.h"
-#include "glm/fwd.hpp"
+#include "SelectedTileRenderer.h"
 #include "UICoordinator.h"
 
 enum class GameState {
@@ -54,11 +55,11 @@ private:
 	Jauntlet::SpriteFont _spriteFont;
 	
 	PlayerManager _players;
-	glm::vec2 _selectedTilePos = glm::vec2(0);
 
 	DrillManager _drill;
 	UICoordinator _uiCoordinator;
 	PlayerResources _resources;
+	SelectedTileRenderer _selectedTile;
 
 	// defines scale of movement for the camera. if set to 1, the camera will follow the mouse, if set to 0, the mouse has no control over the camera.
 	const float _CAMERA_MOVEMENT_SCALE =  0.5f;
