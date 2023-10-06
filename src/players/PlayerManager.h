@@ -1,5 +1,6 @@
 #pragma once
 #include "Player.h"
+#include "PathRenderer.h"
 
 #include <Jauntlet/InputManager.h>
 #include <Jauntlet/Camera2D.h>
@@ -7,7 +8,9 @@
 
 class PlayerManager {
 public: 
-	PlayerManager(int initialPlayers);
+	PlayerManager();
+	// initialize player manager
+	void init(int initialPlayers, Jauntlet::TileMap* tileWalls);
 	// adds an already defined player to the player manager
 	void addPlayer(Player& player);
 	// creates a new player and places it into the player manager
@@ -26,4 +29,6 @@ public:
 private:
 	std::vector<Player> _players;
 	int _selectedPlayer = -1;
+
+	PathRenderer _pathRenderer;
 };

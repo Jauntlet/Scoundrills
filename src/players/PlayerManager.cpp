@@ -2,7 +2,12 @@
 
 #include "PlayerManager.h"
 
-PlayerManager::PlayerManager(int initialPlayers) {
+PlayerManager::PlayerManager() {
+	// Empty
+}
+void PlayerManager::init(int initialPlayers, Jauntlet::TileMap* tileWalls) {
+	_pathRenderer.init(tileWalls);
+
 	for (int i = 0; i < initialPlayers; i++) {
 		_players.emplace_back(64 * (i + 1) + 320, -64);
 	}
@@ -32,6 +37,7 @@ bool PlayerManager::processInput(Jauntlet::InputManager* inputManager, Jauntlet:
 			_selectedPlayer = -1;
 		}	
 	} else if (_selectedPlayer != -1) {
+		//_pathRenderer.drawPath(_players[_selectedPlayer].getPosition(), )
 		return true;
 	}
 	return false;

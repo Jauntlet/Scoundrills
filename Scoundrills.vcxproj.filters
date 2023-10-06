@@ -21,6 +21,9 @@
     </ClCompile>
     <ClCompile Include="src\UICoordinator.cpp" />
     <ClCompile Include="src\SelectedTileRenderer.cpp" />
+    <ClCompile Include="src\players\PathRenderer.cpp">
+      <Filter>players</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\MainGame.h" />
@@ -42,6 +45,9 @@
     </ClInclude>
     <ClInclude Include="src\UICoordinator.h" />
     <ClInclude Include="src\SelectedTileRenderer.h" />
+    <ClInclude Include="src\players\PathRenderer.h">
+      <Filter>players</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="players">
