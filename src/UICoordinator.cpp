@@ -54,8 +54,8 @@ void UICoordinator::draw() {
 }
 
 void UICoordinator::applyNewScreenSize(glm::ivec2 screenSize) {
-	_UIManager.resolvePositions();
 	_UIManager.setScale((screenSize.y / 1080.0f) * (screenSize.x / 1920.0f));
+	_UIManager.resolvePositions();
 
 	// temporary
 	navigation.genNav(_UIManager, _inputManager, &screenSize.x, &screenSize.y);
