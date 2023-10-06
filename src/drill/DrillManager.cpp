@@ -28,3 +28,11 @@ void DrillManager::off() {
 	_drillOn = false;
 	_drillAssets.stopAnimation();
 }
+
+void DrillManager::toggle() {
+	if (_drillOn) {
+		off();
+	} else {
+		on();
+	}
+}
