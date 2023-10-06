@@ -50,7 +50,7 @@ void Player::draw(Jauntlet::SpriteBatch& spriteBatch) {
 void Player::navigateTo(Jauntlet::TileMap* map, glm::vec2 position) {
 	_path.clear();
 
-	_path = Pathfinding::findPath(map, _position, position, false);
+	_path = Pathfinding::findPath(map, _position, position);
 }
 
 void Player::setPosition(float x, float y) {

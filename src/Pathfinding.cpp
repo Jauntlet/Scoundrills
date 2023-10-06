@@ -8,7 +8,7 @@ std::vector<cell> Pathfinding::_closedList;
 Pathfinding::Pathfinding() {
 	// Empty
 }
-std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, glm::vec2 start, glm::vec2 destination, bool allowDiagonals /*= true*/) {	
+std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, glm::vec2 start, glm::vec2 destination) {	
 	// translate world coords to tilemap coords.
 	destination = map->WorldPosToTilePos(destination);
 	start = map->WorldPosToTilePos(start);
@@ -39,10 +39,7 @@ std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, glm::vec2 s
 		// Loop through all successors to the bestNode
 		for (int y = -1; y < 2; y++) {
 			for (int x = -1; x < 2; x++) {
-				if (x == 0 && y == 0) { // skip (0,0)
-					continue;
-				}
-				if (!allowDiagonals && x != 0 && y != 0) { // skip diagonals if they aren't allowed.
+				if ((x == 0 && y == 0) || (x != 0 && y != 0)) { // skip (0,0) and diagonals
 					continue;
 				}
 
@@ -58,21 +55,12 @@ std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, glm::vec2 s
 					continue;
 				}
 
-				if (!allowDiagonals) {
-					// Diagonals are not possible, so the added distance is always 1
-					currentNode.pathDistance = _closedList.back().pathDistance + 1;
+				// Diagonals are not possible, so the added distance is always 1
+				currentNode.pathDistance = _closedList.back().pathDistance + 1;
 
-					// Calculate the distance from the node to the goal: this is essiential for A* pathfinding.
-					// We use manhattan distance when we are not allowing diagonals: The difference of X + the difference of Y
-					currentNode.estimatedDistance = std::abs(currentNode.position.x - destination.x) + std::abs(currentNode.position.y - destination.y);
-				}
-				else {
-					currentNode.pathDistance = _closedList.back().pathDistance + std::abs(JMath::Distance(currentNode.position, _closedList.back().position));
-
-					// Calculate the distance from the node to the goal: this is essiential for A* pathfinding.
-					// When diagonals are allowed, we simply use a distance formula.
-					currentNode.estimatedDistance = JMath::Distance(currentNode.position, destination);
-				}
+				// Calculate the distance from the node to the goal: this is essiential for A* pathfinding.
+				// We use manhattan distance when we are not allowing diagonals: The difference of X + the difference of Y
+				currentNode.estimatedDistance = std::abs(currentNode.position.x - destination.x) + std::abs(currentNode.position.y - destination.y);
 
 				// Final score:
 				currentNode.estimatedDistance += currentNode.pathDistance;
