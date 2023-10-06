@@ -1,3 +1,7 @@
+#include <functional>
+#include <iostream>
+#include <Jauntlet/UI/UIButtonElement.h>
+
 #include "UICoordinator.h"
 
 UICoordinator::UICoordinator() {
@@ -8,7 +12,12 @@ UICoordinator::~UICoordinator() {
 	delete _fpsCounter;
 }
 
-void UICoordinator::init(glm::ivec2 screenSize, Jauntlet::Camera2D* hudCamera, Jauntlet::SpriteFont* spriteFont, Jauntlet::InputManager* inputManager) {
+void _bruh() {
+	std::cout << "bruh" << std::endl;
+}
+
+
+void UICoordinator::init(glm::ivec2 screenSize, Jauntlet::Camera2D* hudCamera, Jauntlet::SpriteFont* spriteFont, Jauntlet::InputManager* inputManager, DrillManager* drillManager) {
 	
 	_hudCamera = hudCamera;
 	_spriteFont = spriteFont;
@@ -28,6 +37,16 @@ void UICoordinator::init(glm::ivec2 screenSize, Jauntlet::Camera2D* hudCamera, J
 	_fpsCounter = new Jauntlet::UITextElement(_spriteFont, &fpsText, &_fpsColor, &_fpsPosition);
 	
 	_UIManager.addElement(_fpsCounter);
+
+	GLuint _buttonTexture = Jauntlet::ResourceManager::getTexture("Textures/button.png").id;
+	glm::vec2* buttonPos = new glm::vec2(10, 10);
+	
+	// conversion from `void` to `std::function<void ()>` -jk
+	std::function<void()> _buttonMethod = std::bind(&DrillManager::toggle, drillManager);
+	
+	Jauntlet::UIButtonElement* _button = new Jauntlet::UIButtonElement(_inputManager, _buttonMethod, _buttonTexture, buttonPos, glm::vec2(512, 512), Jauntlet::UIElement::ORIGIN_PIN::TOP_LEFT);
+		
+	_UIManager.addElement(_button);
 }
 
 void UICoordinator::draw() {
