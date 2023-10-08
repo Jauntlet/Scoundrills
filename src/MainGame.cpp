@@ -6,7 +6,7 @@
 #include "MainGame.h"
 
 MainGame::MainGame() :
-	_players(3),
+	//_players(3),
 	_window() {
 }
 
