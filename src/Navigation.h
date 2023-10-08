@@ -10,7 +10,7 @@ class Navigation {
 public:
 	Navigation();
 
-	void genNav(Jauntlet::UIManager& UIM, Jauntlet::InputManager* inManager, int* screenWidth, int* screenheight); //new nav positions
+	void genNav(Jauntlet::UIManager& UIM, Jauntlet::InputManager* inManager); //new nav positions
 
 	bool isNavOpen();
 	void toggleNav();

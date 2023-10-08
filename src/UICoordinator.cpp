@@ -29,8 +29,8 @@ void UICoordinator::init(glm::ivec2 screenSize, Jauntlet::Camera2D* hudCamera, J
 	_UIManager.resolvePositions();
 
 	// TODO: Remove second genNav call
-	navigation.genNav(_UIManager, _inputManager, &screenSize.x, &screenSize.y);
-	navigation.genNav(_UIManager, _inputManager, &screenSize.x, &screenSize.y);
+	navigation.genNav(_UIManager, _inputManager);
+	navigation.genNav(_UIManager, _inputManager);
 
 	_fpsColor = Jauntlet::Color(0, 255, 0, 255);
 	_fpsPosition = glm::vec2(0);
@@ -58,5 +58,5 @@ void UICoordinator::applyNewScreenSize(glm::ivec2 screenSize) {
 	_UIManager.resolvePositions();
 
 	// temporary
-	navigation.genNav(_UIManager, _inputManager, &screenSize.x, &screenSize.y);
+	navigation.genNav(_UIManager, _inputManager);
 }
