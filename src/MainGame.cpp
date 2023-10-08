@@ -5,9 +5,7 @@
 #include "Jauntlet/UI/UIElement.h"
 #include "MainGame.h"
 
-MainGame::MainGame() :
-	//_players(3),
-	_window() {
+MainGame::MainGame() {
 }
 
 void MainGame::run() {
@@ -27,7 +25,7 @@ void MainGame::initSystems() {
 
 	initShaders();
 
-	Jauntlet::ResourceManager::setMissingTexture("Textures/Icon.png");
+	Jauntlet::ResourceManager::setMissingTexture("Textures/missing.png");
 
 	_camera.init(_screenWidth, _screenHeight);
 	_hudCamera.init(_screenWidth, _screenHeight);
@@ -35,6 +33,7 @@ void MainGame::initSystems() {
 	_cameraManager.init(&_camera, &_inputManager, &_players, &_drill.drillWalls);
 
 	// initialize player spriteBatch
+	_players.init(3, &_drill.drillWalls);
 	_playerSpriteBatch.init();
 	_HUDSpriteBatch.init();
 
@@ -117,7 +116,6 @@ void MainGame::drawGame() {
 
 	// Draw the player using a spriteBatch
 	_playerSpriteBatch.begin();
-	
 	_players.draw(_playerSpriteBatch);
 	_playerSpriteBatch.endAndRender();
 	
