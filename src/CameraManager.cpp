@@ -34,10 +34,10 @@ void CameraManager::processInput() {
 		_camera->transitionToScale(1);
 	}
 
+	bool clickOnPlayers = _players->processInput(_inputManager, _camera, _level);
+	
 	if (_inputManager->isKeyDown(SDL_BUTTON_LEFT)) {
-		bool _clickOnPlayers = _players->processInput(_inputManager, _camera, _level);
-		
-		if (!_clickOnPlayers) {
+		if (!clickOnPlayers) {
 			_camera->clearTransitions();
 			_deltaMouse = glm::vec2(_oldMouse.x - _inputManager->getMouseCoords().x, _inputManager->getMouseCoords().y - _oldMouse.y);
 		}
