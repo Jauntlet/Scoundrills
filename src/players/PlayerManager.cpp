@@ -37,8 +37,7 @@ bool PlayerManager::processInput(Jauntlet::InputManager* inputManager, Jauntlet:
 			_selectedPlayer = -1;
 		}	
 	} else if (_selectedPlayer != -1) {
-		//_pathRenderer.drawPath(_players[_selectedPlayer].getPosition(), )
-		return true;
+		_pathRenderer.createPath(_players[_selectedPlayer].getPosition(), navTileMap->RoundWorldPos(activeCamera->convertScreenToWorld(inputManager->getMouseCoords())));
 	}
 	return false;
 }
@@ -57,4 +56,5 @@ void PlayerManager::draw(Jauntlet::SpriteBatch& spriteBatch) {
 	for (int i = 0; i < _players.size(); i++) {
 		_players[i].draw(spriteBatch);
 	}
+	_pathRenderer.drawPath();
 }

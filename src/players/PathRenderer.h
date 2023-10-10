@@ -8,8 +8,8 @@ public:
 	PathRenderer();
 
 	void init(Jauntlet::TileMap* tileMap);
-
-	void drawPath(glm::vec2 start, glm::vec2 end);
+	void createPath(glm::vec2 start, glm::vec2 end);
+	void drawPath();
 private:
 	Jauntlet::TileMap* _tilemap;
 	Jauntlet::SpriteBatch _spriteBatch;
