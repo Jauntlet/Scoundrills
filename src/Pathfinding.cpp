@@ -4,6 +4,8 @@
 
 std::vector<cell> Pathfinding::_openList;
 std::vector<cell> Pathfinding::_closedList;
+const int TIMEOUT_LIMIT = 200;
+
 
 Pathfinding::Pathfinding() {
 	// Empty
@@ -21,7 +23,7 @@ std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, glm::vec2 s
 	}
 
 	bool foundDest = false;
-	while (!_openList.empty() && !foundDest) {
+	while (!_openList.empty() && !foundDest && _openList.size() < TIMEOUT_LIMIT) {
 		int bestNodeID = 0;
 		// Search through the list of nodes for the lowest movement cost
 		for (int i = 1; i < _openList.size(); i++) {
