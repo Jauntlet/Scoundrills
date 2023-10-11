@@ -34,6 +34,7 @@ bool PlayerManager::processInput(Jauntlet::InputManager* inputManager, Jauntlet:
 		}
 		else { // we have selected a position for the player to move to.
 			_players[_selectedPlayer].navigateTo(navTileMap, navTileMap->RoundWorldPos(activeCamera->convertScreenToWorld(inputManager->getMouseCoords())));
+			_pathRenderer.clearPath();
 			_selectedPlayer = -1;
 		}	
 	} else if (_selectedPlayer != -1) {

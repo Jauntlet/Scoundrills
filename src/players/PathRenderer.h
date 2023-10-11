@@ -9,6 +9,7 @@ public:
 
 	void init(Jauntlet::TileMap* tileMap);
 	void createPath(glm::vec2 start, glm::vec2 end);
+	void clearPath();
 	void drawPath();
 private:
 	Jauntlet::TileMap* _tilemap;

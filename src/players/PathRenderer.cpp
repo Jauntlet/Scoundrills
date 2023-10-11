@@ -93,7 +93,10 @@ void PathRenderer::createPath(glm::vec2 start, glm::vec2 end) {
 	}
 	_spriteBatch.end();
 }
-
+void PathRenderer::clearPath() {
+	_spriteBatch.begin();
+	_spriteBatch.end();
+}
 void PathRenderer::drawPath() {
 	_spriteBatch.render();
 }
