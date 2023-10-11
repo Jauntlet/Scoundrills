@@ -1,6 +1,6 @@
 #pragma once
 #include "Player.h"
-#include "PathRenderer.h"
+#include "../pathfinding/PathRenderer.h"
 
 #include <Jauntlet/InputManager.h>
 #include <Jauntlet/Camera2D.h>

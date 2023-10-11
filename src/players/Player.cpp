@@ -5,7 +5,7 @@
 #include <SDL/SDL.h>
 #include <algorithm>
 
-#include "../Pathfinding.h"
+#include "../pathfinding/Pathfinding.h"
 #include "Player.h"
 
 Player::Player(float x, float y) : collider(Jauntlet::BoxCollider2D(glm::vec2(64), glm::vec2(x,y))) {

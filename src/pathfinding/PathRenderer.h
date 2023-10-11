@@ -1,6 +1,6 @@
 #pragma once
 #include <Jauntlet/Rendering/ResourceManager.h>
-#include "../Pathfinding.h"
+#include "../pathfinding/Pathfinding.h"
 class PathRenderer
 {
 public:

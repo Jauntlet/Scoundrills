@@ -4,7 +4,6 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MainGame.cpp" />
     <ClCompile Include="src\Navigation.cpp" />
-    <ClCompile Include="src\Pathfinding.cpp" />
     <ClCompile Include="src\players\Player.cpp">
       <Filter>players</Filter>
     </ClCompile>
@@ -21,14 +20,16 @@
     </ClCompile>
     <ClCompile Include="src\UICoordinator.cpp" />
     <ClCompile Include="src\SelectedTileRenderer.cpp" />
-    <ClCompile Include="src\players\PathRenderer.cpp">
-      <Filter>players</Filter>
+    <ClCompile Include="src\pathfinding\Pathfinding.cpp">
+      <Filter>pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pathfinding\PathRenderer.cpp">
+      <Filter>pathfinding</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\MainGame.h" />
     <ClInclude Include="src\Navigation.h" />
-    <ClInclude Include="src\Pathfinding.h" />
     <ClInclude Include="src\players\Player.h">
       <Filter>players</Filter>
     </ClInclude>
@@ -45,8 +46,11 @@
     </ClInclude>
     <ClInclude Include="src\UICoordinator.h" />
     <ClInclude Include="src\SelectedTileRenderer.h" />
-    <ClInclude Include="src\players\PathRenderer.h">
-      <Filter>players</Filter>
+    <ClInclude Include="src\pathfinding\Pathfinding.h">
+      <Filter>pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="src\pathfinding\PathRenderer.h">
+      <Filter>pathfinding</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -55,6 +59,9 @@
     </Filter>
     <Filter Include="drill">
       <UniqueIdentifier>{758a71ed-bb0a-4bdd-9865-ae370068a4b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pathfinding">
+      <UniqueIdentifier>{49162868-9ea9-4899-87fb-fb41e86879fb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
