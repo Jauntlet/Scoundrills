@@ -31,4 +31,5 @@ private:
 	int _selectedPlayer = -1;
 
 	PathRenderer _pathRenderer;
+	glm::vec2 _storedMousePos = glm::vec2(0);
 };

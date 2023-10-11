@@ -33,12 +33,16 @@ bool PlayerManager::processInput(Jauntlet::InputManager* inputManager, Jauntlet:
 			}
 		}
 		else { // we have selected a position for the player to move to.
-			_players[_selectedPlayer].navigateTo(navTileMap, navTileMap->RoundWorldPos(activeCamera->convertScreenToWorld(inputManager->getMouseCoords())));
+			_storedMousePos = navTileMap->RoundWorldPos(activeCamera->convertScreenToWorld(inputManager->getMouseCoords()));
+			_players[_selectedPlayer].navigateTo(navTileMap, _storedMousePos);
 			_pathRenderer.clearPath();
 			_selectedPlayer = -1;
 		}	
 	} else if (_selectedPlayer != -1) {
-		_pathRenderer.createPath(_players[_selectedPlayer].getPosition(), navTileMap->RoundWorldPos(activeCamera->convertScreenToWorld(inputManager->getMouseCoords())));
+		if (_storedMousePos != navTileMap->RoundWorldPos(activeCamera->convertScreenToWorld(inputManager->getMouseCoords()))) {
+			_storedMousePos = navTileMap->RoundWorldPos(activeCamera->convertScreenToWorld(inputManager->getMouseCoords()));
+			_pathRenderer.createPath(_players[_selectedPlayer].getPosition(), _storedMousePos);
+		}
 	}
 	return false;
 }
