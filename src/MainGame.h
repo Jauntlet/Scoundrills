@@ -1,3 +1,6 @@
+/* Purpose: Initializes all parts of the game and runs the main game loop.
+ * Main Contributer(s): Xander Mooney / Jack Kennedy / Christopher Kowalewski
+ */
 #pragma once
 
 #include <Jauntlet/Jauntlet.h>

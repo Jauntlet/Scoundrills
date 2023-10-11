@@ -1,3 +1,6 @@
+/* Purpose:
+ * Main Contributer(s):
+ */
 #pragma once
 
 class PlayerResources {

@@ -1,3 +1,6 @@
+/* Purpose: Renders the tile the mouse is hovered over
+ * Main Contributer(s): Xander Mooney
+ */
 #pragma once
 #include <Jauntlet/Rendering/ResourceManager.h>
 #include <Jauntlet/TileMap.h>

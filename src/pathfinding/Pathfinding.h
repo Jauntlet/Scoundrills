@@ -1,3 +1,6 @@
+/* Purpose: Uses A* Pathfinding algorithms to find the shortest path between two points on a tilemap
+ * Main Contributer(s): Xander Mooney
+ */
 #pragma once
 #include <Jauntlet/TileMap.h>
 

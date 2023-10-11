@@ -1,3 +1,6 @@
+/* Purpose: Renders assets tied to the drill
+ * Main Contributer(s): Xander Mooney / Jack Kennedy
+ */
 #pragma once
 #include <Jauntlet/Rendering/SpriteBatch.h>
 #include <Jauntlet/Rendering/ResourceManager.h>

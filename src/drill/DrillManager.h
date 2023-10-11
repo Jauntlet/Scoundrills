@@ -1,3 +1,6 @@
+/* Purpose: Handles the drill and the happenings within it.
+ * Main Contributer(s): Xander Mooney / Jack Kennedy
+ */
 #pragma once
 
 #include <Jauntlet/TileMap.h>

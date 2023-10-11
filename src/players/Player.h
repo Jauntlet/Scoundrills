@@ -1,3 +1,6 @@
+/* Purpose: Controls an individual player, including tasks and pathfinding.
+ * Main Contributer(s): Xander Mooney
+ */
 #pragma once
 
 #include <Jauntlet/Collision/Collision2D.h>

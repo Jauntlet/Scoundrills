@@ -1,3 +1,6 @@
+/* Purpose:
+ * Main Contributer(s):
+ */
 #pragma once
 
 #include <Jauntlet/UI/UIManager.h>

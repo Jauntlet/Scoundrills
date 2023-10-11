@@ -1,3 +1,6 @@
+/* Purpose: Visualizes paths in which players would take to get a location
+ * Main Contributer(s): Xander Mooney
+ */
 #pragma once
 #include <Jauntlet/Rendering/ResourceManager.h>
 #include "../pathfinding/Pathfinding.h"

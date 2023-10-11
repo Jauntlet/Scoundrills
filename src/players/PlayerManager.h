@@ -1,3 +1,6 @@
+/* Purpose: Manages all instances of players as a collective, and handles inputs sent to each one.
+ * Main Contributer(s): Xander Mooney
+ */
 #pragma once
 #include "Player.h"
 #include "../pathfinding/PathRenderer.h"

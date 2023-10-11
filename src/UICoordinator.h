@@ -1,3 +1,6 @@
+/* Purpose: Handles UIManagers and the elements within as to keep them better organized.
+ * Main Contributer(s): Jack Kennedy / Xander Mooney
+ */
 #pragma once
 
 #include <Jauntlet/Rendering/ResourceManager.h>
