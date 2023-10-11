@@ -25,6 +25,10 @@ void TileHandler::loadFile() {
 		files.pop_back();
 	}
 
+	// We have to reserve space in the tilemap vector because if the vector needs more space, it will allocate more space which requires the vector to need to be moved.
+	// this causes the existing tilemaps to get deleted which then of course causes errors.
+	_tileMaps.reserve(sizeof(Jauntlet::TileMap) * files.size());
+
 	std::ifstream file;
 	for (int i = 0; i < files.size(); i++) {
 		file.open(files[i]);
@@ -49,7 +53,7 @@ void TileHandler::loadFile() {
 				continue;
 			}
 			// check for duplicates
-			bool duplicate = false;
+			/*bool duplicate = false;
 			for (int i = 0; i < _tileInfo.size(); i++) {
 				if (line == _tileInfo[i]) {
 					duplicate = true;
@@ -58,13 +62,13 @@ void TileHandler::loadFile() {
 			}
 			if (duplicate) {
 				continue;
-			}
+			}*/
 
 			_tileInfo.push_back(line);
 			// add newly found tile information to old tilemaps
-			for (int i = 0; i < _tileMaps.size() - 1; i++) {
+			/*for (int i = 0; i < _tileMaps.size() - 1; i++) {
 				_tileMaps[i].Register(line);
-			}
+			}*/
 		}
 
 		int y = 0;
