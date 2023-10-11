@@ -17,7 +17,7 @@ void MainGame::run() {
 void MainGame::initSystems() {
 	Jauntlet::init();
 
-	_window.create("Jauntlet Game Engine", _screenWidth, _screenHeight, Jauntlet::WindowFlags::RESIZEABLE);
+	_window.create("Scoundrills", _screenWidth, _screenHeight, Jauntlet::WindowFlags::RESIZEABLE);
 	_window.setBackgroundColor(Jauntlet::Color(97, 60, 47));// 61 3c 2f
 	_window.setWindowIcon("Textures/Icon.png");
 
