@@ -4,7 +4,7 @@
 
 std::vector<cell> Pathfinding::_openList;
 std::vector<cell> Pathfinding::_closedList;
-const int TIMEOUT_LIMIT = 200;
+const int TIMEOUT_LIMIT = 100;
 
 
 Pathfinding::Pathfinding() {
