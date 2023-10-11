@@ -1,6 +1,5 @@
 #include "PathRenderer.h"
 
-#include <iostream> // REMOVE
 PathRenderer::PathRenderer() : _textureID(0), _tilemap(nullptr) {
 	// Empty
 }

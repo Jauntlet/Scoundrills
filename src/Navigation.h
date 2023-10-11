@@ -1,7 +1,5 @@
 #pragma once
 
-#include <Jauntlet/Collision/Collision2D.h>
-#include <Jauntlet/Rendering/SpriteFont.h>
 #include <Jauntlet/UI/UIManager.h>
 #include <Jauntlet/UI/UIButtonElement.h>
 #include <vector>

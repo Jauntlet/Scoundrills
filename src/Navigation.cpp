@@ -4,8 +4,6 @@
 #include <Jauntlet/Rendering/ResourceManager.h>
 #include <random>
 
-#include <iostream>
-
 const std::string bgTextures[] = {"Textures/NavGround1.png", "Textures/NavGround2.png", "Textures/NavGround3.png", "Textures/NavGround4.png"};
 const int outcoveAmt = 4;
 const int layerAmt = 3;

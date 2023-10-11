@@ -1,7 +1,5 @@
 #pragma once
 #include <Jauntlet/TileMap.h>
-#include <glm/glm.hpp>
-#include <vector>
 
 // Used to find pathfind routes.
 // DO NOT USE otherwise.

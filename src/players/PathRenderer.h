@@ -1,5 +1,4 @@
 #pragma once
-#include <vector>
 #include <Jauntlet/Rendering/ResourceManager.h>
 #include "../Pathfinding.h"
 class PathRenderer
