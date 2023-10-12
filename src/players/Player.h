@@ -8,6 +8,7 @@
 #include <Jauntlet/InputManager.h>
 #include <Jauntlet/Rendering/SpriteBatch.h>
 #include <Jauntlet/TileMap.h>
+#include "../drill/PlayerStation.h"
 
 class Player
 {
@@ -19,6 +20,10 @@ public:
 	// Navigate through a tilemap to a position.
 	void navigateTo(Jauntlet::TileMap* map, glm::vec2 position);
 
+	// assign player to specified station.
+	void assignStation(PlayerStation* station);
+	// unassign player from station.
+	void clearStation();
 
 	void setPosition(float x, float y);
 	void setPosition(glm::vec2 pos);
@@ -33,4 +38,6 @@ private:
 	std::vector<glm::vec2> _path;
 
 	float _speed = 300;
+
+	PlayerStation* _station = nullptr;
 };

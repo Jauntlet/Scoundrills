@@ -60,7 +60,6 @@ void MainGame::gameLoop() {
 
 		processInput();
 
-		_players.update();
 		_camera.update();
 		_hudCamera.update();
 
@@ -76,8 +75,11 @@ void MainGame::processInput() {
 	if (_inputManager.quitGameCalled()) {
 		_gameState = GameState::EXIT;
 	}
-
+	
+	_players.update();
 	_cameraManager.processInput();
+
+	_drill.processInput(&_inputManager, &_players, _camera.convertScreenToWorld(_inputManager.getMouseCoords()));
 
 	if (_inputManager.isKeyPressed(SDLK_F11) || (_inputManager.isKeyDown(SDLK_LALT) || _inputManager.isKeyDown(SDLK_RALT)) && _inputManager.isKeyPressed(SDLK_RETURN)) {
 		_window.toggleFullscreen();

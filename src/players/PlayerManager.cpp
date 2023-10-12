@@ -22,6 +22,7 @@ void PlayerManager::createPlayer(int x, int y) {
 }
 
 bool PlayerManager::processInput(Jauntlet::InputManager* inputManager, Jauntlet::Camera2D* activeCamera, Jauntlet::TileMap* navTileMap) {
+	// if we click
 	if (inputManager->isKeyPressed(SDL_BUTTON_LEFT)) {
 		if (_selectedPlayer == -1) { // we are selecting a player.
 			Jauntlet::Collision2D collision;
@@ -35,15 +36,15 @@ bool PlayerManager::processInput(Jauntlet::InputManager* inputManager, Jauntlet:
 			}
 		}
 		else { // we have selected a position for the player to move to.
-			_storedMousePos = navTileMap->RoundWorldPos(activeCamera->convertScreenToWorld(inputManager->getMouseCoords()));
-			_players[_selectedPlayer].navigateTo(navTileMap, _storedMousePos);
+			_storedMousePos = activeCamera->convertScreenToWorld(inputManager->getMouseCoords());
+			_players[_selectedPlayer].navigateTo(navTileMap, navTileMap->RoundWorldPos(_storedMousePos));
 			_pathRenderer.clearPath();
 			_selectedPlayer = -1;
 		}	
 	} else if (_selectedPlayer != -1) {
-		if (_storedMousePos != navTileMap->RoundWorldPos(activeCamera->convertScreenToWorld(inputManager->getMouseCoords()))) {
-			_storedMousePos = navTileMap->RoundWorldPos(activeCamera->convertScreenToWorld(inputManager->getMouseCoords()));
-			_pathRenderer.createPath(_players[_selectedPlayer].getPosition(), _storedMousePos);
+		if (_storedMousePos != activeCamera->convertScreenToWorld(inputManager->getMouseCoords())) {
+			_storedMousePos = activeCamera->convertScreenToWorld(inputManager->getMouseCoords());
+			_pathRenderer.createPath(_players[_selectedPlayer].getPosition(), navTileMap->RoundWorldPos(_storedMousePos));
 		}
 	}
 	return false;
@@ -51,6 +52,9 @@ bool PlayerManager::processInput(Jauntlet::InputManager* inputManager, Jauntlet:
 
 bool PlayerManager::isPlayerSelected() {
 	return _selectedPlayer != -1;
+}
+void PlayerManager::assignStation(PlayerStation* newStation) {
+	_players[_selectedPlayer].assignStation(newStation);
 }
 
 void PlayerManager::update() {

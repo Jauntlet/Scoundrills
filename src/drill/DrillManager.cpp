@@ -12,7 +12,13 @@ void DrillManager::init() {
 
 	on();
 }
-
+void DrillManager::processInput(Jauntlet::InputManager* inputManager, PlayerManager* playerManager, glm::vec2 mousePosAsWorld) {
+	if (playerManager->isPlayerSelected()) {
+		if (!_drillAssets.steeringWheel.isOccupied() && _drillAssets.steeringWheel.isColliding(mousePosAsWorld)) {
+			playerManager->assignStation(&_drillAssets.steeringWheel);
+		}
+	}
+}
 void DrillManager::draw() {
 	_drillAssets.drawLayerOne();
 	drillFloor.draw();
