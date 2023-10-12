@@ -26,6 +26,9 @@
     <ClCompile Include="src\pathfinding\PathRenderer.cpp">
       <Filter>pathfinding</Filter>
     </ClCompile>
+    <ClCompile Include="src\drill\PlayerStation.cpp">
+      <Filter>drill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\MainGame.h" />
@@ -51,6 +54,9 @@
     </ClInclude>
     <ClInclude Include="src\pathfinding\PathRenderer.h">
       <Filter>pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="src\drill\PlayerStation.h">
+      <Filter>drill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
