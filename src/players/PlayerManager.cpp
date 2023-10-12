@@ -8,6 +8,8 @@ PlayerManager::PlayerManager() {
 void PlayerManager::init(int initialPlayers, Jauntlet::TileMap* tileWalls) {
 	_pathRenderer.init(tileWalls);
 
+	_players.reserve(sizeof(Player) * initialPlayers);
+
 	for (int i = 0; i < initialPlayers; i++) {
 		_players.emplace_back(64 * (i + 1) + 320, -64);
 	}
