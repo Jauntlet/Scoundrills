@@ -10,6 +10,7 @@ build/scoundrills
 # Visual Studio
 .vs/
 .cache/
+enc_temp_folder
 *.vcxproj.FileListAbsolute.txt
 
 # CMake Build Files
