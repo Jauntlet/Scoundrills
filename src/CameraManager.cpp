@@ -6,6 +6,8 @@
 #include "Jauntlet/TileMap.h"
 #include "src/players/PlayerManager.h"
 
+const float CAMERA_SPEED = 500;
+
 CameraManager::CameraManager() {
 	// Empty
 }
@@ -47,19 +49,19 @@ void CameraManager::processInput() {
 	}
 
 	if (_moveLeft.isDown()) {
-		_camera->translate(glm::vec2(-300 * Jauntlet::Time::getDeltaTime(), 0));
+		_camera->translate(glm::vec2(-CAMERA_SPEED * Jauntlet::Time::getDeltaTime(), 0));
 		_camera->clearTransition(Jauntlet::Camera2D::TRANSITION_TYPE::POSITION);
 	}
 	if (_moveRight.isDown()) {
-		_camera->translate(glm::vec2(300 * Jauntlet::Time::getDeltaTime(), 0));
+		_camera->translate(glm::vec2(CAMERA_SPEED * Jauntlet::Time::getDeltaTime(), 0));
 		_camera->clearTransition(Jauntlet::Camera2D::TRANSITION_TYPE::POSITION);
 	}
 	if (_moveUp.isDown()) {
-		_camera->translate(glm::vec2(0, 300 * Jauntlet::Time::getDeltaTime()));
+		_camera->translate(glm::vec2(0, CAMERA_SPEED * Jauntlet::Time::getDeltaTime()));
 		_camera->clearTransition(Jauntlet::Camera2D::TRANSITION_TYPE::POSITION);
 	}
 	if (_moveDown.isDown()) {
-		_camera->translate(glm::vec2(0, -300 * Jauntlet::Time::getDeltaTime()));
+		_camera->translate(glm::vec2(0, -CAMERA_SPEED * Jauntlet::Time::getDeltaTime()));
 		_camera->clearTransition(Jauntlet::Camera2D::TRANSITION_TYPE::POSITION);
 	}
 
