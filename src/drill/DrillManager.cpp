@@ -14,9 +14,10 @@ void DrillManager::init() {
 }
 
 void DrillManager::draw() {
-	_drillAssets.draw();
+	_drillAssets.drawLayerOne();
 	drillFloor.draw();
 	drillWalls.draw();
+	_drillAssets.drawLayerTwo();
 }
 
 void DrillManager::on() {
