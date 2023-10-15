@@ -57,15 +57,15 @@ void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::InputManager* inMana
 			int point = _map[y][x]; //The point type according to the generated "map," will determine the chance of encountering water, ores, etc. when arriving there.
 			_positions.push_back(glm::vec2(100 * x - 50 * layerSpan, 200 * y - 50 * layersHeight)); //0 is the center of the screen.
 			if (point == 0) { // white X
-				_points.push_back(Jauntlet::UIButtonElement(inManager, [&]() -> void { selectNav(_points.size()); }, _xTure, &_positions[_points.size()], glm::vec2(128), Jauntlet::UIElement::ORIGIN_PIN::CENTER));
+				_points.push_back(Jauntlet::UIButtonElement(inManager, [&]() -> void { selectNav(_positions.size() - 1); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(128), Jauntlet::UIElement::ORIGIN_PIN::CENTER));
 				continue;
 			}
 			if (point == 1) { // blue X
-				_points.push_back(Jauntlet::UIButtonElement(inManager, [&]() -> void { selectNav(_points.size()); }, _xTure, &_positions[_points.size()], glm::vec2(128), Jauntlet::UIElement::ORIGIN_PIN::CENTER));
+				_points.push_back(Jauntlet::UIButtonElement(inManager, [&]() -> void { selectNav(_positions.size() - 1); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(128), Jauntlet::UIElement::ORIGIN_PIN::CENTER));
 				continue;
 			}
 			if (point == 2) { // orange X
-				_points.push_back(Jauntlet::UIButtonElement(inManager, [&]() -> void { selectNav(_points.size()); }, _xTure, &_positions[_points.size()], glm::vec2(128), Jauntlet::UIElement::ORIGIN_PIN::CENTER));
+				_points.push_back(Jauntlet::UIButtonElement(inManager, [&]() -> void { selectNav(_positions.size() - 1); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(128), Jauntlet::UIElement::ORIGIN_PIN::CENTER));
 				continue;
 			}
 		}
