@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Scoundrills
 Comment=Drill through the earth with convicts
-Exec=/path/to/scoundrills
-Icon=/path/to/scoundrills/Textures/Icon.png
+Exec=./scoundrills
+Icon=scoundrills
 Type=Application
 Categories=Game;
