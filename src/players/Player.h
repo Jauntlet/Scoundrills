@@ -37,8 +37,7 @@ private:
 	glm::vec2 _position = glm::vec2(0,0);
 	std::vector<glm::vec2> _path;
 
-	float _speed = 300;
-	glm::vec2 _storedVelocity = glm::vec2(0);
+	float _speed = 300, _storedVelocity = 0;
 
 	PlayerStation* _station = nullptr;
 };

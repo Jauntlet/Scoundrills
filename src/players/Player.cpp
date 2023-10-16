@@ -22,17 +22,17 @@ void Player::update() {
 			if (std::abs(direction.x) < _speed * Jauntlet::Time::getDeltaTime()) {
 				// The character will move to the desired position with momentum leftover, so we store the velocity for the next movement.
 				_position.x += direction.x;
-				_storedVelocity.x += Jauntlet::Time::getDeltaTime() * _speed - std::abs(direction.x);
+				_storedVelocity += Jauntlet::Time::getDeltaTime() * _speed - std::abs(direction.x);
 			}
-			else if (std::abs(direction.x) < _speed * Jauntlet::Time::getDeltaTime() + _storedVelocity.x) {
+			else if (std::abs(direction.x) < _speed * Jauntlet::Time::getDeltaTime() + _storedVelocity) {
 				// The character will move to the desired position whilst using some stored velocity.
-				_storedVelocity.x -= direction.x - _speed * Jauntlet::Time::getDeltaTime();
+				_storedVelocity -= direction.x - _speed * Jauntlet::Time::getDeltaTime();
 				_position.x += direction.x;
 			}
 			else {
 				// The character will not reach the desired position, so use all stored velocity
-				_position.x += Jauntlet::Time::getDeltaTime() * _speed * glm::sign(direction.x) + glm::sign(direction.x) * _storedVelocity.x;
-				_storedVelocity.x = 0;
+				_position.x += Jauntlet::Time::getDeltaTime() * _speed * glm::sign(direction.x) + glm::sign(direction.x) * _storedVelocity;
+				_storedVelocity = 0;
 			}
 		}
 
@@ -40,17 +40,17 @@ void Player::update() {
 			if (std::abs(direction.y) < _speed * Jauntlet::Time::getDeltaTime()) {
 				// The character will move to the desired position with momentum leftover, so we store the velocity for the next movement.
 				_position.y += direction.y;
-				_storedVelocity.y += Jauntlet::Time::getDeltaTime() * _speed - std::abs(direction.y);
+				_storedVelocity += Jauntlet::Time::getDeltaTime() * _speed - std::abs(direction.y);
 			}
-			else if (std::abs(direction.y) < _speed * Jauntlet::Time::getDeltaTime() + _storedVelocity.y) {
+			else if (std::abs(direction.y) < _speed * Jauntlet::Time::getDeltaTime() + _storedVelocity) {
 				// The character will move to the desired position whilst using some stored velocity.
-				_storedVelocity.y -= direction.y - _speed * Jauntlet::Time::getDeltaTime();
+				_storedVelocity -= direction.y - _speed * Jauntlet::Time::getDeltaTime();
 				_position.y += direction.y;
 			}
 			else {
 				// The character will not reach the desired position, so use all stored velocity
-				_position.y += Jauntlet::Time::getDeltaTime() * _speed * glm::sign(direction.y) + glm::sign(direction.y) * _storedVelocity.y;
-				_storedVelocity.y = 0;
+				_position.y += Jauntlet::Time::getDeltaTime() * _speed * glm::sign(direction.y) + glm::sign(direction.y) * _storedVelocity;
+				_storedVelocity = 0;
 			}
 		}
 
@@ -61,7 +61,7 @@ void Player::update() {
 			
 			// remove all stored velocity if destination is reached.
 			if (_path.empty()) {
-				_storedVelocity = glm::vec2(0);
+				_storedVelocity = 0;
 			}
 		}
 	}
