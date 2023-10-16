@@ -58,6 +58,7 @@
     <ClInclude Include="src\drill\PlayerStation.h">
       <Filter>drill</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="players">
@@ -69,5 +70,11 @@
     <Filter Include="pathfinding">
       <UniqueIdentifier>{49162868-9ea9-4899-87fb-fb41e86879fb}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Scoundrills.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico" />
   </ItemGroup>
 </Project>
