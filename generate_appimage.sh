@@ -7,10 +7,10 @@ APPDIR="Scoundrills.AppDir"
 rm -rf "$APPDIR"
 
 # Create the AppDir structure
-mkdir -p "$APPDIR/usr/bin"
+mkdir -p "$APPDIR"
 
 # Copy your executable to the AppDir
-cp build/scoundrills "$APPDIR/usr/bin"
+cp build/scoundrills "$APPDIR/scoundrills"
 
 # Copy the icon to the AppDir
 cp build/Textures/Icon.png "$APPDIR/scoundrills.png"
@@ -19,13 +19,13 @@ cp build/Textures/Icon.png "$APPDIR/scoundrills.png"
 cp extras/scoundrills.desktop "$APPDIR/scoundrills.desktop"
 
 # Give the executable execute permission
-chmod +x "$APPDIR/usr/bin/scoundrills"
+chmod +x "$APPDIR/scoundrills"
 
 # Copy the contents of the "build" directory recursively
-cp -r build/Fonts "$APPDIR/usr/bin"
-cp -r build/Levels "$APPDIR/usr/bin"
-cp -r build/Shaders "$APPDIR/usr/bin"
-cp -r build/Textures "$APPDIR/usr/bin"
+cp -r build/Fonts "$APPDIR"
+cp -r build/Levels "$APPDIR"
+cp -r build/Shaders "$APPDIR"
+cp -r build/Textures "$APPDIR"
 
 # Create aan apprun
 cp extras/AppRun "$APPDIR/AppRun"
