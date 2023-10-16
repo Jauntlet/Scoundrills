@@ -10,7 +10,14 @@ void PathRenderer::init(Jauntlet::TileMap* tileMap) {
 }
 
 void PathRenderer::createPath(glm::vec2 start, glm::vec2 end) {
-	std::vector<glm::vec2> path = Pathfinding::findPath(_tilemap, start, end);
+	bool reachedDest = false;
+	std::vector<glm::vec2> path = Pathfinding::findPath(_tilemap, start, end, reachedDest);
+	if (!reachedDest) {
+		path.clear();
+		clearPath();
+		return;
+	}
+
 	glm::vec2 lastPos = start;
 	
 	path[0] = path.back();

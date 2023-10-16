@@ -79,7 +79,13 @@ void Player::draw(Jauntlet::SpriteBatch& spriteBatch) {
 void Player::navigateTo(Jauntlet::TileMap* map, glm::vec2 position) {
 	_path.clear();
 
-	_path = Pathfinding::findPath(map, _position, position);
+	bool reachedDest = false;
+	_path = Pathfinding::findPath(map, _position, position, reachedDest);
+	if (!reachedDest) {
+		_path.clear();
+		return;
+	}
+
 	_path.erase(_path.begin());
 	// if the final destination is in a valid position, add it to the vector again. This is because when starting to pathfind, the final destination
 	// gets removed at some point.. This is weird, but it does allow us to prevent going to a bad final destination. -xm
