@@ -38,6 +38,15 @@ void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::InputManager* inMana
 	_points.clear();
 	_positions.clear();
 
+	int sizeSum = 0;
+
+	for (int i = 0; i < _map.size(); i++) {
+		sizeSum += _map[i].size();
+	}
+
+	_positions.reserve(sizeof(glm::vec2) * sizeSum);
+	_points.reserve(sizeof(Jauntlet::UIButtonElement) * sizeSum);
+
 	//read in textures
 	for (int i = 0; i < 4; i++) {
 		_navTextures.push_back(Jauntlet::ResourceManager::getTexture(bgTextures[i]).id);
