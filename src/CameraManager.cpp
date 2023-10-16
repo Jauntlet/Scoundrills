@@ -77,13 +77,11 @@ void CameraManager::processInput() {
 	if (_inputManager->deltaScroll != 0) {
 		_camera->clearTransitions();
 
-		float zoom = pow(1.25f, _inputManager->deltaScroll);
+		float zoom = pow(1.1f, _inputManager->deltaScroll);
 
-		glm::vec2 mouse = _camera->convertScreenToWorldDisregardPosition(_inputManager->getMouseCoords());
+		//glm::vec2 mouse = _camera->convertScreenToWorldDisregardPosition(_inputManager->getMouseCoords());
 
-		_camera->translate(mouse);
 		_camera->multiply(zoom);
-		_camera->translate(-mouse);
 
 		_inputManager->deltaScroll = 0;
 	}
