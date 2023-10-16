@@ -6,6 +6,7 @@
 # Executables
 *.exe
 build/scoundrills
+*.AppImage
 
 # Visual Studio
 .vs/
