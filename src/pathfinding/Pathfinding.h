@@ -26,6 +26,9 @@ public:
 	Pathfinding();
 	// Finds the path between a starting and end location in world space, using a tilemap as reference.
 	static std::vector<glm::vec2> findPath(Jauntlet::TileMap* map, glm::vec2 start, glm::vec2 destination);
+	// Finds the path between a starting and end location in world space, using a tilemap as reference.
+	// reachedDestination will return true or false depending on if the final destination is reachable.
+	static std::vector<glm::vec2> findPath(Jauntlet::TileMap* map, glm::vec2 start, glm::vec2 destination, bool& reachedDestination);
 
 private:
 
