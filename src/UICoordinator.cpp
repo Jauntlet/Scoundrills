@@ -42,7 +42,7 @@ void UICoordinator::init(glm::ivec2 screenSize, Jauntlet::Camera2D* hudCamera, J
 	// conversion from `void` to `std::function<void ()>` -jk
 	std::function<void()> _buttonMethod = std::bind(&DrillManager::toggle, drillManager);
 	
-	Jauntlet::UIButtonElement* _button = new Jauntlet::UIButtonElement(_inputManager, _buttonMethod, _buttonTexture, buttonPos, glm::vec2(512, 512), Jauntlet::UIElement::ORIGIN_PIN::TOP_LEFT);
+	Jauntlet::UIButtonElement* _button = new Jauntlet::UIButtonElement(_inputManager, _buttonMethod, _buttonTexture, buttonPos, glm::vec2(512, 512), Jauntlet::UIElement::ORIGIN_PIN::BOTTOM_LEFT);
 		
 	_UIManager.addElement(_button);
 }
