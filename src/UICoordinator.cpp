@@ -28,7 +28,6 @@ void UICoordinator::init(glm::ivec2 screenSize, Jauntlet::Camera2D* hudCamera, J
 	_UIManager.setScale((hudCamera->getCameraSize().y / 1080.0f) * (hudCamera->getCameraSize().x / 1920.0f));
 	_UIManager.resolvePositions();
 
-	// TODO: Remove second genNav call
 	navigation.genNav(_UIManager, _inputManager);
 
 	_fpsColor = Jauntlet::Color(0, 255, 0, 255);
