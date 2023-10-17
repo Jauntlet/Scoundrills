@@ -9,7 +9,7 @@ const int outcoveAmt = 4;
 const int layerAmt = 3;
 static int seed = std::chrono::system_clock::now().time_since_epoch().count(); //temp
 
-Navigation::Navigation() {
+Navigation::Navigation() : _background(nullptr) {
 	if (_map.empty()) { //map not generated (so generate it)
 		//generate some randomness
 		std::mt19937 r = std::mt19937(seed);
@@ -28,10 +28,15 @@ Navigation::Navigation() {
 	}
 }
 
+Navigation::~Navigation() {
+	delete _background;
+}
+
 void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::InputManager* inManager) {
 	_xTure = Jauntlet::ResourceManager::getTexture("Textures/xmark.png").id;
 	//set stuff
 	UIManager = UIM;
+	_bgPos = glm::vec2(0);
 
 	//clear stuff
 	_navTextures.clear();
@@ -48,13 +53,15 @@ void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::InputManager* inMana
 	_points.reserve(sizeof(Jauntlet::UIButtonElement) * sizeSum);
 
 	//read in textures
+	_navTextures.reserve(sizeof(GLuint) * 4);
 	for (int i = 0; i < 4; i++) {
 		_navTextures.push_back(Jauntlet::ResourceManager::getTexture(bgTextures[i]).id);
 	}
 
 	//draw background
-	Jauntlet::UIElement background = Jauntlet::UIElement(); //when jack implements a constructor for UI elements via sprites rather than text, i'll do this part.
-	
+	 _background = new Jauntlet::UISpriteElement(_navTextures[0], &_bgPos, glm::vec2(1200), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+
+	UIM.addElement(_background);
 
 	int layersHeight = _map.size(); //store the total height of the "layers"
 
@@ -64,7 +71,7 @@ void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::InputManager* inMana
 
 		for (int x = 0; x < _map[y].size(); x++) {
 			int point = _map[y][x]; //The point type according to the generated "map," will determine the chance of encountering water, ores, etc. when arriving there.
-			_positions.push_back(glm::vec2(100 * x - 50 * layerSpan, 200 * y - 50 * layersHeight)); //0 is the center of the screen.
+			_positions.push_back(glm::vec2((2 * x - layerSpan) * 100, (4 * y - layersHeight) * 100)); //0 is the center of the screen.
 			if (point == 0) { // white X
 				_points.push_back(Jauntlet::UIButtonElement(inManager, [&]() -> void { selectNav(_positions.size() - 1); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(128), Jauntlet::UIElement::ORIGIN_PIN::CENTER));
 				continue;
