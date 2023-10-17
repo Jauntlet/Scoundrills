@@ -35,7 +35,7 @@ Navigation::~Navigation() {
 void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::InputManager* inManager) {
 	_xTure = Jauntlet::ResourceManager::getTexture("Textures/xmark.png").id;
 	//set stuff
-	UIManager = UIM;
+	UIManager = &UIM;
 	_bgPos = glm::vec2(0);
 
 	//clear stuff

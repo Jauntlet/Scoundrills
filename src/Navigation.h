@@ -23,7 +23,7 @@ private:
 	GLuint _xTure;
 	bool _navOpen = false;
 	int destination;
-	Jauntlet::UIManager UIManager;
+	Jauntlet::UIManager* UIManager;
 	std::vector<Jauntlet::UIButtonElement> _points;
 	glm::vec2 _bgPos;
 	std::vector<glm::vec2> _positions;
