@@ -32,8 +32,8 @@ void CameraManager::init(Jauntlet::Camera2D* camera, Jauntlet::InputManager* inp
 
 void CameraManager::processInput() {
 	if (_inputManager->isKeyDown(SDLK_r)) {
-		_camera->transitionToPosition(glm::vec2(0));
-		_camera->transitionToScale(1);
+		_camera->transitionToPosition(glm::vec2(24 * 64 * 0.5f, 30 * 64 * 0.5f * -1));
+		_camera->transitionToScale(0.5f);
 	}
 
 	bool clickOnPlayers = _players->processInput(_inputManager, _camera, _level);
