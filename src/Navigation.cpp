@@ -92,6 +92,7 @@ void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::InputManager* inMana
 	}
 
 	//update visibility
+	_background->visible = _navOpen;
 	for (int i = 0; i < _points.size(); i++) {
 		_points[i].visible = _navOpen;
 	}
@@ -100,6 +101,7 @@ void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::InputManager* inMana
 void Navigation::toggleNav() {
 	_navOpen = !_navOpen;
 	//update visibility
+	_background->visible = _navOpen;
 	for (int i = 0; i < _points.size(); i++) {
 		_points[i].visible = _navOpen;
 	}
