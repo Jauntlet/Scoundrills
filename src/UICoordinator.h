@@ -4,7 +4,7 @@
 #pragma once
 
 #include <Jauntlet/Rendering/ResourceManager.h>
-#include <Jauntlet/UI/UIButtonElement.h>
+#include <Jauntlet/UI/UIButtonToggleableElement.h>
 #include <Jauntlet/UI/UIManager.h>
 #include <Jauntlet/UI/UITextElement.h>
 
@@ -43,5 +43,5 @@ private:
 	// Debug Button
 	GLuint _buttonTexture;
 	glm::vec2* buttonPos;
-	Jauntlet::UIButtonElement* _button;
+	Jauntlet::UIButtonToggleableElement* _button;
 };

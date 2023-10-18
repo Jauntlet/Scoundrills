@@ -1,6 +1,6 @@
 #include <functional>
 #include <iostream>
-#include <Jauntlet/UI/UIButtonElement.h>
+#include <Jauntlet/UI/UIButtonToggleableElement.h>
 
 #include "UICoordinator.h"
 
@@ -42,8 +42,8 @@ void UICoordinator::init(glm::ivec2 screenSize, Jauntlet::Camera2D* hudCamera, J
 	// conversion from `void` to `std::function<void ()>` -jk
 	std::function<void()> _buttonMethod = std::bind(&DrillManager::toggle, drillManager);
 	
-	Jauntlet::UIButtonElement* _button = new Jauntlet::UIButtonElement(_inputManager, _buttonMethod, _buttonTexture, buttonPos, glm::vec2(512, 512), Jauntlet::UIElement::ORIGIN_PIN::BOTTOM_LEFT);
-		
+	Jauntlet::UIButtonToggleableElement* _button = new Jauntlet::UIButtonToggleableElement(_inputManager, _buttonMethod, _buttonTexture, buttonPos, glm::vec2(512, 512), Jauntlet::UIElement::ORIGIN_PIN::BOTTOM_LEFT);
+	
 	_UIManager.addElement(_button);
 }
 
