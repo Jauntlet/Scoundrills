@@ -41,7 +41,7 @@ void MainGame::initSystems() {
 	_uiCoordinator.init(glm::ivec2(_screenWidth, _screenHeight), &_hudCamera, &_spriteFont, &_inputManager, &_drill);
 	
 	_drill.init();
-	_selectedTile.init(&_drill.drillFloor);
+	_selectedTile.init(&_drill.drillFloor, &_players);
 }
 
 void MainGame::initShaders() {

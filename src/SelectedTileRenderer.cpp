@@ -3,8 +3,9 @@
 SelectedTileRenderer::SelectedTileRenderer() : _drawColor(255, 255, 255), _textureID(0), _tilemap(nullptr) {
 	// Empty
 }
-void SelectedTileRenderer::init(Jauntlet::TileMap* Tilemap) {
+void SelectedTileRenderer::init(Jauntlet::TileMap* Tilemap, PlayerManager* playerManager) {
 	_tilemap = Tilemap;
+	_players = playerManager;
 	_textureID = Jauntlet::ResourceManager::getTexture("Textures/WhiteSquare.png").id;
 
 	_spriteBatch.init();
@@ -13,11 +14,16 @@ void SelectedTileRenderer::init(Jauntlet::TileMap* Tilemap) {
 void SelectedTileRenderer::draw(Jauntlet::Camera2D* activeCamera, Jauntlet::InputManager* inputManager) {
 	glm::vec2 _selectedTilePos = _tilemap->RoundWorldPos(activeCamera->convertScreenToWorld(inputManager->getMouseCoords()));
 	glm::ivec2 _selectedTile = _tilemap->WorldPosToTilePos(_selectedTilePos);
-	if (!_tilemap->isValidTilePos(_selectedTile) || _tilemap->tileHasCollision(_selectedTile) || _tilemap->isTileEmpty(_selectedTile)) {
-		_drawColor = Jauntlet::Color(255, 0, 0);
+	if (_players->isPlayerSelected()) {
+		if (!_tilemap->isValidTilePos(_selectedTile) || _tilemap->tileHasCollision(_selectedTile) || _tilemap->isTileEmpty(_selectedTile)) {
+			_drawColor = Jauntlet::Color(255, 0, 0);
+		}
+		else {
+			_drawColor = Jauntlet::Color(0, 255, 0);
+		}
 	}
 	else {
-		_drawColor = Jauntlet::Color(0, 255, 0);
+		_drawColor = Jauntlet::Color(255, 255, 255);
 	}
 
 	_spriteBatch.begin();
