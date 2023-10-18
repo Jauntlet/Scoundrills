@@ -71,6 +71,8 @@ Type=Application
 Categories=Game;
 EOF
 
+bash compile.sh --release --no-launch
+
 # Create the AppImage
 ./appimagetool-x86_64.AppImage "$APPDIR"
 
