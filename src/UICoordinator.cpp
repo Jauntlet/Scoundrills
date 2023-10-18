@@ -10,6 +10,8 @@ UICoordinator::UICoordinator() {
 
 UICoordinator::~UICoordinator() {
 	delete _fpsCounter;
+	delete buttonPos;
+	delete _button;
 }
 
 void _bruh() {
