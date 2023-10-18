@@ -6,6 +6,7 @@
 # Executables
 *.exe
 build/game
+*.AppImage
 
 # Visual Studio
 .vs/
