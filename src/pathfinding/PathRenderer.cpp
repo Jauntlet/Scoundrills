@@ -28,7 +28,7 @@ void PathRenderer::createPath(glm::vec2 start, glm::vec2 end) {
  	while (!path.empty()) {
 		if (path.size() > 1) {
 			direction = glm::sign(path[0] - path.back());
-			
+
 			if (direction != lastDir && lastDir != glm::ivec2(0)) {
 				if (lastDir.y == 1 && direction.x == -1 || direction.y == -1 && lastDir.x == 1) { // from going down to going right and vice versa
 					_spriteBatch.draw({ path[0].x, path[0].y, 64, 64 }, { (1.0f / 18.0f) * 6.0f, 0, (1.0f / 18.0f), 1 }, _textureID);
@@ -43,11 +43,17 @@ void PathRenderer::createPath(glm::vec2 start, glm::vec2 end) {
 					_spriteBatch.draw({ path[0].x, path[0].y, 64, 64 }, { (1.0f / 18.0f) * 9.0f, 0, (1.0f / 18.0f), 1 }, _textureID);
 				}
 			}
-			else if (direction.x != 0) {
+			else if (direction.x == 1) {
 				_spriteBatch.draw({ path[0].x, path[0].y, 64, 64 }, { (1.0f / 18.0f) * 4.0f, 0, (1.0f / 18.0f), 1 }, _textureID);
 			}
-			else { // direction is in the Y
+			else if (direction.x == -1) {
+				_spriteBatch.draw({ path[0].x, path[0].y, 64, 64 }, { (1.0f / 18.0f) * 4.0f, 0, (1.0f / 18.0f), 1 }, 180, _textureID);
+			}
+			else if (direction.y == 1) {
 				_spriteBatch.draw({ path[0].x, path[0].y, 64, 64 }, { (1.0f / 18.0f) * 5.0f, 0, (1.0f / 18.0f), 1 }, _textureID);
+			}
+			else {
+				_spriteBatch.draw({ path[0].x, path[0].y, 64, 64 }, { (1.0f / 18.0f) * 5.0f, 0, (1.0f / 18.0f), 1 }, 180, _textureID);
 			}
 		}
 		else { // we are at the part of the line, we draw the arrow head.
