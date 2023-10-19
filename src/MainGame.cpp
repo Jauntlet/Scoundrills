@@ -4,7 +4,7 @@
 #include <Jauntlet/Errors.h>
 #include "MainGame.h"
 
-MainGame::MainGame() {
+MainGame::MainGame() : _window("Jauntlet Game Engine", _screenWidth, _screenHeight, Jauntlet::WindowFlags::RESIZEABLE) {
 	// Empty
 
 }
@@ -18,7 +18,6 @@ void MainGame::run() {
 void MainGame::initSystems() {
 	Jauntlet::init();
 
-	_window.create("Jauntlet Game Engine", _screenWidth, _screenHeight, Jauntlet::WindowFlags::RESIZEABLE);
 	_window.setBackgroundColor(Jauntlet::Color(76, 24, 32));
 
 	initShaders();
