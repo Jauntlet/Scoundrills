@@ -40,8 +40,9 @@ bool PlayerManager::processInput(Jauntlet::InputManager* inputManager, Jauntlet:
 			_players[_selectedPlayer].navigateTo(navTileMap, navTileMap->RoundWorldPos(_storedMousePos));
 			_pathRenderer.clearPath();
 			_selectedPlayer = -1;
-		}	
+		}
 	} else if (_selectedPlayer != -1) {
+		// no click, so we draw the path via pathrenderer
 		if (_storedMousePos != activeCamera->convertScreenToWorld(inputManager->getMouseCoords())) {
 			_storedMousePos = activeCamera->convertScreenToWorld(inputManager->getMouseCoords());
 			_pathRenderer.createPath(_players[_selectedPlayer].getPosition(), navTileMap->RoundWorldPos(_storedMousePos));

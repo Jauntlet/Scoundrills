@@ -1,4 +1,5 @@
 #include "PathRenderer.h"
+#include <Jauntlet/JMath.h>
 
 PathRenderer::PathRenderer() : _textureID(0), _tilemap(nullptr) {
 	// Empty
@@ -47,13 +48,13 @@ void PathRenderer::createPath(glm::vec2 start, glm::vec2 end) {
 				_spriteBatch.draw({ path[0].x, path[0].y, 64, 64 }, { (1.0f / 18.0f) * 4.0f, 0, (1.0f / 18.0f), 1 }, _textureID);
 			}
 			else if (direction.x == -1) {
-				_spriteBatch.draw({ path[0].x, path[0].y, 64, 64 }, { (1.0f / 18.0f) * 4.0f, 0, (1.0f / 18.0f), 1 }, 180, _textureID);
+				_spriteBatch.draw({ path[0].x, path[0].y, 64, 64 }, { (1.0f / 18.0f) * 4.0f, 0, (1.0f / 18.0f), 1 }, M_PI /*180 degrees in radians*/, _textureID);
 			}
 			else if (direction.y == 1) {
 				_spriteBatch.draw({ path[0].x, path[0].y, 64, 64 }, { (1.0f / 18.0f) * 5.0f, 0, (1.0f / 18.0f), 1 }, _textureID);
 			}
 			else {
-				_spriteBatch.draw({ path[0].x, path[0].y, 64, 64 }, { (1.0f / 18.0f) * 5.0f, 0, (1.0f / 18.0f), 1 }, 180, _textureID);
+				_spriteBatch.draw({ path[0].x, path[0].y, 64, 64 }, { (1.0f / 18.0f) * 5.0f, 0, (1.0f / 18.0f), 1 }, M_PI /*180 degrees in radians*/, _textureID);
 			}
 		}
 		else { // we are at the part of the line, we draw the arrow head.
