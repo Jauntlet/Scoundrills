@@ -1,5 +1,5 @@
-/* Purpose:
- * Main Contributer(s):
+/* Purpose: Store and manage all interactions with the player's resources, materials, inventory, etc. Generally anything numeric to do with the crew/drill is stored here.
+ * Main Contributor(s): Christopher Kowalewski
  */
 #pragma once
 
