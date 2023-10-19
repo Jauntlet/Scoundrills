@@ -38,6 +38,7 @@ private:
 	void drawGame();
 	void drawHUD();
 
+	int  _screenWidth = 1024, _screenHeight = 768;
 	Jauntlet::Window _window;
 
 	Jauntlet::GLSLProgram _colorProgram;
@@ -49,7 +50,6 @@ private:
 
 	GameState _gameState = GameState::PLAY;
 
-	int  _screenWidth = 1024, _screenHeight = 768;
 	float _fps = 0;
 
 	Jauntlet::SpriteBatch _playerSpriteBatch;
