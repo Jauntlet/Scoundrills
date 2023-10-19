@@ -58,7 +58,9 @@
     <ClInclude Include="src\drill\PlayerStation.h">
       <Filter>drill</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h" />
+    <ClInclude Include="resource.h">
+      <Filter>icon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="players">
