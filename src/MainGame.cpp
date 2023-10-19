@@ -1,6 +1,7 @@
 #include "MainGame.h"
 
-MainGame::MainGame() {
+//                        initialize the window via an initializer list
+MainGame::MainGame() : _window("Jauntlet Game Engine", _screenWidth, _screenHeight, 0) {
 	// Empty
 }
 
@@ -13,8 +14,7 @@ void MainGame::initSystems() {
 	// initialize Jauntlet
 	Jauntlet::init();
 
-	// create a window and set some default properties
-	_window.create("Jauntlet Game Engine", _screenWidth, _screenHeight, 0);
+	// set some default window properties
 	_window.setBackgroundColor(Jauntlet::Color(76, 24, 32));
 	_window.setWindowIcon("Textures/Icon.png");
 	
