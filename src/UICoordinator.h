@@ -13,10 +13,8 @@
 
 class UICoordinator {
 public:
-	UICoordinator();
+	UICoordinator(glm::ivec2 screenSize, Jauntlet::Camera2D* hudCamera, Jauntlet::SpriteFont* spriteFont, Jauntlet::InputManager* inputManager, DrillManager* drillManager);
 	~UICoordinator();
-
-	void init(glm::ivec2 screenSize, Jauntlet::Camera2D* hudCamera, Jauntlet::SpriteFont* spriteFont, Jauntlet::InputManager* inputManager, DrillManager* drillManager);
 
 	void draw();
 

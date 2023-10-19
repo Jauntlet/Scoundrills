@@ -3,8 +3,11 @@
 #include <Jauntlet/UI/UIElement.h>
 #include "MainGame.h"
 
-MainGame::MainGame() :
-	_window("Scoundrills", _screenWidth, _screenHeight, Jauntlet::WindowFlags::RESIZEABLE) {
+MainGame::MainGame()
+:
+	_window("Scoundrills", _screenWidth, _screenHeight, Jauntlet::WindowFlags::RESIZEABLE),
+	_uiCoordinator(glm::ivec2(_screenWidth, _screenHeight), &_hudCamera, &_spriteFont, &_inputManager, &_drill) 
+{
 	// empty
 }
 
@@ -38,8 +41,6 @@ void MainGame::initSystems() {
 
 	// initializes spritefont
 	_spriteFont.init(&_hudCamera, "Fonts/HandelGo.ttf", 256);
-
-	_uiCoordinator.init(glm::ivec2(_screenWidth, _screenHeight), &_hudCamera, &_spriteFont, &_inputManager, &_drill);
 	
 	_drill.init();
 	_selectedTile.init(&_drill.drillFloor, &_players);
