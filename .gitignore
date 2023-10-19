@@ -5,13 +5,13 @@
 
 # Executables
 *.exe
-build/game
-*.AppImage
+build/visualizer
 
 # Visual Studio
 .vs/
 .cache/
 *.vcxproj.FileListAbsolute.txt
+build/Scoundrills.res
 
 # CMake Build Files
 build/CMakeFiles/
