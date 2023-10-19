@@ -54,8 +54,6 @@ void Player::update() {
 			}
 		}
 
-
-
 		if (_position == _path.back()) {
 			_path.pop_back();
 			
@@ -71,9 +69,7 @@ void Player::update() {
 }
 
 void Player::draw(Jauntlet::SpriteBatch& spriteBatch) {
-	glm::vec4 destRect = glm::vec4(_position.x, _position.y, 64, 64);
-
-	spriteBatch.draw(destRect, Jauntlet::ResourceManager::getTexture("Textures/Craig.png").id, 0);
+	spriteBatch.draw({ _position.x, _position.y, 64, 64 }, Jauntlet::ResourceManager::getTexture("Textures/Craig.png").id, 0);
 }
 
 void Player::navigateTo(Jauntlet::TileMap* map, glm::vec2 position) {

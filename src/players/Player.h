@@ -3,10 +3,7 @@
  */
 #pragma once
 
-#include <Jauntlet/Collision/Collision2D.h>
 #include <Jauntlet/InputKey.h>
-#include <Jauntlet/InputManager.h>
-#include <Jauntlet/Rendering/SpriteBatch.h>
 #include <Jauntlet/TileMap.h>
 #include "../drill/PlayerStation.h"
 
