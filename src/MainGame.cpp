@@ -1,7 +1,11 @@
 #include "MainGame.h"
 
 //                        initialize the window via an initializer list
-MainGame::MainGame() : _window("Jauntlet Game Engine", _screenWidth, _screenHeight, 0) {
+MainGame::MainGame() 
+	: 
+	_window("Jauntlet Game Engine", _screenWidth, _screenHeight, 0),
+	_camera(_screenWidth, _screenHeight) 
+{
 	// Empty
 }
 
@@ -23,8 +27,6 @@ void MainGame::initSystems() {
 	
 	// initialize shaders
 	initShaders();
-	// initialize camera
-	_camera.init(_screenWidth, _screenHeight);
 }
 
 void MainGame::initShaders() {
