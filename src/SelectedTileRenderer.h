@@ -11,9 +11,7 @@
 class SelectedTileRenderer
 {
 public:
-	SelectedTileRenderer();
-	// initialize Selected Tile Renderer.
-	void init(Jauntlet::TileMap* Tilemap, PlayerManager* playerManager);
+	SelectedTileRenderer(Jauntlet::TileMap* Tilemap, PlayerManager* playerManager);
 
 	// draw the selected tile to screen
 	void draw(Jauntlet::Camera2D* activeCamera, Jauntlet::InputManager* inputManager);

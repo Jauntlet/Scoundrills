@@ -1,13 +1,10 @@
 #include "PathRenderer.h"
 #include <Jauntlet/JMath.h>
 
-PathRenderer::PathRenderer() : _textureID(0), _tilemap(nullptr) {
+PathRenderer::PathRenderer(Jauntlet::TileMap* tileMap) : 
+	_textureID(Jauntlet::ResourceManager::getTexture("Textures/Arrow Paths.png").id), 
+	_tilemap(tileMap) {
 	// Empty
-}
-void PathRenderer::init(Jauntlet::TileMap* tileMap) {
-	_tilemap = tileMap;
-	_spriteBatch.init();
-	_textureID = Jauntlet::ResourceManager::getTexture("Textures/Arrow Paths.png").id;
 }
 
 void PathRenderer::createPath(glm::vec2 start, glm::vec2 end) {

@@ -11,7 +11,9 @@ MainGame::MainGame()
 	_uiCoordinator(glm::ivec2(_screenWidth, _screenHeight), &_hudCamera, &_spriteFont, &_inputManager, &_drill),
 	_drill(),
 	_cameraManager(&_camera, &_inputManager, &_players, &_drill.drillWalls),
-	_players(3, &_drill.drillWalls)
+	_players(3, &_drill.drillWalls),
+	_selectedTile(&_drill.drillFloor, &_players),
+	_spriteFont(&_hudCamera, "Fonts/HandelGo.ttf", 256)
 {
 	// empty
 }
@@ -33,15 +35,6 @@ void MainGame::initSystems() {
 	initShaders();
 
 	Jauntlet::ResourceManager::setMissingTexture("Textures/missing.png");
-
-	// initialize player spriteBatch
-	_playerSpriteBatch.init();
-	_HUDSpriteBatch.init();
-
-	// initializes spritefont
-	_spriteFont.init(&_hudCamera, "Fonts/HandelGo.ttf", 256);
-	
-	_selectedTile.init(&_drill.drillFloor, &_players);
 }
 
 void MainGame::initShaders() {
