@@ -4,7 +4,11 @@
 #include <Jauntlet/Errors.h>
 #include "MainGame.h"
 
-MainGame::MainGame() : _window("Jauntlet Game Engine", _screenWidth, _screenHeight, Jauntlet::WindowFlags::RESIZEABLE) {
+MainGame::MainGame() : 
+	_window("Jauntlet Game Engine", _screenWidth, _screenHeight, Jauntlet::WindowFlags::RESIZEABLE),
+	_hudCamera(_screenWidth, _screenHeight),
+	_cameraManager(glm::vec2(_screenWidth, _screenHeight), &_inputManager)
+{
 	// Empty
 
 }
@@ -22,11 +26,8 @@ void MainGame::initSystems() {
 
 	initShaders();
 	Jauntlet::ResourceManager::setMissingTexture("Textures/Icon.png");
-	_cameraManager.init(glm::vec2(_screenWidth, _screenHeight), &_inputManager);
-	_hudCamera.init(_screenWidth, _screenHeight);
 
 	_tileHandler.loadFile();
-	_spriteBatch.init();
 }
 
 void MainGame::initShaders() {

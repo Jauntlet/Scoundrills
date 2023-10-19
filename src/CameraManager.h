@@ -4,8 +4,7 @@
 class CameraManager
 {
 public:
-	CameraManager();
-	void init(glm::ivec2 windowSize, Jauntlet::InputManager* inputManager);
+	CameraManager(glm::ivec2 windowSize, Jauntlet::InputManager* inputManager);
 
 	void Update();
 	void ActivateCamera();

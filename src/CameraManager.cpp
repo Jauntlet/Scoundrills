@@ -2,28 +2,16 @@
 
 #include <Jauntlet/Time.h>
 
-CameraManager::CameraManager() {
+CameraManager::CameraManager(glm::ivec2 windowSize, Jauntlet::InputManager* inputManager) :
+	camera(windowSize.x, windowSize.y),
+	_moveDown(inputManager, SDLK_s),
+	_moveLeft(inputManager, SDLK_a),
+	_moveUp(inputManager, SDLK_w),
+	_moveRight(inputManager, SDLK_d),
+	_zoomIn(inputManager, SDLK_q),
+	_zoomOut(inputManager, SDLK_e)
+{
 	// Empty
-}
-
-void CameraManager::init(glm::ivec2 windowSize, Jauntlet::InputManager* inputManager) {
-	camera.init(windowSize.x, windowSize.y);
-	
-	_moveDown.init(inputManager);
-	_moveLeft.init(inputManager);
-	_moveUp.init(inputManager);
-	_moveRight.init(inputManager);
-
-	_moveDown.addKey(SDLK_s);
-	_moveLeft.addKey(SDLK_a);
-	_moveUp.addKey(SDLK_w);
-	_moveRight.addKey(SDLK_d);
-
-	_zoomIn.init(inputManager);
-	_zoomOut.init(inputManager);
-
-	_zoomIn.addKey(SDLK_q);
-	_zoomOut.addKey(SDLK_e);
 }
 
 void CameraManager::Update() {
