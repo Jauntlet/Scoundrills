@@ -10,8 +10,6 @@
 class DrillAssetRenderer {
 public:
 	DrillAssetRenderer();
-	// initialize the drill renderer
-	void init();
 	// draw the first layer of assets; this renders beneath the walls/floor of the drill
 	void drawLayerOne();
 	// draw the second layer of assets; this renders above the walls/floor of the drill

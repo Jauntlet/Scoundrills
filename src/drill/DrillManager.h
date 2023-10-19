@@ -12,8 +12,6 @@ class DrillManager {
 public:
 	DrillManager();
 	
-	// initialize the drill elements
-	void init();
 	// process inputs to the drill
 	void processInput(Jauntlet::InputManager* inputManager, PlayerManager* playerManager, glm::vec2 mousePosAsWorld);
 	// draw the drill elements

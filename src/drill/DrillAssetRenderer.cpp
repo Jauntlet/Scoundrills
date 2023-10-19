@@ -7,9 +7,6 @@
 const float SHAKE_AMOUNT = 20.0f;
 
 DrillAssetRenderer::DrillAssetRenderer() {
-}
-
-void DrillAssetRenderer::init() {
 	_spriteBatch.init();
 	steeringWheel.init("Textures/missing.png", { 64 * 11.5, -64 * 28, 64, 64 }, { 64 * 11.5, -64 * 28, 64, 64 }, { 0, 0 });
 

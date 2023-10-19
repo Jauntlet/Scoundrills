@@ -11,9 +11,7 @@
 
 class PlayerManager {
 public: 
-	PlayerManager();
-	// initialize player manager
-	void init(int initialPlayers, Jauntlet::TileMap* tileWalls);
+	PlayerManager(int initialPlayers, Jauntlet::TileMap* tileWalls);
 	// adds an already defined player to the player manager
 	void addPlayer(Player& player);
 	// creates a new player and places it into the player manager

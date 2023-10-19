@@ -2,10 +2,7 @@
 
 #include "PlayerManager.h"
 
-PlayerManager::PlayerManager() {
-	// Empty
-}
-void PlayerManager::init(int initialPlayers, Jauntlet::TileMap* tileWalls) {
+PlayerManager::PlayerManager(int initialPlayers, Jauntlet::TileMap* tileWalls) {
 	_pathRenderer.init(tileWalls);
 
 	_players.reserve(sizeof(Player) * initialPlayers);

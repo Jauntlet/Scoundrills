@@ -6,7 +6,12 @@
 MainGame::MainGame()
 :
 	_window("Scoundrills", _screenWidth, _screenHeight, Jauntlet::WindowFlags::RESIZEABLE),
-	_uiCoordinator(glm::ivec2(_screenWidth, _screenHeight), &_hudCamera, &_spriteFont, &_inputManager, &_drill) 
+	_camera(_screenWidth, _screenHeight),
+	_hudCamera(_screenWidth, _screenHeight),
+	_uiCoordinator(glm::ivec2(_screenWidth, _screenHeight), &_hudCamera, &_spriteFont, &_inputManager, &_drill),
+	_drill(),
+	_cameraManager(&_camera, &_inputManager, &_players, &_drill.drillWalls),
+	_players(3, &_drill.drillWalls)
 {
 	// empty
 }
@@ -29,20 +34,13 @@ void MainGame::initSystems() {
 
 	Jauntlet::ResourceManager::setMissingTexture("Textures/missing.png");
 
-	_camera.init(_screenWidth, _screenHeight);
-	_hudCamera.init(_screenWidth, _screenHeight);
-
-	_cameraManager.init(&_camera, &_inputManager, &_players, &_drill.drillWalls);
-
 	// initialize player spriteBatch
-	_players.init(3, &_drill.drillWalls);
 	_playerSpriteBatch.init();
 	_HUDSpriteBatch.init();
 
 	// initializes spritefont
 	_spriteFont.init(&_hudCamera, "Fonts/HandelGo.ttf", 256);
 	
-	_drill.init();
 	_selectedTile.init(&_drill.drillFloor, &_players);
 }
 

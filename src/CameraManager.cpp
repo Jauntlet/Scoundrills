@@ -8,11 +8,7 @@
 
 const float CAMERA_SPEED = 500;
 
-CameraManager::CameraManager() {
-	// Empty
-}
-
-void CameraManager::init(Jauntlet::Camera2D* camera, Jauntlet::InputManager* inputManager, PlayerManager* players, Jauntlet::TileMap* level) {
+CameraManager::CameraManager(Jauntlet::Camera2D* camera, Jauntlet::InputManager* inputManager, PlayerManager* players, Jauntlet::TileMap* level) {
 	_camera = camera;
 	_inputManager = inputManager;
 
