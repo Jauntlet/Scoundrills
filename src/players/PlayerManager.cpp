@@ -21,7 +21,7 @@ void PlayerManager::createPlayer(int x, int y) {
 	_players.emplace_back(x, y);
 }
 
-bool PlayerManager::processInput(Jauntlet::InputManager* inputManager, Jauntlet::Camera2D* activeCamera, Jauntlet::TileMap* navTileMap) {
+bool PlayerManager::processInput(Jauntlet::InputManager* inputManager, Jauntlet::Camera2D* activeCamera, DrillManager* drill) {
 	// if we click
 	if (inputManager->isKeyPressed(SDL_BUTTON_LEFT)) {
 		if (_selectedPlayer == -1) { // we are selecting a player.
@@ -36,16 +36,16 @@ bool PlayerManager::processInput(Jauntlet::InputManager* inputManager, Jauntlet:
 			}
 		}
 		else { // we have selected a position for the player to move to.
-			_storedMousePos = activeCamera->convertScreenToWorld(inputManager->getMouseCoords());
-			_players[_selectedPlayer].navigateTo(navTileMap, navTileMap->RoundWorldPos(_storedMousePos));
+			_storedMousePos = drill->drillWalls.RoundWorldPos(activeCamera->convertScreenToWorld(inputManager->getMouseCoords()));
+			_players[_selectedPlayer].navigateTo(&drill->drillWalls, _storedMousePos);
 			_pathRenderer.clearPath();
 			_selectedPlayer = -1;
 		}
 	} else if (_selectedPlayer != -1) {
 		// no click, so we draw the path via pathrenderer
-		if (_storedMousePos != activeCamera->convertScreenToWorld(inputManager->getMouseCoords())) {
-			_storedMousePos = activeCamera->convertScreenToWorld(inputManager->getMouseCoords());
-			_pathRenderer.createPath(_players[_selectedPlayer].getPosition(), navTileMap->RoundWorldPos(_storedMousePos));
+		if (_storedMousePos != drill->drillWalls.RoundWorldPos(activeCamera->convertScreenToWorld(inputManager->getMouseCoords()))) {
+			_storedMousePos = drill->drillWalls.RoundWorldPos(activeCamera->convertScreenToWorld(inputManager->getMouseCoords()));
+			_pathRenderer.createPath(_players[_selectedPlayer].getPosition(), _storedMousePos);
 		}
 	}
 	return false;

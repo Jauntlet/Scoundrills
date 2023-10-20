@@ -4,7 +4,7 @@
 #pragma once
 #include "Player.h"
 #include "../pathfinding/PathRenderer.h"
-
+#include "../drill/DrillManager.h"
 #include <Jauntlet/InputManager.h>
 #include <Jauntlet/Camera2D.h>
 #include <Jauntlet/Rendering/SpriteBatch.h>
@@ -20,7 +20,7 @@ public:
 	void createPlayer(int x, int y);
 	
 	// processes a click to see if we operate on the players, returns true if we are, false if we arent.
-	bool processInput(Jauntlet::InputManager* inputManager, Jauntlet::Camera2D* activeCamera, Jauntlet::TileMap* navTileMap);
+	bool processInput(Jauntlet::InputManager* inputManager, Jauntlet::Camera2D* activeCamera, DrillManager* drill);
 
 	// returns true if a player is selected
 	bool isPlayerSelected();

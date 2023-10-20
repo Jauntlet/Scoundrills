@@ -14,8 +14,6 @@ public:
 	
 	// initialize the drill elements
 	void init();
-	// process inputs to the drill
-	void processInput(Jauntlet::InputManager* inputManager, PlayerManager* playerManager, glm::vec2 mousePosAsWorld);
 	// draw the drill elements
 	void draw();
 
@@ -23,9 +21,10 @@ public:
 	void on();
 	// turn off the drill
 	void off();
-
 	// toggle the drill
 	void toggle();
+
+	PlayerStation* checkHoveringStation(glm::vec2 position);
 
 	Jauntlet::TileMap drillWalls;
 	Jauntlet::TileMap drillFloor;

@@ -32,7 +32,7 @@ void MainGame::initSystems() {
 	_camera.init(_screenWidth, _screenHeight);
 	_hudCamera.init(_screenWidth, _screenHeight);
 
-	_cameraManager.init(&_camera, &_inputManager, &_players, &_drill.drillWalls);
+	_cameraManager.init(&_camera, &_inputManager, &_players, &_drill);
 
 	// initialize player spriteBatch
 	_players.init(3, &_drill.drillWalls);
@@ -80,8 +80,6 @@ void MainGame::processInput() {
 	
 	_players.update();
 	_cameraManager.processInput();
-
-	_drill.processInput(&_inputManager, &_players, _camera.convertScreenToWorld(_inputManager.getMouseCoords()));
 
 	if (_inputManager.isKeyPressed(SDLK_F11) || (_inputManager.isKeyDown(SDLK_LALT) || _inputManager.isKeyDown(SDLK_RALT)) && _inputManager.isKeyPressed(SDLK_RETURN)) {
 		_window.toggleFullscreen();

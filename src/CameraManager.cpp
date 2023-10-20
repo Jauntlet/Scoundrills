@@ -12,12 +12,12 @@ CameraManager::CameraManager() {
 	// Empty
 }
 
-void CameraManager::init(Jauntlet::Camera2D* camera, Jauntlet::InputManager* inputManager, PlayerManager* players, Jauntlet::TileMap* level) {
+void CameraManager::init(Jauntlet::Camera2D* camera, Jauntlet::InputManager* inputManager, PlayerManager* players, DrillManager* drill) {
 	_camera = camera;
 	_inputManager = inputManager;
 
 	_players = players;
-	_level = level;
+	_drill = drill;
 
 	_moveDown.init(inputManager);
 	_moveLeft.init(inputManager);
@@ -36,7 +36,7 @@ void CameraManager::processInput() {
 		_camera->transitionToScale(0.5f);
 	}
 
-	bool clickOnPlayers = _players->processInput(_inputManager, _camera, _level);
+	bool clickOnPlayers = _players->processInput(_inputManager, _camera, _drill);
 	
 	if (_inputManager->isKeyDown(SDL_BUTTON_LEFT)) {
 		if (!clickOnPlayers) {

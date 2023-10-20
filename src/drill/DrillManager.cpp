@@ -12,13 +12,6 @@ void DrillManager::init() {
 
 	on();
 }
-void DrillManager::processInput(Jauntlet::InputManager* inputManager, PlayerManager* playerManager, glm::vec2 mousePosAsWorld) {
-	if (playerManager->isPlayerSelected()) {
-		if (!_drillAssets.steeringWheel.isOccupied() && _drillAssets.steeringWheel.isColliding(mousePosAsWorld)) {
-			playerManager->assignStation(&_drillAssets.steeringWheel);
-		}
-	}
-}
 void DrillManager::draw() {
 	_drillAssets.drawLayerOne();
 	drillFloor.draw();
@@ -35,11 +28,19 @@ void DrillManager::off() {
 	_drillOn = false;
 	_drillAssets.stopAnimation();
 }
-
 void DrillManager::toggle() {
 	if (_drillOn) {
 		off();
 	} else {
 		on();
+	}
+}
+
+PlayerStation* DrillManager::checkHoveringStation(glm::vec2 position) {
+	if (!_drillAssets.steeringWheel.isOccupied() && _drillAssets.steeringWheel.isColliding(position)) {
+		return &_drillAssets.steeringWheel;
+	}
+	else {
+		return nullptr;
 	}
 }
