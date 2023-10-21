@@ -59,9 +59,10 @@ void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::InputManager* inMana
 	}
 
 	//draw background
-	 _background = new Jauntlet::UISpriteElement(_navTextures[0], &_bgPos, glm::vec2(1200), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
-
-	UIM.addElement(_background);
+	if (_background == NULL) {
+		_background = new Jauntlet::UISpriteElement(_navTextures[0], &_bgPos, glm::vec2(1000), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+		UIM.addElement(_background);
+	}
 
 	int layersHeight = _map.size(); //store the total height of the "layers"
 
