@@ -1,14 +1,12 @@
 #include "SelectedTileRenderer.h"
 
-SelectedTileRenderer::SelectedTileRenderer() : _drawColor(255, 255, 255), _textureID(0), _tilemap(nullptr) {
+SelectedTileRenderer::SelectedTileRenderer(Jauntlet::TileMap* Tilemap, PlayerManager* playerManager) : 
+	_drawColor(255, 255, 255), 
+	_textureID(Jauntlet::ResourceManager::getTexture("Textures/WhiteSquare.png").id),
+	_tilemap(Tilemap),
+	_players(playerManager) 
+{
 	// Empty
-}
-void SelectedTileRenderer::init(Jauntlet::TileMap* Tilemap, PlayerManager* playerManager) {
-	_tilemap = Tilemap;
-	_players = playerManager;
-	_textureID = Jauntlet::ResourceManager::getTexture("Textures/WhiteSquare.png").id;
-
-	_spriteBatch.init();
 }
 
 void SelectedTileRenderer::draw(Jauntlet::Camera2D* activeCamera, Jauntlet::InputManager* inputManager) {

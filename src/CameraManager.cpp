@@ -8,22 +8,16 @@
 
 const float CAMERA_SPEED = 500;
 
-CameraManager::CameraManager() {
-	// Empty
-}
-
-void CameraManager::init(Jauntlet::Camera2D* camera, Jauntlet::InputManager* inputManager, PlayerManager* players, DrillManager* drill) {
-	_camera = camera;
-	_inputManager = inputManager;
-
-	_players = players;
-	_drill = drill;
-
-	_moveDown.init(inputManager);
-	_moveLeft.init(inputManager);
-	_moveUp.init(inputManager);
-	_moveRight.init(inputManager);
-
+CameraManager::CameraManager(Jauntlet::Camera2D* camera, Jauntlet::InputManager* inputManager, PlayerManager* players, Jauntlet::TileMap* level) 
+	: _moveDown(inputManager),
+	_moveLeft(inputManager),
+	_moveUp(inputManager),
+	_moveRight(inputManager),
+	_camera(camera),
+	_inputManager(inputManager),
+	_players(players),
+	_level(level) 
+{
 	_moveDown.addKey(SDLK_s, SDLK_DOWN);
 	_moveLeft.addKey(SDLK_a, SDLK_LEFT);
 	_moveUp.addKey(SDLK_w, SDLK_UP);
