@@ -49,9 +49,6 @@ bool PlayerManager::processInput(Jauntlet::InputManager* inputManager, Jauntlet:
 bool PlayerManager::isPlayerSelected() {
 	return _selectedPlayer != -1;
 }
-void PlayerManager::assignStation(PlayerStation* newStation) {
-	_players[_selectedPlayer].assignStation(newStation);
-}
 
 void PlayerManager::update() {
 	for (int i = 0; i < _players.size(); i++) {

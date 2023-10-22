@@ -22,8 +22,6 @@ public:
 
 	// returns true if a player is selected
 	bool isPlayerSelected();
-	// Updates what station the selected player is assigned to
-	void assignStation(PlayerStation* newStation);
 
 	// updates the state of players
 	void update();
