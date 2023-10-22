@@ -32,13 +32,12 @@ bool PlayerManager::processInput(Jauntlet::InputManager* inputManager, Jauntlet:
 			}
 		}
 		else { // we have selected a position for the player to move to.
-			_storedMousePos = drill->drillWalls.RoundWorldPos(activeCamera->convertScreenToWorld(inputManager->getMouseCoords()));
-			_players[_selectedPlayer].navigateTo(&drill->drillWalls, _storedMousePos);
+			_players[_selectedPlayer].navigateTo(drill, activeCamera->convertScreenToWorld(inputManager->getMouseCoords()));
 			_pathRenderer.clearPath();
 			_selectedPlayer = -1;
 		}
 	} else if (_selectedPlayer != -1) {
-		// no click, so we draw the path via pathrenderer
+		// a player is selected and we aren't clicking, so we draw the path via pathrenderer
 		if (_storedMousePos != drill->drillWalls.RoundWorldPos(activeCamera->convertScreenToWorld(inputManager->getMouseCoords()))) {
 			_storedMousePos = drill->drillWalls.RoundWorldPos(activeCamera->convertScreenToWorld(inputManager->getMouseCoords()));
 			_pathRenderer.createPath(_players[_selectedPlayer].getPosition(), _storedMousePos);

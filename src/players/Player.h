@@ -15,8 +15,8 @@ public:
 	void update();
 	void draw(Jauntlet::SpriteBatch& spriteBatch);
 	// Navigate through a tilemap to a position.
-	void navigateTo(Jauntlet::TileMap* map, glm::vec2 position);
-
+	// this function expects a world position not rounded to a tile, so that it can check what player stations it may be connected to.
+	void navigateTo(DrillManager* drill, glm::vec2 position);
 
 	void setSpeed(float newSpeed);
 

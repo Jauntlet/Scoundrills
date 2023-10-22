@@ -1,14 +1,13 @@
-#include <iostream> // remove when done debugging
 #include <Jauntlet/Time.h>
 
 #include "CameraManager.h"
 #include "Jauntlet/Camera2D.h"
-#include "Jauntlet/TileMap.h"
+#include "drill/DrillManager.h"
 #include "src/players/PlayerManager.h"
 
 const float CAMERA_SPEED = 500;
 
-CameraManager::CameraManager(Jauntlet::Camera2D* camera, Jauntlet::InputManager* inputManager, PlayerManager* players, Jauntlet::TileMap* level) 
+CameraManager::CameraManager(Jauntlet::Camera2D* camera, Jauntlet::InputManager* inputManager, PlayerManager* players, DrillManager* drill) 
 	: _moveDown(inputManager),
 	_moveLeft(inputManager),
 	_moveUp(inputManager),
@@ -16,7 +15,7 @@ CameraManager::CameraManager(Jauntlet::Camera2D* camera, Jauntlet::InputManager*
 	_camera(camera),
 	_inputManager(inputManager),
 	_players(players),
-	_level(level) 
+	_drill(drill)
 {
 	_moveDown.addKey(SDLK_s, SDLK_DOWN);
 	_moveLeft.addKey(SDLK_a, SDLK_LEFT);

@@ -6,14 +6,11 @@
 #include <Jauntlet/TileMap.h>
 #include <Jauntlet/InputManager.h>
 #include "DrillAssetRenderer.h"
-#include "../players/PlayerManager.h"
 
 class DrillManager {
 public:
 	DrillManager();
 	
-	// process inputs to the drill
-	void processInput(Jauntlet::InputManager* inputManager, PlayerManager* playerManager, glm::vec2 mousePosAsWorld);
 	// draw the drill elements
 	void draw();
 

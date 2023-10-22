@@ -10,7 +10,7 @@ MainGame::MainGame()
 	_hudCamera(_screenWidth, _screenHeight),
 	_uiCoordinator(glm::ivec2(_screenWidth, _screenHeight), &_hudCamera, &_spriteFont, &_inputManager, &_drill),
 	_drill(),
-	_cameraManager(&_camera, &_inputManager, &_players, &_drill.drillWalls),
+	_cameraManager(&_camera, &_inputManager, &_players, &_drill),
 	_players(3, &_drill.drillWalls),
 	_selectedTile(&_drill.drillFloor, &_players),
 	_spriteFont(&_hudCamera, "Fonts/HandelGo.ttf", 256)
@@ -97,7 +97,6 @@ void MainGame::processInput() {
 }
 
 void MainGame::drawGame() {
-	// Reset screen
 	_window.clearScreen();
 	
 	_colorProgram.use();
