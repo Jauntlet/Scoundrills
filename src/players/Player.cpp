@@ -76,7 +76,7 @@ void Player::navigateTo(DrillManager* drill, glm::vec2 position) {
 	_path.clear();
 
 	bool reachedDest = false;
-	_path = Pathfinding::findPath(&drill->drillWalls, _position, position, reachedDest);
+	_path = Pathfinding::findPath(&drill->drillWalls, _position, drill->drillWalls.RoundWorldPos(position), reachedDest);
 	if (!reachedDest) {
 		_path.clear();
 		return;
@@ -93,7 +93,7 @@ void Player::navigateTo(DrillManager* drill, glm::vec2 position) {
 	}
 	else {
 		_station = nullptr;
-		_path.insert(_path.begin(), position);
+		_path.insert(_path.begin(), drill->drillWalls.RoundWorldPos(position));
 	}
 }
 
