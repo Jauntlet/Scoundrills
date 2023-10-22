@@ -173,7 +173,10 @@ std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, glm::vec2 s
 		return { map->TilePosToWorldPos(start) };
 	}
 
+	// You might try to replace this with the reachedDestination bool we pass in for this overload, but sadly this bool is needed to be able to break fully
+	// out of the pathfinding loop and detect if we need to find the next-closest-successor, so we can't easily replace it without some weird work-arounds. -xm
 	bool foundDest = false;
+
 	while (!_openList.empty() && !foundDest && _openList.size() < TIMEOUT_LIMIT) {
 		int bestNodeID = 0;
 		// Search through the list of nodes for the lowest movement cost
