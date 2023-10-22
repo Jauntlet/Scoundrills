@@ -96,19 +96,7 @@ void Player::navigateTo(Jauntlet::TileMap* map, glm::vec2 position) {
 	}
 }
 
-void Player::assignStation(PlayerStation* station) {
-	_station = station;
-}
-void Player::clearStation() {
-	_station = nullptr;
-}
 
-void Player::setPosition(float x, float y) {
-	_position = glm::vec2(x, y);
-}
-void Player::setPosition(glm::vec2 pos) {
-	_position = pos;
-	collider.position = pos;
 }
 
 void Player::setSpeed(float newSpeed) {
