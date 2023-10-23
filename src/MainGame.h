@@ -13,8 +13,6 @@
 
 #include "CameraManager.h"
 #include "drill/DrillManager.h"
-#include "glm/fwd.hpp"
-#include "Navigation.h"
 #include "players/PlayerManager.h"
 #include "PlayerResources.h"
 #include "SelectedTileRenderer.h"
@@ -41,12 +39,25 @@ private:
 	int  _screenWidth = 1024, _screenHeight = 768;
 	Jauntlet::Window _window;
 
-	Jauntlet::GLSLProgram _colorProgram;
-	
 	Jauntlet::Camera2D _camera, _hudCamera;
-	CameraManager _cameraManager;
-	
+
 	Jauntlet::InputManager _inputManager;
+
+	UICoordinator _uiCoordinator;
+
+	DrillManager _drill;
+
+	CameraManager _cameraManager;
+
+	PlayerManager _players;
+
+	SelectedTileRenderer _selectedTile;
+	
+	Jauntlet::SpriteFont _spriteFont;
+
+
+
+	Jauntlet::GLSLProgram _colorProgram;
 
 	GameState _gameState = GameState::PLAY;
 
@@ -55,14 +66,8 @@ private:
 	Jauntlet::SpriteBatch _playerSpriteBatch;
 
 	Jauntlet::SpriteBatch _HUDSpriteBatch;
-	Jauntlet::SpriteFont _spriteFont;
 	
-	PlayerManager _players;
-
-	DrillManager _drill;
-	UICoordinator _uiCoordinator;
 	PlayerResources _resources;
-	SelectedTileRenderer _selectedTile;
 
 	// defines scale of movement for the camera. if set to 1, the camera will follow the mouse, if set to 0, the mouse has no control over the camera.
 	const float _CAMERA_MOVEMENT_SCALE =  0.5f;
