@@ -7,7 +7,8 @@
 const float SHAKE_AMOUNT = 20.0f;
 
 DrillAssetRenderer::DrillAssetRenderer() :
-	steeringWheel("Textures/missing.png", { 64 * 11.5, -64 * 28, 64, 64 }, { 64 * 11.5, -64 * 28, 64, 64 }, { 0, 0 }) 
+	steeringWheel("Textures/missing.png", { 64 * 11.5, -64 * 28, 64, 64 }, { 64 * 11.5, -64 * 28, 64, 64 }, { 0, 0 }),
+	boiler("Textures/boiler.png", { 64 * 15.5, -64 * 1, 58 * 2, 45 * 2 }, { 64 * 15.5, -64 * 1, 58 * 2, 45 * 2 }, { 16,-64 })
 {
 
 	_drillAnimation = Jauntlet::Animation(3);
@@ -32,8 +33,9 @@ void DrillAssetRenderer::drawLayerTwo() {
 	// Layer two renders above the walls / floor of the tilemap
 	_spriteBatch.begin();
 
-	// draw the steering wheel
+	// draw the player stations
 	steeringWheel.draw(_spriteBatch);
+	boiler.draw(_spriteBatch);
 
 	_spriteBatch.endAndRender();
 }

@@ -38,6 +38,9 @@ PlayerStation* DrillManager::checkHoveringStation(glm::vec2 position) {
 	if (!_drillAssets.steeringWheel.isOccupied() && _drillAssets.steeringWheel.isColliding(position)) {
 		return &_drillAssets.steeringWheel;
 	}
+	else if (!_drillAssets.boiler.isOccupied() && _drillAssets.boiler.isColliding(position)) {
+		return &_drillAssets.boiler;
+	}
 	else {
 		return nullptr;
 	}
