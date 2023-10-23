@@ -24,7 +24,7 @@ private:
 	void processInput();
 	void drawGame();
 
-	int _screenWidth = 1024, _screenHeight = 768;
+	int _screenWidth = 1280, _screenHeight = 720;
 	Jauntlet::Window _window;
 
 	Jauntlet::GLSLProgram _colorProgram;
