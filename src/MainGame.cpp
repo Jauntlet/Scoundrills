@@ -1,6 +1,7 @@
 #include <Jauntlet/Rendering/ResourceManager.h>
 #include <Jauntlet/Rendering/TextureCache.h>
 #include <Jauntlet/UI/UIElement.h>
+
 #include "MainGame.h"
 
 MainGame::MainGame()
