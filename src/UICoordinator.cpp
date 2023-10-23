@@ -4,6 +4,10 @@
 
 #include "UICoordinator.h"
 
+void bruh() {
+	std::cout << std::stoi("a");
+}
+
 UICoordinator::UICoordinator(glm::ivec2 screenSize, Jauntlet::Camera2D* hudCamera, Jauntlet::SpriteFont* spriteFont, Jauntlet::InputManager* inputManager, DrillManager* drillManager)
 :
 	_UIManager(hudCamera),
@@ -29,7 +33,7 @@ UICoordinator::UICoordinator(glm::ivec2 screenSize, Jauntlet::Camera2D* hudCamer
 	// conversion from `void` to `std::function<void ()>` -jk
 	std::function<void()> _buttonMethod = std::bind(&DrillManager::toggle, drillManager);
 
-	Jauntlet::UIButtonToggleableElement* _button = new Jauntlet::UIButtonToggleableElement(_inputManager, _buttonMethod, _buttonTexture, buttonPos, glm::vec2(512, 512), Jauntlet::UIElement::ORIGIN_PIN::BOTTOM_LEFT);
+	Jauntlet::UIButtonToggleableElement* _button = new Jauntlet::UIButtonToggleableElement(_inputManager, &bruh, _buttonTexture, buttonPos, glm::vec2(512, 512), Jauntlet::UIElement::ORIGIN_PIN::BOTTOM_LEFT);
 
 	_UIManager.addElement(_button);
 }
