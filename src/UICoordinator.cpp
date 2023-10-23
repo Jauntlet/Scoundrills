@@ -40,10 +40,6 @@ UICoordinator::~UICoordinator() {
 	delete _button;
 }
 
-void _bruh() {
-	std::cout << "bruh" << std::endl;
-}
-
 void UICoordinator::draw() {
 	_UIManager.draw();
 }
