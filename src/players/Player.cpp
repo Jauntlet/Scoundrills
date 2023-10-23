@@ -87,12 +87,22 @@ void Player::navigateTo(DrillManager* drill, glm::vec2 position) {
 	// We add the final destination twice to the vector, because the final vector position for some reason gets destroyed at some point
 	// this is a weird bug that only occurs here, as the pathRenderer uses the same method and the result is fine. -xm
 
-	if ((_station = drill->checkHoveringStation(position)) != nullptr && !_station->isOccupied()) {
-		// pathfind to the position of the station the player was assigned to.
-		_path.insert(_path.begin(), _station->getAnchorPoint() - glm::vec2(32, 32));
+	if (drill->checkHoveringStation(position) != nullptr) {
+		_station = drill->checkHoveringStation(position);
+		if (!_station->isOccupied()) {
+			_station->Occupy(this);
+			// pathfind to the position of the station the player was assigned to.
+			_path.insert(_path.begin(), _station->getAnchorPoint() - glm::vec2(32, 32));
+		}
+		else {
+			_station = nullptr;
+		}
 	}
 	else {
-		_station = nullptr;
+		if (_station != nullptr) {
+			_station->Occupy(nullptr);
+			_station = nullptr;
+		}
 		_path.insert(_path.begin(), drill->drillWalls.RoundWorldPos(position));
 	}
 }

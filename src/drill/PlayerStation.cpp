@@ -21,6 +21,18 @@ bool PlayerStation::isColliding(glm::vec2 position) {
 bool PlayerStation::isOccupied() {
 	return _occupied;
 }
+void PlayerStation::Occupy(Player* player) {
+	// We pass in a player pointer which suggests that we can do stuff specifically to the player occupying
+	// the station, however we don't do anything with it as of now due to not having anything to do with it yet.
+	// Im certain at some point we WILL need to be able to pass in a player, but not right now. -xm
+	
+	if (player != nullptr) {
+		_occupied = true;
+	}
+	else {
+		_occupied = false;
+	}
+}
 
 glm::vec2 PlayerStation::getAnchorPoint() {
 	return _anchorPoint;

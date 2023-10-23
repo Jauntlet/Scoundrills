@@ -7,6 +7,8 @@
 #include <Jauntlet/Rendering/ResourceManager.h>
 #include <Jauntlet/Rendering/SpriteBatch.h>
 
+class Player;
+
 class PlayerStation
 {
 public:
@@ -24,6 +26,8 @@ public:
 	bool isColliding(glm::vec2 position);
 	// Returns true if the station is already used by a player.
 	bool isOccupied();
+	// Occupy a station with a player
+	void Occupy(Player* player);
 
 	// Returns the anchor point for the player
 	glm::vec2 getAnchorPoint();
