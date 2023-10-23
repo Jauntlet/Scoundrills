@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "drill/DrillManager.h"
 #include "Jauntlet/TileMap.h"
 #include "src/players/PlayerManager.h"
 #include <Jauntlet/Camera2D.h>
@@ -12,7 +13,7 @@
 
 class CameraManager {
 public:
-	CameraManager(Jauntlet::Camera2D* camera, Jauntlet::InputManager* inputManager, PlayerManager* players, Jauntlet::TileMap* level);
+	CameraManager(Jauntlet::Camera2D* camera, Jauntlet::InputManager* inputManager, PlayerManager* players, DrillManager* drill);
 
 	void processInput();
 private:
@@ -20,7 +21,7 @@ private:
 	Jauntlet::InputManager* _inputManager;
 
 	PlayerManager* _players;
-	Jauntlet::TileMap* _level;
+	DrillManager* _drill;
 
 	Jauntlet::InputKey _moveLeft;
 	Jauntlet::InputKey _moveRight;

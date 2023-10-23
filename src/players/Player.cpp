@@ -72,43 +72,29 @@ void Player::draw(Jauntlet::SpriteBatch& spriteBatch) {
 	spriteBatch.draw({ _position.x, _position.y, 64, 64 }, Jauntlet::ResourceManager::getTexture("Textures/Craig.png").id, 0);
 }
 
-void Player::navigateTo(Jauntlet::TileMap* map, glm::vec2 position) {
+void Player::navigateTo(DrillManager* drill, glm::vec2 position) {
 	_path.clear();
 
 	bool reachedDest = false;
-	_path = Pathfinding::findPath(map, _position, position, reachedDest);
+	_path = Pathfinding::findPath(&drill->drillWalls, _position, drill->drillWalls.RoundWorldPos(position), reachedDest);
 	if (!reachedDest) {
 		_path.clear();
 		return;
 	}
 
 	_path.erase(_path.begin());
-	// if the final destination is in a valid position, add it to the vector again. This is because when starting to pathfind, the final destination
-	// gets removed at some point.. This is weird, but it does allow us to prevent going to a bad final destination. -xm
-	if (!map->tileHasCollision(map->WorldPosToTilePos(position)) && map->isValidTilePos(map->WorldPosToTilePos(position))) {
+
+	// We add the final destination twice to the vector, because the final vector position for some reason gets destroyed at some point
+	// this is a weird bug that only occurs here, as the pathRenderer uses the same method and the result is fine. -xm
+
+	if ((_station = drill->checkHoveringStation(position)) != nullptr && !_station->isOccupied()) {
 		// pathfind to the position of the station the player was assigned to.
-		if (_station != nullptr) {
-			_path.insert(_path.begin(), _station->getAnchorPoint() - glm::vec2(32, 32));
-		}
-		else {
-			_path.insert(_path.begin(), position);
-		}
+		_path.insert(_path.begin(), _station->getAnchorPoint() - glm::vec2(32, 32));
 	}
-}
-
-void Player::assignStation(PlayerStation* station) {
-	_station = station;
-}
-void Player::clearStation() {
-	_station = nullptr;
-}
-
-void Player::setPosition(float x, float y) {
-	_position = glm::vec2(x, y);
-}
-void Player::setPosition(glm::vec2 pos) {
-	_position = pos;
-	collider.position = pos;
+	else {
+		_station = nullptr;
+		_path.insert(_path.begin(), drill->drillWalls.RoundWorldPos(position));
+	}
 }
 
 void Player::setSpeed(float newSpeed) {

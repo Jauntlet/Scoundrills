@@ -4,7 +4,7 @@
 #pragma once
 
 #include <Jauntlet/InputKey.h>
-#include <Jauntlet/TileMap.h>
+#include "../drill/DrillManager.h"
 #include "../drill/PlayerStation.h"
 
 class Player
@@ -15,15 +15,8 @@ public:
 	void update();
 	void draw(Jauntlet::SpriteBatch& spriteBatch);
 	// Navigate through a tilemap to a position.
-	void navigateTo(Jauntlet::TileMap* map, glm::vec2 position);
-
-	// assign player to specified station.
-	void assignStation(PlayerStation* station);
-	// unassign player from station.
-	void clearStation();
-
-	void setPosition(float x, float y);
-	void setPosition(glm::vec2 pos);
+	// this function expects a world position not rounded to a tile, so that it can check what player stations it may be connected to.
+	void navigateTo(DrillManager* drill, glm::vec2 position);
 
 	void setSpeed(float newSpeed);
 
