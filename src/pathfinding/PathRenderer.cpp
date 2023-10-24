@@ -9,7 +9,6 @@ PathRenderer::PathRenderer(Jauntlet::TileMap* tileMap) :
 
 void PathRenderer::createPath(glm::vec2 start, glm::vec2 end) {
 	if (_tilemap->tileHasCollision(_tilemap->WorldPosToTilePos(end)) || _tilemap->isValidTilePos(_tilemap->WorldPosToTilePos(end))) {
-		path.clear();
 		clearPath();
 		return;
 	}
