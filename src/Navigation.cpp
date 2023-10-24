@@ -81,8 +81,8 @@ void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::InputManager* inMana
 				_points.push_back(Jauntlet::UIButtonElement(inManager, [&]() -> void { selectNav(_positions.size() - 1); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(128), Jauntlet::UIElement::ORIGIN_PIN::CENTER));
 				continue;
 			}
-			if (point == 2) { // orange X
-				_points.push_back(Jauntlet::UIButtonElement(inManager, [&]() -> void { selectNav(_positions.size() - 1); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(128), Jauntlet::UIElement::ORIGIN_PIN::CENTER));
+			if (point == 2) { // no X
+				//_points.push_back(Jauntlet::UIButtonElement(inManager, [&]() -> void { selectNav(_positions.size() - 1); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(128), Jauntlet::UIElement::ORIGIN_PIN::CENTER));
 				continue;
 			}
 		}
@@ -113,5 +113,18 @@ bool Navigation::isNavOpen() {
 }
 
 void Navigation::selectNav(int id) {
-	destination = id;
+	_destination = id;
+}
+
+void Navigation::updateTravel() {
+	if (_destination != -1) {
+		_progress += 0.1f;
+		if (_progress >= 1.0f) {
+			_destination = -1;
+		}
+	}
+	else
+	{
+		_progress = 0.0f;
+	}
 }

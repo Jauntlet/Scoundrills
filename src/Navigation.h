@@ -11,18 +11,20 @@
 class Navigation {
 public:
 	Navigation();
-	~Navigation();
+	~Navigation(); //deletes hanging references
 
 	void genNav(Jauntlet::UIManager& UIM, Jauntlet::InputManager* inManager); //new nav positions
 
-	bool isNavOpen();
-	void toggleNav();
-	void selectNav(int id);
+	bool isNavOpen(); //returns if the thing is thinging
+	void toggleNav(); //toggles visibility (on/off)
+	void selectNav(int id); //sets selected destination
+	void updateTravel(); //Updates the "tick" of travel; Moves the points closer to the drill to simulate going to the outcove. When reaching the destination, set destination to null.
 private:
 	std::vector<GLuint> _navTextures;
 	GLuint _xTure;
-	bool _navOpen = false;
-	int destination;
+	bool _navOpen = false; //visibility of menu
+	int _destination = -1; //id value
+	float _progress; //0-1; 0 being just selected dest, 1 being @ dest.
 	Jauntlet::UIManager* UIManager;
 	std::vector<Jauntlet::UIButtonElement> _points;
 	glm::vec2 _bgPos;
