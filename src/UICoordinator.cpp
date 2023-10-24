@@ -8,7 +8,7 @@ void bruh() {
 	std::cout << std::stoi("a");
 }
 
-UICoordinator::UICoordinator(glm::ivec2 screenSize, Jauntlet::Camera2D* hudCamera, Jauntlet::SpriteFont* spriteFont, Jauntlet::InputManager* inputManager, DrillManager* drillManager)
+UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::SpriteFont* spriteFont, Jauntlet::InputManager* inputManager, DrillManager* drillManager)
 :
 	_UIManager(hudCamera),
 	_fpsPosition(0),
@@ -24,8 +24,8 @@ UICoordinator::UICoordinator(glm::ivec2 screenSize, Jauntlet::Camera2D* hudCamer
 	navigation.genNav(_UIManager, _inputManager);
 
 	_fpsCounter = new Jauntlet::UITextElement(_spriteFont, &fpsText, &_fpsColor, &_fpsPosition);
-
 	_UIManager.addElement(_fpsCounter);
+	_fpsCounter->visible = _debugging;
 
 	GLuint _buttonTexture = Jauntlet::ResourceManager::getTexture("Textures/button.png").id;
 	glm::vec2* buttonPos = new glm::vec2(10, 10);
@@ -34,7 +34,6 @@ UICoordinator::UICoordinator(glm::ivec2 screenSize, Jauntlet::Camera2D* hudCamer
 	std::function<void()> _buttonMethod = std::bind(&DrillManager::toggle, drillManager);
 
 	Jauntlet::UIButtonToggleableElement* _button = new Jauntlet::UIButtonToggleableElement(_inputManager, &bruh, _buttonTexture, buttonPos, glm::vec2(512, 512), Jauntlet::UIElement::ORIGIN_PIN::BOTTOM_LEFT);
-
 	_UIManager.addElement(_button);
 }
 
@@ -54,4 +53,25 @@ void UICoordinator::applyNewScreenSize(glm::ivec2 screenSize) {
 
 	// temporary
 	navigation.genNav(_UIManager, _inputManager);
+}
+
+void UICoordinator::toggleDebugMode() {
+	_debugging = !_debugging;
+
+	if (_debugging) {
+		_fpsCounter->visible = false;
+	}
+	else {
+		_fpsCounter->visible = true;
+	}
+}
+void UICoordinator::toggleDebugMode(bool debugging) {
+	_debugging = debugging;
+
+	if (_debugging) {
+		_fpsCounter->visible = false;
+	}
+	else {
+		_fpsCounter->visible = true;
+	}
 }

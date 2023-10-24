@@ -14,17 +14,21 @@
 
 class UICoordinator {
 public:
-	UICoordinator(glm::ivec2 screenSize, Jauntlet::Camera2D* hudCamera, Jauntlet::SpriteFont* spriteFont, Jauntlet::InputManager* inputManager, DrillManager* drillManager);
+	UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::SpriteFont* spriteFont, Jauntlet::InputManager* inputManager, DrillManager* drillManager);
 	~UICoordinator();
 
 	void draw();
 
 	void applyNewScreenSize(glm::ivec2 screenSize);
 
+	// toggles debug UI options
+	void toggleDebugMode();
+	// toggle debug UI options to selected value
+	void toggleDebugMode(bool debugging);
+	
 	Navigation navigation;
 	std::string fpsText = "0";
 private:
-	void _addElements();
 
 	// Pointers
 	Jauntlet::Camera2D* _hudCamera = nullptr;
@@ -35,6 +39,7 @@ private:
 	Jauntlet::UIManager _UIManager;
 	
 	// FPS counter
+	bool _debugging = true;
 	Jauntlet::Color _fpsColor;
 	glm::vec2 _fpsPosition;
 	Jauntlet::UITextElement* _fpsCounter;

@@ -9,7 +9,7 @@ MainGame::MainGame()
 	_window("Scoundrills", _screenWidth, _screenHeight, Jauntlet::WindowFlags::RESIZEABLE),
 	_camera(_screenWidth, _screenHeight),
 	_hudCamera(_screenWidth, _screenHeight),
-	_uiCoordinator(glm::ivec2(_screenWidth, _screenHeight), &_hudCamera, &_spriteFont, &_inputManager, &_drill),
+	_uiCoordinator(&_hudCamera, &_spriteFont, &_inputManager, &_drill),
 	_drill(),
 	_cameraManager(&_camera, &_inputManager, &_players, &_drill),
 	_players(3, &_drill.drillWalls),
