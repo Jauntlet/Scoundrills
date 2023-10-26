@@ -1,6 +1,8 @@
 #include "MainGame.h"
+#include <Jauntlet/tinyfiledialogs.h>
+#include <Jauntlet/IOManager.h>
 
-//                        initialize the window via an initializer list
+// initialize the window via an initializer list
 MainGame::MainGame() 
 	: 
 	_window("Jauntlet Game Engine", _screenWidth, _screenHeight, 0),
@@ -21,12 +23,25 @@ void MainGame::initSystems() {
 	// set some default window properties
 	_window.setBackgroundColor(Jauntlet::Color(76, 24, 32));
 	_window.setWindowIcon("Textures/Icon.png");
-	
+
 	// set default missing Texture
 	Jauntlet::ResourceManager::setMissingTexture("Textures/Icon.png");
-	
+
 	// initialize shaders
 	initShaders();
+
+	// DEBUGGING
+	do {
+		tinyfd_messageBox("File Systems Debugging", "To start, please delete the Logs folder within Scoundrills. This may be in the builds folder based on your setup. \n\nIf this shows again after pressing OK, there may be an error.", "ok", "info", 1);
+	} while (Jauntlet::IOManager::findFolder("Logs"));
+
+	if (Jauntlet::IOManager::createFolder("Logs")) {
+		tinyfd_messageBox("File Systems Debugging", "Successfully created the Logs folder, please make sure it is there", "ok", "info", 1);
+	}
+	else {
+		tinyfd_messageBox("File Systems Debugging", "Failed to create the Logs folder!", "ok", "error", 1);
+	}
+
 }
 
 void MainGame::initShaders() {
