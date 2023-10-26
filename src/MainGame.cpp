@@ -1,4 +1,5 @@
 #include "MainGame.h"
+#include "Jauntlet/Errors.h"
 #include <Jauntlet/tinyfiledialogs.h>
 #include <Jauntlet/IOManager.h>
 
@@ -40,8 +41,10 @@ void MainGame::initSystems() {
 	}
 	else {
 		tinyfd_messageBox("File Systems Debugging", "Failed to create the Logs folder!", "ok", "error", 1);
+		Jauntlet::fatalError("fatal error");
 	}
 
+	tinyfd_messageBox("Logs folder location", Jauntlet::IOManager::toAbsoluteFilePath("Logs").c_str(), "ok", "info", 1);
 }
 
 void MainGame::initShaders() {
