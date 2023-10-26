@@ -22,13 +22,16 @@ public:
 private:
 	std::vector<GLuint> _navTextures;
 	GLuint _xTure;
+	GLuint _caret;
 	bool _navOpen = false; //visibility of menu
 	int _destination = -1; //id value
 	float _progress; //0-1; 0 being just selected dest, 1 being @ dest.
 	Jauntlet::UIManager* UIManager;
 	std::vector<Jauntlet::UIButtonElement> _points;
 	glm::vec2 _bgPos;
+	glm::vec2 _caretPos;
 	std::vector<glm::vec2> _positions;
 	std::vector<std::vector<int>> _map;
 	Jauntlet::UISpriteElement* _background;
+	Jauntlet::UISpriteElement* _caretEl;
 };

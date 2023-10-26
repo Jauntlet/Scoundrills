@@ -9,7 +9,7 @@ const int outcoveAmt = 4;
 const int layerAmt = 3;
 static int seed = std::chrono::system_clock::now().time_since_epoch().count(); //temp
 
-Navigation::Navigation() : _background(nullptr) {
+Navigation::Navigation() : _background(nullptr), _caretEl(nullptr) {
 	if (_map.empty()) { //map not generated (so generate it)
 		//generate some randomness
 		std::mt19937 r = std::mt19937(seed);
@@ -30,10 +30,12 @@ Navigation::Navigation() : _background(nullptr) {
 
 Navigation::~Navigation() {
 	delete _background;
+	delete _caretEl;
 }
 
 void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::InputManager* inManager) {
 	_xTure = Jauntlet::ResourceManager::getTexture("Textures/xmark.png").id;
+	_caret = Jauntlet::ResourceManager::getTexture("Textures/caret.png").id;
 	//set stuff
 	UIManager = &UIM;
 	_bgPos = glm::vec2(0);
@@ -74,11 +76,13 @@ void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::InputManager* inMana
 			int point = _map[y][x]; //The point type according to the generated "map," will determine the chance of encountering water, ores, etc. when arriving there.
 			_positions.push_back(glm::vec2(200 * (x+1) - 100 * (layerSpan + 1), 300 * (y+1) - 150 * (layersHeight + 1))); //0 is the center of the screen.
 			if (point == 0) { // white X
-				_points.push_back(Jauntlet::UIButtonElement(inManager, [&]() -> void { selectNav(_positions.size() - 1); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(128), Jauntlet::UIElement::ORIGIN_PIN::CENTER));
+				int destID = _positions.size() - 1;
+				_points.push_back(Jauntlet::UIButtonElement(inManager, [&, destID]() -> void { selectNav(destID); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(128), Jauntlet::UIElement::ORIGIN_PIN::CENTER));
 				continue;
 			}
 			if (point == 1) { // blue X
-				_points.push_back(Jauntlet::UIButtonElement(inManager, [&]() -> void { selectNav(_positions.size() - 1); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(128), Jauntlet::UIElement::ORIGIN_PIN::CENTER));
+				int destID = _positions.size() - 1;
+				_points.push_back(Jauntlet::UIButtonElement(inManager, [&, destID]() -> void { selectNav(destID); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(128), Jauntlet::UIElement::ORIGIN_PIN::CENTER));
 				continue;
 			}
 			if (point == 2) { // no X
@@ -103,6 +107,7 @@ void Navigation::toggleNav() {
 	_navOpen = !_navOpen;
 	//update visibility
 	_background->visible = _navOpen;
+	if (_caretEl != nullptr) _caretEl->visible = _navOpen;
 	for (int i = 0; i < _points.size(); i++) {
 		_points[i].visible = _navOpen;
 	}
@@ -114,13 +119,22 @@ bool Navigation::isNavOpen() {
 
 void Navigation::selectNav(int id) {
 	_destination = id;
+	_caretPos = _positions[id] + glm::vec2(0, 80);
+	if (_caretEl == nullptr) {
+		_caretEl = new Jauntlet::UISpriteElement(_caret, &_caretPos, glm::vec2(45,30), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+		UIManager->addElement(_caretEl);
+	}
 }
 
 void Navigation::updateTravel() {
 	if (_destination != -1) {
 		_progress += 0.1f;
 		if (_progress >= 1.0f) {
-			_destination = -1;
+			_destination = -1; //set dest
+			//remove caret
+
+			//_caretEl->visible = false;
+			//delete _caretEl;
 		}
 	}
 	else
