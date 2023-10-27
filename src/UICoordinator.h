@@ -14,7 +14,7 @@
 
 class UICoordinator {
 public:
-	UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::SpriteFont* spriteFont, Jauntlet::InputManager* inputManager, DrillManager* drillManager);
+	UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::SpriteFont* spriteFont, Jauntlet::InputManager* inputManager, DrillManager* drillManager, GLuint textProgram, GLuint buttonProgram);
 	~UICoordinator();
 
 	void draw();

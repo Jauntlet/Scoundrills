@@ -3,13 +3,13 @@
 #include <Jauntlet/UI/UIElement.h>
 
 #include "MainGame.h"
+#include "src/UICoordinator.h"
 
 MainGame::MainGame()
 :
 	_window("Scoundrills", _screenWidth, _screenHeight, Jauntlet::WindowFlags::RESIZEABLE),
 	_camera(_screenWidth, _screenHeight),
 	_hudCamera(_screenWidth, _screenHeight),
-	_uiCoordinator(&_hudCamera, &_spriteFont, &_inputManager, &_drill),
 	_drill(),
 	_cameraManager(&_camera, &_inputManager, &_players, &_drill),
 	_players(3, &_drill.drillWalls),
@@ -35,6 +35,8 @@ void MainGame::initSystems() {
 
 	initShaders();
 
+	_uiCoordinator = UICoordinator(&_hudCamera, &_spriteFont, &_inputManager, &_drill, _colorProgram.getId(), _textProgram.getId());
+
 	Jauntlet::ResourceManager::setMissingTexture("Textures/missing.png");
 }
 
@@ -44,6 +46,12 @@ void MainGame::initShaders() {
 	_colorProgram.addAttribute("vertexColor");
 	_colorProgram.addAttribute("vertexUV");
 	_colorProgram.linkShaders();
+
+	_textProgram.compileShaders("Shaders/text.vert", "Shaders/text.frag");
+	_textProgram.addAttribute("vertexPosition");
+	_textProgram.addAttribute("vertexColor");
+	_textProgram.addAttribute("vertexUV");
+	_textProgram.linkShaders();
 }
 
 void MainGame::gameLoop() {
