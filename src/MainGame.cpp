@@ -6,7 +6,7 @@
 #include "src/UICoordinator.h"
 
 MainGame::MainGame()
-:
+	:
 	_window("Scoundrills", _screenWidth, _screenHeight, Jauntlet::WindowFlags::RESIZEABLE),
 	_camera(_screenWidth, _screenHeight),
 	_hudCamera(_screenWidth, _screenHeight),
@@ -14,7 +14,8 @@ MainGame::MainGame()
 	_cameraManager(&_camera, &_inputManager, &_players, &_drill),
 	_players(3, &_drill.drillWalls),
 	_selectedTile(&_drill.drillFloor, &_players),
-	_spriteFont(&_hudCamera, "Fonts/HandelGo.ttf", 256)
+	_spriteFont(&_hudCamera, "Fonts/HandelGo.ttf", 256),
+	_uiCoordinator(&_hudCamera, &_spriteFont, &_inputManager, &_drill, &_colorProgram, &_textProgram)
 {
 	// empty
 }
@@ -34,8 +35,6 @@ void MainGame::initSystems() {
 	SDL_ShowCursor(1); // show the mouse cursor. can be set to 0 later for replacements.
 
 	initShaders();
-
-	_uiCoordinator = UICoordinator(&_hudCamera, &_spriteFont, &_inputManager, &_drill, _colorProgram.getId(), _textProgram.getId());
 
 	Jauntlet::ResourceManager::setMissingTexture("Textures/missing.png");
 }
