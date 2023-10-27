@@ -36,3 +36,4 @@ dependencies/lib/libjauntlet.a
 
 # Profiler Output Files
 callgrind.out.*
+build/game
