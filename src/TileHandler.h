@@ -49,7 +49,7 @@ private:
 	std::vector<Jauntlet::TileMap> _tileMaps;
 
 	// stored for saving the map at the end.
-	std::vector<std::string> _tileInfo;
+	std::vector<std::vector<std::string>> _tileInfo;
 	std::vector<std::string> _tileMapfilePath;
 	std::vector<std::vector<std::vector<unsigned int>>> _levelInfos; // totally not me making a 4D array to hold level information -xm
 

@@ -43,6 +43,7 @@ void TileHandler::loadFile() {
 		_tileMaps.emplace_back(_textureCache, 64);
 		_levelInfos.push_back(std::vector<std::vector<unsigned int>>());
 		_selectedTileMap = _tileMaps.size() - 1;
+		_tileInfo.push_back(std::vector<std::string>());
 
 		std::string line;
 		while (std::getline(file, line, '\n')) {
@@ -52,23 +53,8 @@ void TileHandler::loadFile() {
 			if (JMath::Split(line, ' ')[0] == "offset") {
 				continue;
 			}
-			// check for duplicates
-			/*bool duplicate = false;
-			for (int i = 0; i < _tileInfo.size(); i++) {
-				if (line == _tileInfo[i]) {
-					duplicate = true;
-					break;
-				}
-			}
-			if (duplicate) {
-				continue;
-			}*/
 
-			_tileInfo.push_back(line);
-			// add newly found tile information to old tilemaps
-			/*for (int i = 0; i < _tileMaps.size() - 1; i++) {
-				_tileMaps[i].Register(line);
-			}*/
+			_tileInfo[i].push_back(line);
 		}
 
 		int y = 0;
@@ -99,9 +85,9 @@ void TileHandler::saveAllFiles() {
 	for (int i = 0; i < _tileMapfilePath.size(); i++) {
 		file.open(_tileMapfilePath[i]);
 
-		// TODO: remove unused tiles from each file
-		for (int i = 0; i < _tileInfo.size(); i++) {
-			file << _tileInfo[i] << std::endl;
+		// add all tiles to the file
+		for (int j = 0; j < _tileInfo[i].size(); j++) {
+			file << _tileInfo[i][j] << std::endl;
 		}
 		file << "ENDDEC" << std::endl;
 
@@ -132,8 +118,8 @@ void TileHandler::saveSelectedTileMapAs() {
 
 	std::ofstream file(filePath);
 
-	for (int i = 0; i < _tileInfo.size(); i++) {
-		file << _tileInfo[i] << std::endl;
+	for (int i = 0; i < _tileInfo[_selectedTileMap].size(); i++) {
+		file << _tileInfo[_selectedTileMap][i] << std::endl;
 	}
 	file << "ENDDEC" << std::endl;
 
@@ -155,17 +141,17 @@ void TileHandler::draw() {
 	}
 }
 void TileHandler::setSelectedTile(unsigned int index) {
-	 (index > _tileInfo.size())? _selectedTileID = _tileInfo.size(): _selectedTileID = index;
+	 (index > _tileInfo[_selectedTileMap].size())? _selectedTileID = _tileInfo[_selectedTileMap].size(): _selectedTileID = index;
 }
 void TileHandler::changeSelectedTile(int changeAmount) {
 	// this could be changed to a while statement if we were expecting changes of more than one. -xm
 	changeAmount = std::max(-1, std::min(changeAmount, 1));
 
 	if (_selectedTileID == 0 && changeAmount == -1) {
-		_selectedTileID = _tileInfo.size();
+		_selectedTileID = _tileInfo[_selectedTileMap].size();
 		return;
 	}
-	if (_selectedTileID == _tileInfo.size() && changeAmount == 1) {
+	if (_selectedTileID == _tileInfo[_selectedTileMap].size() && changeAmount == 1) {
 		_selectedTileID = 0;
 		return;
 	}
@@ -178,7 +164,7 @@ void TileHandler::changeSelectedTileMap(int changeAmount) {
 	if (_selectedTileMap == 0 && changeAmount == -1) {
 		return;
 	}
-	if (_selectedTileMap == _tileInfo.size() - 1 && changeAmount == 1) {
+	if (_selectedTileMap == _tileMaps.size() - 1 && changeAmount == 1) {
 		return;
 	}
 	_selectedTileMap += changeAmount;
@@ -192,12 +178,16 @@ void TileHandler::changeSelectedTileMap(int changeAmount) {
 			_tileMaps[i].changeDrawColor({ 50, 50, 50 });
 		}
 	}
+	// correct selected tile if tilemap has smaller amount of tiles to select from
+	if (_selectedTileID > _tileInfo[_selectedTileMap].size() - 1) {
+		_selectedTileID = _tileInfo[_selectedTileMap].size() - 1;
+	}
 }
 std::string TileHandler::getSelectedTileTexture() {
 	if (_selectedTileID == 0) {
 		return "Textures/WhiteSquare.png";
 	}
-	return JMath::Split(_tileInfo[_selectedTileID - 1], '"')[1];
+	return JMath::Split(_tileInfo[_selectedTileMap][_selectedTileID - 1], '"')[1];
 }
 void TileHandler::toggleShadedTileMapView() {
 	_shadeUnselectedMaps = !_shadeUnselectedMaps;
