@@ -15,7 +15,7 @@ MainGame::MainGame()
 	_players(3, &_drill.drillWalls),
 	_selectedTile(&_drill.drillFloor, &_players),
 	_spriteFont(&_hudCamera, "Fonts/HandelGo.ttf", 256),
-	_uiCoordinator(&_hudCamera, &_spriteFont, &_inputManager, &_drill, &_colorProgram, &_textProgram)
+	_uiCoordinator(&_hudCamera, &_spriteFont, &_inputManager, &_drill, &_textProgram, &_colorProgram)
 {
 	// empty
 }
@@ -122,7 +122,7 @@ void MainGame::drawGame() {
 	_colorProgram.unuse();
 	
 	drawHUD();
-	
+
 	_window.swapBuffer();
 }
 
