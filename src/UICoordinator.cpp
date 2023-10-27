@@ -3,7 +3,6 @@
 #include <Jauntlet/UI/UIButtonToggleableElement.h>
 
 #include "UICoordinator.h"
-#include <Jauntlet/Rendering/GLSLProgram.h>
 
 void bruh() {
 	std::cout << std::stoi("a");
@@ -18,11 +17,12 @@ UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::SpriteFont
 	_hudCamera = hudCamera;
 	_spriteFont = spriteFont;
 	_inputManager = inputManager;
+	_colorProgram = buttonProgram;
 
 	_UIManager.setScale((hudCamera->getCameraSize().y / 1080.0f) * (hudCamera->getCameraSize().x / 1920.0f));
 	_UIManager.resolvePositions();
 
-	navigation.genNav(_UIManager, _inputManager);
+	navigation.genNav(_UIManager, _inputManager, buttonProgram);
 
 	_fpsCounter = new Jauntlet::UITextElement(_spriteFont, &fpsText, &_fpsColor, &_fpsPosition);
 	_UIManager.addElement(_fpsCounter, textProgram);
@@ -53,7 +53,7 @@ void UICoordinator::applyNewScreenSize(glm::ivec2 screenSize) {
 	_UIManager.resolvePositions();
 
 	// temporary
-	navigation.genNav(_UIManager, _inputManager);
+	navigation.genNav(_UIManager, _inputManager, _colorProgram);
 }
 
 void UICoordinator::toggleDebugMode() {

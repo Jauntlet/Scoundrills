@@ -12,6 +12,8 @@
 #include "Navigation.h"
 #include "drill/DrillManager.h"
 
+class GLSLProgram;
+
 class UICoordinator {
 public:
 	UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::SpriteFont* spriteFont, Jauntlet::InputManager* inputManager, DrillManager* drillManager, Jauntlet::GLSLProgram* textProgram, Jauntlet::GLSLProgram* buttonProgram);
@@ -29,6 +31,8 @@ public:
 	Navigation navigation;
 	std::string fpsText = "0";
 private:
+	// Color programs
+	Jauntlet::GLSLProgram* _colorProgram;
 
 	// Pointers
 	Jauntlet::Camera2D* _hudCamera = nullptr;

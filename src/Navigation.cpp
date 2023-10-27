@@ -33,12 +33,13 @@ Navigation::~Navigation() {
 	delete _caretEl;
 }
 
-void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::InputManager* inManager) {
+void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::InputManager* inManager, Jauntlet::GLSLProgram* colorProgram) {
 	_xTure = Jauntlet::ResourceManager::getTexture("Textures/xmark.png").id;
 	_caret = Jauntlet::ResourceManager::getTexture("Textures/caret.png").id;
 	//set stuff
 	UIManager = &UIM;
 	_bgPos = glm::vec2(0);
+	_colorProgram = colorProgram;
 
 	//clear stuff
 	_navTextures.clear();
@@ -63,7 +64,7 @@ void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::InputManager* inMana
 	//draw background
 	if (_background == NULL) {
 		_background = new Jauntlet::UISpriteElement(_navTextures[0], &_bgPos, glm::vec2(1000), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
-		UIM.addElement(_background);
+		UIM.addElement(_background, _colorProgram);
 	}
 
 	int layersHeight = _map.size(); //store the total height of the "layers"
@@ -93,7 +94,7 @@ void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::InputManager* inMana
 	}
 
 	for (int i = 0; i < _points.size(); i++) {
-		UIM.addElement(&_points[i]);
+		UIM.addElement(&_points[i], _colorProgram);
 	}
 
 	//update visibility
@@ -122,7 +123,7 @@ void Navigation::selectNav(int id) {
 	_caretPos = _positions[id] + glm::vec2(0, 80);
 	if (_caretEl == nullptr) {
 		_caretEl = new Jauntlet::UISpriteElement(_caret, &_caretPos, glm::vec2(45,30), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
-		UIManager->addElement(_caretEl);
+		UIManager->addElement(_caretEl, _colorProgram);
 	}
 }
 

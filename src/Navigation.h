@@ -8,12 +8,16 @@
 #include <Jauntlet/UI/UISpriteElement.h>
 #include <vector>
 
+namespace Jauntlet {
+	class GLSLProgram;
+}
+
 class Navigation {
 public:
 	Navigation();
 	~Navigation(); //deletes hanging references
 
-	void genNav(Jauntlet::UIManager& UIM, Jauntlet::InputManager* inManager); //new nav positions
+	void genNav(Jauntlet::UIManager& UIM, Jauntlet::InputManager* inManager, Jauntlet::GLSLProgram* colorProgram); //new nav positions
 
 	bool isNavOpen(); //returns if the thing is thinging
 	void toggleNav(); //toggles visibility (on/off)
@@ -23,6 +27,7 @@ private:
 	std::vector<GLuint> _navTextures;
 	GLuint _xTure;
 	GLuint _caret;
+	Jauntlet::GLSLProgram* _colorProgram;
 	bool _navOpen = false; //visibility of menu
 	int _destination = -1; //id value
 	float _progress; //0-1; 0 being just selected dest, 1 being @ dest.
