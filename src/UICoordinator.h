@@ -5,14 +5,13 @@
 #pragma once
 
 #include <Jauntlet/Rendering/ResourceManager.h>
+#include <Jauntlet/Rendering/GLSLProgram.h>
 #include <Jauntlet/UI/UIButtonToggleableElement.h>
 #include <Jauntlet/UI/UIManager.h>
 #include <Jauntlet/UI/UITextElement.h>
 
 #include "Navigation.h"
 #include "drill/DrillManager.h"
-
-class GLSLProgram;
 
 class UICoordinator {
 public:

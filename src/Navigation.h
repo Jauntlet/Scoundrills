@@ -3,14 +3,11 @@
  */
 #pragma once
 
+#include <Jauntlet/Rendering/GLSLProgram.h>
 #include <Jauntlet/UI/UIManager.h>
 #include <Jauntlet/UI/UIButtonElement.h>
 #include <Jauntlet/UI/UISpriteElement.h>
 #include <vector>
-
-namespace Jauntlet {
-	class GLSLProgram;
-}
 
 class Navigation {
 public:
