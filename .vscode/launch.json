@@ -5,7 +5,7 @@
             "name": "Launch",
             "type": "lldb",
             "request": "launch",
-            "program": "${workspaceFolder}/build/scoundrills",
+            "program": "${workspaceFolder}/build/game",
             "args": [],
             "cwd": "${workspaceFolder}/build",
             "preLaunchTask": "build",
