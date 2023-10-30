@@ -29,7 +29,7 @@ void CameraManager::processInput() {
 		_camera->transitionToScale(0.5f);
 	}
 
-	bool clickOnPlayers = _players->processInput(_inputManager, _camera, _drill);
+	bool clickOnPlayers = _players->processInput(_inputManager, _camera);
 	
 	if (_inputManager->isKeyDown(SDL_BUTTON_LEFT)) {
 		if (!clickOnPlayers) {
