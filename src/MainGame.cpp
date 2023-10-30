@@ -121,7 +121,7 @@ void MainGame::drawGame() {
 
 	_colorProgram.unuse();
 	
-	//drawHUD();
+	drawHUD();
 
 	_window.swapBuffer();
 }
