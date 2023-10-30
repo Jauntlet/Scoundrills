@@ -75,12 +75,7 @@ void Player::draw(Jauntlet::SpriteBatch& spriteBatch) {
 void Player::navigateTo(DrillManager* drill, glm::vec2 position) {
 	_path.clear();
 
-	bool reachedDest = false;
-	_path = Pathfinding::findPath(&drill->drillWalls, _position, drill->drillWalls.RoundWorldPos(position), reachedDest);
-	if (!reachedDest) {
-		_path.clear();
-		return;
-	}
+	_path = Pathfinding::findPath(&drill->drillWalls, _position, drill->drillWalls.RoundWorldPos(position));
 
 	_path.erase(_path.begin());
 

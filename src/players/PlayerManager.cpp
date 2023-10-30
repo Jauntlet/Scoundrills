@@ -34,7 +34,9 @@ bool PlayerManager::processInput(Jauntlet::InputManager* inputManager, Jauntlet:
 			}
 		}
 		else { // we have selected a position for the player to move to.
-			_players[_selectedPlayer].navigateTo(_drill, activeCamera->convertScreenToWorld(inputManager->getMouseCoords()));
+			if (isValidDestination(activeCamera->convertScreenToWorld(inputManager->getMouseCoords()))) {
+				_players[_selectedPlayer].navigateTo(_drill, activeCamera->convertScreenToWorld(inputManager->getMouseCoords()));
+			}
 			_pathRenderer.clearPath();
 			_selectedPlayer = -1;
 		}
