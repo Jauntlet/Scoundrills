@@ -1,9 +1,15 @@
+#include <Jauntlet/Time.h>
 #include "DrillManager.h"
 
-DrillManager::DrillManager()
+//debug
+#include <iostream>
+#include <iomanip>
+
+DrillManager::DrillManager(PlayerResources resourceManager)
 :
 	drillFloor(_textureCache, 64), drillWalls(_textureCache, 64),
-	_drillAssets()
+	_drillAssets(),
+	_resources(resourceManager)
 {
 	drillFloor.loadTileMap("Levels/DrillFloor.JML");
 	drillWalls.loadTileMap("Levels/DrillWall.JML");
@@ -15,6 +21,9 @@ void DrillManager::draw() {
 	drillFloor.draw();
 	drillWalls.draw();
 	_drillAssets.drawLayerTwo();
+
+	//Apply Resources Tick
+	resourcesTick();
 }
 
 void DrillManager::on() {
@@ -32,6 +41,13 @@ void DrillManager::toggle() {
 	} else {
 		on();
 	}
+}
+
+void DrillManager::resourcesTick() {
+	_resources.heat += Jauntlet::Time::getDeltaTime() * .3f;
+
+	//output to debug console for now.
+	std::cout << std::setprecision(2) << std::to_string(_resources.heat) << std::endl;
 }
 
 PlayerStation* DrillManager::checkHoveringStation(glm::vec2 position) {

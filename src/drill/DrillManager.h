@@ -8,10 +8,11 @@
 #include <Jauntlet/InputManager.h>
 
 #include "DrillAssetRenderer.h"
+#include "../PlayerResources.h"
 
 class DrillManager {
 public:
-	DrillManager();
+	DrillManager(PlayerResources resourceManager);
 	
 	// draw the drill elements
 	void draw();
@@ -23,6 +24,8 @@ public:
 	// toggle the drill
 	void toggle();
 
+	void resourcesTick();
+
 	PlayerStation* checkHoveringStation(glm::vec2 position);
 
 	Jauntlet::TileMap drillWalls;
@@ -33,4 +36,6 @@ private:
 	Jauntlet::TextureCache _textureCache;
 
 	bool _drillOn = true;
+
+	PlayerResources _resources;
 };
