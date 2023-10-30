@@ -13,7 +13,7 @@ MainGame::MainGame()
 	_resources(),
 	_drill(_resources),
 	_cameraManager(&_camera, &_inputManager, &_players, &_drill),
-	_players(3, &_drill.drillWalls),
+	_players(3, &_drill),
 	_selectedTile(&_drill.drillFloor, &_players),
 	_spriteFont(&_hudCamera, "Fonts/HandelGo.ttf", 256),
 	_uiCoordinator(&_hudCamera, &_spriteFont, &_inputManager, &_drill, &_textProgram, &_colorProgram)

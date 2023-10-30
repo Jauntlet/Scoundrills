@@ -11,14 +11,16 @@
 
 class PlayerManager {
 public: 
-	PlayerManager(int initialPlayers, Jauntlet::TileMap* tileWalls);
+	PlayerManager(int initialPlayers, DrillManager* drill);
 	// adds an already defined player to the player manager
 	void addPlayer(Player& player);
 	// creates a new player and places it into the player manager
 	void createPlayer(int x, int y);
 	
 	// processes a click to see if we operate on the players, returns true if we are, false if we arent.
-	bool processInput(Jauntlet::InputManager* inputManager, Jauntlet::Camera2D* activeCamera, DrillManager* drill);
+	bool processInput(Jauntlet::InputManager* inputManager, Jauntlet::Camera2D* activeCamera);
+	// returns if a position is a valid destination to pathfind to.
+	bool isValidDestination(glm::vec2 worldPos);
 
 	// returns true if a player is selected
 	bool isPlayerSelected();
@@ -32,5 +34,6 @@ private:
 	int _selectedPlayer = -1;
 
 	PathRenderer _pathRenderer;
+	DrillManager* _drill;
 	glm::vec2 _storedMousePos = glm::vec2(0);
 };

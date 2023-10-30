@@ -1,4 +1,5 @@
 #include "Navigation.h"
+#include "Jauntlet/UI/UIButtonElement.h"
 
 #include <chrono>
 #include <Jauntlet/Rendering/ResourceManager.h>
@@ -78,12 +79,14 @@ void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::InputManager* inMana
 			_positions.push_back(glm::vec2(200 * (x+1) - 100 * (layerSpan + 1), 300 * (y+1) - 150 * (layersHeight + 1))); //0 is the center of the screen.
 			if (point == 0) { // white X
 				int destID = _positions.size() - 1;
-				_points.push_back(Jauntlet::UIButtonElement(inManager, [&, destID]() -> void { selectNav(destID); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(128), Jauntlet::UIElement::ORIGIN_PIN::CENTER));
+				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(inManager, [&, destID]() -> void { selectNav(destID); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(128), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+				_points.push_back(button);
 				continue;
 			}
 			if (point == 1) { // blue X
 				int destID = _positions.size() - 1;
-				_points.push_back(Jauntlet::UIButtonElement(inManager, [&, destID]() -> void { selectNav(destID); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(128), Jauntlet::UIElement::ORIGIN_PIN::CENTER));
+				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(inManager, [&, destID]() -> void { selectNav(destID); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(128), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+				_points.push_back(button);
 				continue;
 			}
 			if (point == 2) { // no X

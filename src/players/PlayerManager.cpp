@@ -2,8 +2,10 @@
 
 #include "PlayerManager.h"
 
-PlayerManager::PlayerManager(int initialPlayers, Jauntlet::TileMap* tileWalls) 
-	: _pathRenderer(tileWalls) {
+PlayerManager::PlayerManager(int initialPlayers, DrillManager* drill)
+	: 
+	_drill(drill),
+	_pathRenderer(&drill->drillWalls) {
 	_players.reserve(sizeof(Player) * initialPlayers);
 
 	for (int i = 0; i < initialPlayers; ++i) {
@@ -17,7 +19,7 @@ void PlayerManager::createPlayer(int x, int y) {
 	_players.emplace_back(x, y);
 }
 
-bool PlayerManager::processInput(Jauntlet::InputManager* inputManager, Jauntlet::Camera2D* activeCamera, DrillManager* drill) {
+bool PlayerManager::processInput(Jauntlet::InputManager* inputManager, Jauntlet::Camera2D* activeCamera) {
 	// if we click
 	if (inputManager->isKeyPressed(SDL_BUTTON_LEFT)) {
 		if (_selectedPlayer == -1) { // we are selecting a player.
@@ -32,18 +34,35 @@ bool PlayerManager::processInput(Jauntlet::InputManager* inputManager, Jauntlet:
 			}
 		}
 		else { // we have selected a position for the player to move to.
-			_players[_selectedPlayer].navigateTo(drill, activeCamera->convertScreenToWorld(inputManager->getMouseCoords()));
+			_players[_selectedPlayer].navigateTo(_drill, activeCamera->convertScreenToWorld(inputManager->getMouseCoords()));
 			_pathRenderer.clearPath();
 			_selectedPlayer = -1;
 		}
 	} else if (_selectedPlayer != -1) {
 		// a player is selected and we aren't clicking, so we draw the path via pathrenderer
-		if (_storedMousePos != drill->drillWalls.RoundWorldPos(activeCamera->convertScreenToWorld(inputManager->getMouseCoords()))) {
-			_storedMousePos = drill->drillWalls.RoundWorldPos(activeCamera->convertScreenToWorld(inputManager->getMouseCoords()));
+		if (_storedMousePos != _drill->drillWalls.RoundWorldPos(activeCamera->convertScreenToWorld(inputManager->getMouseCoords()))) {
+			_storedMousePos = _drill->drillWalls.RoundWorldPos(activeCamera->convertScreenToWorld(inputManager->getMouseCoords()));
 			_pathRenderer.createPath(_players[_selectedPlayer].getPosition(), _storedMousePos);
 		}
 	}
 	return false;
+}
+bool PlayerManager::isValidDestination(glm::vec2 worldPos) {
+	glm::vec2 pos = _drill->drillWalls.WorldPosToTilePos(worldPos);
+	worldPos = _drill->drillWalls.RoundWorldPos(worldPos);
+
+	if (_drill->drillWalls.tileHasCollision(pos) || !_drill->drillWalls.isValidTilePos(pos)) {
+		return false;
+	}
+
+	// check if position overlaps another player
+	for (int i = 0; i < _players.size(); i++) {
+		if (worldPos == _players[i].getPosition() - glm::vec2(0, 64)) {
+			return false;
+		}
+	}
+
+	return true;
 }
 
 bool PlayerManager::isPlayerSelected() {
