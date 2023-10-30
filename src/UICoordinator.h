@@ -48,7 +48,7 @@ private:
 	Jauntlet::UITextElement* _fpsCounter;
 
 	// Debug Button
-	GLuint _buttonTexture;
-	glm::vec2* buttonPos;
-	Jauntlet::UIButtonToggleableElement* _button;
+	GLuint _buttonTexture = 0;
+	glm::vec2* buttonPos = nullptr;
+	Jauntlet::UIButtonToggleableElement* _button = nullptr;
 };
