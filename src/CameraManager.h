@@ -5,7 +5,6 @@
 #pragma once
 
 #include "drill/DrillManager.h"
-#include "Jauntlet/TileMap.h"
 #include "src/players/PlayerManager.h"
 #include <Jauntlet/Camera2D.h>
 #include <Jauntlet/InputManager.h>

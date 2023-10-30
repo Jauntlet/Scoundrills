@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <Jauntlet/TileMap.h>
+#include <Jauntlet/Tiles/TileMap.h>
 #include <Jauntlet/InputManager.h>
 
 #include "DrillAssetRenderer.h"

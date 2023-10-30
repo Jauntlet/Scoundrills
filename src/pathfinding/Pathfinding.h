@@ -2,7 +2,7 @@
  * Main Contributer(s): Xander Mooney
  */
 #pragma once
-#include <Jauntlet/TileMap.h>
+#include <Jauntlet/Tiles/TileMap.h>
 
 // Used to find pathfind routes.
 // DO NOT USE otherwise.
