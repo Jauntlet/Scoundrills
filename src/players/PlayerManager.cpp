@@ -6,7 +6,7 @@ PlayerManager::PlayerManager(int initialPlayers, Jauntlet::TileMap* tileWalls)
 	: _pathRenderer(tileWalls) {
 	_players.reserve(sizeof(Player) * initialPlayers);
 
-	for (int i = 0; i < initialPlayers; i++) {
+	for (int i = 0; i < initialPlayers; ++i) {
 		_players.emplace_back(64 * (i + 1) + 320, -64);
 	}
 }
@@ -24,7 +24,7 @@ bool PlayerManager::processInput(Jauntlet::InputManager* inputManager, Jauntlet:
 			Jauntlet::Collision2D collision;
 			glm::vec2 mousePos = activeCamera->convertScreenToWorld(inputManager->getMouseCoords());
 
-			for (int i = 0; i < _players.size(); i++) {
+			for (int i = 0; i < _players.size(); ++i) {
 				if (collision.getCollision(&_players[i].collider, mousePos)) {
 					_selectedPlayer = i;
 					return true;
@@ -51,13 +51,13 @@ bool PlayerManager::isPlayerSelected() {
 }
 
 void PlayerManager::update() {
-	for (int i = 0; i < _players.size(); i++) {
+	for (int i = 0; i < _players.size(); ++i) {
 		_players[i].update();
 	}
 }
 
 void PlayerManager::draw(Jauntlet::SpriteBatch& spriteBatch) {
-	for (int i = 0; i < _players.size(); i++) {
+	for (int i = 0; i < _players.size(); ++i) {
 		_players[i].draw(spriteBatch);
 	}
 	_pathRenderer.drawPath();

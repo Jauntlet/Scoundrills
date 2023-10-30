@@ -48,7 +48,7 @@ void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::InputManager* inMana
 
 	int sizeSum = 0;
 
-	for (int i = 0; i < _map.size(); i++) {
+	for (int i = 0; i < _map.size(); ++i) {
 		sizeSum += _map[i].size();
 	}
 
@@ -57,7 +57,7 @@ void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::InputManager* inMana
 
 	//read in textures
 	_navTextures.reserve(sizeof(GLuint) * 4);
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 4; ++i) {
 		_navTextures.push_back(Jauntlet::ResourceManager::getTexture(bgTextures[i]).id);
 	}
 
@@ -93,13 +93,13 @@ void Navigation::genNav(Jauntlet::UIManager& UIM, Jauntlet::InputManager* inMana
 		}
 	}
 
-	for (int i = 0; i < _points.size(); i++) {
+	for (int i = 0; i < _points.size(); ++i) {
 		UIM.addElement(&_points[i], _colorProgram);
 	}
 
 	//update visibility
 	_background->visible = _navOpen;
-	for (int i = 0; i < _points.size(); i++) {
+	for (int i = 0; i < _points.size(); ++i) {
 		_points[i].visible = _navOpen;
 	}
 }
@@ -109,7 +109,7 @@ void Navigation::toggleNav() {
 	//update visibility
 	_background->visible = _navOpen;
 	if (_caretEl != nullptr) _caretEl->visible = _navOpen;
-	for (int i = 0; i < _points.size(); i++) {
+	for (int i = 0; i < _points.size(); ++i) {
 		_points[i].visible = _navOpen;
 	}
 }
