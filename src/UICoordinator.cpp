@@ -32,6 +32,9 @@ UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::SpriteFont
 
 	Jauntlet::UIButtonToggleableElement* _button = new Jauntlet::UIButtonToggleableElement(_inputManager, _buttonMethod, _buttonTexture, buttonPos, glm::vec2(512, 512), Jauntlet::UIElement::ORIGIN_PIN::BOTTOM_LEFT);
 	_UIManager.addElement(_button, buttonProgram);
+
+	// optimize batches
+	_UIManager.optimize();
 }
 
 UICoordinator::~UICoordinator() {
