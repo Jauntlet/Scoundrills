@@ -1,5 +1,5 @@
 #pragma once
-#include <Jauntlet/TileMap.h>
+#include <Jauntlet/Tiles/TileMap.h>
 
 class TileHandler
 {
