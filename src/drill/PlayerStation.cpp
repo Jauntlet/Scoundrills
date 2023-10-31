@@ -37,3 +37,6 @@ void PlayerStation::Occupy(Player* player) {
 glm::vec2 PlayerStation::getAnchorPoint() {
 	return _anchorPoint;
 }
+glm::vec4 PlayerStation::getBoundingBox() {
+	return _destination;
+}

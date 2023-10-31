@@ -63,8 +63,7 @@ bool PlayerManager::isValidDestination(glm::vec2 worldPos) {
 			return false;
 		}
 	}
-
-	return true;
+	return !_drill->doesTileOverlapStations(pos);
 }
 
 bool PlayerManager::isPlayerSelected() {

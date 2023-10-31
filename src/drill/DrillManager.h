@@ -27,6 +27,7 @@ public:
 	void resourcesTick();
 
 	PlayerStation* checkHoveringStation(glm::vec2 position);
+	bool doesTileOverlapStations(glm::ivec2 tilePos);
 
 	Jauntlet::TileMap drillWalls;
 	Jauntlet::TileMap drillFloor;

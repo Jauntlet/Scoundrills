@@ -68,3 +68,7 @@ PlayerStation* DrillManager::checkHoveringStation(glm::vec2 position) {
 		return nullptr;
 	}
 }
+bool DrillManager::doesTileOverlapStations(glm::ivec2 tilePos) {
+	return drillWalls.doesTileOverlap(tilePos, _drillAssets.steeringWheel.getBoundingBox()) ||
+		drillWalls.doesTileOverlap(tilePos, _drillAssets.boiler.getBoundingBox());
+}
