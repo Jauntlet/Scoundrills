@@ -5,6 +5,10 @@
 #include <iostream>
 #include <iomanip>
 
+//Constants
+const float heatRiseScale = .3f; //1 heat every ~3 seconds
+const float heatFallScale = .1f; //1 heat every 10 seconds
+
 DrillManager::DrillManager(PlayerResources resourceManager)
 :
 	drillFloor(_textureCache, 64), drillWalls(_textureCache, 64),
@@ -44,7 +48,10 @@ void DrillManager::toggle() {
 }
 
 void DrillManager::resourcesTick() {
-	_resources.heat += Jauntlet::Time::getDeltaTime() * .3f;
+	if (_drillOn)
+		_resources.heat += Jauntlet::Time::getDeltaTime() * heatRiseScale;
+	else
+		_resources.heat -= Jauntlet::Time::getDeltaTime() * heatFallScale;
 
 	//output to debug console for now.
 	std::cout << std::setprecision(2) << std::to_string(_resources.heat) << std::endl;
