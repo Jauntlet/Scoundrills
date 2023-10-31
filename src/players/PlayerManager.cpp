@@ -34,7 +34,7 @@ bool PlayerManager::processInput(Jauntlet::InputManager* inputManager, Jauntlet:
 			}
 		}
 		else { // we have selected a position for the player to move to.
-			if (isValidDestination(activeCamera->convertScreenToWorld(inputManager->getMouseCoords()))) {
+			if (isValidDestination(_storedMousePos)) {
 				_players[_selectedPlayer].navigateTo(_drill, activeCamera->convertScreenToWorld(inputManager->getMouseCoords()));
 			}
 			_pathRenderer.clearPath();
@@ -44,7 +44,12 @@ bool PlayerManager::processInput(Jauntlet::InputManager* inputManager, Jauntlet:
 		// a player is selected and we aren't clicking, so we draw the path via pathrenderer
 		if (_storedMousePos != _drill->drillWalls.RoundWorldPos(activeCamera->convertScreenToWorld(inputManager->getMouseCoords()))) {
 			_storedMousePos = _drill->drillWalls.RoundWorldPos(activeCamera->convertScreenToWorld(inputManager->getMouseCoords()));
-			_pathRenderer.createPath(_players[_selectedPlayer].getPosition(), _storedMousePos);
+			if (isValidDestination(_storedMousePos)) {
+				_pathRenderer.createPath(_players[_selectedPlayer].getPosition(), _storedMousePos);
+			}
+			else {
+				_pathRenderer.clearPath();
+			}
 		}
 	}
 	return false;
@@ -64,6 +69,9 @@ bool PlayerManager::isValidDestination(glm::vec2 worldPos) {
 		}
 	}
 	return !_drill->doesTileOverlapStations(pos);
+}
+bool PlayerManager::hoveringStation(glm::vec2 worldPos) {
+	return _drill->doesTileOverlapStations(_drill->drillWalls.WorldPosToTilePos(worldPos));
 }
 
 bool PlayerManager::isPlayerSelected() {

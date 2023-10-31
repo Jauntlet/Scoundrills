@@ -21,6 +21,8 @@ public:
 	bool processInput(Jauntlet::InputManager* inputManager, Jauntlet::Camera2D* activeCamera);
 	// returns if a position is a valid destination to pathfind to.
 	bool isValidDestination(glm::vec2 worldPos);
+	// returns true if hovering a player station
+	bool hoveringStation(glm::vec2 worldPos);
 
 	// returns true if a player is selected
 	bool isPlayerSelected();

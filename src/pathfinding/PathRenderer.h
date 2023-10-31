@@ -4,6 +4,7 @@
 #pragma once
 #include <Jauntlet/Rendering/ResourceManager.h>
 #include "../pathfinding/Pathfinding.h"
+
 class PathRenderer
 {
 public:

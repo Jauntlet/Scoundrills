@@ -8,11 +8,6 @@ PathRenderer::PathRenderer(Jauntlet::TileMap* tileMap) :
 }
 
 void PathRenderer::createPath(glm::vec2 start, glm::vec2 end) {
-	if (_tilemap->tileHasCollision(_tilemap->WorldPosToTilePos(end)) || !_tilemap->isValidTilePos(_tilemap->WorldPosToTilePos(end))) {
-		clearPath();
-		return;
-	}
-	
 	bool reachedDest = false;
 	std::vector<glm::vec2> path = Pathfinding::findPath(_tilemap, start, end, reachedDest);
 	if (!reachedDest) {

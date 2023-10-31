@@ -17,7 +17,10 @@ void SelectedTileRenderer::draw(Jauntlet::Camera2D* activeCamera, Jauntlet::Inpu
 		
 		// if a player is selected, we highlight the tile if its a valid pathfind pos or not
 		if (_players->isPlayerSelected()) {
-			if (_players->isValidDestination(_selectedTilePos)) {
+			if (_players->hoveringStation(_selectedTilePos)) {
+				_drawColor = Jauntlet::Color(0, 0, 0, 0);
+			}
+			else if (_players->isValidDestination(_selectedTilePos)) {
 				_drawColor = Jauntlet::Color(0, 255, 0);
 			}
 			else {
