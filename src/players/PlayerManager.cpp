@@ -70,8 +70,8 @@ bool PlayerManager::isValidDestination(glm::vec2 worldPos) {
 	}
 	return !_drill->doesTileOverlapStations(pos);
 }
-bool PlayerManager::hoveringStation(glm::vec2 worldPos) {
-	return _drill->doesTileOverlapStations(_drill->drillWalls.WorldPosToTilePos(worldPos));
+bool PlayerManager::hoveringStation(const glm::vec2& worldPos) {
+	return _drill->checkHoveringStation(worldPos);
 }
 
 bool PlayerManager::isPlayerSelected() {

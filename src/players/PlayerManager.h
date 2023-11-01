@@ -22,7 +22,7 @@ public:
 	// returns if a position is a valid destination to pathfind to.
 	bool isValidDestination(glm::vec2 worldPos);
 	// returns true if hovering a player station
-	bool hoveringStation(glm::vec2 worldPos);
+	bool hoveringStation(const glm::vec2& worldPos);
 
 	// returns true if a player is selected
 	bool isPlayerSelected();
