@@ -54,7 +54,7 @@ void DrillManager::resourcesTick() {
 		_resources.heat -= Jauntlet::Time::getDeltaTime() * heatFallScale;
 
 	//output to debug console for now.
-	std::cout << std::setprecision(2) << std::to_string(_resources.heat) << std::endl;
+	//std::cout << std::setprecision(2) << std::to_string(_resources.heat) << std::endl;
 }
 
 PlayerStation* DrillManager::checkHoveringStation(glm::vec2 position) {
