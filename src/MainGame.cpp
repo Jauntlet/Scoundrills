@@ -1,7 +1,9 @@
 #include <Jauntlet/Rendering/ResourceManager.h>
 #include <Jauntlet/Rendering/TextureCache.h>
 #include <Jauntlet/UI/UIElement.h>
+#include <iostream>
 
+#include "Jauntlet/Time.h"
 #include "MainGame.h"
 #include "src/UICoordinator.h"
 
@@ -97,6 +99,18 @@ void MainGame::processInput() {
 	//open nav
 	if (_inputManager.isKeyPressed(SDLK_EQUALS)) {
 		_uiCoordinator.navigation.toggleNav();
+	}
+
+	if (_inputManager.isKeyPressed(SDLK_SPACE)) {
+		paused = !paused;
+
+		if (paused) {
+			Jauntlet::Time::setTimeScale(0.0f);
+			std::cout << "paused" << std::endl;
+		} else {
+			Jauntlet::Time::setTimeScale(1.0f);
+			std::cout << "unpaused" << std::endl;
+		}
 	}
 
 	//mouse hover over navigation
