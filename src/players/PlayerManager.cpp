@@ -54,7 +54,7 @@ bool PlayerManager::processInput(Jauntlet::InputManager* inputManager, Jauntlet:
 	}
 	return false;
 }
-const bool PlayerManager::isValidDestination(glm::vec2 worldPos) {
+bool PlayerManager::isValidDestination(glm::vec2 worldPos) {
 	glm::ivec2 pos = _drill->drillWalls.WorldPosToTilePos(worldPos);
 	glm::vec2 floorPos = _drill->drillFloor.WorldPosToTilePos(worldPos);
 	worldPos = _drill->drillWalls.RoundWorldPos(worldPos);
