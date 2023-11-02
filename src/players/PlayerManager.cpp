@@ -5,7 +5,7 @@
 PlayerManager::PlayerManager(int initialPlayers, DrillManager* drill)
 	: 
 	_drill(drill),
-	_pathRenderer(&drill->drillWalls) {
+	_pathRenderer(&drill->drillWalls, this) {
 	_players.reserve(sizeof(Player) * initialPlayers);
 
 	for (int i = 0; i < initialPlayers; ++i) {
