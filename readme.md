@@ -12,7 +12,7 @@ to compile on Debian:
 
 get dependencies
 ```
-sudo apt install make cmake libglm-dev libsdl2-dev libglew-dev g++ libfreetype-dev
+sudo apt install ninja cmake libglm-dev libsdl2-dev libglew-dev g++ libfreetype-dev
 ```
 clone and enter the repository
 ```
@@ -27,10 +27,10 @@ create and move into the "build" folder
 mkdir build
 cd build
 ```
-compile using CMake (run in the build folder). we export the compile commands for clangd, you can skip that argument step if you don't use anything like that.
+compile using CMake and ninja (run in the build folder). we export the compile commands for clangd, you can skip that argument step if you don't use anything like that.
 ```
 cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=1
-make
+ninja
 ```
 the executable is called "scoundrills", so run this command to launch it
 ```
