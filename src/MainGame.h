@@ -42,6 +42,8 @@ private:
 
 	Jauntlet::Camera2D _camera, _hudCamera;
 
+	PlayerResources _resources;
+
 	Jauntlet::InputManager _inputManager;
 
 	UICoordinator _uiCoordinator;
@@ -56,8 +58,6 @@ private:
 	
 	Jauntlet::SpriteFont _spriteFont;
 
-
-
 	Jauntlet::GLSLProgram _colorProgram, _textProgram;
 
 	GameState _gameState = GameState::PLAY;
@@ -67,8 +67,6 @@ private:
 	Jauntlet::SpriteBatch _playerSpriteBatch;
 
 	Jauntlet::SpriteBatch _HUDSpriteBatch;
-	
-	PlayerResources _resources;
 
 	bool paused = false;
 
