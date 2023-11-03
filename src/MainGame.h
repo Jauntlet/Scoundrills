@@ -11,7 +11,7 @@
 #include <Jauntlet/UI/UITextElement.h>
 #include <Jauntlet/Rendering/Window.h>
 #include <Jauntlet/Rendering/Particles/Particle.h>
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 
 #include "CameraManager.h"
 #include "drill/DrillManager.h"
@@ -38,7 +38,8 @@ private:
 	void drawGame();
 	void drawHUD();
 
-	int  _screenWidth = 1024, _screenHeight = 768;
+	uint32_t _screenWidth = 1024;
+	uint32_t _screenHeight = 768;
 	Jauntlet::Window _window;
 
 	Jauntlet::Camera2D _camera, _hudCamera;
