@@ -22,7 +22,7 @@ done
 
 # Run the build steps based on the conditions
 mkdir -p build
-cd build && cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -DCMAKE_BUILD_TYPE=$build_type && ninja
+cd build && cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -DCMAKE_BUILD_TYPE=$build_type -G Ninja && ninja
 
 # Check the exit status of make
 make_status=$?
