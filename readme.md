@@ -12,7 +12,7 @@ to compile on Debian:
 
 get dependencies
 ```
-sudo apt install ninja cmake libglm-dev libsdl2-dev libglew-dev g++ libfreetype-dev
+sudo apt install ninja-build cmake libglm-dev libsdl2-dev libglew-dev g++ libfreetype-dev
 ```
 clone and enter the repository
 ```
