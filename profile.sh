@@ -9,4 +9,5 @@ cd build && rm callgrind.out.*
 valgrind --tool=callgrind ./scoundrills
 cd ..
 kcachegrind build/callgrind.out.*
+echo ----------
 echo go outside
