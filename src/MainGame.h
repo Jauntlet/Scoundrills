@@ -28,9 +28,6 @@ class MainGame {
 public:
 	MainGame();
 
-	glm::vec2 jim = glm::vec2(0);
-	Jauntlet::Particle jimp;
-
 	void run();
 
 private:
@@ -74,4 +71,7 @@ private:
 
 	// defines scale of movement for the camera. if set to 1, the camera will follow the mouse, if set to 0, the mouse has no control over the camera.
 	const float _CAMERA_MOVEMENT_SCALE =  0.5f;
+
+	glm::vec2 jim = glm::vec2(0);
+	Jauntlet::Particle jimp;
 };
