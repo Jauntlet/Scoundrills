@@ -15,30 +15,12 @@ file(GLOB_RECURSE JAUNTLET_FILES "${JAUNTLET_DIR}/*.cpp")
 # Set the output directory for libraries
 set(LIBRARY_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/dependencies/lib")
 
-# Find and configure OpenGL with GLVND preference
-set(OpenGL_GL_PREFERENCE "GLVND")
-find_package(OpenGL REQUIRED)
-include_directories(${OPENGL_INCLUDE_DIRS})
+# Use pkg-config to find SDL2
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(SDL2 REQUIRED sdl2)
 
-# Find and configure SDL2
-find_package(SDL2 REQUIRED)
-include_directories(${SDL2_INCLUDE_DIRS})
-
-# Add SDL2_mixer library
-#find_package(SDL2_mixer REQUIRED)
-#include_directories(${SDL_MIXER_INCLUDE_DIRS})
-
-# Find and configure GLEW
-find_package(GLEW REQUIRED)
-include_directories(${GLEW_INCLUDE_DIRS})
-
-# Find and configure GLM
-find_package(glm REQUIRED)
-include_directories(${GLM_INCLUDE_DIRS})
-
-# Find and configure FreeType
-find_package(Freetype REQUIRED)
-include_directories(${FREETYPE_INCLUDE_DIRS})
+# Print the SDL2 include directory
+message(STATUS "SDL2 Include Directory: ${SDL2_INCLUDE_DIRS}")
 
 # Create a library from the "Jauntlet" source files
 add_library(jauntlet ${JAUNTLET_FILES})
@@ -65,8 +47,8 @@ if(WIN32)
     file(GLOB WIN_LIB_FILES "${CMAKE_SOURCE_DIR}/dependencies/lib/*.lib")
     target_link_libraries(scoundrills PRIVATE ${WIN_LIB_FILES})
 elseif(UNIX)
-    # On Unix, use SDL2::SDL2, GLEW::GLEW, OpenGL::OpenGL, and Freetype::Freetype
-    target_link_libraries(scoundrills PRIVATE SDL2::SDL2 GLEW::GLEW OpenGL::OpenGL Freetype::Freetype)
+    # On Unix, use SDL2 from pkg-config
+    target_link_libraries(scoundrills PRIVATE ${SDL2_LIBRARIES})
 endif()
 
 # Specify include directories for the "Jauntlet" directory (outside of it)
