@@ -4,7 +4,6 @@ PlayerResources::PlayerResources() {
 	//empty
 }
 
-PlayerResources::PlayerResources(float Water, unsigned int Food, unsigned int Copper, unsigned int Parts, float Heat) 
-	: water(Water), food(Food), copper(Copper), parts(Parts), heat(Heat) {
-	//empty
+PlayerResources::PlayerResources(float water, unsigned int food, unsigned int copper, unsigned int parts, float heat) 
+: water(water), food(food), copper(copper), parts(parts), heat(heat) {
 }
