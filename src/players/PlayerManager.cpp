@@ -5,7 +5,7 @@
 PlayerManager::PlayerManager(int initialPlayers, DrillManager* drill)
 	: 
 	_drill(drill),
-	_pathRenderer(&drill->drillWalls) {
+	_pathRenderer(&drill->drillWalls, this) {
 	_players.reserve(sizeof(Player) * initialPlayers);
 
 	for (int i = 0; i < initialPlayers; ++i) {
@@ -55,10 +55,15 @@ bool PlayerManager::processInput(Jauntlet::InputManager* inputManager, Jauntlet:
 	return false;
 }
 bool PlayerManager::isValidDestination(glm::vec2 worldPos) {
-	glm::vec2 pos = _drill->drillWalls.WorldPosToTilePos(worldPos);
+	glm::ivec2 pos = _drill->drillWalls.WorldPosToTilePos(worldPos);
+	glm::vec2 floorPos = _drill->drillFloor.WorldPosToTilePos(worldPos);
 	worldPos = _drill->drillWalls.RoundWorldPos(worldPos);
 
+
 	if (_drill->drillWalls.tileHasCollision(pos) || !_drill->drillWalls.isValidTilePos(pos)) {
+		return false;
+	}
+	if (_drill->drillFloor.isTileEmpty(floorPos)) {
 		return false;
 	}
 

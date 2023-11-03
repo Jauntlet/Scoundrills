@@ -1,6 +1,7 @@
 #include <Jauntlet/JMath.h>
 
 #include "Pathfinding.h"
+#include "../players/PlayerManager.h"
 
 std::vector<cell> Pathfinding::_openList;
 std::vector<cell> Pathfinding::_closedList;
@@ -159,8 +160,7 @@ std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, glm::vec2 s
 
 	return output;
 }
-
-std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, glm::vec2 start, glm::vec2 destination, bool& reachedDestination) {
+std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, PlayerManager& players, glm::vec2 start, glm::vec2 destination) {
 	// translate world coords to tilemap coords.
 	destination = map->WorldPosToTilePos(destination);
 	start = map->WorldPosToTilePos(start);
@@ -169,14 +169,10 @@ std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, glm::vec2 s
 
 	if (start == destination) {
 		_openList.clear();
-		reachedDestination = true;
 		return { map->TilePosToWorldPos(start) };
 	}
 
-	// You might try to replace this with the reachedDestination bool we pass in for this overload, but sadly this bool is needed to be able to break fully
-	// out of the pathfinding loop and detect if we need to find the next-closest-successor, so we can't easily replace it without some weird work-arounds. -xm
 	bool foundDest = false;
-
 	while (!_openList.empty() && !foundDest && _openList.size() < TIMEOUT_LIMIT) {
 		int bestNodeID = 0;
 		// Search through the list of nodes for the lowest movement cost
@@ -203,12 +199,12 @@ std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, glm::vec2 s
 
 				if (currentNode.position == destination) {
 					foundDest = true;
-					reachedDestination = !(map->tileHasCollision(destination));
 					break;
 				}
+				
 
 				// Position has collision, and therefore is not a valid position to check for navigation.
-				if (map->tileHasCollision(currentNode.position)) {
+				if (!players.isValidDestination(map->TilePosToWorldPos(currentNode.position))) {
 					continue;
 				}
 
@@ -278,7 +274,6 @@ std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, glm::vec2 s
 		_openList.clear();
 		_closedList.clear();
 
-		reachedDestination = false;
 		return output;
 	}
 
