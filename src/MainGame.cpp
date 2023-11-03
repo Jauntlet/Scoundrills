@@ -150,8 +150,4 @@ void MainGame::drawHUD() {
 	_uiCoordinator.fpsText = std::to_string((int)_fps); // #TODO: DELTEME
 
 	_uiCoordinator.draw();
-
-	_HUDSpriteBatch.begin();
-
-	_HUDSpriteBatch.endAndRender();
 }

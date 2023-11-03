@@ -28,7 +28,7 @@ class MainGame {
 public:
 	MainGame();
 
-	glm::vec2 jim = glm::vec2(0,0);
+	glm::vec2 jim = glm::vec2(0);
 	Jauntlet::Particle jimp;
 
 	void run();
@@ -69,8 +69,6 @@ private:
 	float _fps = 0;
 
 	Jauntlet::SpriteBatch _playerSpriteBatch;
-
-	Jauntlet::SpriteBatch _HUDSpriteBatch;
 
 	bool paused = false;
 
