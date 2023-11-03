@@ -78,4 +78,4 @@ bash compile.sh --release --no-launch
 ./appimagetool-x86_64.AppImage "$APPDIR"
 
 # Clean up newest build
-#rm -rf "$APPDIR"
+rm -rf "$APPDIR"
