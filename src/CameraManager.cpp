@@ -1,7 +1,6 @@
 #include <Jauntlet/Time.h>
-
+#include <Jauntlet/Rendering/Cameras/Camera2D.h>
 #include "CameraManager.h"
-#include "Jauntlet/Camera2D.h"
 #include "drill/DrillManager.h"
 #include "src/players/PlayerManager.h"
 

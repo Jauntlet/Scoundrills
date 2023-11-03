@@ -5,8 +5,8 @@
 #include "Player.h"
 #include "../pathfinding/PathRenderer.h"
 #include "../drill/DrillManager.h"
-#include <Jauntlet/InputManager.h>
-#include <Jauntlet/Camera2D.h>
+#include <Jauntlet/Inputs/InputManager.h>
+#include <Jauntlet/Rendering/Cameras/Camera2D.h>
 #include <Jauntlet/Rendering/SpriteBatch.h>
 
 class PlayerManager {

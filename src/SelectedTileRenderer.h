@@ -4,8 +4,8 @@
 #pragma once
 #include <Jauntlet/Rendering/ResourceManager.h>
 #include <Jauntlet/Tiles/TileMap.h>
-#include <Jauntlet/Camera2D.h>
-#include <Jauntlet/InputManager.h>
+#include <Jauntlet/Rendering/Cameras/Camera2D.h>
+#include <Jauntlet/Inputs/InputManager.h>
 #include "players/PlayerManager.h"
 
 class SelectedTileRenderer

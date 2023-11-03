@@ -3,7 +3,7 @@
  */
 #pragma once
 
-#include <Jauntlet/InputKey.h>
+#include <Jauntlet/Inputs/InputKey.h>
 #include "../drill/DrillManager.h"
 #include "../drill/PlayerStation.h"
 

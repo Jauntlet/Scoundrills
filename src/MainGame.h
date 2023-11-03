@@ -9,7 +9,7 @@
 #include <Jauntlet/UI/UIButtonElement.h>
 #include <Jauntlet/UI/UIManager.h>
 #include <Jauntlet/UI/UITextElement.h>
-#include <Jauntlet/Window.h>
+#include <Jauntlet/Rendering/Window.h>
 #include <SDL/SDL.h>
 
 #include "CameraManager.h"

@@ -6,9 +6,9 @@
 
 #include "drill/DrillManager.h"
 #include "src/players/PlayerManager.h"
-#include <Jauntlet/Camera2D.h>
-#include <Jauntlet/InputManager.h>
-#include <Jauntlet/InputKey.h>
+#include <Jauntlet/Rendering/Cameras/Camera2D.h>
+#include <Jauntlet/Inputs/InputManager.h>
+#include <Jauntlet/Inputs/InputKey.h>
 
 class CameraManager {
 public:
