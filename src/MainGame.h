@@ -10,6 +10,7 @@
 #include <Jauntlet/UI/UIManager.h>
 #include <Jauntlet/UI/UITextElement.h>
 #include <Jauntlet/Rendering/Window.h>
+#include <Jauntlet/Rendering/Particles/Particle.h>
 #include <SDL/SDL.h>
 
 #include "CameraManager.h"
@@ -26,6 +27,9 @@ enum class GameState {
 class MainGame {
 public:
 	MainGame();
+
+	glm::vec2 jim = glm::vec2(0,0);
+	Jauntlet::Particle jimp;
 
 	void run();
 

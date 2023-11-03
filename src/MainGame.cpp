@@ -18,7 +18,8 @@ MainGame::MainGame()
 	_players(3, &_drill),
 	_selectedTile(&_drill.drillFloor, &_players),
 	_spriteFont(&_hudCamera, "Fonts/HandelGo.ttf", 256),
-	_uiCoordinator(&_hudCamera, &_spriteFont, &_inputManager, &_drill, &_textProgram, &_colorProgram)
+	_uiCoordinator(&_hudCamera, &_spriteFont, &_inputManager, &_drill, &_textProgram, &_colorProgram),
+	jimp({}, &_camera, &jim, "Textures/Icon.png")
 {
 	_uiCoordinator.applyNewScreenSize(glm::ivec2(_screenWidth, _screenHeight));
 }
@@ -133,6 +134,8 @@ void MainGame::drawGame() {
 	_playerSpriteBatch.endAndRender();
 	
 	_selectedTile.draw(&_camera, &_inputManager);
+
+	jimp.draw();
 
 	_colorProgram.unuse();
 	
