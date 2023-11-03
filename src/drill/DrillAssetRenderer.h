@@ -4,7 +4,7 @@
 #pragma once
 #include <Jauntlet/Rendering/SpriteBatch.h>
 #include <Jauntlet/Rendering/ResourceManager.h>
-#include <Jauntlet/Rendering/Animation.h>
+#include <Jauntlet/Rendering/Animation/Animation.h>
 #include "PlayerStation.h"
 
 class DrillAssetRenderer {
