@@ -2,12 +2,12 @@
 
 #include <Jauntlet/Jauntlet.h>
 #include <Jauntlet/Time.h>
-#include <Jauntlet/Window.h>
+#include <Jauntlet/Rendering/Window.h>
 
 #include "glm/fwd.hpp"
 #include <Jauntlet/Rendering/GLSLProgram.h>
-#include <Jauntlet/Camera2D.h>
-#include <Jauntlet/InputManager.h>
+#include <Jauntlet/Rendering/Cameras/Camera2D.h>
+#include <Jauntlet/Inputs/InputManager.h>
 #include <Jauntlet/Tiles/TileMap.h>
 
 #include "TileHandler.h"

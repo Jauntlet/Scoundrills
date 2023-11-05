@@ -3,7 +3,7 @@
 #include <iostream>
 #include <Jauntlet/Errors.h>
 #include <Jauntlet/JMath.h>
-#include <Jauntlet/tinyfiledialogs.h>
+#include <Jauntlet/Externals/tinyfiledialogs.h>
 #include <sstream>
 
 
