@@ -4,14 +4,14 @@
 
 #include "UICoordinator.h"
 
-UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::SpriteFont* spriteFont, Jauntlet::InputManager* inputManager, DrillManager* drillManager, Jauntlet::GLSLProgram* textProgram, Jauntlet::GLSLProgram* buttonProgram)
+UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRenderer* textRenderer, Jauntlet::InputManager* inputManager, DrillManager* drillManager, Jauntlet::GLSLProgram* textProgram, Jauntlet::GLSLProgram* buttonProgram)
 :
 	_UIManager(hudCamera),
 	_fpsPosition(0),
 	_fpsColor(0, 255, 0, 255)
 {
 	_hudCamera = hudCamera;
-	_spriteFont = spriteFont;
+	_textRenderer = textRenderer;
 	_inputManager = inputManager;
 	_colorProgram = buttonProgram;
 
@@ -20,7 +20,7 @@ UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::SpriteFont
 
 	navigation.genNav(_UIManager, _inputManager, buttonProgram);
 
-	_fpsCounter = new Jauntlet::UITextElement(_spriteFont, &fpsText, &_fpsColor, &_fpsPosition);
+	_fpsCounter = new Jauntlet::UITextElement(_textRenderer, &fpsText, &_fpsColor, &_fpsPosition);
 	_UIManager.addElement(_fpsCounter, textProgram);
 	//_fpsCounter->visible = _debugging;
 

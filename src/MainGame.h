@@ -57,7 +57,7 @@ private:
 
 	SelectedTileRenderer _selectedTile;
 	
-	Jauntlet::SpriteFont _spriteFont;
+	Jauntlet::TextRenderer _textRenderer;
 
 	Jauntlet::GLSLProgram _colorProgram, _textProgram;
 
