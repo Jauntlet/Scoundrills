@@ -15,7 +15,7 @@ file(GLOB_RECURSE JAUNTLET_FILES "${JAUNTLET_DIR}/*.cpp")
 # Set the output directory for libraries
 set(LIBRARY_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/dependencies/lib")
 
-# thank you freetype
+# Include FreeType header directory
 include_directories(/usr/include/freetype2)
 
 # Find required packages
@@ -31,13 +31,15 @@ add_library(jauntlet ${JAUNTLET_FILES})
 # Create an executable from the "src" source files
 add_executable(scoundrills ${SRC_FILES})
 
-# On Unix, use g++
-set(CMAKE_CXX_COMPILER "g++")
+# Set the C++ compiler to g++ on Unix
+if (UNIX)
+    set(CMAKE_CXX_COMPILER "g++")
+endif()
 
-# On all platforms, link the jauntlet library with our executable.
+# Link the jauntlet library with the executable
 target_link_libraries(scoundrills PRIVATE jauntlet)
 
-# On all platforms link scoundrills with its dependencies
+# Link scoundrills with its dependencies
 target_link_libraries(scoundrills PRIVATE ${SDL2_LIBRARIES} ${GLEW_LIBRARIES} ${OPENGL_LIBRARIES} ${FREETYPE_LIBRARIES})
 
 # Specify include directories for the "Jauntlet" directory (outside of it)
