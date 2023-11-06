@@ -11,7 +11,7 @@
 #include <Jauntlet/UI/UITextElement.h>
 #include <Jauntlet/Rendering/Window.h>
 #include <Jauntlet/Rendering/Particles/Particle.h>
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 
 #include "CameraManager.h"
 #include "drill/DrillManager.h"
