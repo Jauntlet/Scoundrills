@@ -3,9 +3,13 @@
 #include <Jauntlet/UI/UIElement.h>
 #include <iostream>
 
+#include "Jauntlet/Rendering/Particles/Particle.h"
+#include "Jauntlet/Rendering/Particles/Properties/ParticleProperty.h"
 #include "Jauntlet/Time.h"
 #include "MainGame.h"
 #include "src/UICoordinator.h"
+
+#include <Jauntlet/Rendering/Particles/Properties/ParticleGrow.h>
 
 MainGame::MainGame()
 	:
@@ -19,7 +23,7 @@ MainGame::MainGame()
 	_selectedTile(&_drill.drillFloor, &_players),
 	_spriteFont(&_hudCamera, "Fonts/HandelGo.ttf", 256),
 	_uiCoordinator(&_hudCamera, &_spriteFont, &_inputManager, &_drill, &_textProgram, &_colorProgram),
-	jimp({}, &_camera, &jim, "Textures/Icon.png")
+	jimp(&_camera, jim, "Textures/Icon.png")
 {
 	_uiCoordinator.applyNewScreenSize(glm::ivec2(_screenWidth, _screenHeight));
 }
@@ -39,6 +43,12 @@ void MainGame::initSystems() {
 	SDL_ShowCursor(1); // show the mouse cursor. can be set to 0 later for replacements.
 
 	initShaders();
+
+	jimp = Jauntlet::Particle(&_camera,glm::vec2(0),"Textures/Icon.png");
+
+	Jauntlet::ParticleGrow grow = Jauntlet::ParticleGrow(0.0f,10.0f);
+
+	jimp.addProperty(&grow);
 
 	Jauntlet::ResourceManager::setMissingTexture("Textures/missing.png");
 }
