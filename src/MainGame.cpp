@@ -135,7 +135,7 @@ void MainGame::drawGame() {
 	
 	_selectedTile.draw(&_camera, &_inputManager);
 
-	jimp.update();
+	//jimp.update();
 	jimp.draw();
 
 	_colorProgram.unuse();
