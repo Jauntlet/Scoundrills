@@ -1,7 +1,7 @@
 #include "MainGame.h"
 #include "Jauntlet/Errors.h"
-#include <Jauntlet/tinyfiledialogs.h>
-#include <Jauntlet/IOManager.h>
+#include <Jauntlet/Externals/tinyfiledialogs.h>
+#include <Jauntlet/Filesystems/FileManager.h>
 
 // initialize the window via an initializer list
 MainGame::MainGame() 
@@ -34,9 +34,9 @@ void MainGame::initSystems() {
 	// DEBUGGING
 	do {
 		tinyfd_messageBox("File Systems Debugging", "To start, please delete the Logs folder within Scoundrills. This may be in the builds folder based on your setup. \n\nIf this shows again after pressing OK, there may be an error.", "ok", "info", 1);
-	} while (Jauntlet::IOManager::findFolder("Logs"));
+	} while (Jauntlet::FileManager::findFolder("Logs"));
 
-	if (Jauntlet::IOManager::createFolder("Logs")) {
+	if (Jauntlet::FileManager::createFolder("Logs")) {
 		tinyfd_messageBox("File Systems Debugging", "Successfully created the Logs folder, please make sure it is there", "ok", "info", 1);
 	}
 	else {
