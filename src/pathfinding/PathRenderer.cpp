@@ -10,12 +10,11 @@ PathRenderer::PathRenderer(Jauntlet::TileMap* tileMap, PlayerManager* players) :
 }
 
 void PathRenderer::createPath(glm::vec2 start, glm::vec2 end) {
-	std::vector<glm::vec2> path = Pathfinding::findPath(_tilemap, *_players, start, end);
-	if (!true) {
-		path.clear();
+	if (!_players->isValidDestination(end)) {
 		clearPath();
 		return;
 	}
+	std::vector<glm::vec2> path = Pathfinding::findPath(_tilemap, *_players, start, end);
 
 	glm::vec2 lastPos = start;
 	
