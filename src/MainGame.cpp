@@ -44,7 +44,11 @@ void MainGame::initSystems() {
 		Jauntlet::fatalError("fatal error");
 	}
 
-	tinyfd_messageBox("Logs folder location", Jauntlet::IOManager::toAbsoluteFilePath("Logs").c_str(), "ok", "info", 1);
+	tinyfd_messageBox("Logs folder location", Jauntlet::FileManager::toAbsoluteFilePath("Logs").c_str(), "ok", "info", 1);
+
+	tinyfd_messageBox("File Systems Debugging", "We are now going to initialize a crash.\n\nThis may not work if launching from Visual Studio, or in Debug Mode", "ok", "info", 1);
+
+	std::stoi("A");
 }
 
 void MainGame::initShaders() {
