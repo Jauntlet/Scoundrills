@@ -2,7 +2,7 @@
 #include <Jauntlet/Rendering/ResourceManager.h>
 #include <Jauntlet/Rendering/Vertex.h>
 #include <Jauntlet/Time.h>
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 #include <algorithm>
 
 #include "../pathfinding/Pathfinding.h"
