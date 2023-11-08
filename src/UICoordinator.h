@@ -15,7 +15,7 @@
 
 class UICoordinator {
 public:
-	UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::SpriteFont* spriteFont, Jauntlet::InputManager* inputManager, DrillManager* drillManager, Jauntlet::GLSLProgram* textProgram, Jauntlet::GLSLProgram* buttonProgram);
+	UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRenderer* spriteFont, Jauntlet::InputManager* inputManager, DrillManager* drillManager, Jauntlet::GLSLProgram* textProgram, Jauntlet::GLSLProgram* buttonProgram);
 	~UICoordinator();
 
 	void draw();
@@ -35,7 +35,7 @@ private:
 
 	// Pointers
 	Jauntlet::Camera2D* _hudCamera = nullptr;
-	Jauntlet::SpriteFont* _spriteFont = nullptr;
+	Jauntlet::TextRenderer* _textRenderer = nullptr;
 	Jauntlet::InputManager* _inputManager = nullptr;
 
 	// UI Manager
