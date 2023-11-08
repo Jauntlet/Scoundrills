@@ -10,7 +10,7 @@ const int outcoveAmt = 4;
 const int layerAmt = 3;
 static int seed = std::chrono::system_clock::now().time_since_epoch().count(); //temp
 
-Navigation::Navigation() : _background(nullptr), _caretElement(nullptr) {
+Navigation::Navigation() : _background(nullptr), _caretElement(nullptr), _colorProgram(nullptr), _bgPos(glm::vec2(0)) {
 	if (_map.empty()) { //map not generated (so generate it)
 		//generate some randomness
 		std::mt19937 r = std::mt19937(seed);
@@ -34,13 +34,13 @@ Navigation::~Navigation() {
 	delete _caretElement;
 }
 
-void Navigation::genNav(Jauntlet::UIManager& uiManager, Jauntlet::InputManager* inputManager, Jauntlet::GLSLProgram* colorProgram) {
+void Navigation::genNav(Jauntlet::UIManager& uiManager, Jauntlet::InputManager* inputManager, Jauntlet::GLSLProgram* colorProgram, Jauntlet::Camera2D* cam) {
 	_xTure = Jauntlet::ResourceManager::getTexture("Textures/xmark.png").id;
 	_caret = Jauntlet::ResourceManager::getTexture("Textures/caret.png").id;
 	//set stuff
 	_uiManager = &uiManager;
-	_bgPos = glm::vec2(0);
 	_colorProgram = colorProgram;
+	_camera = cam;
 
 	//clear stuff
 	_navTextures.clear();
@@ -65,7 +65,7 @@ void Navigation::genNav(Jauntlet::UIManager& uiManager, Jauntlet::InputManager* 
 	//draw background
 	if (_background == NULL) {
 		_background = new Jauntlet::UISpriteElement(_navTextures[0], &_bgPos, glm::vec2(1000), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
-		uiManager.addElement(_background, _colorProgram);
+		_uiManager->addElement(_background, _colorProgram);
 	}
 
 	int layersHeight = _map.size(); //store the total height of the "layers"
@@ -97,7 +97,7 @@ void Navigation::genNav(Jauntlet::UIManager& uiManager, Jauntlet::InputManager* 
 	}
 
 	for (int i = 0; i < _points.size(); ++i) {
-		uiManager.addElement(&_points[i], _colorProgram);
+		_uiManager->addElement(&_points[i], _colorProgram);
 	}
 
 	//update visibility
@@ -123,11 +123,16 @@ bool Navigation::isNavOpen() {
 
 void Navigation::selectNav(int id) {
 	_destination = id;
-	_caretPos = _positions[id] + glm::vec2(0, 80);
+	_caretPos = _positions[id] + glm::vec2(0, 100);
 	if (_caretElement == nullptr) {
-		_caretElement = new Jauntlet::UISpriteElement(_caret, &_caretPos, glm::vec2(45,30), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+		_caretElement = new Jauntlet::UISpriteElement(_caret, &_caretPos, glm::vec2(45, 30), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
 		_uiManager->addElement(_caretElement, _colorProgram);
 	}
+	
+	// Temporary Fix for UIManager bugs
+	_uiManager->setScale((_camera->getCameraSize().y / 1080.0f) * (_camera->getCameraSize().x / 1920.0f));
+	_uiManager->optimize();
+	_uiManager->resolvePositions();
 }
 
 void Navigation::updateTravel() {

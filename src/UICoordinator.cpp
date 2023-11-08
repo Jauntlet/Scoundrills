@@ -16,9 +16,8 @@ UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRender
 	_colorProgram = buttonProgram;
 
 	_UIManager.setScale((hudCamera->getCameraSize().y / 1080.0f) * (hudCamera->getCameraSize().x / 1920.0f));
-	_UIManager.resolvePositions();
-
-	navigation.genNav(_UIManager, _inputManager, buttonProgram);
+	
+	navigation.genNav(_UIManager, _inputManager, buttonProgram, _hudCamera);
 
 	_fpsCounter = new Jauntlet::UITextElement(_textRenderer, &fpsText, &_fpsColor, &_fpsPosition);
 	_UIManager.addElement(_fpsCounter, textProgram);
@@ -33,9 +32,9 @@ UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRender
 	Jauntlet::UIButtonToggleableElement* _button = new Jauntlet::UIButtonToggleableElement(_inputManager, _buttonMethod, _buttonTexture, buttonPos, glm::vec2(512, 512), Jauntlet::UIElement::ORIGIN_PIN::BOTTOM_LEFT);
 	_UIManager.addElement(_button, buttonProgram);
 
-	_UIManager.resolvePositions();
 	// optimize batches
 	_UIManager.optimize();
+	_UIManager.resolvePositions();
 }
 
 UICoordinator::~UICoordinator() {

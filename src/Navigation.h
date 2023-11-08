@@ -14,7 +14,7 @@ public:
 	Navigation();
 	~Navigation(); //deletes hanging references
 
-	void genNav(Jauntlet::UIManager& uiManager, Jauntlet::InputManager* inputManager, Jauntlet::GLSLProgram* colorProgram); //new nav positions
+	void genNav(Jauntlet::UIManager& uiManager, Jauntlet::InputManager* inputManager, Jauntlet::GLSLProgram* colorProgram, Jauntlet::Camera2D* cam); //new nav positions
 
 	bool isNavOpen(); //returns if the thing is thinging
 	void toggleNav(); //toggles visibility (on/off)
@@ -36,4 +36,5 @@ private:
 	std::vector<std::vector<int>> _map;
 	Jauntlet::UISpriteElement* _background;
 	Jauntlet::UISpriteElement* _caretElement;
+	Jauntlet::Camera2D* _camera;
 };
