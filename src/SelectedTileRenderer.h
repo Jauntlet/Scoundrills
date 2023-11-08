@@ -24,6 +24,6 @@ private:
 	Jauntlet::TileMap* _tilemap;
 	PlayerManager* _players;
 
-	glm::ivec2 _selectedTile = glm::ivec2(0);
+	glm::vec2 _lastPosition = glm::vec2(0);
 };
 

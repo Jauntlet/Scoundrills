@@ -1,5 +1,7 @@
 #include "SelectedTileRenderer.h"
 
+#include <iostream> // REMOVE
+
 SelectedTileRenderer::SelectedTileRenderer(Jauntlet::TileMap* Tilemap, PlayerManager* playerManager) : 
 	_drawColor(255, 255, 255), 
 	_textureID(Jauntlet::ResourceManager::getTexture("Textures/WhiteSquare.png").id),
@@ -10,14 +12,16 @@ SelectedTileRenderer::SelectedTileRenderer(Jauntlet::TileMap* Tilemap, PlayerMan
 }
 
 void SelectedTileRenderer::draw(Jauntlet::Camera2D* activeCamera, Jauntlet::InputManager* inputManager) {
-	glm::vec2 _selectedTilePos = _tilemap->RoundWorldPos(activeCamera->convertScreenToWorld(inputManager->getMouseCoords()));
-	
-	if (_selectedTile != _tilemap->WorldPosToTilePos(_selectedTilePos)) {
-		_selectedTile = _tilemap->WorldPosToTilePos(_selectedTilePos);
+	if (_lastPosition != activeCamera->convertScreenToWorld(inputManager->getMouseCoords())) {
+		_lastPosition = activeCamera->convertScreenToWorld(inputManager->getMouseCoords());
+		glm::vec2 _selectedTilePos = _tilemap->RoundWorldPos(_lastPosition);
 		
+
+		std::cout << "Redraw" << std::endl;
+
 		// if a player is selected, we highlight the tile if its a valid pathfind pos or not
 		if (_players->isPlayerSelected()) {
-			if (_players->hoveringStation(_selectedTilePos)) {
+			if (_players->hoveringStation(_lastPosition)) {
 				_drawColor = Jauntlet::Color(0, 0, 0, 0);
 			}
 			else if (_players->isValidDestination(_selectedTilePos)) {
@@ -33,7 +37,6 @@ void SelectedTileRenderer::draw(Jauntlet::Camera2D* activeCamera, Jauntlet::Inpu
 		}
 
 		_spriteBatch.begin();
-		// draw the selected tile sprite
 		_spriteBatch.draw({ _selectedTilePos.x, _selectedTilePos.y, 64, 64 }, _textureID, 0 , _drawColor);
 		_spriteBatch.endAndRender();
 	}
