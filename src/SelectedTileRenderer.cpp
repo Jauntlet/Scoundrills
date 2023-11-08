@@ -1,7 +1,5 @@
 #include "SelectedTileRenderer.h"
 
-#include <iostream> // REMOVE
-
 SelectedTileRenderer::SelectedTileRenderer(Jauntlet::TileMap* Tilemap, PlayerManager* playerManager) : 
 	_drawColor(255, 255, 255), 
 	_textureID(Jauntlet::ResourceManager::getTexture("Textures/WhiteSquare.png").id),
@@ -15,9 +13,6 @@ void SelectedTileRenderer::draw(Jauntlet::Camera2D* activeCamera, Jauntlet::Inpu
 	if (_lastPosition != activeCamera->convertScreenToWorld(inputManager->getMouseCoords())) {
 		_lastPosition = activeCamera->convertScreenToWorld(inputManager->getMouseCoords());
 		glm::vec2 _selectedTilePos = _tilemap->RoundWorldPos(_lastPosition);
-		
-
-		std::cout << "Redraw" << std::endl;
 
 		// if a player is selected, we highlight the tile if its a valid pathfind pos or not
 		if (_players->isPlayerSelected()) {
