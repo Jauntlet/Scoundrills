@@ -22,7 +22,7 @@ MainGame::MainGame()
 	_players(3, &_drill),
 	_selectedTile(&_drill.drillFloor, &_players),
 	_textRenderer(&_hudCamera, "Fonts/HandelGo.ttf", 256),
-	_uiCoordinator(&_hudCamera, &_textRenderer, &_inputManager, &_drill, &_textProgram, &_colorProgram),
+	_uiCoordinator(&_hudCamera, &_textRenderer, &_inputManager, &_drill, &_colorProgram),
 	jimp(&_camera, jim, "Textures/Icon.png")
 {
 	_uiCoordinator.applyNewScreenSize(glm::ivec2(_screenWidth, _screenHeight));
@@ -59,12 +59,6 @@ void MainGame::initShaders() {
 	_colorProgram.addAttribute("vertexColor");
 	_colorProgram.addAttribute("vertexUV");
 	_colorProgram.linkShaders();
-
-	_textProgram.compileShaders("Shaders/text.vert", "Shaders/text.frag");
-	_textProgram.addAttribute("vertexPosition");
-	_textProgram.addAttribute("vertexColor");
-	_textProgram.addAttribute("vertexUV");
-	_textProgram.linkShaders();
 }
 
 void MainGame::gameLoop() {

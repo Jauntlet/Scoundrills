@@ -4,7 +4,7 @@
 
 #include "UICoordinator.h"
 
-UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRenderer* textRenderer, Jauntlet::InputManager* inputManager, DrillManager* drillManager, Jauntlet::GLSLProgram* textProgram, Jauntlet::GLSLProgram* buttonProgram)
+UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRenderer* textRenderer, Jauntlet::InputManager* inputManager, DrillManager* drillManager, Jauntlet::GLSLProgram* buttonProgram)
 :
 	_UIManager(hudCamera),
 	_fpsPosition(0),
@@ -55,20 +55,10 @@ void UICoordinator::applyNewScreenSize(glm::ivec2 screenSize) {
 void UICoordinator::toggleDebugMode() {
 	_debugging = !_debugging;
 
-	if (_debugging) {
-		_fpsCounter->visible = false;
-	}
-	else {
-		_fpsCounter->visible = true;
-	}
+	_fpsCounter->visible = _debugging;
 }
 void UICoordinator::toggleDebugMode(bool debugging) {
 	_debugging = debugging;
 
-	if (_debugging) {
-		_fpsCounter->visible = false;
-	}
-	else {
-		_fpsCounter->visible = true;
-	}
+	_fpsCounter->visible = debugging;
 }

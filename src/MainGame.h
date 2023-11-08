@@ -59,7 +59,7 @@ private:
 	
 	Jauntlet::TextRenderer _textRenderer;
 
-	Jauntlet::GLSLProgram _colorProgram, _textProgram;
+	Jauntlet::GLSLProgram _colorProgram;
 
 	GameState _gameState = GameState::PLAY;
 
