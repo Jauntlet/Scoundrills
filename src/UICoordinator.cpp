@@ -48,6 +48,7 @@ void UICoordinator::draw() {
 }
 
 void UICoordinator::applyNewScreenSize(glm::ivec2 screenSize) {
+	std::cout << (screenSize.y / 1080.0f) * (screenSize.x / 1920.0f) << std::endl;
 	_UIManager.setScale((screenSize.y / 1080.0f) * (screenSize.x / 1920.0f));
 	_UIManager.resolvePositions();
 }
