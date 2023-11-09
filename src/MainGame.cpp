@@ -48,7 +48,7 @@ void MainGame::initSystems() {
 
 	Jauntlet::ParticleGrow grow = Jauntlet::ParticleGrow(0.0f,10.0f);
 
-	jimp.addProperty(&grow);
+	jimp.addProperty(grow);
 
 	Jauntlet::ResourceManager::setMissingTexture("Textures/missing.png");
 }
@@ -139,7 +139,7 @@ void MainGame::drawGame() {
 	
 	_selectedTile.draw(&_camera, &_inputManager);
 
-	//jimp.update();
+	jimp.update();
 	jimp.draw();
 
 	_colorProgram.unuse();
