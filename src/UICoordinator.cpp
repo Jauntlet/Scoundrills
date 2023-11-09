@@ -13,8 +13,6 @@ UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRender
 	_textRenderer = textRenderer;
 	_inputManager = inputManager;
 	_colorProgram = buttonProgram;
-
-	_UIManager.setScale((hudCamera->getCameraSize().y / 1080.0f) * (hudCamera->getCameraSize().x / 1920.0f));
 	
 	navigation.genNav(_UIManager, _inputManager, buttonProgram, _hudCamera);
 
