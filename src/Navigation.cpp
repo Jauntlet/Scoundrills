@@ -105,13 +105,21 @@ void Navigation::genNav(Jauntlet::UIManager& uiManager, Jauntlet::InputManager* 
 	for (int i = 0; i < _points.size(); ++i) {
 		_points[i].visible = _navOpen;
 	}
+
+	_caretElement = new Jauntlet::UISpriteElement(_caret, &_caretPos, glm::vec2(45, 30), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+	_uiManager->addElement(_caretElement, _colorProgram);
+	_caretElement->visible = false;
+	
 }
 
 void Navigation::toggleNav() {
 	_navOpen = !_navOpen;
 	//update visibility
 	_background->visible = _navOpen;
-	if (_caretElement != nullptr) _caretElement->visible = _navOpen;
+	if (_caretSet) {
+		_caretElement->visible = _navOpen;
+	}
+	
 	for (int i = 0; i < _points.size(); ++i) {
 		_points[i].visible = _navOpen;
 	}
@@ -122,16 +130,13 @@ bool Navigation::isNavOpen() {
 }
 
 void Navigation::selectNav(int id) {
+	_caretSet = true;
 	_destination = id;
 	_caretPos = _positions[id] + glm::vec2(0, 100);
-	if (_caretElement == nullptr) {
-		_caretElement = new Jauntlet::UISpriteElement(_caret, &_caretPos, glm::vec2(45, 30), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
-		_uiManager->addElement(_caretElement, _colorProgram);
+	if (!_caretElement->visible) {
+		_caretElement->visible = true;
 	}
-	
-	// Temporary Fix for UIManager bugs
-	_uiManager->setScale((_camera->getCameraSize().y / 1080.0f) * (_camera->getCameraSize().x / 1920.0f));
-	_uiManager->optimize();
+
 	_uiManager->resolvePositions();
 }
 

@@ -1,5 +1,5 @@
 /* Purpose: Display a menu that allows the player to select a "destination" in-game that progresses them towards the end goal.
- * Main Contributor(s): Christopher Kowalewski
+ * Main Contributor(s): Christopher Kowalewski, Jack Kennedy
  */
 #pragma once
 
@@ -37,4 +37,5 @@ private:
 	Jauntlet::UISpriteElement* _background;
 	Jauntlet::UISpriteElement* _caretElement;
 	Jauntlet::Camera2D* _camera;
+	bool _caretSet = false;
 };
