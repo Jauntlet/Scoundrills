@@ -1,6 +1,5 @@
 #include <Jauntlet/Time.h>
 #include <cstdlib>
-#include <iostream>
 
 #include "DrillAssetRenderer.h"
 
