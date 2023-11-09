@@ -14,6 +14,7 @@ get dependencies
 ```
 sudo apt install ninja-build cmake libglm-dev libsdl2-dev libglew-dev g++ libfreetype-dev
 ```
+it is worth noting that libfreetype should be installed under `/usr/include/freetype2/` or **must** have its path manually changed in `CMakeLists.txt`
 clone and enter the repository
 ```
 git clone https://github.com/XanderMooney/Scoundrills
