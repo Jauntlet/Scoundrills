@@ -19,6 +19,11 @@ void PathRenderer::createPath(glm::vec2 start, glm::vec2 end) {
 
 	glm::vec2 lastPos = start;
 	
+	if (path.size() < 3) {
+		// path is too small to go anywhere
+		return;
+	}
+
 	path.pop_back();
 	//path.erase(path.begin());
 	path[0] = path.back();
