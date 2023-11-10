@@ -119,3 +119,6 @@ void Player::setSpeed(float newSpeed) {
 glm::vec2 Player::getPosition() {
 	return _position;
 }
+glm::vec2 Player::getDestination() {
+	return _path.size() > 0 ? _path.back() : _position;
+}

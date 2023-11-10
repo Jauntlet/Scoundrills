@@ -21,6 +21,7 @@ public:
 	void setSpeed(float newSpeed);
 
 	glm::vec2 getPosition();
+	glm::vec2 getDestination();
 
 	Jauntlet::BoxCollider2D collider;
 private:

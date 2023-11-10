@@ -69,7 +69,7 @@ bool PlayerManager::isValidDestination(glm::vec2 worldPos) {
 
 	// check if position overlaps another player
 	for (int i = 0; i < _players.size(); i++) {
-		if (worldPos == _players[i].getPosition() - glm::vec2(0, 64)) {
+		if (worldPos == _players[i].getDestination() - glm::vec2(0, 64)) {
 			return false;
 		}
 	}
