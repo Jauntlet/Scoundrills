@@ -75,21 +75,29 @@ void Player::draw(Jauntlet::SpriteBatch& spriteBatch) {
 void Player::navigateTo(DrillManager* drill, glm::vec2 position) {
 	_path.clear();
 
-	_path = Pathfinding::findPath(&drill->drillWalls, _position, drill->drillWalls.RoundWorldPos(position));
 
-	_path.erase(_path.begin());
 
 	// We add the final destination twice to the vector, because the final vector position for some reason gets destroyed at some point
 	// this is a weird bug that only occurs here, as the pathRenderer uses the same method and the result is fine. -xm
-
-	if (drill->checkHoveringStation(position) != nullptr) {
-		_station = drill->checkHoveringStation(position);
+	PlayerStation* storedStation;
+	if ((storedStation = drill->checkHoveringStation(position)) != nullptr) {
+		if (_station == storedStation) {
+			// we are already at the correct station
+			return;
+		}
+		
+		_station = storedStation;
 		if (!_station->isOccupied()) {
 			_station->Occupy(this);
+			
+			_path = Pathfinding::findPath(&drill->drillWalls, _position, _station->getAnchorPoint());
+			_path.erase(_path.begin());
 			// pathfind to the position of the station the player was assigned to.
 			_path.insert(_path.begin(), _station->getAnchorPoint() - glm::vec2(32, 32));
 		}
 		else {
+			_path = Pathfinding::findPath(&drill->drillWalls, _position, drill->drillWalls.RoundWorldPos(position));
+			_path.erase(_path.begin());
 			_station = nullptr;
 		}
 	}
@@ -98,6 +106,8 @@ void Player::navigateTo(DrillManager* drill, glm::vec2 position) {
 			_station->Occupy(nullptr);
 			_station = nullptr;
 		}
+		_path = Pathfinding::findPath(&drill->drillWalls, _position, drill->drillWalls.RoundWorldPos(position));
+		_path.erase(_path.begin());
 		_path.insert(_path.begin(), drill->drillWalls.RoundWorldPos(position));
 	}
 }
