@@ -35,7 +35,7 @@ bool PlayerManager::processInput(Jauntlet::InputManager* inputManager, Jauntlet:
 		}
 		else { // we have selected a position for the player to move to.
 			if (isValidDestination(_storedMousePos) || _drill->checkHoveringStation(mousePos) != nullptr) {
-				_players[_selectedPlayer].navigateTo(_drill, mousePos);
+				_players[_selectedPlayer].navigateTo(_drill, *this, mousePos);
 			}
 			_pathRenderer.clearPath();
 			_selectedPlayer = -1;
