@@ -22,20 +22,20 @@ public:
 	void updateTravel(); //Updates the "tick" of travel; Moves the points closer to the drill to simulate going to the outcove. When reaching the destination, set destination to null.
 private:
 	std::vector<GLuint> _navTextures;
-	GLuint _xTure;
-	GLuint _caret;
-	Jauntlet::GLSLProgram* _colorProgram;
+	GLuint _xTure = 0;
+	GLuint _caret = 0;
+	Jauntlet::GLSLProgram* _colorProgram = nullptr;
 	bool _navOpen = false; //visibility of menu
 	int _destination = -1; //id value
-	float _progress; //0-1; 0 being just selected dest, 1 being @ dest.
-	Jauntlet::UIManager* _uiManager;
+	float _progress = -1; //0-1; 0 being just selected dest, 1 being @ dest.
+	Jauntlet::UIManager* _uiManager = nullptr;
 	std::vector<Jauntlet::UIButtonElement> _points;
-	glm::vec2 _bgPos;
-	glm::vec2 _caretPos;
+	glm::vec2 _bgPos = glm::vec2(0);
+	glm::vec2 _caretPos = glm::vec2(0);
 	std::vector<glm::vec2> _positions;
 	std::vector<std::vector<int>> _map;
-	Jauntlet::UISpriteElement* _background;
-	Jauntlet::UISpriteElement* _caretElement;
-	Jauntlet::Camera2D* _camera;
+	Jauntlet::UISpriteElement* _background = nullptr;
+	Jauntlet::UISpriteElement* _caretElement = nullptr;
+	Jauntlet::Camera2D* _camera = nullptr;
 	bool _caretSet = false;
 };
