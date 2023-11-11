@@ -29,6 +29,8 @@ public:
 	PlayerStation* checkHoveringStation(glm::vec2 position);
 	bool doesTileOverlapStations(glm::ivec2 tilePos);
 
+	void bustRandomPipe();
+
 	Jauntlet::TileMap drillWalls;
 	Jauntlet::TileMap drillFloor;
 	Jauntlet::TileMap pipes;

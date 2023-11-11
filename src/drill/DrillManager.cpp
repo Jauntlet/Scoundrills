@@ -18,6 +18,9 @@ DrillManager::DrillManager(PlayerResources resourceManager)
 	drillFloor.loadTileMap("Levels/DrillFloor.JML");
 	drillWalls.loadTileMap("Levels/DrillWall.JML");
 	pipes.loadTileMap("Levels/Pipes.JML");
+	bustRandomPipe();
+	bustRandomPipe();
+	bustRandomPipe();
 	on();
 }
 void DrillManager::draw() {
@@ -72,4 +75,9 @@ PlayerStation* DrillManager::checkHoveringStation(glm::vec2 position) {
 bool DrillManager::doesTileOverlapStations(glm::ivec2 tilePos) {
 	return drillWalls.doesTileOverlap(tilePos, _drillAssets.steeringWheel.getBoundingBox()) ||
 		drillWalls.doesTileOverlap(tilePos, _drillAssets.boiler.getBoundingBox());
+}
+
+void DrillManager::bustRandomPipe() {
+	// changes a random pipe of ID 1 (normal pipe) to a pipe of ID 2 (broken pipe)
+	pipes.UpdateTile(pipes.selectRandomTile(1), 2);
 }
