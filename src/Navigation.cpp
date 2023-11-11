@@ -55,9 +55,9 @@ void Navigation::genNav(Jauntlet::UIManager& uiManager, Jauntlet::InputManager* 
 
 	_positions.reserve(sizeof(glm::vec2) * sizeSum);
 	_points.reserve(sizeof(Jauntlet::UIButtonElement) * sizeSum);
+	_navTextures.reserve(sizeof(GLuint) * 4);
 
 	//read in textures
-	_navTextures.reserve(sizeof(GLuint) * 4);
 	for (int i = 0; i < 4; ++i) {
 		_navTextures.push_back(Jauntlet::ResourceManager::getTexture(bgTextures[i]).id);
 	}
