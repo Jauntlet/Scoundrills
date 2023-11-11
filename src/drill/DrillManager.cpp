@@ -11,19 +11,20 @@ const float heatFallScale = .1f; //1 heat every 10 seconds
 
 DrillManager::DrillManager(PlayerResources resourceManager)
 :
-	drillFloor(_textureCache, 64), drillWalls(_textureCache, 64),
+	drillFloor(_textureCache, 64), drillWalls(_textureCache, 64), pipes(_textureCache, 64),
 	_drillAssets(),
 	_resources(resourceManager)
 {
 	drillFloor.loadTileMap("Levels/DrillFloor.JML");
 	drillWalls.loadTileMap("Levels/DrillWall.JML");
-
+	pipes.loadTileMap("Levels/Pipes.JML");
 	on();
 }
 void DrillManager::draw() {
 	_drillAssets.drawLayerOne();
 	drillFloor.draw();
 	drillWalls.draw();
+	pipes.draw();
 	_drillAssets.drawLayerTwo();
 
 	//Apply Resources Tick

@@ -31,6 +31,7 @@ public:
 
 	Jauntlet::TileMap drillWalls;
 	Jauntlet::TileMap drillFloor;
+	Jauntlet::TileMap pipes;
 private:
 	DrillAssetRenderer _drillAssets;
 
