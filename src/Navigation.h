@@ -33,7 +33,7 @@ private:
 	glm::vec2 _bgPos = glm::vec2(0);
 	glm::vec2 _caretPos = glm::vec2(0);
 	std::vector<glm::vec2> _positions;
-	std::vector<std::vector<int>> _map;
+	int _map[5][5]; //Y (count) first X (width) second
 	Jauntlet::UISpriteElement* _background = nullptr;
 	Jauntlet::UISpriteElement* _caretElement = nullptr;
 	bool _caretSet = false;
