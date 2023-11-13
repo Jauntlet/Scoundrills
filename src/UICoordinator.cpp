@@ -14,7 +14,7 @@ UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRender
 	_inputManager = inputManager;
 	_colorProgram = buttonProgram;
 	
-	navigation.genNav(_UIManager, _inputManager, buttonProgram, _hudCamera);
+	navigation.genNav(_UIManager, _inputManager, buttonProgram);
 
 	_fpsCounter = new Jauntlet::UITextElement(_textRenderer, &fpsText, &_fpsColor, &_fpsPosition);
 	//_UIManager.addElement(_fpsCounter, buttonProgram);

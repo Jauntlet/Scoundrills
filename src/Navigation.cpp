@@ -10,22 +10,23 @@ const int outcoveAmt = 4;
 const int layerAmt = 3;
 static int seed = std::chrono::system_clock::now().time_since_epoch().count(); //temp
 
-Navigation::Navigation() {
-	if (_map.empty()) { //map not generated (so generate it)
-		//generate some randomness
-		std::mt19937 random = std::mt19937(seed);
+Navigation::Navigation() : 
+	_xTure(Jauntlet::ResourceManager::getTexture("Textures/xmark.png").id), 
+	_caret(Jauntlet::ResourceManager::getTexture("Textures/caret.png").id) 
+{
+	//generate some randomness
+	std::mt19937 random = std::mt19937(seed);
 
-		//create navPoints
-		for (int y = 0; y < layerAmt; y++) {
-			std::vector<int> layer = std::vector<int>();
+	//create navPoints
+	for (int y = 0; y < layerAmt; y++) {
+		std::vector<int> layer = std::vector<int>();
 
-			int temp = outcoveAmt + (random() % 2 - 1); //outcoveAmt - 1, outcoveAmt, outcoveAmt + 1
-			for (int x = 0; x < temp; x++) {
-				layer.push_back(random() % 3); //0, 1, 2
-			}
-
-			_map.push_back(layer);
+		int temp = outcoveAmt + (random() % 2 - 1); //outcoveAmt - 1, outcoveAmt, outcoveAmt + 1
+		for (int x = 0; x < temp; x++) {
+			layer.push_back(random() % 3); //0, 1, 2
 		}
+
+		_map.push_back(layer);
 	}
 }
 
@@ -34,13 +35,10 @@ Navigation::~Navigation() {
 	delete _caretElement;
 }
 
-void Navigation::genNav(Jauntlet::UIManager& uiManager, Jauntlet::InputManager* inputManager, Jauntlet::GLSLProgram* colorProgram, Jauntlet::Camera2D* cam) {
-	_xTure = Jauntlet::ResourceManager::getTexture("Textures/xmark.png").id;
-	_caret = Jauntlet::ResourceManager::getTexture("Textures/caret.png").id;
+void Navigation::genNav(Jauntlet::UIManager& uiManager, Jauntlet::InputManager* inputManager, Jauntlet::GLSLProgram* colorProgram) {
 	//set stuff
 	_uiManager = &uiManager;
 	_colorProgram = colorProgram;
-	_camera = cam;
 
 	//clear stuff
 	_navTextures.clear();
@@ -48,7 +46,6 @@ void Navigation::genNav(Jauntlet::UIManager& uiManager, Jauntlet::InputManager* 
 	_positions.clear();
 
 	size_t sizeSum = 0;
-
 	for (int i = 0; i < _map.size(); ++i) {
 		sizeSum += _map[i].size();
 	}
@@ -90,7 +87,6 @@ void Navigation::genNav(Jauntlet::UIManager& uiManager, Jauntlet::InputManager* 
 				continue;
 			}
 			if (point == 2) { // no X
-				//_points.push_back(Jauntlet::UIButtonElement(inputManager, [&]() -> void { selectNav(_positions.size() - 1); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(128), Jauntlet::UIElement::ORIGIN_PIN::CENTER));
 				continue;
 			}
 		}
