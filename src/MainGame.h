@@ -1,20 +1,16 @@
 /* Purpose: Initializes all parts of the game and runs the main game loop.
  * Main Contributer(s): Xander Mooney / Jack Kennedy / Christopher Kowalewski
  */
-
 #pragma once
-
+#include "CameraManager.h"
+#include "drill/DrillManager.h"
 #include <Jauntlet/Jauntlet.h>
+#include <Jauntlet/Rendering/Particles/Particle.h>
+#include <Jauntlet/Rendering/Window.h>
 #include <Jauntlet/Time.h>
 #include <Jauntlet/UI/UIButtonElement.h>
 #include <Jauntlet/UI/UIManager.h>
 #include <Jauntlet/UI/UITextElement.h>
-#include <Jauntlet/Rendering/Window.h>
-#include <Jauntlet/Rendering/Particles/Particle.h>
-#include <SDL2/SDL.h>
-
-#include "CameraManager.h"
-#include "drill/DrillManager.h"
 #include "players/PlayerManager.h"
 #include "PlayerResources.h"
 #include "SelectedTileRenderer.h"
