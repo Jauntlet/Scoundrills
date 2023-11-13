@@ -23,7 +23,7 @@ MainGame::MainGame()
 	_selectedTile(&_drill.drillFloor, &_players),
 	_textRenderer(&_hudCamera, "Fonts/HandelGo.ttf", 256),
 	_uiCoordinator(&_hudCamera, &_textRenderer, &_inputManager, &_drill, &_colorProgram),
-	jimp(&_camera, jim, "Textures/Icon.png")
+	jimp(&_camera, jim, "Textures/smoke.png")
 {
 	_uiCoordinator.applyNewScreenSize(glm::ivec2(_screenWidth, _screenHeight));
 }
@@ -44,7 +44,7 @@ void MainGame::initSystems() {
 
 	initShaders();
 
-	jimp = Jauntlet::Particle(&_camera,glm::vec2(0),"Textures/Icon.png");
+	//jimp = Jauntlet::Particle(&_camera,glm::vec2(0),"Textures/smoke.png");
 
 	Jauntlet::ParticleGrow grow = Jauntlet::ParticleGrow(0.0f,10.0f);
 
