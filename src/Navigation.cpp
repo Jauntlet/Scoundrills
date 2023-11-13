@@ -8,7 +8,7 @@
 const int layerCount = 5; //amt of layers (Y axis)
 const int layerWidth = 5; //amt of destinations on each layer (X axis)
 
-const std::string bgTextures[] = {"Textures/NavGround1.png", "Textures/NavGround2.png", "Textures/NavGround3.png", "Textures/NavGround4.png"};
+const std::string bgTextures[] = {"Textures/NavGround1.png"};
 static int seed = std::chrono::system_clock::now().time_since_epoch().count(); //temp
 
 Navigation::Navigation() : 
@@ -51,7 +51,7 @@ void Navigation::genNav(Jauntlet::UIManager& uiManager, Jauntlet::InputManager* 
 	_navTextures.reserve(sizeof(GLuint) * 4);
 
 	//read in textures
-	for (int i = 0; i < 4; ++i) {
+	for (int i = 0; i < 1; ++i) {
 		_navTextures.push_back(Jauntlet::ResourceManager::getTexture(bgTextures[i]).id);
 	}
 
@@ -68,13 +68,13 @@ void Navigation::genNav(Jauntlet::UIManager& uiManager, Jauntlet::InputManager* 
 			if (_positions[_positions.size() - 1].y < -500 || _positions[_positions.size() - 1].y > 500) continue;
 			if (point == 0) { // white X
 				int destID = _positions.size() - 1;
-				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(inputManager, [&, destID]() -> void { selectNav(destID); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(128), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(inputManager, [&, destID]() -> void { selectNav(destID); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(64), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
 				_points.push_back(button);
 				continue;
 			}
 			if (point == 1) { // blue X
 				int destID = _positions.size() - 1;
-				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(inputManager, [&, destID]() -> void { selectNav(destID); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(128), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(inputManager, [&, destID]() -> void { selectNav(destID); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(64), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
 				_points.push_back(button);
 				continue;
 			}
