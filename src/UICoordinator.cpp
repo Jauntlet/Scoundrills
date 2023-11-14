@@ -29,6 +29,7 @@ UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRender
 	Jauntlet::UIButtonToggleableElement* _button = new Jauntlet::UIButtonToggleableElement(_inputManager, _buttonMethod, _buttonTexture, buttonPos, glm::vec2(512, 512), Jauntlet::UIElement::ORIGIN_PIN::BOTTOM_LEFT);
 	_UIManager.addElement(_button, buttonProgram);
 
+	
 	// optimize batches
 	_UIManager.optimize();
 	_UIManager.resolvePositions();
@@ -45,7 +46,7 @@ void UICoordinator::draw() {
 }
 
 void UICoordinator::applyNewScreenSize(glm::ivec2 screenSize) {
-	_UIManager.setScale(sqrt((screenSize.y / 1080.0f) * (screenSize.x / 1920.0f)));
+	_UIManager.setScale(((screenSize.y / 1080.0f)));
 	_UIManager.resolvePositions();
 }
 
