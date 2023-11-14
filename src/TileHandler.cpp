@@ -3,7 +3,7 @@
 #include <iostream>
 #include <Jauntlet/Errors.h>
 #include <Jauntlet/JMath.h>
-#include <Jauntlet/Externals/tinyfiledialogs.h>
+#include <Jauntlet/Filesystems/FileDialogs.h>
 #include <sstream>
 
 
@@ -11,10 +11,10 @@ TileHandler::TileHandler() {
 }
 
 void TileHandler::loadFile() {
-	char const* filter[1] = { "*.JML" };
-	char const* filePath = tinyfd_openFileDialog("Select file to open", NULL, 1, filter, "Jauntlet Map Loader File (JML)", 1);
+	std::vector<const char*> filter = { "*.JML"};
+	std::string filePath = Jauntlet::openFilePrompt("Select file to open", "Levels", filter, "Jauntlet Map Loader File (JML)", true);
 	// the user cancelled the selection
-	if (filePath == NULL) {
+	if (filePath.empty()) {
 		return;
 	}
 
@@ -108,11 +108,10 @@ void TileHandler::saveAllFiles() {
 void TileHandler::saveSelectedTileMapAs() {
 	cleanTileMaps();
 
-	char const* filter[1] = { "*.JML" };
-	char const* filePath = tinyfd_saveFileDialog("Select where to save file", 
-	NULL, 1, filter, "Jauntlet Map Loader (JML)");
+	std::vector<const char*> filter = { "*.JML" };
+	std::string filePath = Jauntlet::saveFilePrompt("Select where to save file", "Levels", filter, "Jauntlet Map Loader (JML)");
 	// the user cancelled the selection
-	if (filePath == NULL) {
+	if (filePath.empty()) {
 		return;
 	}
 

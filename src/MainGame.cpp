@@ -1,5 +1,4 @@
 #include <Jauntlet/Rendering/ResourceManager.h>
-#include <Jauntlet/Externals/tinyfiledialogs.h>
 #include <Jauntlet/Errors.h>
 #include "MainGame.h"
 
