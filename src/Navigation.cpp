@@ -57,7 +57,7 @@ void Navigation::genNav(Jauntlet::UIManager& uiManager, Jauntlet::InputManager* 
 
 	//draw background
 	if (_background == NULL) {
-		_background = new Jauntlet::UISpriteElement(_navTextures[0], &_bgPos, glm::vec2(576,1228.8f), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+		_background = new Jauntlet::UISpriteElement(_navTextures[0], &_bgPos, glm::vec2(512, 819.2f), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
 		_uiManager->addElement(_background, _colorProgram);
 	}
 
