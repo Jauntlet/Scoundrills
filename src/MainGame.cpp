@@ -17,13 +17,12 @@ MainGame::MainGame()
 	_camera(_screenWidth, _screenHeight),
 	_hudCamera(_screenWidth, _screenHeight),
 	_resources(),
-	_drill(_resources),
+	_drill(_resources, &_hudCamera),
 	_cameraManager(&_camera, &_inputManager, &_players, &_drill),
 	_players(3, &_drill),
 	_selectedTile(&_drill.drillFloor, &_players),
 	_textRenderer(&_hudCamera, "Fonts/HandelGo.ttf", 256),
-	_uiCoordinator(&_hudCamera, &_textRenderer, &_inputManager, &_drill, &_colorProgram),
-	jimp(&_camera, jim, "Textures/smoke.png")
+	_uiCoordinator(&_hudCamera, &_textRenderer, &_inputManager, &_drill, &_colorProgram)
 {
 	_uiCoordinator.applyNewScreenSize(glm::ivec2(_screenWidth, _screenHeight));
 }
@@ -43,12 +42,6 @@ void MainGame::initSystems() {
 	SDL_ShowCursor(1); // show the mouse cursor. can be set to 0 later for replacements.
 
 	initShaders();
-
-	//jimp = Jauntlet::Particle(&_camera,glm::vec2(0),"Textures/smoke.png");
-
-	Jauntlet::ParticleGrow grow = Jauntlet::ParticleGrow(0.0f,10.0f);
-
-	jimp.addProperty(grow);
 
 	Jauntlet::ResourceManager::setMissingTexture("Textures/missing.png");
 }
@@ -80,7 +73,7 @@ void MainGame::gameLoop() {
 
 void MainGame::processInput() {
 	_inputManager.processInput();
-
+	 
 	if (_inputManager.quitGameCalled()) {
 		_gameState = GameState::EXIT;
 	}
@@ -138,9 +131,6 @@ void MainGame::drawGame() {
 	_playerSpriteBatch.endAndRender();
 	
 	_selectedTile.draw(&_camera, &_inputManager);
-
-	jimp.update();
-	jimp.draw();
 
 	_colorProgram.unuse();
 	

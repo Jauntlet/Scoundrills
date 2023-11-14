@@ -1,5 +1,5 @@
 /* Purpose: Display a menu that allows the player to select a "destination" in-game that progresses them towards the end goal.
- * Main Contributor(s): Christopher Kowalewski, Jack Kennedy
+ * Main Contributor(s): Christopher Kowalewski, Jack Kennedy, Xander Mooney
  */
 #pragma once
 

@@ -9,10 +9,10 @@
 const float heatRiseScale = .3f; //1 heat every ~3 seconds
 const float heatFallScale = .1f; //1 heat every 10 seconds
 
-DrillManager::DrillManager(PlayerResources resourceManager)
+DrillManager::DrillManager(PlayerResources resourceManager, Jauntlet::Camera2D* camera)
 :
 	drillFloor(_textureCache, 64), drillWalls(_textureCache, 64), pipes(_textureCache, 64),
-	_drillAssets(),
+	_drillAssets(camera),
 	_resources(resourceManager)
 {
 	drillFloor.loadTileMap("Levels/DrillFloor.JML");

@@ -12,7 +12,7 @@
 
 class DrillManager {
 public:
-	DrillManager(PlayerResources resourceManager);
+	DrillManager(PlayerResources resourceManager, Jauntlet::Camera2D* camera);
 	
 	// draw the drill elements
 	void draw();
