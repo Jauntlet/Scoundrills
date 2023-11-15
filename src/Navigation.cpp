@@ -131,16 +131,25 @@ void Navigation::selectNav(int id) {
 void Navigation::updateTravel() {
 	if (_destination != -1) {
 		_progress += 0.1f;
+		float newX = 0.0f;
+		float newY = 1.0f;
+		refreshPositions(newX, newY);
 		if (_progress >= 1.0f) {
 			_destination = -1; //set dest
 			//remove caret
 
-			//_caretElement->visible = false;
+			_caretElement->visible = false;
 			//delete _caretElement;
 		}
 	}
 	else
 	{
 		_progress = 0.0f;
+	}
+}
+
+void Navigation::refreshPositions(float shiftX, float shiftY) {
+	for (int i = 0; i < _positions.size(); i++) {
+		_positions[i] = glm::vec2(_positions[i].x - shiftX, _positions[i].y + shiftY);
 	}
 }

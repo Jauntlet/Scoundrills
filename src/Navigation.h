@@ -37,4 +37,6 @@ private:
 	Jauntlet::UISpriteElement* _background = nullptr;
 	Jauntlet::UISpriteElement* _caretElement = nullptr;
 	bool _caretSet = false;
+
+	void refreshPositions(float shiftX, float shiftY);
 };
