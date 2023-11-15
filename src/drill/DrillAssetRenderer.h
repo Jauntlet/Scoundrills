@@ -29,5 +29,6 @@ private:
 	bool _shake = false;
 
 	Jauntlet::Particle _boilerSmoke;
+	GLuint _boilerTexture;
 	glm::vec2 _smokePos = glm::vec2(0);
 };

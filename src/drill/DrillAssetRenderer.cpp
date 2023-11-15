@@ -7,8 +7,9 @@ const float SHAKE_AMOUNT = 20.0f;
 
 DrillAssetRenderer::DrillAssetRenderer(Jauntlet::Camera2D* _UIcamera) :
 	steeringWheel("Textures/missing.png", { 64 * 11.5, -64 * 28, 64, 64 }, { 64 * 11.5, -64 * 28, 64, 64 }, { 0, 0 }),
-	boiler("Textures/Boiler.png", { 64 * 15.5, -64 * 2, 64 * 2, 96 * 2 }, { 64 * 15.5, -64 * 2, 64 * 2, 96 * 2 }, { 16,-64 }),
-	_boilerSmoke(_UIcamera, _smokePos, "Textures/smoke.png") 
+	boiler("Textures/BoilerTank.png", { 64 * 16, -64 * 1 - 10, 32 * 2, 43 * 2 }, { 64 * 15.5, -64 * 2, 64 * 2, 96 * 2 }, { 16,-64 }),
+	_boilerSmoke(_UIcamera, _smokePos, "Textures/smoke.png"),
+	_boilerTexture(Jauntlet::ResourceManager::getTexture("Textures/Boiler.png").id)
 {
 	Jauntlet::ParticleGrow grow = Jauntlet::ParticleGrow(0.0f, 10.0f);
 
@@ -37,10 +38,11 @@ void DrillAssetRenderer::drawLayerTwo() {
 
 	// draw the player stations
 	steeringWheel.draw(_spriteBatch);
+	
+	_spriteBatch.draw(glm::vec4(64 * 15.5, -64 * 2, 64 * 2, 96 * 2), _boilerTexture);
 	boiler.draw(_spriteBatch);
 	_boilerSmoke.update();
 	_boilerSmoke.draw();
-
 
 	_spriteBatch.endAndRender();
 }
