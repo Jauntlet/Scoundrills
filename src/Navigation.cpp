@@ -32,7 +32,7 @@ Navigation::~Navigation() {
 	delete _caretElement;
 }
 
-void Navigation::genNav(Jauntlet::InputManager* inputManager, Jauntlet::GLSLProgram* colorProgram) {
+Jauntlet::UIManager* Navigation::genNav(Jauntlet::InputManager* inputManager, Jauntlet::GLSLProgram* colorProgram) {
 	//set stuff
 	_colorProgram = colorProgram;
 
@@ -94,13 +94,17 @@ void Navigation::genNav(Jauntlet::InputManager* inputManager, Jauntlet::GLSLProg
 		_points[i].visible = _navOpen;
 	}
 
+	//create caret (selector icon)
 	_caretElement = new Jauntlet::UISpriteElement(_caret, &_caretPos, glm::vec2(31.25, 18.75), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
 	_uiManager.addElement(_caretElement, _colorProgram);
 	_caretElement->visible = false;
 
+	//Return UIManager
+	return &_uiManager;
+
 	// optimize batches
-	_uiManager.optimize();
-	_uiManager.resolvePositions();
+	//_uiManager.optimize();
+	//_uiManager.resolvePositions();
 }
 
 void Navigation::toggleNav() {

@@ -14,7 +14,7 @@ public:
 	Navigation(Jauntlet::Camera2D* camera);
 	~Navigation(); //deletes hanging references
 
-	void genNav(Jauntlet::InputManager* inputManager, Jauntlet::GLSLProgram* colorProgram); //new nav positions
+	Jauntlet::UIManager* genNav(Jauntlet::InputManager* inputManager, Jauntlet::GLSLProgram* colorProgram); //new nav positions
 
 	bool isNavOpen(); //returns if the thing is thinging
 	void toggleNav(); //toggles visibility (on/off)

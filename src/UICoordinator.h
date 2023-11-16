@@ -38,9 +38,10 @@ private:
 	Jauntlet::TextRenderer* _textRenderer = nullptr;
 	Jauntlet::InputManager* _inputManager = nullptr;
 
-	// UI Manager
+	// UI Manager(s)
 	Jauntlet::UIManager _UIManager;
-	
+	Jauntlet::UIManager* _NavManager;
+
 	// FPS counter
 	bool _debugging = true;
 	Jauntlet::Color _fpsColor;

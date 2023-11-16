@@ -15,7 +15,7 @@ UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRender
 	_inputManager = inputManager;
 	_colorProgram = buttonProgram;
 	
-	navigation.genNav(_inputManager, buttonProgram);
+	_NavManager = navigation.genNav(_inputManager, buttonProgram);
 
 	_fpsCounter = new Jauntlet::UITextElement(_textRenderer, &fpsText, &_fpsColor, &_fpsPosition);
 	_UIManager.addElement(_fpsCounter, &Jauntlet::TextRenderer::textShader);
@@ -34,6 +34,9 @@ UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRender
 	// optimize batches
 	_UIManager.optimize();
 	_UIManager.resolvePositions();
+
+	_NavManager->optimize();
+	_NavManager->resolvePositions();
 }
 
 UICoordinator::~UICoordinator() {
@@ -44,11 +47,15 @@ UICoordinator::~UICoordinator() {
 
 void UICoordinator::draw() {
 	_UIManager.draw();
+	_NavManager->draw();
 }
 
 void UICoordinator::applyNewScreenSize(glm::ivec2 screenSize) {
 	_UIManager.setScale(((screenSize.y / 1080.0f)));
 	_UIManager.resolvePositions();
+
+	_NavManager->setScale(((screenSize.y / 1080.0f)));
+	_NavManager->resolvePositions();
 }
 
 void UICoordinator::toggleDebugMode() {
