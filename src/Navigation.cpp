@@ -11,9 +11,10 @@ const int layerWidth = 5; //amt of destinations on each layer (X axis)
 const std::string bgTextures[] = {"Textures/NavGround1.png"};
 static int seed = std::chrono::system_clock::now().time_since_epoch().count(); //temp
 
-Navigation::Navigation() : 
+Navigation::Navigation(Jauntlet::Camera2D* camera) : 
 	_xTure(Jauntlet::ResourceManager::getTexture("Textures/xmark.png").id), 
-	_caret(Jauntlet::ResourceManager::getTexture("Textures/caret.png").id)
+	_caret(Jauntlet::ResourceManager::getTexture("Textures/caret.png").id),
+	_uiManager(camera)
 {
 	//generate some randomness
 	std::mt19937 random = std::mt19937(seed);
@@ -31,12 +32,11 @@ Navigation::~Navigation() {
 	delete _caretElement;
 }
 
-void Navigation::genNav(Jauntlet::UIManager& uiManager, Jauntlet::InputManager* inputManager, Jauntlet::GLSLProgram* colorProgram) {
+void Navigation::genNav(Jauntlet::InputManager* inputManager, Jauntlet::GLSLProgram* colorProgram) {
 	//set stuff
-	_uiManager = &uiManager;
 	_colorProgram = colorProgram;
 
-	//clear stuff
+	////clear stuff
 	_navTextures.clear();
 	_points.clear();
 	_positions.clear();
@@ -58,7 +58,7 @@ void Navigation::genNav(Jauntlet::UIManager& uiManager, Jauntlet::InputManager* 
 	//draw background
 	if (_background == NULL) {
 		_background = new Jauntlet::UISpriteElement(_navTextures[0], &_bgPos, glm::vec2(640, 1024), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
-		_uiManager->addElement(_background, _colorProgram);
+		_uiManager.addElement(_background, _colorProgram);
 	}
 
 	for (int y = 0; y < layerCount; y++) {
@@ -85,7 +85,7 @@ void Navigation::genNav(Jauntlet::UIManager& uiManager, Jauntlet::InputManager* 
 	}
 
 	for (int i = 0; i < _points.size(); ++i) {
-		_uiManager->addElement(&_points[i], _colorProgram);
+		_uiManager.addElement(&_points[i], _colorProgram);
 	}
 
 	//update visibility
@@ -95,9 +95,12 @@ void Navigation::genNav(Jauntlet::UIManager& uiManager, Jauntlet::InputManager* 
 	}
 
 	_caretElement = new Jauntlet::UISpriteElement(_caret, &_caretPos, glm::vec2(31.25, 18.75), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
-	_uiManager->addElement(_caretElement, _colorProgram);
+	_uiManager.addElement(_caretElement, _colorProgram);
 	_caretElement->visible = false;
-	
+
+	// optimize batches
+	_uiManager.optimize();
+	_uiManager.resolvePositions();
 }
 
 void Navigation::toggleNav() {
@@ -125,7 +128,7 @@ void Navigation::selectNav(int id) {
 		_caretElement->visible = true;
 	}
 
-	_uiManager->resolvePositions();
+	_uiManager.resolvePositions();
 }
 
 void Navigation::updateTravel() {

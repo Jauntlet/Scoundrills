@@ -7,17 +7,18 @@ UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRender
 :
 	_UIManager(hudCamera),
 	_fpsPosition(0),
-	_fpsColor(0, 255, 0, 255)
+	_fpsColor(0, 255, 0, 255),
+	navigation(hudCamera)
 {
 	_hudCamera = hudCamera;
 	_textRenderer = textRenderer;
 	_inputManager = inputManager;
 	_colorProgram = buttonProgram;
 	
-	navigation.genNav(_UIManager, _inputManager, buttonProgram);
+	navigation.genNav(_inputManager, buttonProgram);
 
 	_fpsCounter = new Jauntlet::UITextElement(_textRenderer, &fpsText, &_fpsColor, &_fpsPosition);
-	_UIManager.addElement(_fpsCounter, buttonProgram);
+	_UIManager.addElement(_fpsCounter, &Jauntlet::TextRenderer::textShader);
 	//_fpsCounter->visible = _debugging;
 
 	GLuint _buttonTexture = Jauntlet::ResourceManager::getTexture("Textures/button.png").id;
