@@ -2,8 +2,8 @@
  * Main Contributer(s): Xander Mooney / Jack Kennedy / Christopher Kowalewski
  */
 #pragma once
-#include "CameraManager.h"
-#include "drill/DrillManager.h"
+#include "../CameraManager.h"
+#include "../drill/DrillManager.h"
 #include <Jauntlet/Jauntlet.h>
 #include <Jauntlet/Rendering/Particles/Particle.h>
 #include <Jauntlet/Rendering/Window.h>
@@ -11,37 +11,27 @@
 #include <Jauntlet/UI/UIButtonElement.h>
 #include <Jauntlet/UI/UIManager.h>
 #include <Jauntlet/UI/UITextElement.h>
-#include "players/PlayerManager.h"
-#include "PlayerResources.h"
-#include "SelectedTileRenderer.h"
-#include "UICoordinator.h"
-
-enum class GameState {
-	PLAY, EXIT
-};
+#include "../players/PlayerManager.h"
+#include "../PlayerResources.h"
+#include "../SelectedTileRenderer.h"
+#include "../UICoordinator.h"
 
 class MainGame {
 public:
 	MainGame();
 
-	void run();
-
-private:
-	void initSystems();
-	void initShaders();
+	void windowResized();
 	void gameLoop();
+private:
 	void processInput();
 	void drawGame();
 	void drawHUD();
 
-	int  _screenWidth = 1024, _screenHeight = 768;
-	Jauntlet::Window _window;
+	// called whenever the window is resized.
 
 	Jauntlet::Camera2D _camera, _hudCamera;
 
 	PlayerResources _resources;
-
-	Jauntlet::InputManager _inputManager;
 
 	UICoordinator _uiCoordinator;
 
@@ -54,10 +44,6 @@ private:
 	SelectedTileRenderer _selectedTile;
 	
 	Jauntlet::TextRenderer _textRenderer;
-
-	Jauntlet::GLSLProgram _colorProgram;
-
-	GameState _gameState = GameState::PLAY;
 
 	float _fps = 0;
 

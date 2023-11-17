@@ -1,7 +1,6 @@
-#include "MainGame.h"
+#include "scenes/SceneManager.h"
 
 int main(int argc, char** argv) {
-	MainGame mainGame;
-	mainGame.run();
+	SceneManager scene;
 	return 0;
 }
