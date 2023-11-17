@@ -1,4 +1,4 @@
-#include "src/scenes/GlobalContext.h"
+#include "GlobalContext.h"
 #include "Jauntlet/Rendering/Window.h"
 
 Jauntlet::GLSLProgram GlobalContext::normalShader;

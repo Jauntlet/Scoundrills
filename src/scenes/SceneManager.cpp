@@ -1,7 +1,7 @@
 #include "SceneManager.h"
-#include "Jauntlet/Time.h"
-#include "src/scenes/GlobalContext.h"
-#include "src/scenes/MainGame.h"
+#include <Jauntlet/Time.h>
+#include "GlobalContext.h"
+#include "MainGame.h"
 
 SceneManager::SceneManager() {
     Jauntlet::init();

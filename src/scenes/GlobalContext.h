@@ -2,7 +2,7 @@
  * Main Contributer(s): Xander Mooney
  */
  #pragma once
- #include "Jauntlet/Inputs/InputManager.h"
+ #include <Jauntlet/Inputs/InputManager.h>
  #include <Jauntlet/Rendering/GLSLProgram.h>
  #include <Jauntlet/Rendering/Window.h>
 

@@ -2,7 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\MainGame.cpp" />
     <ClCompile Include="src\Navigation.cpp" />
     <ClCompile Include="src\players\Player.cpp">
       <Filter>players</Filter>
@@ -29,9 +28,17 @@
     <ClCompile Include="src\drill\PlayerStation.cpp">
       <Filter>drill</Filter>
     </ClCompile>
+    <ClCompile Include="src\scenes\GlobalContext.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scenes\SceneManager.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scenes\MainGame.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\MainGame.h" />
     <ClInclude Include="src\Navigation.h" />
     <ClInclude Include="src\players\Player.h">
       <Filter>players</Filter>
@@ -61,6 +68,15 @@
     <ClInclude Include="resource.h">
       <Filter>icon</Filter>
     </ClInclude>
+    <ClInclude Include="src\scenes\GlobalContext.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scenes\SceneManager.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scenes\MainGame.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="players">
@@ -74,6 +90,9 @@
     </Filter>
     <Filter Include="icon">
       <UniqueIdentifier>{08367519-b396-46b1-99d2-bfc03c27085a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scenes">
+      <UniqueIdentifier>{6753c400-5855-4681-9e49-f3406cf572f2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
