@@ -23,15 +23,26 @@ DrillManager::DrillManager(PlayerResources resourceManager, Jauntlet::Camera2D* 
 	bustRandomPipe();
 	on();
 }
+
+void DrillManager::update() {
+	if (_drillOn) {
+		if (boilerWater > 0) {
+			boilerWater -= Jauntlet::Time::getDeltaTime();
+			_resources.heat += Jauntlet::Time::getDeltaTime() * heatRiseScale;
+		}
+	}
+	else {
+		_resources.heat -= Jauntlet::Time::getDeltaTime() * heatFallScale;
+	}
+	
+}
+
 void DrillManager::draw() {
 	_drillAssets.drawLayerOne();
 	drillFloor.draw();
 	drillWalls.draw();
 	pipes.draw();
 	_drillAssets.drawLayerTwo();
-
-	//Apply Resources Tick
-	resourcesTick();
 }
 
 void DrillManager::on() {
@@ -49,16 +60,6 @@ void DrillManager::toggle() {
 	} else {
 		on();
 	}
-}
-
-void DrillManager::resourcesTick() {
-	if (_drillOn)
-		_resources.heat += Jauntlet::Time::getDeltaTime() * heatRiseScale;
-	else
-		_resources.heat -= Jauntlet::Time::getDeltaTime() * heatFallScale;
-
-	//output to debug console for now.
-	//std::cout << std::setprecision(2) << std::to_string(_resources.heat) << std::endl;
 }
 
 PlayerStation* DrillManager::checkHoveringStation(glm::vec2 position) {

@@ -14,6 +14,9 @@ class DrillManager {
 public:
 	DrillManager(PlayerResources resourceManager, Jauntlet::Camera2D* camera);
 	
+	// update parts of the drill
+	void update();
+
 	// draw the drill elements
 	void draw();
 
@@ -24,8 +27,6 @@ public:
 	// toggle the drill
 	void toggle();
 
-	void resourcesTick();
-
 	PlayerStation* checkHoveringStation(glm::vec2 position);
 	bool doesTileOverlapStations(glm::ivec2 tilePos);
 
@@ -34,6 +35,8 @@ public:
 	Jauntlet::TileMap drillWalls;
 	Jauntlet::TileMap drillFloor;
 	Jauntlet::TileMap pipes;
+
+	float boilerWater = 60.0f;
 private:
 	DrillAssetRenderer _drillAssets;
 
