@@ -1,5 +1,5 @@
 #include <Jauntlet/Collision/Collision2D.h>
-
+#include "../scenes/GlobalContext.h"
 #include "PlayerManager.h"
 
 PlayerManager::PlayerManager(int initialPlayers, DrillManager* drill)
@@ -19,10 +19,10 @@ void PlayerManager::createPlayer(int x, int y) {
 	_players.emplace_back(x, y);
 }
 
-bool PlayerManager::processInput(Jauntlet::InputManager* inputManager, Jauntlet::Camera2D* activeCamera) {
-	glm::vec2 mousePos = activeCamera->convertScreenToWorld(inputManager->getMouseCoords());
+bool PlayerManager::processInput(Jauntlet::Camera2D* activeCamera) {
+	glm::vec2 mousePos = activeCamera->convertScreenToWorld(GlobalContext::inputManager.getMouseCoords());
 	// if we click
-	if (inputManager->isKeyPressed(SDL_BUTTON_LEFT)) {
+	if (GlobalContext::inputManager.isKeyPressed(SDL_BUTTON_LEFT)) {
 		if (_selectedPlayer == -1) { // we are selecting a player.
 			Jauntlet::Collision2D collision;
 

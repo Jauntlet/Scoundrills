@@ -2,8 +2,9 @@
 #include <Jauntlet/UI/UIButtonToggleableElement.h>
 
 #include "UICoordinator.h"
+#include "src/scenes/GlobalContext.h"
 
-UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRenderer* textRenderer, Jauntlet::InputManager* inputManager, DrillManager* drillManager, Jauntlet::GLSLProgram* buttonProgram)
+UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRenderer* textRenderer, DrillManager* drillManager)
 :
 	_UIManager(hudCamera),
 	_fpsPosition(0),
@@ -12,10 +13,8 @@ UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRender
 {
 	_hudCamera = hudCamera;
 	_textRenderer = textRenderer;
-	_inputManager = inputManager;
-	_colorProgram = buttonProgram;
 	
-	_NavManager = navigation.genNav(_inputManager, buttonProgram);
+	_NavManager = navigation.genNav();
 
 	_fpsCounter = new Jauntlet::UITextElement(_textRenderer, &fpsText, &_fpsColor, &_fpsPosition);
 	_UIManager.addElement(_fpsCounter, &Jauntlet::TextRenderer::textShader);
@@ -27,8 +26,8 @@ UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRender
 	// conversion from `void` to `std::function<void ()>` -jk
 	std::function<void()> _buttonMethod = std::bind(&DrillManager::toggle, drillManager);
 
-	Jauntlet::UIButtonToggleableElement* _button = new Jauntlet::UIButtonToggleableElement(_inputManager, _buttonMethod, _buttonTexture, buttonPos, glm::vec2(256, 256), Jauntlet::UIElement::ORIGIN_PIN::BOTTOM_LEFT);
-	_UIManager.addElement(_button, buttonProgram);
+	Jauntlet::UIButtonToggleableElement* _button = new Jauntlet::UIButtonToggleableElement(&GlobalContext::inputManager, _buttonMethod, _buttonTexture, buttonPos, glm::vec2(256, 256), Jauntlet::UIElement::ORIGIN_PIN::BOTTOM_LEFT);
+	_UIManager.addElement(_button, &GlobalContext::normalShader);
 
 	
 	// optimize batches

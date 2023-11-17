@@ -14,7 +14,7 @@ public:
 	Navigation(Jauntlet::Camera2D* camera);
 	~Navigation(); //deletes hanging references
 
-	Jauntlet::UIManager* genNav(Jauntlet::InputManager* inputManager, Jauntlet::GLSLProgram* colorProgram); //new nav positions
+	Jauntlet::UIManager* genNav(); //new nav positions
 
 	bool isNavOpen(); //returns if the thing is thinging
 	void toggleNav(); //toggles visibility (on/off)
@@ -24,7 +24,6 @@ private:
 	std::vector<GLuint> _navTextures;
 	GLuint _xTure = 0;
 	GLuint _caret = 0;
-	Jauntlet::GLSLProgram* _colorProgram = nullptr;
 	bool _navOpen = false; //visibility of menu
 	int _destination = -1; //id value
 	float _progress = -1; //0-1; 0 being just selected dest, 1 being @ dest.

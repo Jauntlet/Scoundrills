@@ -1,5 +1,6 @@
 #include "Navigation.h"
 #include "Jauntlet/UI/UIButtonElement.h"
+#include "src/scenes/GlobalContext.h"
 
 #include <chrono>
 #include <Jauntlet/Rendering/ResourceManager.h>
@@ -32,10 +33,7 @@ Navigation::~Navigation() {
 	delete _caretElement;
 }
 
-Jauntlet::UIManager* Navigation::genNav(Jauntlet::InputManager* inputManager, Jauntlet::GLSLProgram* colorProgram) {
-	//set stuff
-	_colorProgram = colorProgram;
-
+Jauntlet::UIManager* Navigation::genNav() {
 	////clear stuff
 	_navTextures.clear();
 	_points.clear();
@@ -58,7 +56,7 @@ Jauntlet::UIManager* Navigation::genNav(Jauntlet::InputManager* inputManager, Ja
 	//draw background
 	if (_background == NULL) {
 		_background = new Jauntlet::UISpriteElement(_navTextures[0], &_bgPos, glm::vec2(640, 1024), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
-		_uiManager.addElement(_background, _colorProgram);
+		_uiManager.addElement(_background, &GlobalContext::normalShader);
 	}
 
 	for (int y = 0; y < layerCount; y++) {
@@ -68,13 +66,13 @@ Jauntlet::UIManager* Navigation::genNav(Jauntlet::InputManager* inputManager, Ja
 			if (_positions[_positions.size() - 1].y < -250 || _positions[_positions.size() - 1].y > 500) continue;
 			if (point == 0) { // white X
 				int destID = _positions.size() - 1;
-				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(inputManager, [&, destID]() -> void { selectNav(destID); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID]() -> void { selectNav(destID); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
 				_points.push_back(button);
 				continue;
 			}
 			if (point == 1) { // blue X
 				int destID = _positions.size() - 1;
-				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(inputManager, [&, destID]() -> void { selectNav(destID); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID]() -> void { selectNav(destID); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
 				_points.push_back(button);
 				continue;
 			}
@@ -85,7 +83,7 @@ Jauntlet::UIManager* Navigation::genNav(Jauntlet::InputManager* inputManager, Ja
 	}
 
 	for (int i = 0; i < _points.size(); ++i) {
-		_uiManager.addElement(&_points[i], _colorProgram);
+		_uiManager.addElement(&_points[i], &GlobalContext::normalShader);
 	}
 
 	//update visibility
@@ -96,7 +94,7 @@ Jauntlet::UIManager* Navigation::genNav(Jauntlet::InputManager* inputManager, Ja
 
 	//create caret (selector icon)
 	_caretElement = new Jauntlet::UISpriteElement(_caret, &_caretPos, glm::vec2(31.25, 18.75), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
-	_uiManager.addElement(_caretElement, _colorProgram);
+	_uiManager.addElement(_caretElement, &GlobalContext::normalShader);
 	_caretElement->visible = false;
 
 	//Return UIManager

@@ -18,7 +18,7 @@ public:
 	void createPlayer(int x, int y);
 	
 	// processes a click to see if we operate on the players, returns true if we are, false if we arent.
-	bool processInput(Jauntlet::InputManager* inputManager, Jauntlet::Camera2D* activeCamera);
+	bool processInput(Jauntlet::Camera2D* activeCamera);
 	// returns if a position is a valid destination to pathfind to.
 	bool isValidDestination(glm::vec2 worldPos);
 	// returns true if hovering a player station

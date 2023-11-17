@@ -12,12 +12,11 @@
 
 class CameraManager {
 public:
-	CameraManager(Jauntlet::Camera2D* camera, Jauntlet::InputManager* inputManager, PlayerManager* players, DrillManager* drill);
+	CameraManager(Jauntlet::Camera2D* camera, PlayerManager* players, DrillManager* drill);
 
 	void processInput();
 private:
 	Jauntlet::Camera2D* _camera;
-	Jauntlet::InputManager* _inputManager;
 
 	PlayerManager* _players;
 	DrillManager* _drill;

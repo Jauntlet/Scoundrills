@@ -3,16 +3,16 @@
 #include "CameraManager.h"
 #include "drill/DrillManager.h"
 #include "src/players/PlayerManager.h"
+#include "src/scenes/GlobalContext.h"
 
 const float CAMERA_SPEED = 500;
 
-CameraManager::CameraManager(Jauntlet::Camera2D* camera, Jauntlet::InputManager* inputManager, PlayerManager* players, DrillManager* drill) 
-	: _moveDown(inputManager),
-	_moveLeft(inputManager),
-	_moveUp(inputManager),
-	_moveRight(inputManager),
+CameraManager::CameraManager(Jauntlet::Camera2D* camera, PlayerManager* players, DrillManager* drill) 
+	: _moveDown(&GlobalContext::inputManager),
+	_moveLeft(&GlobalContext::inputManager),
+	_moveUp(&GlobalContext::inputManager),
+	_moveRight(&GlobalContext::inputManager),
 	_camera(camera),
-	_inputManager(inputManager),
 	_players(players),
 	_drill(drill)
 {
@@ -23,17 +23,17 @@ CameraManager::CameraManager(Jauntlet::Camera2D* camera, Jauntlet::InputManager*
 }
 
 void CameraManager::processInput() {
-	if (_inputManager->isKeyDown(SDLK_r)) {
+	if (GlobalContext::inputManager.isKeyDown(SDLK_r)) {
 		_camera->transitionToPosition(glm::vec2(24 * 64 * 0.5f, 30 * 64 * 0.5f * -1));
 		_camera->transitionToScale(0.5f);
 	}
 
-	bool clickOnPlayers = _players->processInput(_inputManager, _camera);
+	bool clickOnPlayers = _players->processInput(_camera);
 	
-	if (_inputManager->isKeyDown(SDL_BUTTON_LEFT)) {
+	if (GlobalContext::inputManager.isKeyDown(SDL_BUTTON_LEFT)) {
 		if (!clickOnPlayers) {
 			_camera->clearTransitions();
-			_deltaMouse = glm::vec2(_oldMouse.x - _inputManager->getMouseCoords().x, _inputManager->getMouseCoords().y - _oldMouse.y);
+			_deltaMouse = glm::vec2(_oldMouse.x - GlobalContext::inputManager.getMouseCoords().x, GlobalContext::inputManager.getMouseCoords().y - _oldMouse.y);
 		}
 	}
 	else {
@@ -60,23 +60,23 @@ void CameraManager::processInput() {
 
 	_camera->translate(_deltaMouse);
 
-	glm::vec2 rStick = _inputManager->getControllerAxis(Jauntlet::Axis::RightStick);
+	glm::vec2 rStick = GlobalContext::inputManager.getControllerAxis(Jauntlet::Axis::RightStick);
 	if (glm::abs(rStick.x) > .2 || glm::abs(rStick.y) > .2) {
 		_camera->translate(glm::vec2(rStick.x, -rStick.y) * (250.0f * Jauntlet::Time::getDeltaTime()));
 	}
 
 
-	if (_inputManager->deltaScroll != 0) {
+	if (GlobalContext::inputManager.deltaScroll != 0) {
 		_camera->clearTransitions();
 
-		float zoom = pow(1.1f, _inputManager->deltaScroll);
+		float zoom = pow(1.1f, GlobalContext::inputManager.deltaScroll);
 
 		//glm::vec2 mouse = _camera->convertScreenToWorldDisregardPosition(_inputManager->getMouseCoords());
 
 		_camera->multiply(zoom);
 
-		_inputManager->deltaScroll = 0;
+		GlobalContext::inputManager.deltaScroll = 0;
 	}
 
-	_oldMouse = _inputManager->getMouseCoords(); // the old mouse position is now the current mouse position
+	_oldMouse = GlobalContext::inputManager.getMouseCoords(); // the old mouse position is now the current mouse position
 }
