@@ -13,7 +13,8 @@ DrillManager::DrillManager(PlayerResources resourceManager, Jauntlet::Camera2D* 
 :
 	drillFloor(_textureCache, 64), drillWalls(_textureCache, 64), pipes(_textureCache, 64),
 	_drillAssets(camera),
-	_resources(resourceManager)
+	_resources(resourceManager),
+	_navigation(camera)
 {
 	drillFloor.loadTileMap("Levels/DrillFloor.JML");
 	drillWalls.loadTileMap("Levels/DrillWall.JML");
@@ -29,6 +30,7 @@ void DrillManager::update() {
 		if (boilerWater > 0) {
 			boilerWater -= Jauntlet::Time::getDeltaTime();
 			_resources.heat += Jauntlet::Time::getDeltaTime() * heatRiseScale;
+			_navigation.updateTravel();
 		}
 	}
 	else {
