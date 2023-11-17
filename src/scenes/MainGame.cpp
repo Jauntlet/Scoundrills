@@ -23,6 +23,7 @@ MainGame::MainGame()
 	_textRenderer(&_hudCamera, "Fonts/HandelGo.ttf", 256),
 	_uiCoordinator(&_hudCamera, &_textRenderer, &GlobalContext::inputManager, &_drill, &GlobalContext::normalShader) // #TODO: make not pass in inputmanager
 {
+	GlobalContext::window.setBackgroundColor(Jauntlet::Color(97, 60, 47));
 	_uiCoordinator.applyNewScreenSize(glm::ivec2(GlobalContext::screenSize.x, GlobalContext::screenSize.y));
 }
 
