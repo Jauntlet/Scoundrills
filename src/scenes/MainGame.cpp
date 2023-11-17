@@ -92,7 +92,7 @@ void MainGame::drawHUD() {
 }
 
 void MainGame::windowResized() {
-	_camera.updateCameraSize(GlobalContext::screenSize.x, GlobalContext::screenSize.y);
-	_hudCamera.updateCameraSize(GlobalContext::screenSize.x, GlobalContext::screenSize.y);
+	_camera.updateCameraSize(GlobalContext::screenSize);
+	_hudCamera.updateCameraSize(GlobalContext::screenSize);
 	_uiCoordinator.applyNewScreenSize(GlobalContext::screenSize);
 }
