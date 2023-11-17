@@ -123,6 +123,7 @@ bool Navigation::isNavOpen() {
 }
 
 void Navigation::selectNav(int id) {
+	if (id / layerCount > _nextRow) return;
 	_caretSet = true;
 	_destination = id;
 	_caretPos = _positions[id] + glm::vec2(0, 37.5);
@@ -141,6 +142,7 @@ void Navigation::updateTravel() {
 		refreshPositions(newX, newY);
 		if (_progress >= 1.0f) {
 			_destination = -1; //set dest
+			_nextRow++; //set the next available row to navigate to.
 			//remove caret
 
 			_caretElement->visible = false;
