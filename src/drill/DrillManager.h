@@ -9,6 +9,7 @@
 
 #include "DrillAssetRenderer.h"
 #include "../PlayerResources.h"
+#include "../Navigation.h"
 
 class DrillManager {
 public:
@@ -45,4 +46,5 @@ private:
 	bool _drillOn = true;
 
 	PlayerResources _resources;
+	Navigation _navigation;
 };
