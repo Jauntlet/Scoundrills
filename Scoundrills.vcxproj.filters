@@ -37,6 +37,9 @@
     <ClCompile Include="src\scenes\MainGame.cpp">
       <Filter>scenes</Filter>
     </ClCompile>
+    <ClCompile Include="src\scenes\MainMenu.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Navigation.h" />
@@ -75,6 +78,9 @@
       <Filter>scenes</Filter>
     </ClInclude>
     <ClInclude Include="src\scenes\MainGame.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scenes\MainMenu.h">
       <Filter>scenes</Filter>
     </ClInclude>
   </ItemGroup>

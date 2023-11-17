@@ -3,6 +3,7 @@
  */
  #pragma once
  #include "MainGame.h"
+ #include "MainMenu.h"
 
 enum class GameState { MAINMENU, MAINGAME };
 
@@ -14,7 +15,8 @@ public:
 
     void switchScene(GameState newState);
 private:
-    GameState _gameState = GameState::MAINMENU;
+    GameState _gameState;
 
     MainGame* _mainGame = nullptr;
+    MainMenu* _mainMenu = nullptr;
 };

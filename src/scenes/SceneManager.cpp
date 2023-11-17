@@ -9,9 +9,14 @@ SceneManager::SceneManager() {
     
     GlobalContext::initContext();
     
-    // Start at specified scene; for final builds it should be GameState::MAINMENU
+    // Start at specified scene
+#if NDEBUG
+    // do NOT change, release builds always build to main menu.
+    switchScene(GameState::MAINMENU);
+#else
+    // Feel free to change this to whatever you need for debugging. This will not compile on release builds.
     switchScene(GameState::MAINGAME);
-
+#endif
     gameLoop();
 }
 
@@ -20,7 +25,8 @@ void SceneManager::gameLoop() {
 
     while (true) {
         Jauntlet::Time::beginFrame();
-        
+        GlobalContext::window.clearScreen();
+
         GlobalContext::inputManager.processInput();
 
         if (GlobalContext::inputManager.quitGameCalled()) {
@@ -35,12 +41,19 @@ void SceneManager::gameLoop() {
                 // run maingame window resize event.
                 _mainGame->windowResized();
             }
+            else if (_gameState == GameState::MAINMENU) {
+                _mainMenu->windowResized();
+            }
         }
 
         if (_gameState == GameState::MAINGAME) {
             _mainGame->gameLoop();
         }
+        else if (_gameState == GameState::MAINMENU) {
+            _mainMenu->gameLoop();
+        }
 
+        GlobalContext::window.swapBuffer();
         Jauntlet::Time::endFrame();
     }
 }
@@ -55,5 +68,14 @@ void SceneManager::switchScene(GameState newState) {
         }
     } else if (_mainGame != nullptr) {
             delete _mainGame;
+    }
+
+    if (_gameState == GameState::MAINMENU) {
+        if (_mainMenu == nullptr) {
+            _mainMenu = new MainMenu(this);
+        }
+    }
+    else if (_mainMenu != nullptr) {
+        delete _mainMenu;
     }
 }

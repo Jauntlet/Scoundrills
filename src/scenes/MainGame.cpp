@@ -61,9 +61,7 @@ void MainGame::processInput() {
 	}
 }
 
-void MainGame::drawGame() {
-	GlobalContext::window.clearScreen();
-	
+void MainGame::drawGame() {	
 	GlobalContext::normalShader.use();
 	_camera.setActiveCamera();
 
@@ -79,14 +77,10 @@ void MainGame::drawGame() {
 	GlobalContext::normalShader.unuse();
 	
 	drawHUD();
-
-	GlobalContext::window.swapBuffer();
 }
 
 void MainGame::drawHUD() {
 	_hudCamera.setActiveCamera();
-
-	_uiCoordinator.fpsText = std::to_string((int)_fps); // #TODO: DELTEME
 
 	_uiCoordinator.draw();
 }

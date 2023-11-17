@@ -45,8 +45,6 @@ private:
 	
 	Jauntlet::TextRenderer _textRenderer;
 
-	float _fps = 0;
-
 	Jauntlet::SpriteBatch _playerSpriteBatch;
 
 	bool paused = false;
