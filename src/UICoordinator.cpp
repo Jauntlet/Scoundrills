@@ -3,22 +3,25 @@
 
 #include "UICoordinator.h"
 #include "src/scenes/GlobalContext.h"
+#include <Jauntlet/Rendering/TextRenderer.h>
+#include <Jauntlet/JMath.h>
 
-UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRenderer* textRenderer, DrillManager* drillManager)
-:
+UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRenderer* textRenderer, DrillManager* drillManager, PlayerResources* resources)
+	:
+	_hudCamera(hudCamera),
+	_textRenderer(textRenderer),
 	_UIManager(hudCamera),
-	_fpsPosition(0),
-	_fpsColor(0, 255, 0, 255),
-	navigation(hudCamera)
+	navigation(hudCamera),
+	_playerResources(resources),
+	_waterIconTextElement(_textRenderer, &waterIconText, &_textColor, &_waterIconTextPosition)
 {
-	_hudCamera = hudCamera;
-	_textRenderer = textRenderer;
-	
 	_NavManager = navigation.genNav();
 
-	_fpsCounter = new Jauntlet::UITextElement(_textRenderer, &fpsText, &_fpsColor, &_fpsPosition);
-	_UIManager.addElement(_fpsCounter, &Jauntlet::TextRenderer::textShader);
-	//_fpsCounter->visible = _debugging;
+	_UIManager.addElement(&_waterIconTextElement, &Jauntlet::TextRenderer::textShader);
+	_UIManager.addElement(&_waterIcon, &GlobalContext::normalShader);
+	_UIManager.addElement(&_foodIcon, &GlobalContext::normalShader);
+	_UIManager.addElement(&_partsIcon, &GlobalContext::normalShader);
+	_UIManager.addElement(&_tempIcon, &GlobalContext::normalShader);
 
 	GLuint _buttonTexture = Jauntlet::ResourceManager::getTexture("Textures/button.png").id;
 	glm::vec2* buttonPos = new glm::vec2(10, 10);
@@ -39,12 +42,13 @@ UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRender
 }
 
 UICoordinator::~UICoordinator() {
-	delete _fpsCounter;
 	delete buttonPos;
 	delete _button;
 }
 
 void UICoordinator::draw() {
+	waterIconText = std::to_string(_playerResources->water).substr(0,1);
+	
 	_UIManager.draw();
 	_NavManager->draw();
 }
@@ -55,15 +59,4 @@ void UICoordinator::applyNewScreenSize(glm::ivec2 screenSize) {
 
 	_NavManager->setScale(((screenSize.y / 1080.0f)));
 	_NavManager->resolvePositions();
-}
-
-void UICoordinator::toggleDebugMode() {
-	_debugging = !_debugging;
-
-	_fpsCounter->visible = _debugging;
-}
-void UICoordinator::toggleDebugMode(bool debugging) {
-	_debugging = debugging;
-
-	_fpsCounter->visible = debugging;
 }

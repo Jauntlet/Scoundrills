@@ -15,13 +15,12 @@ MainGame::MainGame()
 	:
 	_camera(GlobalContext::screenSize.x, GlobalContext::screenSize.y),
 	_hudCamera(GlobalContext::screenSize.x, GlobalContext::screenSize.y),
-	_resources(),
 	_drill(_resources, &_hudCamera),
 	_cameraManager(&_camera, &_players, &_drill),
 	_players(3, &_drill),
 	_selectedTile(&_drill.drillFloor, &_players),
 	_textRenderer(&_hudCamera, "Fonts/HandelGo.ttf", 256),
-	_uiCoordinator(&_hudCamera, &_textRenderer, &_drill)
+	_uiCoordinator(&_hudCamera, &_textRenderer, &_drill, &_resources)
 {
 	GlobalContext::window.setBackgroundColor(Jauntlet::Color(97, 60, 47));
 	_uiCoordinator.applyNewScreenSize(glm::ivec2(GlobalContext::screenSize.x, GlobalContext::screenSize.y));
