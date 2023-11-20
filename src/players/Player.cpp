@@ -6,7 +6,6 @@
 #include <Jauntlet/Time.h>
 #include "Player.h"
 #include "PlayerManager.h"
-#include <SDL2/SDL.h>
 
 
 Player::Player(float x, float y) : collider(Jauntlet::BoxCollider2D(glm::vec2(64), glm::vec2(x,y))) {
