@@ -41,7 +41,7 @@ private:
 
 	// Icons
 	glm::vec2 _waterIconPosition = glm::vec2(75, 0);
-	Jauntlet::UISpriteElement _waterIcon = Jauntlet::UISpriteElement(Jauntlet::ResourceManager::getTexture("Textures/Water Tank.png").id, &_waterIconPosition, glm::vec2(100), Jauntlet::UIElement::ORIGIN_PIN::TOP_LEFT);
+	Jauntlet::UISpriteElement _waterIcon = Jauntlet::UISpriteElement(Jauntlet::ResourceManager::getTexture("Textures/Water tank.png").id, &_waterIconPosition, glm::vec2(100), Jauntlet::UIElement::ORIGIN_PIN::TOP_LEFT);
 	glm::vec2 _foodIconPosition = glm::vec2(225, 0);
 	Jauntlet::UISpriteElement _foodIcon = Jauntlet::UISpriteElement(Jauntlet::ResourceManager::getTexture("Textures/foodIcon.png").id, &_foodIconPosition, glm::vec2(100), Jauntlet::UIElement::ORIGIN_PIN::TOP_LEFT);
 	glm::vec2 _partsIconPosition = glm::vec2(375, 0);
