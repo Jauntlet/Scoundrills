@@ -1,6 +1,5 @@
 #include <Jauntlet/Time.h>
 #include <cstdlib>
-
 #include "DrillAssetRenderer.h"
 
 const float SHAKE_AMOUNT = 20.0f;
@@ -9,9 +8,12 @@ DrillAssetRenderer::DrillAssetRenderer(Jauntlet::Camera2D* _UIcamera) :
 	steeringWheel("Textures/missing.png", { 64 * 11.5, -64 * 28, 64, 64 }, { 64 * 11.5, -64 * 28, 64, 64 }, { 0, 0 }),
 	boiler("Textures/BoilerTank.png", { 64 * 16, -64 * 1 - 10, 32 * 2, 43 * 2 }, { 64 * 15.5, -64 * 2, 64 * 2, 96 * 2 }, { 16,-64 }),
 	_boilerSmoke(_UIcamera, _smokePos, "Textures/smoke.png"),
-	_boilerTexture(Jauntlet::ResourceManager::getTexture("Textures/Boiler.png").id),
-	_drillAnimation(3)
+	_drillAnimation(3),
+	_boilerAnimation(6),
+	_boilerTexture(Jauntlet::ResourceManager::getTexture("Textures/Boiler.png").id)
 {
+	_boilerAnimation.play(0, 2, 0.1f);
+
 	Jauntlet::ParticleGrow grow = Jauntlet::ParticleGrow(0.0f, 10.0f);
 
 	_boilerSmoke.addProperty(grow);
@@ -31,6 +33,8 @@ void DrillAssetRenderer::drawLayerOne() {
 	if (_shake) {
 		_drillAnimation.update();
 	}
+	
+	_boilerAnimation.update();
 }
 void DrillAssetRenderer::drawLayerTwo() {
 	// Layer two renders above the walls / floor of the tilemap
@@ -39,7 +43,8 @@ void DrillAssetRenderer::drawLayerTwo() {
 	// draw the player stations
 	steeringWheel.draw(_spriteBatch);
 	
-	_spriteBatch.draw(glm::vec4(64 * 15.5, -64 * 2, 64 * 2, 96 * 2), _boilerTexture);
+	_spriteBatch.draw(glm::vec4(64 * 15.5, -64 * 2, 64 * 2, 96 * 2), _boilerAnimation.getUV(), _boilerTexture);
+	
 	boiler.draw(_spriteBatch);
 	_boilerSmoke.update();
 	_boilerSmoke.draw();

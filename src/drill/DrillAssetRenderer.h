@@ -25,8 +25,8 @@ public:
 	PlayerStation boiler;
 private:
 	Jauntlet::SpriteBatch _spriteBatch;
-	Jauntlet::Animation _drillAnimation;
-	bool _shake = false;
+	Jauntlet::Animation _drillAnimation, _boilerAnimation;
+	bool _shake = false, _boilerPlaying = true;
 
 	Jauntlet::Particle _boilerSmoke;
 	GLuint _boilerTexture;
