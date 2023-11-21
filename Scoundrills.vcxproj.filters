@@ -40,6 +40,9 @@
     <ClCompile Include="src\scenes\MainMenu.cpp">
       <Filter>scenes</Filter>
     </ClCompile>
+    <ClCompile Include="src\drill\AnimatedPlayerStation.cpp">
+      <Filter>drill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Navigation.h" />
@@ -82,6 +85,9 @@
     </ClInclude>
     <ClInclude Include="src\scenes\MainMenu.h">
       <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\drill\AnimatedPlayerStation.h">
+      <Filter>drill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
