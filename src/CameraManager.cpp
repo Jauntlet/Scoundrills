@@ -33,7 +33,7 @@ void CameraManager::processInput() {
 	if (GlobalContext::inputManager.isKeyDown(SDL_BUTTON_LEFT)) {
 		if (!clickOnPlayers) {
 			_camera->clearTransitions();
-			_deltaMouse = glm::vec2(_oldMouse.x - GlobalContext::inputManager.getMouseCoords().x, GlobalContext::inputManager.getMouseCoords().y - _oldMouse.y);
+			_deltaMouse = Jauntlet::Time::getTimeScale() * glm::vec2(_oldMouse.x - GlobalContext::inputManager.getMouseCoords().x, GlobalContext::inputManager.getMouseCoords().y - _oldMouse.y);
 		}
 	}
 	else {
@@ -58,7 +58,7 @@ void CameraManager::processInput() {
 	}
 
 
-	_camera->translate(_deltaMouse);
+	_camera->translate(_deltaMouse * Jauntlet::Time::getTimeScale());
 
 	glm::vec2 rStick = GlobalContext::inputManager.getControllerAxis(Jauntlet::Axis::RightStick);
 	if (glm::abs(rStick.x) > .2 || glm::abs(rStick.y) > .2) {

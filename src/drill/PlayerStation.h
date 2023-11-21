@@ -19,8 +19,7 @@ public:
 	PlayerStation(std::string texture, glm::vec4 destination, glm::vec4 boundingBox, glm::vec2 anchorPointOffset);
 	
 	// Draw the station on screen
-	void draw(Jauntlet::SpriteBatch& spriteBatch);
-
+	virtual void draw(Jauntlet::SpriteBatch& spriteBatch);
 
 	// Returns true if position is within the bounding box of the station
 	bool isColliding(glm::vec2 position);
@@ -33,7 +32,7 @@ public:
 	glm::vec2 getAnchorPoint();
 	// Returns the collision bounding box of the player station
 	glm::vec4 getBoundingBox();
-private:
+protected:
 	bool _occupied = false;
 
 	Jauntlet::BoxCollider2D _collider;

@@ -7,7 +7,7 @@
 #include <Jauntlet/Rendering/Particles/Particle.h>
 #include <Jauntlet/Rendering/ResourceManager.h>
 #include <Jauntlet/Rendering/SpriteBatch.h>
-#include "PlayerStation.h"
+#include "AnimatedPlayerStation.h"
 
 class DrillAssetRenderer {
 public:
@@ -22,7 +22,7 @@ public:
 	void stopAnimation();
 	
 	PlayerStation steeringWheel;
-	PlayerStation boiler;
+	AnimatedPlayerStation boiler;
 private:
 	Jauntlet::SpriteBatch _spriteBatch;
 	Jauntlet::Animation _drillAnimation, _boilerAnimation;
