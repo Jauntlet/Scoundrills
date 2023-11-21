@@ -202,7 +202,7 @@ std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, PlayerManag
 					break;
 				}
 				
-				if (!players.isValidDestination(map->TilePosToWorldPos(currentNode.position))) {
+				if (!players.isValidPath(map->TilePosToWorldPos(currentNode.position))) {
 					continue;
 				}
 

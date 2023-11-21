@@ -1,6 +1,7 @@
 #include <Jauntlet/Collision/Collision2D.h>
 #include "../scenes/GlobalContext.h"
 #include "PlayerManager.h"
+#include "src/players/Player.h"
 
 PlayerManager::PlayerManager(int initialPlayers, DrillManager* drill)
 	: 
@@ -59,11 +60,10 @@ bool PlayerManager::isValidDestination(glm::vec2 worldPos) {
 	glm::vec2 floorPos = _drill->drillFloor.WorldPosToTilePos(worldPos);
 	worldPos = _drill->drillWalls.RoundWorldPos(worldPos);
 
-
 	if (_drill->drillWalls.tileHasCollision(pos) || !_drill->drillWalls.isValidTilePos(pos)) {
 		return false;
 	}
-	if (_drill->drillFloor.isTileEmpty(floorPos)) {
+	else if (_drill->drillFloor.isTileEmpty(floorPos)) {
 		return false;
 	}
 
@@ -75,6 +75,29 @@ bool PlayerManager::isValidDestination(glm::vec2 worldPos) {
 	}
 	return !_drill->doesTileOverlapStations(pos);
 }
+bool PlayerManager::isValidPath(glm::vec2 worldPos) {
+	// Currently this function is almost identical to isValidDestination. This will change shortly as the content in the game gets more complex,
+	// and a destination starts to differ greatly from what is a valid path. -xm
+	glm::ivec2 pos = _drill->drillWalls.WorldPosToTilePos(worldPos);
+	glm::vec2 floorPos = _drill->drillFloor.WorldPosToTilePos(worldPos);
+	worldPos = _drill->drillWalls.RoundWorldPos(worldPos);
+
+	if (_drill->drillWalls.tileHasCollision(pos) || !_drill->drillWalls.isValidTilePos(pos)) {
+		return false;
+	}
+	else if (_drill->drillFloor.isTileEmpty(floorPos)) {
+		return false;
+	}
+
+	// check if position overlaps another player
+	for (int i = 0; i < _players.size(); i++) {
+		if (worldPos == _players[i].getDestination() - glm::vec2(0, 64)) {
+			return false;
+		}
+	}
+	return !_drill->doesTileOverlapStations(pos);
+}
+
 bool PlayerManager::hoveringStation(const glm::vec2& worldPos) {
 	return _drill->checkHoveringStation(worldPos);
 }
