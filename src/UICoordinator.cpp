@@ -13,7 +13,7 @@ UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRender
 	_UIManager(hudCamera),
 	navigation(hudCamera),
 	_playerResources(resources),
-	_waterIconTextElement(_textRenderer, &waterIconText, &_textColor, &_waterIconTextPosition)
+	_waterIconTextElement(_textRenderer, &waterIconText, &_textColor, &_waterIconTextPosition, 0.5f)
 {
 	_NavManager = navigation.genNav();
 
