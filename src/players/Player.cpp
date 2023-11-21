@@ -118,5 +118,5 @@ glm::vec2 Player::getPosition() {
 	return _position;
 }
 glm::vec2 Player::getDestination() {
-	return _path.size() > 0 ? _path.back() : _position;
+	return _path.size() > 0 ? _path[0] : _position;
 }

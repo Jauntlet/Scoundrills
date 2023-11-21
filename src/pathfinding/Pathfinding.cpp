@@ -24,7 +24,7 @@ std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, glm::vec2 s
 	}
 
 	bool foundDest = false;
-	while (!_openList.empty() && !foundDest && _openList.size() < TIMEOUT_LIMIT) {
+	while (!foundDest && !_openList.empty() && _openList.size() < TIMEOUT_LIMIT) {
 		int bestNodeID = 0;
 		// Search through the list of nodes for the lowest movement cost
 		for (int i = 1; i < _openList.size(); ++i) {
@@ -42,7 +42,7 @@ std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, glm::vec2 s
 		// Loop through all successors to the bestNode
 		for (int y = -1; y < 2; y++) {
 			for (int x = -1; x < 2; x++) {
-				if ((x == 0 && y == 0) || (x != 0 && y != 0)) { // skip (0,0) and diagonals
+				if ((x != 0 && y != 0) || (x == 0 && y == 0)) { // skip (0,0) and diagonals
 					continue;
 				}
 
@@ -173,7 +173,7 @@ std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, PlayerManag
 	}
 
 	bool foundDest = false;
-	while (!_openList.empty() && !foundDest && _openList.size() < TIMEOUT_LIMIT) {
+	while (!foundDest && !_openList.empty() && _openList.size() < TIMEOUT_LIMIT) {
 		int bestNodeID = 0;
 		// Search through the list of nodes for the lowest movement cost
 		for (int i = 1; i < _openList.size(); ++i) {
@@ -191,7 +191,7 @@ std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, PlayerManag
 		// Loop through all successors to the bestNode
 		for (int y = -1; y < 2; y++) {
 			for (int x = -1; x < 2; x++) {
-				if ((x == 0 && y == 0) || (x != 0 && y != 0)) { // skip (0,0) and diagonals
+				if ((x != 0 && y != 0) || (x == 0 && y == 0)) { // skip (0,0) and diagonals
 					continue;
 				}
 
@@ -202,8 +202,6 @@ std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, PlayerManag
 					break;
 				}
 				
-
-				// Position has collision, and therefore is not a valid position to check for navigation.
 				if (!players.isValidDestination(map->TilePosToWorldPos(currentNode.position))) {
 					continue;
 				}
@@ -213,10 +211,7 @@ std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, PlayerManag
 
 				// Calculate the distance from the node to the goal: this is essiential for A* pathfinding.
 				// We use manhattan distance when we are not allowing diagonals: The difference of X + the difference of Y
-				currentNode.estimatedDistance = std::abs(currentNode.position.x - destination.x) + std::abs(currentNode.position.y - destination.y);
-
-				// Final score:
-				currentNode.estimatedDistance += currentNode.pathDistance;
+				currentNode.estimatedDistance = std::abs(currentNode.position.x - destination.x) + std::abs(currentNode.position.y - destination.y) + currentNode.pathDistance;
 
 				bool isValidNode = true;
 				// Loop through the open list for tiles at the same position, with a lower score. If found, we skip this successor.
@@ -226,7 +221,6 @@ std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, PlayerManag
 						break;
 					}
 				}
-
 				if (!isValidNode) continue;
 
 				// Loop through the closed list for tiles at the same position, with a lower score. If found, we skip this successor.
@@ -236,7 +230,6 @@ std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, PlayerManag
 						break;
 					}
 				}
-
 				if (!isValidNode) continue;
 
 				_openList.push_back(currentNode);
