@@ -5,7 +5,7 @@
 
 #include <Jauntlet/Inputs/InputKey.h>
 #include "../drill/DrillManager.h"
-#include "../drill/PlayerStation.h"
+#include "../interactable/PlayerStation.h"
 
 // TODO: remove the need to include playermanager in players.
 // I do not like doing this, it feels wrong... but we have a game to make for now. -xm

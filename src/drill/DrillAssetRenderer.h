@@ -7,7 +7,7 @@
 #include <Jauntlet/Rendering/Particles/Particle.h>
 #include <Jauntlet/Rendering/ResourceManager.h>
 #include <Jauntlet/Rendering/SpriteBatch.h>
-#include "AnimatedPlayerStation.h"
+#include "../interactable/AnimatedPlayerStation.h"
 
 class DrillAssetRenderer {
 public:

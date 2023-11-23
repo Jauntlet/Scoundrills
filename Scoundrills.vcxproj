@@ -20,10 +20,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CameraManager.cpp" />
-    <ClCompile Include="src\drill\AnimatedPlayerStation.cpp" />
     <ClCompile Include="src\drill\DrillAssetRenderer.cpp" />
     <ClCompile Include="src\drill\DrillManager.cpp" />
-    <ClCompile Include="src\drill\PlayerStation.cpp" />
+    <ClCompile Include="src\interactable\AnimatedPlayerStation.cpp" />
+    <ClCompile Include="src\interactable\PlayerStation.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Navigation.cpp" />
     <ClCompile Include="src\pathfinding\Pathfinding.cpp" />
@@ -41,10 +41,10 @@
   <ItemGroup>
     <ClInclude Include="resource.h" />
     <ClInclude Include="src\CameraManager.h" />
-    <ClInclude Include="src\drill\AnimatedPlayerStation.h" />
     <ClInclude Include="src\drill\DrillAssetRenderer.h" />
     <ClInclude Include="src\drill\DrillManager.h" />
-    <ClInclude Include="src\drill\PlayerStation.h" />
+    <ClInclude Include="src\interactable\AnimatedPlayerStation.h" />
+    <ClInclude Include="src\interactable\PlayerStation.h" />
     <ClInclude Include="src\Navigation.h" />
     <ClInclude Include="src\pathfinding\Pathfinding.h" />
     <ClInclude Include="src\pathfinding\PathRenderer.h" />

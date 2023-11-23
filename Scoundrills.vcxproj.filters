@@ -25,9 +25,6 @@
     <ClCompile Include="src\pathfinding\PathRenderer.cpp">
       <Filter>pathfinding</Filter>
     </ClCompile>
-    <ClCompile Include="src\drill\PlayerStation.cpp">
-      <Filter>drill</Filter>
-    </ClCompile>
     <ClCompile Include="src\scenes\GlobalContext.cpp">
       <Filter>scenes</Filter>
     </ClCompile>
@@ -40,8 +37,11 @@
     <ClCompile Include="src\scenes\MainMenu.cpp">
       <Filter>scenes</Filter>
     </ClCompile>
-    <ClCompile Include="src\drill\AnimatedPlayerStation.cpp">
-      <Filter>drill</Filter>
+    <ClCompile Include="src\interactable\AnimatedPlayerStation.cpp">
+      <Filter>interactable</Filter>
+    </ClCompile>
+    <ClCompile Include="src\interactable\PlayerStation.cpp">
+      <Filter>interactable</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -68,9 +68,6 @@
     <ClInclude Include="src\pathfinding\PathRenderer.h">
       <Filter>pathfinding</Filter>
     </ClInclude>
-    <ClInclude Include="src\drill\PlayerStation.h">
-      <Filter>drill</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>icon</Filter>
     </ClInclude>
@@ -86,8 +83,11 @@
     <ClInclude Include="src\scenes\MainMenu.h">
       <Filter>scenes</Filter>
     </ClInclude>
-    <ClInclude Include="src\drill\AnimatedPlayerStation.h">
-      <Filter>drill</Filter>
+    <ClInclude Include="src\interactable\AnimatedPlayerStation.h">
+      <Filter>interactable</Filter>
+    </ClInclude>
+    <ClInclude Include="src\interactable\PlayerStation.h">
+      <Filter>interactable</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +105,9 @@
     </Filter>
     <Filter Include="scenes">
       <UniqueIdentifier>{6753c400-5855-4681-9e49-f3406cf572f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="interactable">
+      <UniqueIdentifier>{b2d42e9b-c84e-4912-9811-c6817d9bb548}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
