@@ -30,6 +30,8 @@ public:
 	static std::vector<glm::vec2> findPath(Jauntlet::TileMap* map, glm::vec2 start, glm::vec2 destination);
 	// Finds the path between a starting and end location in world space, using both a tilemap and information given by the player manager to give much more accurate results at a performance cost.
 	static std::vector<glm::vec2> findPath(Jauntlet::TileMap* map, PlayerManager& players, glm::vec2 start, glm::vec2 destination);
+
+	static bool isReachable(Jauntlet::TileMap* map, PlayerManager& players, glm::vec2 start, glm::vec2 destination);
 private:
 
 	static std::vector<cell> _openList;

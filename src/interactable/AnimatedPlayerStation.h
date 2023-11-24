@@ -1,3 +1,6 @@
+/* Purpose: A derived version of player stations that supports animations
+ * Main Contributer(s): Xander Mooney
+ */
 #pragma once
 #include "PlayerStation.h"
 #include <Jauntlet/Rendering/Animation/Animation.h>
@@ -11,4 +14,3 @@ public:
 
 	Jauntlet::Animation animation;
 };
-

@@ -73,11 +73,14 @@ bool PlayerManager::isValidDestination(glm::vec2 worldPos) {
 			return false;
 		}
 	}
-	return !_drill->doesTileOverlapStations(pos);
+	if (_drill->doesTileOverlapStations(pos)) {
+		return false;
+	}
+
+	// currently sees if the selected player can travel to the destination. May be changed later. -xm
+	return Pathfinding::isReachable(&_drill->drillWalls, *this, _players[_selectedPlayer].getPosition(), worldPos);
 }
 bool PlayerManager::isValidPath(glm::vec2 worldPos) {
-	// Currently this function is almost identical to isValidDestination. This will change shortly as the content in the game gets more complex,
-	// and a destination starts to differ greatly from what is a valid path. -xm
 	glm::ivec2 pos = _drill->drillWalls.WorldPosToTilePos(worldPos);
 	glm::vec2 floorPos = _drill->drillFloor.WorldPosToTilePos(worldPos);
 	worldPos = _drill->drillWalls.RoundWorldPos(worldPos);

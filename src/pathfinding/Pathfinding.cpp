@@ -303,3 +303,84 @@ std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, PlayerManag
 
 	return output;
 }
+
+bool Pathfinding::isReachable(Jauntlet::TileMap* map, PlayerManager& players, glm::vec2 start, glm::vec2 destination) {
+	// translate world coords to tilemap coords.
+	destination = map->WorldPosToTilePos(destination);
+	start = map->WorldPosToTilePos(start);
+
+	_openList.emplace_back(start, glm::vec2());
+
+	if (start == destination) {
+		_openList.clear();
+		return true;
+	}
+
+	while (!_openList.empty() && _openList.size() < TIMEOUT_LIMIT) {
+		int bestNodeID = 0;
+		// Search through the list of nodes for the lowest movement cost
+		for (int i = 1; i < _openList.size(); ++i) {
+			if (_openList[i].estimatedDistance < _openList[bestNodeID].estimatedDistance) {
+				bestNodeID = i;
+			}
+		}
+		// cache best node
+		_closedList.push_back(_openList[bestNodeID]);
+
+		// pop best node off the list
+		_openList[bestNodeID] = _openList.back();
+		_openList.pop_back();
+
+		// Loop through all successors to the bestNode
+		for (int y = -1; y < 2; y++) {
+			for (int x = -1; x < 2; x++) {
+				if ((x != 0 && y != 0) || (x == 0 && y == 0)) { // skip (0,0) and diagonals
+					continue;
+				}
+
+				cell currentNode = cell(_closedList.back().position + glm::vec2(x, y), _closedList.back().position);
+
+				if (currentNode.position == destination) {
+					_openList.clear();
+					_closedList.clear();
+					return true;
+				}
+
+				if (!players.isValidPath(map->TilePosToWorldPos(currentNode.position))) {
+					continue;
+				}
+
+				// Diagonals are not possible, so the added distance is always 1
+				currentNode.pathDistance = _closedList.back().pathDistance + 1;
+
+				// Calculate the distance from the node to the goal: this is essiential for A* pathfinding.
+				// We use manhattan distance when we are not allowing diagonals: The difference of X + the difference of Y
+				currentNode.estimatedDistance = std::abs(currentNode.position.x - destination.x) + std::abs(currentNode.position.y - destination.y) + currentNode.pathDistance;
+
+				bool isValidNode = true;
+				// Loop through the open list for tiles at the same position, with a lower score. If found, we skip this successor.
+				for (int i = 0; i < _openList.size(); ++i) {
+					if (currentNode.position == _openList[i].position && currentNode.estimatedDistance >= _openList[i].estimatedDistance) {
+						isValidNode = false;
+						break;
+					}
+				}
+				if (!isValidNode) continue;
+
+				// Loop through the closed list for tiles at the same position, with a lower score. If found, we skip this successor.
+				for (int i = 0; i < _closedList.size(); ++i) {
+					if (currentNode.position == _closedList[i].position && currentNode.estimatedDistance >= _closedList[i].estimatedDistance) {
+						isValidNode = false;
+						break;
+					}
+				}
+				if (!isValidNode) continue;
+
+				_openList.push_back(currentNode);
+			}
+		}
+	}
+	_openList.clear();
+	_closedList.clear();
+	return false;
+}
