@@ -43,6 +43,9 @@
     <ClCompile Include="src\interactable\PlayerStation.cpp">
       <Filter>interactable</Filter>
     </ClCompile>
+    <ClCompile Include="src\interactable\Holdable.cpp">
+      <Filter>interactable</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Navigation.h" />
@@ -87,6 +90,9 @@
       <Filter>interactable</Filter>
     </ClInclude>
     <ClInclude Include="src\interactable\PlayerStation.h">
+      <Filter>interactable</Filter>
+    </ClInclude>
+    <ClInclude Include="src\interactable\Holdable.h">
       <Filter>interactable</Filter>
     </ClInclude>
   </ItemGroup>
