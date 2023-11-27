@@ -1,4 +1,5 @@
 #include "Holdable.h"
+#include <Jauntlet/Rendering/ResourceManager.h>
 
 Holdable::Holdable(const std::string& texture, const glm::vec2& position, const glm::vec2& size)
 : 

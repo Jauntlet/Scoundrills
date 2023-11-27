@@ -2,7 +2,7 @@
  * Main Contributer(s): Xander Mooney
  */
 #pragma once
-#include "../players/Player.h"
+#include <Jauntlet/Tiles/TileMap.h>
 class Holdable
 {
 public:
