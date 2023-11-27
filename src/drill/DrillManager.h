@@ -3,13 +3,13 @@
  */
 
 #pragma once
-
 #include <Jauntlet/Tiles/TileMap.h>
 #include <Jauntlet/Inputs/InputManager.h>
-
 #include "DrillAssetRenderer.h"
 #include "../PlayerResources.h"
 #include "../Navigation.h"
+
+class PlayerManager;
 
 class DrillManager {
 public:
@@ -28,8 +28,11 @@ public:
 	// toggle the drill
 	void toggle();
 
+	bool isValidDestination(glm::vec2 worldPos, PlayerManager* playerManager) const;
+	bool isValidPath(glm::vec2 worldPos, PlayerManager* playerManager) const;
+
 	PlayerStation* checkHoveringStation(glm::vec2 position);
-	bool doesTileOverlapStations(glm::ivec2 tilePos);
+	bool doesTileOverlapStations(glm::ivec2 tilePos) const;
 
 	void bustRandomPipe();
 

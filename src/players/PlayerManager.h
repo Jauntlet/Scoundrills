@@ -9,6 +9,8 @@
 #include <Jauntlet/Rendering/Cameras/Camera2D.h>
 #include <Jauntlet/Rendering/SpriteBatch.h>
 
+class DrillManager;
+
 class PlayerManager {
 public: 
 	PlayerManager(int initialPlayers, DrillManager* drill);

@@ -1,9 +1,6 @@
 #include <Jauntlet/Time.h>
 #include "DrillManager.h"
-
-//debug
-#include <iostream>
-#include <iomanip>
+#include "../players/PlayerManager.h"
 
 //Constants
 const float heatRiseScale = .3f; //1 heat every ~3 seconds
@@ -64,6 +61,41 @@ void DrillManager::toggle() {
 	}
 }
 
+bool DrillManager::isValidDestination(glm::vec2 worldPos, PlayerManager* playerManager) const {
+	glm::ivec2 pos = drillWalls.WorldPosToTilePos(worldPos);
+	glm::vec2 floorPos = drillFloor.WorldPosToTilePos(worldPos);
+	worldPos = drillWalls.RoundWorldPos(worldPos);
+
+	if (drillWalls.tileHasCollision(pos) || !drillWalls.isValidTilePos(pos)) {
+		return false;
+	}
+	else if (drillFloor.isTileEmpty(floorPos)) {
+		return false;
+	}
+	else if (playerManager->posMatchesPlayerDest(worldPos)) {
+		return false;
+	}
+	else return !doesTileOverlapStations(pos);
+	
+	//return Pathfinding::isReachable(&drillWalls, *playerManager, _players[_selectedPlayer].getPosition(), worldPos);
+}
+bool DrillManager::isValidPath(glm::vec2 worldPos, PlayerManager* playerManager) const {
+	glm::ivec2 pos = drillWalls.WorldPosToTilePos(worldPos);
+	glm::vec2 floorPos = drillFloor.WorldPosToTilePos(worldPos);
+	worldPos = drillWalls.RoundWorldPos(worldPos);
+
+	if (drillWalls.tileHasCollision(pos) || !drillWalls.isValidTilePos(pos)) {
+		return false;
+	}
+	else if (drillFloor.isTileEmpty(floorPos)) {
+		return false;
+	}
+	else if (playerManager->posMatchesPlayerDest(worldPos)) {
+		return false;
+	}
+	else return !doesTileOverlapStations(pos);
+}
+
 PlayerStation* DrillManager::checkHoveringStation(glm::vec2 position) {
 	if (_drillAssets.steeringWheel.isColliding(position)) {
 		return &_drillAssets.steeringWheel;
@@ -75,7 +107,7 @@ PlayerStation* DrillManager::checkHoveringStation(glm::vec2 position) {
 		return nullptr;
 	}
 }
-bool DrillManager::doesTileOverlapStations(glm::ivec2 tilePos) {
+bool DrillManager::doesTileOverlapStations(glm::ivec2 tilePos) const  {
 	return drillWalls.doesTileOverlap(tilePos, _drillAssets.steeringWheel.getBoundingBox()) ||
 		drillWalls.doesTileOverlap(tilePos, _drillAssets.boiler.getBoundingBox());
 }
