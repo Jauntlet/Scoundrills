@@ -6,7 +6,7 @@
 #include <Jauntlet/Rendering/GLSLProgram.h>
 #include <Jauntlet/UI/UIManager.h>
 #include <Jauntlet/UI/UIButtonElement.h>
-#include <Jauntlet/UI/UISpriteElement.h>
+#include <Jauntlet/UI/UISpriteAnimatedElement.h>
 #include <vector>
 
 class Navigation {
@@ -15,6 +15,8 @@ public:
 	~Navigation(); //deletes hanging references
 
 	Jauntlet::UIManager* genNav(); //new nav positions
+
+	void update();
 
 	bool isNavOpen(); //returns if the thing is thinging
 	void toggleNav(); //toggles visibility (on/off)
@@ -34,8 +36,11 @@ private:
 	glm::vec2 _caretPos = glm::vec2(0);
 	std::vector<glm::vec2> _positions;
 	int _map[5][5]; //Y (count) first X (width) second
-	Jauntlet::UISpriteElement* _background = nullptr;
+
+	Jauntlet::Animation _backgroundAnimation = Jauntlet::Animation(3);
+	Jauntlet::UISpriteAnimatedElement* _background = nullptr;
 	Jauntlet::UISpriteElement* _caretElement = nullptr;
+	
 	bool _caretSet = false;
 
 	void refreshPositions(float shiftX, float shiftY);

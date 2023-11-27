@@ -1,9 +1,3 @@
-#include "../pathfinding/Pathfinding.h"
-#include <algorithm>
-#include <Jauntlet/JMath.h>
-#include <Jauntlet/Rendering/ResourceManager.h>
-#include <Jauntlet/Rendering/Vertex.h>
-#include <Jauntlet/Time.h>
 #include "Player.h"
 #include "PlayerManager.h"
 
@@ -72,13 +66,13 @@ void Player::draw(Jauntlet::SpriteBatch& spriteBatch) {
 	spriteBatch.draw({ _position.x, _position.y, 64, 64 }, Jauntlet::ResourceManager::getTexture("Textures/Craig.png").id, 0);
 }
 
-void Player::navigateTo(DrillManager* drill, PlayerManager& playerManager, glm::vec2 position) {
+void Player::navigateTo(DrillManager& drill, PlayerManager& playerManager, glm::vec2 position) {
 	_path.clear();
 
 	// We add the final destination twice to the vector, because the final vector position for some reason gets destroyed at some point
 	// this is a weird bug that only occurs here, as the pathRenderer uses the same method and the result is fine. -xm
 	PlayerStation* storedStation;
-	if ((storedStation = drill->checkHoveringStation(position)) != nullptr) {
+	if ((storedStation = drill.checkHoveringStation(position)) != nullptr) {
 		if (_station == storedStation) {
 			// we are already at the correct station
 			return;
@@ -88,13 +82,13 @@ void Player::navigateTo(DrillManager* drill, PlayerManager& playerManager, glm::
 		if (!_station->isOccupied()) {
 			_station->Occupy(this);
 			
-			_path = Pathfinding::findPath(&drill->drillWalls, playerManager, _position, _station->getAnchorPoint());
+			_path = Pathfinding::findPath(drill, playerManager, _position, _station->getAnchorPoint());
 			_path.erase(_path.begin());
 			// pathfind to the position of the station the player was assigned to.
 			_path.insert(_path.begin(), _station->getAnchorPoint() - glm::vec2(32, 32));
 		}
 		else {
-			_path = Pathfinding::findPath(&drill->drillWalls, playerManager, _position, drill->drillWalls.RoundWorldPos(position));
+			_path = Pathfinding::findPath(drill, playerManager, _position, drill.drillWalls.RoundWorldPos(position));
 			_path.erase(_path.begin());
 			_station = nullptr;
 		}
@@ -104,9 +98,9 @@ void Player::navigateTo(DrillManager* drill, PlayerManager& playerManager, glm::
 			_station->Occupy(nullptr);
 			_station = nullptr;
 		}
-		_path = Pathfinding::findPath(&drill->drillWalls, playerManager, _position, drill->drillWalls.RoundWorldPos(position));
+		_path = Pathfinding::findPath(drill, playerManager, _position, drill.drillWalls.RoundWorldPos(position));
 		_path.erase(_path.begin());
-		_path.insert(_path.begin(), drill->drillWalls.RoundWorldPos(position));
+		_path.insert(_path.begin(), drill.drillWalls.RoundWorldPos(position));
 	}
 }
 

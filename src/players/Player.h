@@ -2,10 +2,11 @@
  * Main Contributer(s): Xander Mooney
  */
 #pragma once
-
 #include <Jauntlet/Inputs/InputKey.h>
 #include "../drill/DrillManager.h"
-#include "../drill/PlayerStation.h"
+#include "../interactable/PlayerStation.h"
+#include "../interactable/Holdable.h"
+#include "../pathfinding/Pathfinding.h"
 
 // TODO: remove the need to include playermanager in players.
 // I do not like doing this, it feels wrong... but we have a game to make for now. -xm
@@ -20,7 +21,7 @@ public:
 	void draw(Jauntlet::SpriteBatch& spriteBatch);
 	// Navigate through a tilemap to a position.
 	// this function expects a world position not rounded to a tile, so that it can check what player stations it may be connected to.
-	void navigateTo(DrillManager* drill, PlayerManager& playerManager, glm::vec2 position);
+	void navigateTo(DrillManager& drill, PlayerManager& playerManager, glm::vec2 position);
 
 	void setSpeed(float newSpeed);
 
@@ -35,4 +36,5 @@ private:
 	float _speed = 300, _storedVelocity = 0;
 
 	PlayerStation* _station = nullptr;
+	Holdable* _heldItem = nullptr;
 };

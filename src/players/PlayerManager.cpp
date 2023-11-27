@@ -2,11 +2,11 @@
 #include "../scenes/GlobalContext.h"
 #include "PlayerManager.h"
 #include "src/players/Player.h"
+#include "../drill/DrillManager.h"
 
 PlayerManager::PlayerManager(int initialPlayers, DrillManager* drill)
-	: 
-	_drill(drill),
-	_pathRenderer(&drill->drillWalls, this) {
+	:
+	_pathRenderer(drill, this) {
 	_players.reserve(sizeof(Player) * initialPlayers);
 
 	for (int i = 0; i < initialPlayers; ++i) {
@@ -20,32 +20,32 @@ void PlayerManager::createPlayer(int x, int y) {
 	_players.emplace_back(x, y);
 }
 
-bool PlayerManager::processInput(Jauntlet::Camera2D* activeCamera) {
-	glm::vec2 mousePos = activeCamera->convertScreenToWorld(GlobalContext::inputManager.getMouseCoords());
+bool PlayerManager::processInput(DrillManager& drill, const Jauntlet::Camera2D& activeCamera) {
+	glm::vec2 mousePos = activeCamera.convertScreenToWorld(GlobalContext::inputManager.getMouseCoords());
 	// if we click
 	if (GlobalContext::inputManager.isKeyPressed(SDL_BUTTON_LEFT)) {
 		if (_selectedPlayer == -1) { // we are selecting a player.
 			Jauntlet::Collision2D collision;
 
 			for (int i = 0; i < _players.size(); ++i) {
-				if (collision.getCollision(&_players[i].collider, mousePos)) {
+				if (collision.calcCollision(&_players[i].collider, mousePos)) {
 					_selectedPlayer = i;
 					return true;
 				}
 			}
 		}
 		else { // we have selected a position for the player to move to.
-			if (isValidDestination(_storedMousePos) || _drill->checkHoveringStation(mousePos) != nullptr) {
-				_players[_selectedPlayer].navigateTo(_drill, *this, mousePos);
+			if (drill.isValidDestination(_storedMousePos, this) || drill.checkHoveringStation(mousePos) != nullptr) {
+				_players[_selectedPlayer].navigateTo(drill, *this, mousePos);
 			}
 			_pathRenderer.clearPath();
 			_selectedPlayer = -1;
 		}
 	} else if (_selectedPlayer != -1) {
 		// a player is selected and we aren't clicking, so we draw the path via pathrenderer
-		if (_storedMousePos != _drill->drillWalls.RoundWorldPos(mousePos)) {
-			_storedMousePos = _drill->drillWalls.RoundWorldPos(mousePos);
-			if (isValidDestination(_storedMousePos)) {
+		if (_storedMousePos != drill.drillWalls.RoundWorldPos(mousePos)) {
+			_storedMousePos = drill.drillWalls.RoundWorldPos(mousePos);
+			if (drill.isValidDestination(_storedMousePos, this)) {
 				_pathRenderer.createPath(_players[_selectedPlayer].getPosition(), _storedMousePos);
 			}
 			else {
@@ -55,55 +55,22 @@ bool PlayerManager::processInput(Jauntlet::Camera2D* activeCamera) {
 	}
 	return false;
 }
-bool PlayerManager::isValidDestination(glm::vec2 worldPos) {
-	glm::ivec2 pos = _drill->drillWalls.WorldPosToTilePos(worldPos);
-	glm::vec2 floorPos = _drill->drillFloor.WorldPosToTilePos(worldPos);
-	worldPos = _drill->drillWalls.RoundWorldPos(worldPos);
-
-	if (_drill->drillWalls.tileHasCollision(pos) || !_drill->drillWalls.isValidTilePos(pos)) {
-		return false;
-	}
-	else if (_drill->drillFloor.isTileEmpty(floorPos)) {
-		return false;
-	}
-
-	// check if position overlaps another player
-	for (int i = 0; i < _players.size(); i++) {
-		if (worldPos == _players[i].getDestination() - glm::vec2(0, 64)) {
-			return false;
-		}
-	}
-	return !_drill->doesTileOverlapStations(pos);
-}
-bool PlayerManager::isValidPath(glm::vec2 worldPos) {
-	// Currently this function is almost identical to isValidDestination. This will change shortly as the content in the game gets more complex,
-	// and a destination starts to differ greatly from what is a valid path. -xm
-	glm::ivec2 pos = _drill->drillWalls.WorldPosToTilePos(worldPos);
-	glm::vec2 floorPos = _drill->drillFloor.WorldPosToTilePos(worldPos);
-	worldPos = _drill->drillWalls.RoundWorldPos(worldPos);
-
-	if (_drill->drillWalls.tileHasCollision(pos) || !_drill->drillWalls.isValidTilePos(pos)) {
-		return false;
-	}
-	else if (_drill->drillFloor.isTileEmpty(floorPos)) {
-		return false;
-	}
-
-	// check if position overlaps another player
-	for (int i = 0; i < _players.size(); i++) {
-		if (worldPos == _players[i].getDestination() - glm::vec2(0, 64)) {
-			return false;
-		}
-	}
-	return !_drill->doesTileOverlapStations(pos);
-}
-
-bool PlayerManager::hoveringStation(const glm::vec2& worldPos) {
-	return _drill->checkHoveringStation(worldPos);
-}
 
 bool PlayerManager::isPlayerSelected() {
 	return _selectedPlayer != -1;
+}
+Player* PlayerManager::getSelectedPlayer() {
+	if (_selectedPlayer == -1) {
+		return nullptr;
+	} else return &_players[_selectedPlayer];
+}
+bool PlayerManager::posMatchesPlayerDest(const glm::vec2& worldPos) {
+	for (int i = 0; i < _players.size(); i++) {
+		if (worldPos == _players[i].getDestination() - glm::vec2(0, 64)) {
+			return true;
+		}
+	}
+	return false;
 }
 
 void PlayerManager::update() {

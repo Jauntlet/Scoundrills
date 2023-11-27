@@ -16,9 +16,9 @@ void PlayerStation::draw(Jauntlet::SpriteBatch& spriteBatch) {
 bool PlayerStation::isColliding(glm::vec2 position) {
 	// consider creating the Collision2D in the header
 	Jauntlet::Collision2D collision;
-	return collision.getCollision(&_collider, position);
+	return collision.calcCollision(&_collider, position);
 }
-bool PlayerStation::isOccupied() {
+bool PlayerStation::isOccupied() const {
 	return _occupied;
 }
 void PlayerStation::Occupy(Player* player) {
@@ -34,9 +34,9 @@ void PlayerStation::Occupy(Player* player) {
 	}
 }
 
-glm::vec2 PlayerStation::getAnchorPoint() {
+glm::vec2 PlayerStation::getAnchorPoint() const {
 	return _anchorPoint;
 }
-glm::vec4 PlayerStation::getBoundingBox() {
+glm::vec4 PlayerStation::getBoundingBox() const {
 	return _destination;
 }

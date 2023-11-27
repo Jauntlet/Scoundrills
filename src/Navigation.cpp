@@ -55,7 +55,7 @@ Jauntlet::UIManager* Navigation::genNav() {
 
 	//draw background
 	if (_background == NULL) {
-		_background = new Jauntlet::UISpriteElement(_navTextures[0], &_bgPos, glm::vec2(640, 1024), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+		_background = new Jauntlet::UISpriteAnimatedElement(_navTextures[0], &_bgPos, glm::vec2(640, 1024), Jauntlet::UIElement::ORIGIN_PIN::CENTER, &_backgroundAnimation);
 		_uiManager.addElement(_background, &GlobalContext::normalShader);
 	}
 
@@ -105,10 +105,21 @@ Jauntlet::UIManager* Navigation::genNav() {
 	//_uiManager.resolvePositions();
 }
 
+void Navigation::update() {
+	_backgroundAnimation.update();
+}
+
 void Navigation::toggleNav() {
 	_navOpen = !_navOpen;
 	//update visibility
-	_background->visible = _navOpen;
+	if (_navOpen) {
+		_background->visible = true;
+		_backgroundAnimation.play(0, 2, 1.0f);
+	}
+	else {
+		_background->visible = false;
+		_backgroundAnimation.stop();
+	}
 	if (_caretSet) {
 		_caretElement->visible = _navOpen;
 	}

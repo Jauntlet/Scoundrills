@@ -11,7 +11,7 @@
 class SelectedTileRenderer
 {
 public:
-	SelectedTileRenderer(Jauntlet::TileMap* Tilemap, PlayerManager* playerManager);
+	SelectedTileRenderer(DrillManager* drill, PlayerManager* playerManager);
 
 	// draw the selected tile to screen
 	void draw(Jauntlet::Camera2D* activeCamera, Jauntlet::InputManager* inputManager);
@@ -21,8 +21,8 @@ private:
 	Jauntlet::SpriteBatch _spriteBatch;
 	Jauntlet::Color _drawColor;
 
-	Jauntlet::TileMap* _tilemap;
 	PlayerManager* _players;
+	DrillManager* _drill;
 
 	glm::vec2 _lastPosition = glm::vec2(0);
 };

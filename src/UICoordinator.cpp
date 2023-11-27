@@ -50,6 +50,7 @@ void UICoordinator::draw() {
 	waterIconText = std::to_string(_playerResources->water).substr(0,1);
 	
 	_UIManager.draw();
+	navigation.update();
 	_NavManager->draw();
 }
 

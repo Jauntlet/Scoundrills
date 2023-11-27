@@ -3,21 +3,21 @@
  */
 #pragma once
 #include <Jauntlet/Rendering/ResourceManager.h>
-#include "../pathfinding/Pathfinding.h"
-
-class PlayerManager;
+#include "../drill/DrillManager.h"
+#include "Pathfinding.h"
 
 class PathRenderer
 {
 public:
-	PathRenderer(Jauntlet::TileMap* tileMap, PlayerManager* players);
+	PathRenderer(DrillManager* drill, PlayerManager* playerManager);
 
 	void createPath(glm::vec2 start, glm::vec2 end);
 	void clearPath();
 	void drawPath();
 private:
+	DrillManager* _drill;
 	PlayerManager* _players;
-	Jauntlet::TileMap* _tilemap;
+
 	Jauntlet::SpriteBatch _spriteBatch;
 	GLuint _textureID;
 };

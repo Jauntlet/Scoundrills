@@ -24,14 +24,14 @@ public:
 	// Returns true if position is within the bounding box of the station
 	bool isColliding(glm::vec2 position);
 	// Returns true if the station is already used by a player.
-	bool isOccupied();
+	bool isOccupied() const;
 	// Occupy a station with a player
 	void Occupy(Player* player);
 
 	// Returns the anchor point for the player
-	glm::vec2 getAnchorPoint();
+	glm::vec2 getAnchorPoint() const;
 	// Returns the collision bounding box of the player station
-	glm::vec4 getBoundingBox();
+	glm::vec4 getBoundingBox() const;
 protected:
 	bool _occupied = false;
 
