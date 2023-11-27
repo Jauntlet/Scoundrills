@@ -40,13 +40,14 @@ void DrillManager::update() {
 	}
 }
 
-void DrillManager::draw() {
+void DrillManager::drawLayerOne() {
 	_drillAssets.drawLayerOne();
 	drillFloor.draw();
 	drillWalls.draw();
 	pipes.draw();
 	_drillAssets.drawLayerTwo();
-
+}
+void DrillManager::drawLayerTwo() {
 	// draw all holdable items
 	_spriteBatch.begin();
 	for (int i = 0; i < _holdables.size(); ++i) {
@@ -59,7 +60,6 @@ void DrillManager::on() {
 	_drillOn = true;
 	_drillAssets.startAnimation();
 }
-
 void DrillManager::off() {
 	_drillOn = false;
 	_drillAssets.stopAnimation();

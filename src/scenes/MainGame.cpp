@@ -64,13 +64,15 @@ void MainGame::drawGame() {
 	GlobalContext::normalShader.use();
 	_camera.setActiveCamera();
 
-	_drill.draw();
+	_drill.drawLayerOne();
 
 	// Draw the player using a spriteBatch
 	_playerSpriteBatch.begin();
 	_players.draw(_playerSpriteBatch);
 	_playerSpriteBatch.endAndRender();
 	
+	_drill.drawLayerTwo();
+
 	_selectedTile.draw(&_camera, &GlobalContext::inputManager); // #TODO: make not pass in inputmanager
 
 	GlobalContext::normalShader.unuse();

@@ -19,8 +19,10 @@ public:
 	// update parts of the drill
 	void update();
 
-	// draw the drill elements
-	void draw();
+	// draw elements that appear beneath the players
+	void drawLayerOne();
+	// draw elements that appear above the players
+	void drawLayerTwo();
 
 	// turn on the drill
 	void on();
