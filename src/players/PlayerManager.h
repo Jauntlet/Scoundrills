@@ -29,7 +29,7 @@ public:
 	bool posMatchesPlayerDest(const glm::vec2& worldPos);
 
 	// updates the state of players
-	void update();
+	void update(DrillManager& drill);
 	// draw all players
 	void draw(Jauntlet::SpriteBatch& spriteBatch);
 private:

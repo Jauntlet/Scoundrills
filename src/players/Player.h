@@ -17,7 +17,7 @@ class Player
 public:
 	Player(float x, float y);
 
-	void update();
+	void update(DrillManager& drill);
 	void draw(Jauntlet::SpriteBatch& spriteBatch);
 	// Navigate through a tilemap to a position.
 	// this function expects a world position not rounded to a tile, so that it can check what player stations it may be connected to.
@@ -25,8 +25,8 @@ public:
 
 	void setSpeed(float newSpeed);
 
-	glm::vec2 getPosition();
-	glm::vec2 getDestination();
+	glm::vec2 getPosition() const;
+	glm::vec2 getDestination() const;
 
 	Jauntlet::BoxCollider2D collider;
 private:

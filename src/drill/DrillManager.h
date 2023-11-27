@@ -38,10 +38,11 @@ public:
 	void bustRandomPipe();
 
 	// adds a holdable item to be managed by the drillManager.
-	// DrillManager will handle pathfinding, as well as drawing the elements.
-	void addHoldable(Holdable* holdable);
+	Holdable* addHoldable(const std::string& texture, const glm::vec2& position, const glm::vec2& size);
 	// removes the holdable from the drillManagers references.
 	void removeHoldable(Holdable* holdable);
+	// gives you a pointer to a holdable if it matches the given position
+	Holdable* getHoldable(glm::vec2 worldPos);
 
 	Jauntlet::TileMap drillWalls = Jauntlet::TileMap(_textureCache, 64);
 	Jauntlet::TileMap drillFloor = Jauntlet::TileMap(_textureCache, 64);
@@ -58,6 +59,6 @@ private:
 	PlayerResources _resources;
 	Navigation _navigation;
 
-	std::vector<Holdable*> _holdables;
+	std::vector<Holdable> _holdables;
 	Jauntlet::SpriteBatch _spriteBatch;
 };

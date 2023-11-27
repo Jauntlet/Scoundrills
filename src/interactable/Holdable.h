@@ -15,7 +15,7 @@ public:
 	// draws the object
 	void draw(Jauntlet::SpriteBatch& spriteBatch);
 
-	bool isHeld();
+	bool isHeld() const;
 
 	glm::vec2 position;
 protected:

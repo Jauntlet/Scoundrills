@@ -18,6 +18,7 @@ DrillManager::DrillManager(PlayerResources resourceManager, Jauntlet::Camera2D* 
 	bustRandomPipe();
 	bustRandomPipe();
 	bustRandomPipe();
+	addHoldable("Textures/missing.png", glm::vec2(64, -64 * 15), glm::vec2(64));
 	on();
 }
 
@@ -45,7 +46,7 @@ void DrillManager::draw() {
 	// draw all holdable items
 	_spriteBatch.begin();
 	for (int i = 0; i < _holdables.size(); ++i) {
-		_holdables[i]->draw(_spriteBatch);
+		_holdables[i].draw(_spriteBatch);
 	}
 	_spriteBatch.endAndRender();
 }
@@ -102,7 +103,7 @@ bool DrillManager::isValidPath(glm::vec2 worldPos, PlayerManager* playerManager)
 	
 	// Prevent pathing through items on the floor.
 	for (int i = 0; i < _holdables.size(); ++i) {	
-		if (!_holdables[i]->isHeld() && worldPos == _holdables[i]->position) {
+		if (!_holdables[i].isHeld() && worldPos == _holdables[i].position) {
 			return false;
 		}
 	}
@@ -131,14 +132,23 @@ void DrillManager::bustRandomPipe() {
 	pipes.UpdateTile(pipes.selectRandomTile(1), 2);
 }
 
-void DrillManager::addHoldable(Holdable* holdable) {
-	_holdables.push_back(holdable);
+Holdable* DrillManager::addHoldable(const std::string& texture, const glm::vec2& position, const glm::vec2& size) {
+	_holdables.emplace_back(texture, position, size);
+	return &_holdables[_holdables.size() - 1];
 }
 void DrillManager::removeHoldable(Holdable* holdable) {
 	for (int i = 0; i < _holdables.size(); ++i) {
-		if (_holdables[i] == holdable) {
+		if (&_holdables[i] == holdable) {
 			_holdables.erase(_holdables.begin() + i);
 			return;
 		}
 	}
+}
+Holdable* DrillManager::getHoldable(glm::vec2 worldPos) {
+	for (int i = 0; i < _holdables.size(); ++i) {
+		if (_holdables[i].position == worldPos) {
+			return &_holdables[i];
+		}
+	}
+	return nullptr;
 }

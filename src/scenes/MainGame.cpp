@@ -36,7 +36,7 @@ void MainGame::gameLoop() {
 }
 
 void MainGame::processInput() {
-	_players.update();
+	_players.update(_drill);
 	_cameraManager.processInput();
 
 	//open nav

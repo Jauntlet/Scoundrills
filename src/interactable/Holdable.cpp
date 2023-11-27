@@ -21,6 +21,6 @@ void Holdable::draw(Jauntlet::SpriteBatch& spriteBatch) {
 	spriteBatch.draw(glm::vec4(position, _size), _textureID);
 }
 
-bool Holdable::isHeld() {
+bool Holdable::isHeld() const {
 	return _isHeld;
 }
