@@ -126,3 +126,11 @@ void DrillManager::bustRandomPipe() {
 void DrillManager::addHoldable(Holdable* holdable) {
 	_holdables.push_back(holdable);
 }
+void DrillManager::removeHoldable(Holdable* holdable) {
+	for (int i = 0; i < _holdables.size(); ++i) {
+		if (_holdables[i] == holdable) {
+			_holdables.erase(_holdables.begin() + i);
+			return;
+		}
+	}
+}
