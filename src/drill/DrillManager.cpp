@@ -8,7 +8,6 @@ const float heatFallScale = .1f; //1 heat every 10 seconds
 
 DrillManager::DrillManager(PlayerResources resourceManager, Jauntlet::Camera2D* camera)
 :
-	drillFloor(_textureCache, 64), drillWalls(_textureCache, 64), pipes(_textureCache, 64),
 	_drillAssets(camera),
 	_resources(resourceManager),
 	_navigation(camera)
@@ -33,7 +32,6 @@ void DrillManager::update() {
 	else {
 		_resources.heat -= Jauntlet::Time::getDeltaTime() * heatFallScale;
 	}
-	
 }
 
 void DrillManager::draw() {
@@ -93,7 +91,15 @@ bool DrillManager::isValidPath(glm::vec2 worldPos, PlayerManager* playerManager)
 	else if (playerManager->posMatchesPlayerDest(worldPos)) {
 		return false;
 	}
-	else return !doesTileOverlapStations(pos);
+	
+	// Prevent pathing through items on the floor.
+	for (int i = 0; i < _holdables.size(); ++i) {	
+		if (!_holdables[i]->isHeld() && worldPos == _holdables[i]->position) {
+			return false;
+		}
+	}
+
+	return !doesTileOverlapStations(pos);
 }
 
 PlayerStation* DrillManager::checkHoveringStation(glm::vec2 position) {
@@ -115,4 +121,8 @@ bool DrillManager::doesTileOverlapStations(glm::ivec2 tilePos) const  {
 void DrillManager::bustRandomPipe() {
 	// changes a random pipe of ID 1 (normal pipe) to a pipe of ID 2 (broken pipe)
 	pipes.UpdateTile(pipes.selectRandomTile(1), 2);
+}
+
+void DrillManager::addHoldable(Holdable* holdable) {
+	_holdables.push_back(holdable);
 }

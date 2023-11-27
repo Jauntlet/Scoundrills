@@ -8,6 +8,7 @@
 #include "DrillAssetRenderer.h"
 #include "../PlayerResources.h"
 #include "../Navigation.h"
+#include "src/interactable/Holdable.h"
 
 class PlayerManager;
 
@@ -36,9 +37,12 @@ public:
 
 	void bustRandomPipe();
 
-	Jauntlet::TileMap drillWalls;
-	Jauntlet::TileMap drillFloor;
-	Jauntlet::TileMap pipes;
+	// adds a holdable item to be managed by the drillManager.
+	void addHoldable(Holdable* holdable);
+
+	Jauntlet::TileMap drillWalls = Jauntlet::TileMap(_textureCache, 64);
+	Jauntlet::TileMap drillFloor = Jauntlet::TileMap(_textureCache, 64);
+	Jauntlet::TileMap pipes = Jauntlet::TileMap(_textureCache, 64);
 
 	float boilerWater = 60.0f;
 private:
@@ -50,4 +54,6 @@ private:
 
 	PlayerResources _resources;
 	Navigation _navigation;
+
+	std::vector<Holdable*> _holdables;
 };
