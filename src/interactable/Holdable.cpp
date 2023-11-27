@@ -10,9 +10,17 @@ Holdable::Holdable(const std::string& texture, const glm::vec2& position, const 
 	
 }
 
+void Holdable::pickup() {
+	_isHeld = true;
+}
 void Holdable::drop(Jauntlet::TileMap* tilemap) {
 	position = tilemap->RoundWorldPos(position);
+	_isHeld = false;
 }
 void Holdable::draw(Jauntlet::SpriteBatch& spriteBatch) {
 	spriteBatch.draw(glm::vec4(position, _size), _textureID);
+}
+
+bool Holdable::isHeld() {
+	return _isHeld;
 }
