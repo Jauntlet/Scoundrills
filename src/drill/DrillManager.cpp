@@ -22,6 +22,7 @@ DrillManager::DrillManager(PlayerResources resourceManager, Jauntlet::Camera2D* 
 }
 
 void DrillManager::update() {
+	// calculate the change in water/heat
 	if (_drillOn) {
 		if (boilerWater > 0) {
 			boilerWater -= Jauntlet::Time::getDeltaTime();
@@ -40,6 +41,13 @@ void DrillManager::draw() {
 	drillWalls.draw();
 	pipes.draw();
 	_drillAssets.drawLayerTwo();
+
+	// draw all holdable items
+	_spriteBatch.begin();
+	for (int i = 0; i < _holdables.size(); ++i) {
+		_holdables[i]->draw(_spriteBatch);
+	}
+	_spriteBatch.endAndRender();
 }
 
 void DrillManager::on() {
