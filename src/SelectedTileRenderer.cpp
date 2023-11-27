@@ -1,10 +1,10 @@
 #include "SelectedTileRenderer.h"
 
-SelectedTileRenderer::SelectedTileRenderer(Jauntlet::TileMap* Tilemap, PlayerManager* playerManager) : 
+SelectedTileRenderer::SelectedTileRenderer(DrillManager* drill, PlayerManager* playerManager) : 
 	_drawColor(255, 255, 255), 
 	_textureID(Jauntlet::ResourceManager::getTexture("Textures/WhiteSquare.png").id),
-	_tilemap(Tilemap),
-	_players(playerManager) 
+	_players(playerManager),
+	_drill(drill)
 {
 	// Empty
 }
@@ -12,14 +12,14 @@ SelectedTileRenderer::SelectedTileRenderer(Jauntlet::TileMap* Tilemap, PlayerMan
 void SelectedTileRenderer::draw(Jauntlet::Camera2D* activeCamera, Jauntlet::InputManager* inputManager) {
 	if (_lastPosition != activeCamera->convertScreenToWorld(inputManager->getMouseCoords())) {
 		_lastPosition = activeCamera->convertScreenToWorld(inputManager->getMouseCoords());
-		glm::vec2 _selectedTilePos = _tilemap->RoundWorldPos(_lastPosition);
+		glm::vec2 _selectedTilePos = _drill->drillWalls.RoundWorldPos(_lastPosition);
 
 		// if a player is selected, we highlight the tile if its a valid pathfind pos or not
 		if (_players->isPlayerSelected()) {
-			if (_players->hoveringStation(_lastPosition)) {
+			if (_drill->checkHoveringStation(_lastPosition)) {
 				_drawColor = Jauntlet::Color(0, 0, 0, 0);
 			}
-			else if (_players->isValidDestination(_selectedTilePos)) {
+			else if (_drill->isValidDestination(_selectedTilePos, _players)) {
 				_drawColor = Jauntlet::Color(0, 255, 0);
 			}
 			else {

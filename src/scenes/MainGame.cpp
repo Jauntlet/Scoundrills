@@ -18,7 +18,7 @@ MainGame::MainGame()
 	_drill(_resources, &_hudCamera),
 	_cameraManager(&_camera, &_players, &_drill),
 	_players(3, &_drill),
-	_selectedTile(&_drill.drillFloor, &_players),
+	_selectedTile(&_drill, &_players),
 	_textRenderer(&_hudCamera, "Fonts/HandelGo.ttf", 256),
 	_uiCoordinator(&_hudCamera, &_textRenderer, &_drill, &_resources)
 {

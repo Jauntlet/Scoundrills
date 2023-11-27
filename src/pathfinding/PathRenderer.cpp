@@ -1,21 +1,20 @@
 #include "PathRenderer.h"
 #include <Jauntlet/JMath.h>
-#include "../players/PlayerManager.h"
 
 #include <iostream>
-PathRenderer::PathRenderer(Jauntlet::TileMap* tileMap, PlayerManager* players) : 
+PathRenderer::PathRenderer(DrillManager* drill, PlayerManager* playerManager) : 
 	_textureID(Jauntlet::ResourceManager::getTexture("Textures/Arrow Paths.png").id), 
-	_players(players),
-	_tilemap(tileMap) {
+	_drill(drill),
+	_players(playerManager) {
 	// Empty
 }
 
 void PathRenderer::createPath(glm::vec2 start, glm::vec2 end) {
-	if (!_players->isValidDestination(end)) {
+	if (!_drill->isValidDestination(end, _players)) {
 		clearPath();
 		return;
 	}
-	std::vector<glm::vec2> path = Pathfinding::findPath(_tilemap, *_players, start, end);
+	std::vector<glm::vec2> path = Pathfinding::findPath(*_drill, *_players, start, end);
 
 	glm::vec2 lastPos = start;
 	

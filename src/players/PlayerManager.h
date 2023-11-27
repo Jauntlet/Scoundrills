@@ -4,7 +4,6 @@
 #pragma once
 #include "Player.h"
 #include "../pathfinding/PathRenderer.h"
-#include "../drill/DrillManager.h"
 #include <Jauntlet/Inputs/InputManager.h>
 #include <Jauntlet/Rendering/Cameras/Camera2D.h>
 #include <Jauntlet/Rendering/SpriteBatch.h>
@@ -20,17 +19,14 @@ public:
 	void createPlayer(int x, int y);
 	
 	// processes a click to see if we operate on the players, returns true if we are, false if we arent.
-	bool processInput(Jauntlet::Camera2D* activeCamera);
-	// returns if a position is a valid destination to pathfind to.
-	bool isValidDestination(glm::vec2 worldPos);
-	// returns if a position is a valid place to path through.
-	bool isValidPath(glm::vec2 worldPos);
-	
-	// returns true if hovering a player station
-	bool hoveringStation(const glm::vec2& worldPos);
+	bool processInput(DrillManager& drill, const Jauntlet::Camera2D& activeCamera);
 
 	// returns true if a player is selected
 	bool isPlayerSelected();
+	// returns a pointer to the selected player
+	Player* getSelectedPlayer();
+
+	bool posMatchesPlayerDest(const glm::vec2& worldPos);
 
 	// updates the state of players
 	void update();
@@ -41,6 +37,5 @@ private:
 	int _selectedPlayer = -1;
 
 	PathRenderer _pathRenderer;
-	DrillManager* _drill;
 	glm::vec2 _storedMousePos = glm::vec2(0);
 };
