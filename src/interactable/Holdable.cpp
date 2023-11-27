@@ -14,11 +14,12 @@ void Holdable::pickup() {
 	_isHeld = true;
 }
 void Holdable::drop(Jauntlet::TileMap* tilemap) {
-	position = tilemap->RoundWorldPos(position);
+	position = tilemap->RoundWorldPos(position) + glm::vec2(0, 64);
 	_isHeld = false;
 }
 void Holdable::draw(Jauntlet::SpriteBatch& spriteBatch) {
-	spriteBatch.draw(glm::vec4(position, _size), _textureID);
+	                          //this weird position math always centers the object on tile regardless of size -xm
+	spriteBatch.draw(glm::vec4(position + ((glm::vec2(64) - _size) * 0.5f), _size), _textureID);
 }
 
 bool Holdable::isHeld() const {

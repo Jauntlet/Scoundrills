@@ -59,7 +59,7 @@ void Player::update(DrillManager& drill) {
 				Holdable* holdable = drill.getHoldable(_position);
 				if (holdable != nullptr) {
 					if (_heldItem != nullptr) {
-						_heldItem->drop(&drill.drillWalls);
+						_heldItem->drop(&drill.drillFloor);
 					}
 					holdable->pickup();
 					_heldItem = holdable;
