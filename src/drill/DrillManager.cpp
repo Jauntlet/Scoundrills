@@ -15,11 +15,15 @@ DrillManager::DrillManager(PlayerResources resourceManager, Jauntlet::Camera2D* 
 	drillFloor.loadTileMap("Levels/DrillFloor.JML");
 	drillWalls.loadTileMap("Levels/DrillWall.JML");
 	pipes.loadTileMap("Levels/Pipes.JML");
-	bustRandomPipe();
-	bustRandomPipe();
-	bustRandomPipe();
-	addHoldable("Textures/missing.png", glm::vec2(64, -64 * 15), glm::vec2(64));
+	
 	on();
+
+	// DEBUGGING CODE
+	bustRandomPipe();
+	bustRandomPipe();
+	bustRandomPipe();
+	addHoldable("Textures/missing.png", glm::vec2(64 * 7, -64 * 6), glm::vec2(32));
+	addHoldable("Textures/pipeCarry.png", glm::vec2(64 * 6, -64 * 6), glm::vec2(32));
 }
 
 void DrillManager::update() {
