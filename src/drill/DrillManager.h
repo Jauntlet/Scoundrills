@@ -8,7 +8,8 @@
 #include "DrillAssetRenderer.h"
 #include "../PlayerResources.h"
 #include "../Navigation.h"
-#include "src/interactable/Holdable.h"
+#include "../interactable/Holdable.h"
+#include "../interactable/specificStations/Boiler.h"
 
 class PlayerManager;
 
@@ -53,6 +54,7 @@ public:
 	float boilerWater = 60.0f;
 private:
 	DrillAssetRenderer _drillAssets;
+	Boiler _boiler;
 
 	Jauntlet::TextureCache _textureCache;
 

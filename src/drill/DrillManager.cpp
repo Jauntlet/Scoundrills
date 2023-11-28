@@ -11,7 +11,8 @@ DrillManager::DrillManager(PlayerResources resourceManager, Jauntlet::Camera2D* 
 :
 	_drillAssets(camera),
 	_resources(resourceManager),
-	_navigation(camera)
+	_navigation(camera),
+	_boiler(&boilerWater, "Textures/BoilerTank.png", { 64 * 16, -64 * 1 - 10, 32 * 2, 43 * 2 }, 5, { 64 * 15.5, -64 * 2, 64 * 2, 96 * 2 }, { 16,-64 })
 {
 	drillFloor.loadTileMap("Levels/DrillFloor.JML");
 	drillWalls.loadTileMap("Levels/DrillWall.JML");
@@ -36,15 +37,16 @@ void DrillManager::update() {
 			_navigation.updateTravel();
 
 			if (boilerWater > 45) {
-				_drillAssets.boiler.animation.stop(4);
+				_boiler.animation.stop(4);
 			} else if (boilerWater > 30) {
-				_drillAssets.boiler.animation.stop(3);
+				_boiler.animation.stop(3);
 			} else if (boilerWater > 15) {
-				_drillAssets.boiler.animation.stop(2);
+				_boiler.animation.stop(2);
 			} else if (boilerWater > 0) {
-				_drillAssets.boiler.animation.stop(1);
+				_boiler.animation.stop(1);
 			} else {
-				_drillAssets.boiler.animation.stop(0);
+				boilerWater = 0;
+				_boiler.animation.stop(0);
 				off();
 			}
 		}
@@ -60,6 +62,11 @@ void DrillManager::drawLayerOne() {
 	drillWalls.draw();
 	pipes.draw();
 	_drillAssets.drawLayerTwo();
+
+	_spriteBatch.begin();
+	_boiler.draw(_spriteBatch);
+	_spriteBatch.endAndRender();
+	
 }
 void DrillManager::drawLayerTwo() {
 	// draw all holdable items
@@ -138,8 +145,8 @@ PlayerStation* DrillManager::checkHoveringStation(glm::vec2 position) {
 	if (_drillAssets.steeringWheel.isColliding(position)) {
 		return &_drillAssets.steeringWheel;
 	}
-	else if (_drillAssets.boiler.isColliding(position)) {
-		return &_drillAssets.boiler;
+	else if (_boiler.isColliding(position)) {
+		return &_boiler;
 	}
 	else {
 		return nullptr;
@@ -147,7 +154,7 @@ PlayerStation* DrillManager::checkHoveringStation(glm::vec2 position) {
 }
 bool DrillManager::doesTileOverlapStations(glm::ivec2 tilePos) const  {
 	return drillWalls.doesTileOverlap(tilePos, _drillAssets.steeringWheel.getBoundingBox()) ||
-		drillWalls.doesTileOverlap(tilePos, _drillAssets.boiler.getBoundingBox());
+		drillWalls.doesTileOverlap(tilePos, _boiler.getBoundingBox());
 }
 
 void DrillManager::bustRandomPipe() {
