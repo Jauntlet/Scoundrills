@@ -11,13 +11,15 @@ DrillManager::DrillManager(PlayerResources resourceManager, Jauntlet::Camera2D* 
 :
 	_drillAssets(camera),
 	_resources(resourceManager),
-	_navigation(camera)
+	navigation(camera)
 {
 	drillFloor.loadTileMap("Levels/DrillFloor.JML");
 	drillWalls.loadTileMap("Levels/DrillWall.JML");
 	pipes.loadTileMap("Levels/Pipes.JML");
 	
 	on();
+
+	navigation.genNav();
 
 	// DEBUGGING CODE
 	bustRandomPipe();
@@ -33,7 +35,7 @@ void DrillManager::update() {
 		if (boilerWater > 0) {
 			boilerWater -= Jauntlet::Time::getDeltaTime();
 			_resources.heat += Jauntlet::Time::getDeltaTime() * heatRiseScale;
-			_navigation.updateTravel();
+			navigation.updateTravel();
 
 			if (boilerWater > 45) {
 				_drillAssets.boiler.animation.stop(4);

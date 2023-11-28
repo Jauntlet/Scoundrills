@@ -42,7 +42,7 @@ void MainGame::processInput() {
 
 	//open nav
 	if (GlobalContext::inputManager.isKeyPressed(SDLK_EQUALS)) {
-		_uiCoordinator.navigation.toggleNav();
+		_uiCoordinator.navigation->toggleNav();
 	}
 
 	if (GlobalContext::inputManager.isKeyPressed(SDLK_SPACE)) {
@@ -56,7 +56,7 @@ void MainGame::processInput() {
 	}
 
 	//mouse hover over navigation
-	if (_uiCoordinator.navigation.isNavOpen()) {
+	if (_uiCoordinator.navigation->isNavOpen()) {
 		//real
 	}
 }

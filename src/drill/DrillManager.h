@@ -51,6 +51,7 @@ public:
 	Jauntlet::TileMap pipes = Jauntlet::TileMap(_textureCache, 64);
 
 	float boilerWater = 60.0f;
+	Navigation navigation;
 private:
 	DrillAssetRenderer _drillAssets;
 
@@ -59,7 +60,6 @@ private:
 	bool _drillOn = true;
 
 	PlayerResources _resources;
-	Navigation _navigation;
 
 	std::vector<Holdable> _holdables;
 	Jauntlet::SpriteBatch _spriteBatch;
