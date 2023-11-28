@@ -23,9 +23,7 @@ bool PlayerStation::isOccupied() const {
 }
 void PlayerStation::Occupy(Player* player) {
 	// We pass in a player pointer which suggests that we can do stuff specifically to the player occupying
-	// the station, however we don't do anything with it as of now due to not having anything to do with it yet.
-	// Im certain at some point we WILL need to be able to pass in a player, but not right now. -xm
-	
+	// the station, however we don't do anything with it within this class and its mostly needed for derived classes. -xm
 	if (player != nullptr) {
 		_occupied = true;
 	}

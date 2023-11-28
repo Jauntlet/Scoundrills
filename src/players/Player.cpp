@@ -58,18 +58,18 @@ void Player::update(DrillManager& drill) {
 				// detect if we landed on an item and pick it up.
 				Holdable* holdable = drill.getHoldable(_position);
 				if (holdable != nullptr) {
-					if (_heldItem != nullptr) {
-						_heldItem->position = _position;
-						_heldItem->drop(&drill.drillWalls);
+					if (heldItem != nullptr) {
+						heldItem->position = _position;
+						heldItem->drop(&drill.drillWalls);
 					}
 					holdable->pickup();
-					_heldItem = holdable;
+					heldItem = holdable;
 				}
 			}
 		}
 		// update position of held item whenever we move
-		if (_heldItem != nullptr) {
-			_heldItem->position = _position;
+		if (heldItem != nullptr) {
+			heldItem->position = _position;
 		}
 	}
 	

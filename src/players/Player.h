@@ -29,6 +29,7 @@ public:
 	glm::vec2 getDestination() const;
 
 	Jauntlet::BoxCollider2D collider;
+	Holdable* heldItem = nullptr;
 private:
 	glm::vec2 _position = glm::vec2(0,0);
 	std::vector<glm::vec2> _path;
@@ -36,5 +37,4 @@ private:
 	float _speed = 300, _storedVelocity = 0;
 
 	PlayerStation* _station = nullptr;
-	Holdable* _heldItem = nullptr;
 };
