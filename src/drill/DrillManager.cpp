@@ -11,7 +11,7 @@ DrillManager::DrillManager(PlayerResources resourceManager, Jauntlet::Camera2D* 
 :
 	_drillAssets(camera),
 	_resources(resourceManager),
-	_navigation(camera),
+	navigation(camera),
 	_boiler(&boilerWater, "Textures/BoilerTank.png", { 64 * 16, -64 * 1 - 10, 32 * 2, 43 * 2 }, 5, { 64 * 15.5, -64 * 2, 64 * 2, 96 * 2 }, { 16,-64 })
 {
 	drillFloor.loadTileMap("Levels/DrillFloor.JML");
