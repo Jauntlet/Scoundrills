@@ -1,13 +1,20 @@
 #include "Holdable.h"
 #include <Jauntlet/Rendering/ResourceManager.h>
 
-Holdable::Holdable(const std::string& texture, const glm::vec2& position, const glm::vec2& size)
+Holdable::Holdable(const std::string& texture, const glm::vec2& position, const glm::vec2& size, HoldableType type)
 : 
 	_textureID(Jauntlet::ResourceManager::getTexture(texture).id),
 	position(position),
-	_size(size)
+	_size(size),
+	_itemType(type)
 {
-	
+	switch (type) {
+		case HoldableType::WATER:
+			_waterAmount = 60;
+			break;
+		default:
+			break;
+	}
 }
 
 void Holdable::pickup() {
@@ -24,4 +31,24 @@ void Holdable::draw(Jauntlet::SpriteBatch& spriteBatch) {
 
 bool Holdable::isHeld() const {
 	return _isHeld;
+}
+
+uint32_t Holdable::requestWater(uint32_t requestedAmt) {
+	if (_itemType != HoldableType::WATER) {
+		return 0;
+	}
+
+	if (_waterAmount <= requestedAmt) {
+		requestedAmt = _waterAmount;
+		_waterAmount = 0;
+	} else {
+		_waterAmount -= requestedAmt;
+	}
+	return requestedAmt;
+}
+bool Holdable::isEmpty() const {
+	if (_itemType == HoldableType::WATER) {
+		return _waterAmount == 0;
+	}
+	else return false;
 }

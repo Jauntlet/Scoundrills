@@ -1,6 +1,7 @@
 #include <Jauntlet/Time.h>
 #include "DrillManager.h"
 #include "../players/PlayerManager.h"
+#include "src/interactable/Holdable.h"
 
 //Constants
 const float heatRiseScale = .3f; //1 heat every ~3 seconds
@@ -22,7 +23,7 @@ DrillManager::DrillManager(PlayerResources resourceManager, Jauntlet::Camera2D* 
 	bustRandomPipe();
 	bustRandomPipe();
 	bustRandomPipe();
-	addHoldable("Textures/missing.png", glm::vec2(64 * 7, -64 * 6), glm::vec2(32));
+	addHoldable("Textures/missing.png", glm::vec2(64 * 7, -64 * 6), glm::vec2(32), HoldableType::WATER);
 	addHoldable("Textures/pipeCarry.png", glm::vec2(64 * 6, -64 * 6), glm::vec2(32));
 }
 
@@ -153,8 +154,8 @@ void DrillManager::bustRandomPipe() {
 	pipes.UpdateTile(pipes.selectRandomTile(1), 2);
 }
 
-Holdable* DrillManager::addHoldable(const std::string& texture, const glm::vec2& position, const glm::vec2& size) {
-	_holdables.emplace_back(texture, position, size);
+Holdable* DrillManager::addHoldable(const std::string& texture, const glm::vec2& position, const glm::vec2& size, const HoldableType& type) {
+	_holdables.emplace_back(texture, position, size, type);
 	return &_holdables[_holdables.size() - 1];
 }
 void DrillManager::removeHoldable(Holdable* holdable) {
