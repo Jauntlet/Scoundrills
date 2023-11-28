@@ -17,7 +17,7 @@ class Player
 public:
 	Player(float x, float y);
 
-	void update();
+	void update(DrillManager& drill);
 	void draw(Jauntlet::SpriteBatch& spriteBatch);
 	// Navigate through a tilemap to a position.
 	// this function expects a world position not rounded to a tile, so that it can check what player stations it may be connected to.
@@ -25,10 +25,14 @@ public:
 
 	void setSpeed(float newSpeed);
 
-	glm::vec2 getPosition();
-	glm::vec2 getDestination();
+	glm::vec2 getPosition() const;
+	glm::vec2 getDestination() const;
+
+	// forces the player to drop his item; called when the item is destroyed
+	void forceDropItem();
 
 	Jauntlet::BoxCollider2D collider;
+	Holdable* heldItem = nullptr;
 private:
 	glm::vec2 _position = glm::vec2(0,0);
 	std::vector<glm::vec2> _path;
@@ -36,5 +40,4 @@ private:
 	float _speed = 300, _storedVelocity = 0;
 
 	PlayerStation* _station = nullptr;
-	Holdable* _heldItem = nullptr;
 };

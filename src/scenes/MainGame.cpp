@@ -31,17 +31,18 @@ void MainGame::gameLoop() {
 
 	_camera.update();
 	_hudCamera.update();
+	_drill.update();
 
 	drawGame();
 }
 
 void MainGame::processInput() {
-	_players.update();
+	_players.update(_drill);
 	_cameraManager.processInput();
 
 	//open nav
 	if (GlobalContext::inputManager.isKeyPressed(SDLK_EQUALS)) {
-		_uiCoordinator.navigation.toggleNav();
+		_uiCoordinator.navigation->toggleNav();
 	}
 
 	if (GlobalContext::inputManager.isKeyPressed(SDLK_SPACE)) {
@@ -55,7 +56,7 @@ void MainGame::processInput() {
 	}
 
 	//mouse hover over navigation
-	if (_uiCoordinator.navigation.isNavOpen()) {
+	if (_uiCoordinator.navigation->isNavOpen()) {
 		//real
 	}
 }
@@ -64,13 +65,15 @@ void MainGame::drawGame() {
 	GlobalContext::normalShader.use();
 	_camera.setActiveCamera();
 
-	_drill.draw();
+	_drill.drawLayerOne();
 
 	// Draw the player using a spriteBatch
 	_playerSpriteBatch.begin();
 	_players.draw(_playerSpriteBatch);
 	_playerSpriteBatch.endAndRender();
 	
+	_drill.drawLayerTwo();
+
 	_selectedTile.draw(&_camera, &GlobalContext::inputManager); // #TODO: make not pass in inputmanager
 
 	GlobalContext::normalShader.unuse();

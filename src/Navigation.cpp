@@ -6,6 +6,8 @@
 #include <Jauntlet/Rendering/ResourceManager.h>
 #include <random>
 
+#include <iostream>
+
 const int layerCount = 5; //amt of layers (Y axis)
 const int layerWidth = 5; //amt of destinations on each layer (X axis)
 
@@ -35,34 +37,27 @@ Navigation::~Navigation() {
 
 Jauntlet::UIManager* Navigation::genNav() {
 	////clear stuff
-	_navTextures.clear();
 	_points.clear();
 	_positions.clear();
 
-	size_t sizeSum = 0;
-	for (int i = 0; i < layerCount; ++i) {
-		sizeSum += layerWidth;
-	}
+	size_t sizeSum = layerCount * layerWidth;
 
 	_positions.reserve(sizeof(glm::vec2) * sizeSum);
 	_points.reserve(sizeof(Jauntlet::UIButtonElement) * sizeSum);
-	_navTextures.reserve(sizeof(GLuint) * 4);
 
 	//read in textures
-	for (int i = 0; i < 1; ++i) {
-		_navTextures.push_back(Jauntlet::ResourceManager::getTexture(bgTextures[i]).id);
-	}
+	_navTexture = Jauntlet::ResourceManager::getTexture(bgTextures[0]).id;
 
 	//draw background
 	if (_background == NULL) {
-		_background = new Jauntlet::UISpriteAnimatedElement(_navTextures[0], &_bgPos, glm::vec2(640, 1024), Jauntlet::UIElement::ORIGIN_PIN::CENTER, &_backgroundAnimation);
+		_background = new Jauntlet::UISpriteAnimatedElement(_navTexture, &_bgPos, glm::vec2(640, 1024), Jauntlet::UIElement::ORIGIN_PIN::CENTER, &_backgroundAnimation);
 		_uiManager.addElement(_background, &GlobalContext::normalShader);
 	}
 
 	for (int y = 0; y < layerCount; y++) {
 		for (int x = 0; x < layerWidth; x++) {
 			int point = _map[y][x]; //The point type according to the generated "map," will determine the chance of encountering water, ores, etc. when arriving there.
-			_positions.push_back(glm::vec2(125 * (x+1) - 62.5 * (layerWidth + 1), 187.5 * (y+1) - 93.75 * (layerCount + 1))); //0 is the center of the screen.
+			_positions.emplace_back(125 * (x+1) - 62.5 * (layerWidth + 1), 187.5 * (y+1) - 93.75 * (layerCount + 1)); //0 is the center of the screen.
 			if (_positions[_positions.size() - 1].y < -250 || _positions[_positions.size() - 1].y > 500) continue;
 			if (point == 0) { // white X
 				int destID = _positions.size() - 1;
@@ -147,9 +142,9 @@ void Navigation::selectNav(int id) {
 
 void Navigation::updateTravel() {
 	if (_destination != -1) {
-		_progress += 0.1f;
+		_progress += Jauntlet::Time::getDeltaTime();
 		float newX = 0.0f;
-		float newY = 1.0f;
+		float newY = 10 * Jauntlet::Time::getDeltaTime();
 		refreshPositions(newX, newY);
 		if (_progress >= 1.0f) {
 			_destination = -1; //set dest
@@ -168,6 +163,10 @@ void Navigation::updateTravel() {
 
 void Navigation::refreshPositions(float shiftX, float shiftY) {
 	for (int i = 0; i < _positions.size(); i++) {
-		_positions[i] = glm::vec2(_positions[i].x - shiftX, _positions[i].y + shiftY);
+		_positions[i] = glm::vec2(_positions[i].x - shiftX, _positions[i].y - shiftY);
 	}
+}
+
+Jauntlet::UIManager* Navigation::getUIManager() {
+	return &_uiManager;
 }

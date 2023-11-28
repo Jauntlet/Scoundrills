@@ -33,9 +33,9 @@ private:
 
 	PlayerResources _resources;
 
-	UICoordinator _uiCoordinator;
-
 	DrillManager _drill;
+
+	UICoordinator _uiCoordinator;
 
 	CameraManager _cameraManager;
 

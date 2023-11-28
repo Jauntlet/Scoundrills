@@ -8,7 +8,8 @@
 #include "DrillAssetRenderer.h"
 #include "../PlayerResources.h"
 #include "../Navigation.h"
-#include "src/interactable/Holdable.h"
+#include "../interactable/Holdable.h"
+#include "../interactable/specificStations/Boiler.h"
 
 class PlayerManager;
 
@@ -19,8 +20,10 @@ public:
 	// update parts of the drill
 	void update();
 
-	// draw the drill elements
-	void draw();
+	// draw elements that appear beneath the players
+	void drawLayerOne();
+	// draw elements that appear above the players
+	void drawLayerTwo();
 
 	// turn on the drill
 	void on();
@@ -38,25 +41,27 @@ public:
 	void bustRandomPipe();
 
 	// adds a holdable item to be managed by the drillManager.
-	// DrillManager will handle pathfinding, as well as drawing the elements.
-	void addHoldable(Holdable* holdable);
+	Holdable* addHoldable(const std::string& texture, const glm::vec2& position, const glm::vec2& size, const HoldableType& type = HoldableType::NONE);
 	// removes the holdable from the drillManagers references.
 	void removeHoldable(Holdable* holdable);
+	// gives you a pointer to a holdable if it matches the given position
+	Holdable* getHoldable(glm::vec2 worldPos);
 
 	Jauntlet::TileMap drillWalls = Jauntlet::TileMap(_textureCache, 64);
 	Jauntlet::TileMap drillFloor = Jauntlet::TileMap(_textureCache, 64);
 	Jauntlet::TileMap pipes = Jauntlet::TileMap(_textureCache, 64);
 
 	float boilerWater = 60.0f;
+	Navigation navigation;
 private:
 	DrillAssetRenderer _drillAssets;
+	Boiler _boiler;
 
 	Jauntlet::TextureCache _textureCache;
 
 	bool _drillOn = true;
 
 	PlayerResources _resources;
-	Navigation _navigation;
 
 	std::vector<Holdable*> _holdables;
 	Jauntlet::SpriteBatch _spriteBatch;

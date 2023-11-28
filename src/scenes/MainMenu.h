@@ -19,7 +19,7 @@ private:
 	Jauntlet::UIManager _uiManager;
 
 	Jauntlet::UIButtonElement _startButton;
-	glm::vec2 _startButtonPos = glm::vec2(10);
+	glm::vec2 _startButtonPos = glm::vec2(20,-10);
 
 	SceneManager* _sceneManager;
 };

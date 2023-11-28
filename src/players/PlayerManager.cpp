@@ -73,9 +73,9 @@ bool PlayerManager::posMatchesPlayerDest(const glm::vec2& worldPos) {
 	return false;
 }
 
-void PlayerManager::update() {
+void PlayerManager::update(DrillManager& drill) {
 	for (int i = 0; i < _players.size(); ++i) {
-		_players[i].update();
+		_players[i].update(drill);
 	}
 }
 

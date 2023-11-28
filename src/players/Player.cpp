@@ -6,7 +6,7 @@ Player::Player(float x, float y) : collider(Jauntlet::BoxCollider2D(glm::vec2(64
 	_position = glm::vec2(x, y);
 }
 
-void Player::update() {
+void Player::update(DrillManager& drill) {
 	
 	// we have a path to follow
 	if (!_path.empty()) {
@@ -51,10 +51,25 @@ void Player::update() {
 		if (_position == _path.back()) {
 			_path.pop_back();
 			
-			// remove all stored velocity if destination is reached.
 			if (_path.empty()) {
+				// remove all stored velocity.
 				_storedVelocity = 0;
+
+				// detect if we landed on an item and pick it up.
+				Holdable* holdable = drill.getHoldable(_position);
+				if (holdable != nullptr) {
+					if (heldItem != nullptr) {
+						heldItem->position = _position;
+						heldItem->drop(&drill.drillWalls);
+					}
+					holdable->pickup(this);
+					heldItem = holdable;
+				}
 			}
+		}
+		// update position of held item whenever we move
+		if (heldItem != nullptr) {
+			heldItem->position = _position;
 		}
 	}
 	
@@ -108,9 +123,13 @@ void Player::setSpeed(float newSpeed) {
 	_speed = newSpeed;
 }
 
-glm::vec2 Player::getPosition() {
+glm::vec2 Player::getPosition() const {
 	return _position;
 }
-glm::vec2 Player::getDestination() {
+glm::vec2 Player::getDestination() const {
 	return _path.size() > 0 ? _path[0] : _position;
+}
+
+void Player::forceDropItem() {
+	heldItem = nullptr;
 }
