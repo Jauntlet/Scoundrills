@@ -45,6 +45,7 @@ void DrillManager::update() {
 				_drillAssets.boiler.animation.stop(1);
 			} else {
 				_drillAssets.boiler.animation.stop(0);
+				off();
 			}
 		}
 	}

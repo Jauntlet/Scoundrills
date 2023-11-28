@@ -56,6 +56,8 @@ void DrillAssetRenderer::drawLayerTwo() {
 void DrillAssetRenderer::stopAnimation() {
 	_drillAnimation.pause();
 	_shake = false;
+
+	_boilerAnimation.play(2,5,0.1f,false);
 }
 
 void DrillAssetRenderer::startAnimation() {
