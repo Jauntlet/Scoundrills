@@ -63,6 +63,6 @@ private:
 	PlayerResources _resources;
 	Navigation _navigation;
 
-	std::vector<Holdable> _holdables;
+	std::vector<Holdable*> _holdables;
 	Jauntlet::SpriteBatch _spriteBatch;
 };

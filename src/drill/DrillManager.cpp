@@ -72,12 +72,12 @@ void DrillManager::drawLayerTwo() {
 	// draw all holdable items
 	_spriteBatch.begin();
 	for (int i = 0; i < _holdables.size(); ++i) {
-		if (_holdables[i].isEmpty()) {
-			removeHoldable(&_holdables[i]);
+		if (_holdables[i]->isEmpty()) {
+			removeHoldable(_holdables[i]);
 			--i;
 			continue;
 		}
-		_holdables[i].draw(_spriteBatch);
+		_holdables[i]->draw(_spriteBatch);
 	}
 	_spriteBatch.endAndRender();
 }
@@ -133,7 +133,7 @@ bool DrillManager::isValidPath(glm::vec2 worldPos, PlayerManager* playerManager)
 	
 	// Prevent pathing through items on the floor.
 	for (int i = 0; i < _holdables.size(); ++i) {	
-		if (!_holdables[i].isHeld() && worldPos == _holdables[i].position) {
+		if (!_holdables[i]->isHeld() && worldPos == _holdables[i]->position) {
 			return false;
 		}
 	}
@@ -163,12 +163,13 @@ void DrillManager::bustRandomPipe() {
 }
 
 Holdable* DrillManager::addHoldable(const std::string& texture, const glm::vec2& position, const glm::vec2& size, const HoldableType& type) {
-	_holdables.emplace_back(texture, position, size, type);
-	return &_holdables[_holdables.size() - 1];
+	_holdables.emplace_back(new Holdable(texture, position, size, type));
+	return _holdables[_holdables.size() - 1];
 }
 void DrillManager::removeHoldable(Holdable* holdable) {
 	for (int i = 0; i < _holdables.size(); ++i) {
-		if (&_holdables[i] == holdable) {
+		if (_holdables[i] == holdable) {
+			delete _holdables[i];
 			_holdables.erase(_holdables.begin() + i);
 			return;
 		}
@@ -176,8 +177,8 @@ void DrillManager::removeHoldable(Holdable* holdable) {
 }
 Holdable* DrillManager::getHoldable(glm::vec2 worldPos) {
 	for (int i = 0; i < _holdables.size(); ++i) {
-		if (_holdables[i].position == worldPos) {
-			return &_holdables[i];
+		if (_holdables[i]->position == worldPos) {
+			return _holdables[i];
 		}
 	}
 	return nullptr;
