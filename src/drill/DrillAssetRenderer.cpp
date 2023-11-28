@@ -1,5 +1,6 @@
 #include <Jauntlet/Time.h>
 #include <cstdlib>
+#include <pthread.h>
 #include "DrillAssetRenderer.h"
 
 const float SHAKE_AMOUNT = 20.0f;
@@ -47,9 +48,12 @@ void DrillAssetRenderer::drawLayerTwo() {
 	_spriteBatch.draw(glm::vec4(64 * 15.5, -64 * 2, 64 * 2, 96 * 2), _boilerAnimation.getUV(), _boilerTexture);
 	
 	boiler.draw(_spriteBatch);
+
+	_spriteBatch.endAndRender();
+
+	_spriteBatch.begin();
 	_boilerSmoke.update();
 	_boilerSmoke.draw();
-
 	_spriteBatch.endAndRender();
 }
 
