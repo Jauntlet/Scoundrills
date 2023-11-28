@@ -27,8 +27,8 @@ private:
 	Jauntlet::SpriteBatch _spriteBatch;
 	Jauntlet::Animation _drillAnimation, _boilerAnimation;
 	bool _shake = false, _boilerPlaying = true;
+	glm::vec2 _smokePos = glm::vec2(64 * 16, -64 - 10);
 
 	Jauntlet::Particle _boilerSmoke;
 	GLuint _boilerTexture;
-	glm::vec2 _smokePos = glm::vec2(0);
 };

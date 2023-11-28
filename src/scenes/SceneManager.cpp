@@ -15,13 +15,14 @@ SceneManager::SceneManager() {
     switchScene(GameState::MAINMENU);
 #else
     // Feel free to change this to whatever you need for debugging. This will not compile on release builds.
+    //switchScene(GameState::MAINMENU);
     switchScene(GameState::MAINGAME);
 #endif
     gameLoop();
 }
 
 void SceneManager::gameLoop() {
-    Jauntlet::Time::setMaxFPS(60);
+    Jauntlet::Time::setMaxFPS(-1);
 
     while (true) {
         Jauntlet::Time::beginFrame();
