@@ -31,6 +31,7 @@ void MainGame::gameLoop() {
 
 	_camera.update();
 	_hudCamera.update();
+	_drill.update();
 
 	drawGame();
 }

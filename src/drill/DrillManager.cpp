@@ -33,6 +33,18 @@ void DrillManager::update() {
 			boilerWater -= Jauntlet::Time::getDeltaTime();
 			_resources.heat += Jauntlet::Time::getDeltaTime() * heatRiseScale;
 			_navigation.updateTravel();
+
+			if (boilerWater > 45) {
+				_drillAssets.boiler.animation.stop(4);
+			} else if (boilerWater > 30) {
+				_drillAssets.boiler.animation.stop(3);
+			} else if (boilerWater > 15) {
+				_drillAssets.boiler.animation.stop(2);
+			} else if (boilerWater > 0) {
+				_drillAssets.boiler.animation.stop(1);
+			} else {
+				_drillAssets.boiler.animation.stop(0);
+			}
 		}
 	}
 	else {
@@ -51,6 +63,11 @@ void DrillManager::drawLayerTwo() {
 	// draw all holdable items
 	_spriteBatch.begin();
 	for (int i = 0; i < _holdables.size(); ++i) {
+		if (_holdables[i].isEmpty()) {
+			removeHoldable(&_holdables[i]);
+			--i;
+			continue;
+		}
 		_holdables[i].draw(_spriteBatch);
 	}
 	_spriteBatch.endAndRender();
