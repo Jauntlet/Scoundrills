@@ -62,7 +62,7 @@ void Player::update(DrillManager& drill) {
 						heldItem->position = _position;
 						heldItem->drop(&drill.drillWalls);
 					}
-					holdable->pickup();
+					holdable->pickup(this);
 					heldItem = holdable;
 				}
 			}
@@ -128,4 +128,8 @@ glm::vec2 Player::getPosition() const {
 }
 glm::vec2 Player::getDestination() const {
 	return _path.size() > 0 ? _path[0] : _position;
+}
+
+void Player::forceDropItem() {
+	heldItem = nullptr;
 }

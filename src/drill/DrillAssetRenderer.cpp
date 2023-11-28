@@ -60,4 +60,6 @@ void DrillAssetRenderer::stopAnimation() {
 void DrillAssetRenderer::startAnimation() {
 	_drillAnimation.play(0, 2, 0.1f);
 	_shake = true;
+
+	_boilerAnimation.play(0, 2, 0.1f);
 }

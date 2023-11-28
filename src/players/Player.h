@@ -28,6 +28,9 @@ public:
 	glm::vec2 getPosition() const;
 	glm::vec2 getDestination() const;
 
+	// forces the player to drop his item; called when the item is destroyed
+	void forceDropItem();
+
 	Jauntlet::BoxCollider2D collider;
 	Holdable* heldItem = nullptr;
 private:
