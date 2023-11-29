@@ -135,7 +135,7 @@ bool DrillManager::isValidPath(glm::vec2 worldPos, PlayerManager* playerManager)
 	
 	// Prevent pathing through items on the floor.
 	for (int i = 0; i < _holdables.size(); ++i) {	
-		if (!_holdables[i]->isHeld() && worldPos == _holdables[i]->position) {
+		if (_holdables[i]->position == worldPos + glm::vec2(0,64)) {
 			return false;
 		}
 	}
