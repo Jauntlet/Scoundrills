@@ -10,8 +10,9 @@ Boiler::Boiler(float* waterAmt, std::string texture, glm::vec4 destination, unsi
 void Boiler::Occupy(Player* player) {
 	if (player != nullptr) {
 		_occupied = true;
-
-		*waterLevel += player->heldItem->requestWater(60 - *waterLevel);
+		if (player->heldItem != nullptr) {
+			*waterLevel += player->heldItem->requestWater(60 - *waterLevel);
+		}
 	}
 	else {
 		_occupied = false;
