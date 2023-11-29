@@ -65,4 +65,6 @@ private:
 
 	std::vector<Holdable*> _holdables;
 	Jauntlet::SpriteBatch _spriteBatch;
+
+	std::vector<glm::ivec2> _brokenPipeLocations;
 };

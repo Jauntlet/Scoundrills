@@ -106,6 +106,12 @@ bool DrillManager::isValidDestination(glm::vec2 worldPos, PlayerManager* playerM
 	worldPos = drillWalls.RoundWorldPos(worldPos);
 
 	if (drillWalls.tileHasCollision(pos) || !drillWalls.isValidTilePos(pos)) {
+		// The tile is in a wall, but theres a chance it is a broken pipe, so we loop through all broken pipes.
+		for (int i = 0; i < _brokenPipeLocations.size(); ++i) {
+			if (pipes.TilePosToWorldPos(_brokenPipeLocations[i]) == worldPos + glm::vec2(0,64)) {
+				return true;
+			}
+		}
 		return false;
 	}
 	else if (drillFloor.isTileEmpty(floorPos)) {
@@ -161,7 +167,8 @@ bool DrillManager::doesTileOverlapStations(glm::ivec2 tilePos) const  {
 
 void DrillManager::bustRandomPipe() {
 	// changes a random pipe of ID 1 (normal pipe) to a pipe of ID 2 (broken pipe)
-	pipes.UpdateTile(pipes.selectRandomTile(1), 2);
+	_brokenPipeLocations.push_back(pipes.selectRandomTile(1));
+	pipes.UpdateTile(_brokenPipeLocations.back(), 2);
 }
 
 Holdable* DrillManager::addHoldable(const std::string& texture, const glm::vec2& position, const glm::vec2& size, const HoldableType& type) {
