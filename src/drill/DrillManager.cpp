@@ -23,11 +23,10 @@ DrillManager::DrillManager(PlayerResources resourceManager, Jauntlet::Camera2D* 
 	navigation.genNav();
 
 	// DEBUGGING CODE
-	bustRandomPipe();
-	bustRandomPipe();
-	bustRandomPipe();
 	addHoldable("Textures/missing.png", glm::vec2(64 * 7, -64 * 6), glm::vec2(32), HoldableType::WATER);
 	addHoldable("Textures/pipeCarry.png", glm::vec2(64 * 6, -64 * 6), glm::vec2(32));
+	for (int i = 0; i < 20; ++i)
+	bustRandomPipe();
 }
 
 void DrillManager::update() {
