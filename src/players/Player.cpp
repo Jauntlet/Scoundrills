@@ -84,8 +84,6 @@ void Player::draw(Jauntlet::SpriteBatch& spriteBatch) {
 void Player::navigateTo(DrillManager& drill, PlayerManager& playerManager, glm::vec2 position) {
 	_path.clear();
 
-	// We add the final destination twice to the vector, because the final vector position for some reason gets destroyed at some point
-	// this is a weird bug that only occurs here, as the pathRenderer uses the same method and the result is fine. -xm
 	PlayerStation* storedStation;
 	if ((storedStation = drill.checkHoveringStation(position)) != nullptr) {
 		if (_station == storedStation) {
@@ -115,7 +113,9 @@ void Player::navigateTo(DrillManager& drill, PlayerManager& playerManager, glm::
 		}
 		_path = Pathfinding::findPath(drill, playerManager, _position, drill.drillWalls.RoundWorldPos(position));
 		_path.erase(_path.begin());
-		_path.insert(_path.begin(), drill.drillWalls.RoundWorldPos(position));
+		if (!drill.drillWalls.tileHasCollision(drill.drillWalls.WorldPosToTilePos(position))) {
+			_path.insert(_path.begin(), drill.drillWalls.RoundWorldPos(position));
+		}
 	}
 }
 
