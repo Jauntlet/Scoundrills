@@ -169,6 +169,15 @@ void DrillManager::bustRandomPipe() {
 	_brokenPipeLocations.push_back(pipes.selectRandomTile(1));
 	pipes.UpdateTile(_brokenPipeLocations.back(), 2);
 }
+void DrillManager::repairPipe(const glm::vec2& worldPos) {
+	for (int i = 0; i < _brokenPipeLocations.size(); ++i) {
+		if (pipes.TilePosToWorldPos(_brokenPipeLocations[i]) == worldPos) {
+			pipes.UpdateTile(_brokenPipeLocations[i], 1);
+			_brokenPipeLocations.erase(_brokenPipeLocations.begin() + i);
+			break;
+		}
+	}
+}
 bool DrillManager::DestMatchesRandomPipe(const glm::vec2& worldPos) const {
 	for (int i = 0; i < _brokenPipeLocations.size(); ++i) {
 			if (pipes.TilePosToWorldPos(_brokenPipeLocations[i]) == worldPos) {
