@@ -11,7 +11,7 @@
 const int layerCount = 5; //amt of layers (Y axis)
 const int layerWidth = 5; //amt of destinations on each layer (X axis)
 
-const std::string bgTextures[] = {"Textures/NavGround1.png"};
+const std::string bgTextures[] = {"Textures/NavBackgroundPrototype.png"};
 static int seed = std::chrono::system_clock::now().time_since_epoch().count(); //temp
 
 Navigation::Navigation(Jauntlet::Camera2D* camera) : 
@@ -31,7 +31,7 @@ Navigation::Navigation(Jauntlet::Camera2D* camera) :
 }
 
 Navigation::~Navigation() {
-	delete _background;
+	//delete _background;
 	delete _caretElement;
 }
 
@@ -48,11 +48,12 @@ Jauntlet::UIManager* Navigation::genNav() {
 	//read in textures
 	_navTexture = Jauntlet::ResourceManager::getTexture(bgTextures[0]).id;
 
+	_bgPos = glm::vec2(0, 0);
+
 	//draw background
-	if (_background == NULL) {
-		_background = new Jauntlet::UISpriteAnimatedElement(_navTexture, &_bgPos, glm::vec2(640, 1024), Jauntlet::UIElement::ORIGIN_PIN::CENTER, &_backgroundAnimation);
-		_uiManager.addElement(_background, &GlobalContext::normalShader);
-	}
+	_background = Jauntlet::UISpriteAnimatedElement(_navTexture, &_bgPos, glm::vec2(640, 1024), Jauntlet::UIElement::ORIGIN_PIN::CENTER, &_backgroundAnimation);
+	_uiManager.addElement(&_background, &GlobalContext::normalShader);
+	_backgroundAnimation.play(0, 2, 0.2f);
 
 	for (int y = 0; y < layerCount; y++) {
 		for (int x = 0; x < layerWidth; x++) {
@@ -82,7 +83,7 @@ Jauntlet::UIManager* Navigation::genNav() {
 	}
 
 	//update visibility
-	_background->visible = _navOpen;
+	_background.visible = _navOpen;
 	for (int i = 0; i < _points.size(); ++i) {
 		_points[i].visible = _navOpen;
 	}
@@ -96,8 +97,8 @@ Jauntlet::UIManager* Navigation::genNav() {
 	return &_uiManager;
 
 	// optimize batches
-	//_uiManager.optimize();
-	//_uiManager.resolvePositions();
+	_uiManager.optimize();
+	_uiManager.resolvePositions();
 }
 
 void Navigation::update() {
@@ -108,12 +109,10 @@ void Navigation::toggleNav() {
 	_navOpen = !_navOpen;
 	//update visibility
 	if (_navOpen) {
-		_background->visible = true;
-		_backgroundAnimation.play(0, 2, 1.0f);
+		_background.visible = true;
 	}
 	else {
-		_background->visible = false;
-		_backgroundAnimation.stop();
+		_background.visible = false;
 	}
 	if (_caretSet) {
 		_caretElement->visible = _navOpen;
