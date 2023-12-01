@@ -22,7 +22,6 @@ public:
 	void stopAnimation();
 	
 	PlayerStation steeringWheel;
-	AnimatedPlayerStation boiler;
 private:
 	Jauntlet::SpriteBatch _spriteBatch;
 	Jauntlet::Animation _drillAnimation, _boilerAnimation;

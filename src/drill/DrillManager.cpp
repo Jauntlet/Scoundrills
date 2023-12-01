@@ -11,7 +11,8 @@ DrillManager::DrillManager(PlayerResources resourceManager, Jauntlet::Camera2D* 
 :
 	_drillAssets(camera),
 	_resources(resourceManager),
-	_navigation(camera)
+	navigation(camera),
+	_boiler(&boilerWater, "Textures/BoilerTank.png", { 64 * 16, -64 * 1 - 10, 32 * 2, 43 * 2 }, 5, { 64 * 15.5, -64 * 2, 64 * 2, 96 * 2 }, { 16,-64 })
 {
 	drillFloor.loadTileMap("Levels/DrillFloor.JML");
 	drillWalls.loadTileMap("Levels/DrillWall.JML");
@@ -19,12 +20,13 @@ DrillManager::DrillManager(PlayerResources resourceManager, Jauntlet::Camera2D* 
 	
 	on();
 
+	navigation.genNav();
+
 	// DEBUGGING CODE
-	bustRandomPipe();
-	bustRandomPipe();
-	bustRandomPipe();
 	addHoldable("Textures/missing.png", glm::vec2(64 * 7, -64 * 6), glm::vec2(32), HoldableType::WATER);
 	addHoldable("Textures/pipeCarry.png", glm::vec2(64 * 6, -64 * 6), glm::vec2(32));
+	for (int i = 0; i < 20; ++i)
+	bustRandomPipe();
 }
 
 void DrillManager::update() {
@@ -33,18 +35,19 @@ void DrillManager::update() {
 		if (boilerWater > 0) {
 			boilerWater -= Jauntlet::Time::getDeltaTime();
 			_resources.heat += Jauntlet::Time::getDeltaTime() * heatRiseScale;
-			_navigation.updateTravel();
+			navigation.updateTravel();
 
 			if (boilerWater > 45) {
-				_drillAssets.boiler.animation.stop(4);
+				_boiler.animation.stop(4);
 			} else if (boilerWater > 30) {
-				_drillAssets.boiler.animation.stop(3);
+				_boiler.animation.stop(3);
 			} else if (boilerWater > 15) {
-				_drillAssets.boiler.animation.stop(2);
+				_boiler.animation.stop(2);
 			} else if (boilerWater > 0) {
-				_drillAssets.boiler.animation.stop(1);
+				_boiler.animation.stop(1);
 			} else {
-				_drillAssets.boiler.animation.stop(0);
+				boilerWater = 0;
+				_boiler.animation.stop(0);
 				off();
 			}
 		}
@@ -60,17 +63,22 @@ void DrillManager::drawLayerOne() {
 	drillWalls.draw();
 	pipes.draw();
 	_drillAssets.drawLayerTwo();
+
+	_spriteBatch.begin();
+	_boiler.draw(_spriteBatch);
+	_spriteBatch.endAndRender();
+	
 }
 void DrillManager::drawLayerTwo() {
 	// draw all holdable items
 	_spriteBatch.begin();
 	for (int i = 0; i < _holdables.size(); ++i) {
-		if (_holdables[i].isEmpty()) {
-			removeHoldable(&_holdables[i]);
+		if (_holdables[i]->isEmpty()) {
+			removeHoldable(_holdables[i]);
 			--i;
 			continue;
 		}
-		_holdables[i].draw(_spriteBatch);
+		_holdables[i]->draw(_spriteBatch);
 	}
 	_spriteBatch.endAndRender();
 }
@@ -97,6 +105,12 @@ bool DrillManager::isValidDestination(glm::vec2 worldPos, PlayerManager* playerM
 	worldPos = drillWalls.RoundWorldPos(worldPos);
 
 	if (drillWalls.tileHasCollision(pos) || !drillWalls.isValidTilePos(pos)) {
+		// The tile is in a wall, but theres a chance it is a broken pipe, so we loop through all broken pipes.
+		for (int i = 0; i < _brokenPipeLocations.size(); ++i) {
+			if (pipes.TilePosToWorldPos(_brokenPipeLocations[i]) == worldPos + glm::vec2(0,64)) {
+				return true;
+			}
+		}
 		return false;
 	}
 	else if (drillFloor.isTileEmpty(floorPos)) {
@@ -126,7 +140,7 @@ bool DrillManager::isValidPath(glm::vec2 worldPos, PlayerManager* playerManager)
 	
 	// Prevent pathing through items on the floor.
 	for (int i = 0; i < _holdables.size(); ++i) {	
-		if (!_holdables[i].isHeld() && worldPos == _holdables[i].position) {
+		if (_holdables[i]->position == worldPos + glm::vec2(0,64)) {
 			return false;
 		}
 	}
@@ -138,8 +152,8 @@ PlayerStation* DrillManager::checkHoveringStation(glm::vec2 position) {
 	if (_drillAssets.steeringWheel.isColliding(position)) {
 		return &_drillAssets.steeringWheel;
 	}
-	else if (_drillAssets.boiler.isColliding(position)) {
-		return &_drillAssets.boiler;
+	else if (_boiler.isColliding(position)) {
+		return &_boiler;
 	}
 	else {
 		return nullptr;
@@ -147,21 +161,23 @@ PlayerStation* DrillManager::checkHoveringStation(glm::vec2 position) {
 }
 bool DrillManager::doesTileOverlapStations(glm::ivec2 tilePos) const  {
 	return drillWalls.doesTileOverlap(tilePos, _drillAssets.steeringWheel.getBoundingBox()) ||
-		drillWalls.doesTileOverlap(tilePos, _drillAssets.boiler.getBoundingBox());
+		drillWalls.doesTileOverlap(tilePos, _boiler.getBoundingBox());
 }
 
 void DrillManager::bustRandomPipe() {
 	// changes a random pipe of ID 1 (normal pipe) to a pipe of ID 2 (broken pipe)
-	pipes.UpdateTile(pipes.selectRandomTile(1), 2);
+	_brokenPipeLocations.push_back(pipes.selectRandomTile(1));
+	pipes.UpdateTile(_brokenPipeLocations.back(), 2);
 }
 
 Holdable* DrillManager::addHoldable(const std::string& texture, const glm::vec2& position, const glm::vec2& size, const HoldableType& type) {
-	_holdables.emplace_back(texture, position, size, type);
-	return &_holdables[_holdables.size() - 1];
+	_holdables.emplace_back(new Holdable(texture, position, size, type));
+	return _holdables[_holdables.size() - 1];
 }
 void DrillManager::removeHoldable(Holdable* holdable) {
 	for (int i = 0; i < _holdables.size(); ++i) {
-		if (&_holdables[i] == holdable) {
+		if (_holdables[i] == holdable) {
+			delete _holdables[i];
 			_holdables.erase(_holdables.begin() + i);
 			return;
 		}
@@ -169,8 +185,8 @@ void DrillManager::removeHoldable(Holdable* holdable) {
 }
 Holdable* DrillManager::getHoldable(glm::vec2 worldPos) {
 	for (int i = 0; i < _holdables.size(); ++i) {
-		if (_holdables[i].position == worldPos) {
-			return &_holdables[i];
+		if (_holdables[i]->position == worldPos) {
+			return _holdables[i];
 		}
 	}
 	return nullptr;

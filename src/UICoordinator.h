@@ -22,7 +22,7 @@ public:
 
 	void applyNewScreenSize(glm::ivec2 screenSize);
 	
-	Navigation navigation;
+	Navigation* navigation;
 	std::string waterIconText = "0";
 private:
 	// Pointers

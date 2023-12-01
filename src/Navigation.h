@@ -22,8 +22,10 @@ public:
 	void toggleNav(); //toggles visibility (on/off)
 	void selectNav(int id); //sets selected destination
 	void updateTravel(); //Updates the "tick" of travel; Moves the points closer to the drill to simulate going to the outcove. When reaching the destination, set destination to null.
+	
+	Jauntlet::UIManager* getUIManager();
 private:
-	std::vector<GLuint> _navTextures;
+	GLuint _navTexture = 0;
 	GLuint _xTure = 0;
 	GLuint _caret = 0;
 	bool _navOpen = false; //visibility of menu

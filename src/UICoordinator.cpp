@@ -11,11 +11,11 @@ UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRender
 	_hudCamera(hudCamera),
 	_textRenderer(textRenderer),
 	_UIManager(hudCamera),
-	navigation(hudCamera),
+	navigation(&drillManager->navigation),
 	_playerResources(resources),
 	_waterIconTextElement(_textRenderer, &waterIconText, &_textColor, &_waterIconTextPosition, 0.5f)
 {
-	_NavManager = navigation.genNav();
+	_NavManager = navigation->getUIManager();
 
 	_UIManager.addElement(&_waterIconTextElement, &Jauntlet::TextRenderer::textShader);
 	_UIManager.addElement(&_waterIcon, &GlobalContext::normalShader);
@@ -50,7 +50,7 @@ void UICoordinator::draw() {
 	waterIconText = std::to_string(_playerResources->water).substr(0,1);
 	
 	_UIManager.draw();
-	navigation.update();
+	navigation->update();
 	_NavManager->draw();
 }
 
