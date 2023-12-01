@@ -52,19 +52,7 @@ void Player::update(DrillManager& drill) {
 			_path.pop_back();
 			
 			if (_path.empty()) {
-				// remove all stored velocity.
-				_storedVelocity = 0;
-
-				// detect if we landed on an item and pick it up.
-				Holdable* holdable = drill.getHoldable(_position);
-				if (holdable != nullptr) {
-					if (heldItem != nullptr) {
-						heldItem->position = _position;
-						heldItem->drop(&drill.drillWalls);
-					}
-					holdable->pickup(this);
-					heldItem = holdable;
-				}
+				onDestination(drill);
 			}
 		}
 		// update position of held item whenever we move
@@ -132,4 +120,19 @@ glm::vec2 Player::getDestination() const {
 
 void Player::forceDropItem() {
 	heldItem = nullptr;
+void Player::onDestination(DrillManager& drill) {
+	// remove all stored velocity.
+	_storedVelocity = 0;
+
+	// detect if we landed on an item and pick it up.
+	Holdable* holdable = drill.getHoldable(_position);
+	if (holdable != nullptr) {
+		if (heldItem != nullptr) {
+			heldItem->position = _position;
+			heldItem->drop(&drill.drillWalls);
+		}
+		holdable->pickup(this);
+		heldItem = holdable;
+	}
+	}
 }

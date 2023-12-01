@@ -34,6 +34,9 @@ public:
 	Jauntlet::BoxCollider2D collider;
 	Holdable* heldItem = nullptr;
 private:
+	// runs when player reaches destination
+	void onDestination(DrillManager& drill);
+
 	glm::vec2 _position = glm::vec2(0,0);
 	std::vector<glm::vec2> _path;
 
