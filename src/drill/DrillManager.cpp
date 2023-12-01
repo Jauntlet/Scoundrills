@@ -107,7 +107,6 @@ bool DrillManager::isValidDestination(glm::vec2 worldPos, PlayerManager* playerM
 	if (drillWalls.tileHasCollision(pos) || !drillWalls.isValidTilePos(pos)) {
 		// The tile is in a wall, but theres a chance it is a broken pipe, so we loop through all broken pipes.
 		for (int i = 0; i < _brokenPipeLocations.size(); ++i) {
-			std::cout << pipes.TilePosToWorldPos(_brokenPipeLocations[i]) << std::endl;
 			if (pipes.TilePosToWorldPos(_brokenPipeLocations[i]) == worldPos + glm::vec2(0,_brokenPipeLocations[i].y != 0 ? 64 : 0)) {
 				return true;
 			}
