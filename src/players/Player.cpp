@@ -89,7 +89,7 @@ void Player::navigateTo(DrillManager& drill, PlayerManager& playerManager, glm::
 		
 		_station = storedStation;
 		if (!_station->isOccupied()) {
-			_station->Occupy(this);
+			_station->occupy();
 			
 			_path = Pathfinding::findPath(drill, playerManager, _position, _station->getAnchorPoint());
 			_path.erase(_path.begin());
@@ -104,7 +104,7 @@ void Player::navigateTo(DrillManager& drill, PlayerManager& playerManager, glm::
 	}
 	else {
 		if (_station != nullptr) {
-			_station->Occupy(nullptr);
+			_station->unoccupy();
 			_station = nullptr;
 		}
 		_path = Pathfinding::findPath(drill, playerManager, _position, drill.drillWalls.RoundWorldPos(position));
@@ -149,6 +149,11 @@ void Player::onDestination(DrillManager& drill) {
 		}
 		holdable->pickup(this);
 		heldItem = holdable;
+	}
+
+	// run code for station on players arrival
+	if (_station != nullptr) {
+		_station->onPlayerArrival(*this);
 	}
 
 	// if destination is pipe, we try to repair it.
