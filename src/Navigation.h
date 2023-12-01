@@ -40,7 +40,7 @@ private:
 	int _map[5][5]; //Y (count) first X (width) second
 
 	Jauntlet::Animation _backgroundAnimation = Jauntlet::Animation(3);
-	Jauntlet::UISpriteAnimatedElement* _background = nullptr;
+	Jauntlet::UISpriteAnimatedElement _background;
 	Jauntlet::UISpriteElement* _caretElement = nullptr;
 	
 	bool _caretSet = false;
