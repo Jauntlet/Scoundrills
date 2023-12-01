@@ -26,7 +26,12 @@ public:
 	// Returns true if the station is already used by a player.
 	bool isOccupied() const;
 	// Occupy a station with a player
-	virtual void Occupy(Player* player);
+	void occupy();
+	// unoccupies the station
+	void unoccupy();
+
+	// meant to be ran when a player arrives at the specified player station.
+	virtual void onPlayerArrival(Player& player);
 
 	// Returns the anchor point for the player
 	glm::vec2 getAnchorPoint() const;
