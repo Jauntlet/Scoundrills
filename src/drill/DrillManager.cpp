@@ -24,7 +24,7 @@ DrillManager::DrillManager(PlayerResources resourceManager, Jauntlet::Camera2D* 
 
 	// DEBUGGING CODE
 	addHoldable("Textures/missing.png", glm::vec2(64 * 7, -64 * 6), glm::vec2(32), HoldableType::WATER);
-	addHoldable("Textures/pipeCarry.png", glm::vec2(64 * 6, -64 * 6), glm::vec2(32));
+	addHoldable("Textures/pipeCarry.png", glm::vec2(64 * 6, -64 * 6), glm::vec2(32), HoldableType::PIPE);
 	for (int i = 0; i < 20; ++i)
 	bustRandomPipe();
 }
@@ -168,6 +168,14 @@ void DrillManager::bustRandomPipe() {
 	// changes a random pipe of ID 1 (normal pipe) to a pipe of ID 2 (broken pipe)
 	_brokenPipeLocations.push_back(pipes.selectRandomTile(1));
 	pipes.UpdateTile(_brokenPipeLocations.back(), 2);
+}
+bool DrillManager::DestMatchesRandomPipe(const glm::vec2& worldPos) const {
+	for (int i = 0; i < _brokenPipeLocations.size(); ++i) {
+			if (pipes.TilePosToWorldPos(_brokenPipeLocations[i]) == worldPos) {
+				return true;
+			}
+	}
+	return false;
 }
 
 Holdable* DrillManager::addHoldable(const std::string& texture, const glm::vec2& position, const glm::vec2& size, const HoldableType& type) {

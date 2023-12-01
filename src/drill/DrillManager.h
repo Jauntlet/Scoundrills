@@ -39,6 +39,7 @@ public:
 	bool doesTileOverlapStations(glm::ivec2 tilePos) const;
 
 	void bustRandomPipe();
+	bool DestMatchesRandomPipe(const glm::vec2& worldPos) const;
 
 	// adds a holdable item to be managed by the drillManager.
 	Holdable* addHoldable(const std::string& texture, const glm::vec2& position, const glm::vec2& size, const HoldableType& type = HoldableType::NONE);
