@@ -32,7 +32,7 @@ void DrillManager::update() {
 	// calculate the change in water/heat
 	if (_drillOn) {
 		if (boilerWater > 0) {
-			boilerWater -= Jauntlet::Time::getDeltaTime();
+			boilerWater -= Jauntlet::Time::getDeltaTime() / 6;
 			resources.heat += Jauntlet::Time::getDeltaTime() * (heatRiseScale + _brokenPipeLocations.size() * 0.1);
 			navigation.updateTravel();
 		}
@@ -41,11 +41,11 @@ void DrillManager::update() {
 		resources.heat -= Jauntlet::Time::getDeltaTime() * (heatFallScale - _brokenPipeLocations.size() * 0.1);
 	}
 
-	if (boilerWater > 45) {
+	if (boilerWater > Boiler::BOILER_MAX_WATER * 0.75) {
 		_boiler.animation.stop(4);
-	} else if (boilerWater > 30) {
+	} else if (boilerWater > Boiler::BOILER_MAX_WATER * 0.5) {
 		_boiler.animation.stop(3);
-	} else if (boilerWater > 15) {
+	} else if (boilerWater > Boiler::BOILER_MAX_WATER * 0.25) {
 		_boiler.animation.stop(2);
 	} else if (boilerWater > 0) {
 		_boiler.animation.stop(1);
