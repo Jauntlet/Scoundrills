@@ -32,7 +32,7 @@ private:
 	bool _navOpen = false; //visibility of menu
 	int _destination = -1; //id value
 	float _progress = -1; //0-1; 0 being just selected dest, 1 being @ dest.
-	int _nextRow = 1; //the row which is selectable to navigate to.
+	//int _nextRow = 1; //the row which is selectable to navigate to.
 	Jauntlet::UIManager _uiManager;
 	std::vector<Jauntlet::UIButtonElement> _points;
 	glm::vec2 _bgPos = glm::vec2(0);
@@ -49,4 +49,5 @@ private:
 	bool _caretSet = false;
 
 	void refreshPositions(float shiftX, float shiftY);
+	void updateVisibility();
 };
