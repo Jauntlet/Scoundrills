@@ -28,6 +28,7 @@ private:
 	GLuint _navTexture = 0;
 	GLuint _xTure = 0;
 	GLuint _caret = 0;
+	GLuint _drillIcon = 0;
 	bool _navOpen = false; //visibility of menu
 	int _destination = -1; //id value
 	float _progress = -1; //0-1; 0 being just selected dest, 1 being @ dest.
@@ -36,12 +37,14 @@ private:
 	std::vector<Jauntlet::UIButtonElement> _points;
 	glm::vec2 _bgPos = glm::vec2(0);
 	glm::vec2 _caretPos = glm::vec2(0);
+	glm::vec2 _iconPos = glm::vec2(0, -365);
 	std::vector<glm::vec2> _positions;
 	int _map[5][5]; //Y (count) first X (width) second
 
 	Jauntlet::Animation _backgroundAnimation = Jauntlet::Animation(3);
 	Jauntlet::UISpriteAnimatedElement _background;
 	Jauntlet::UISpriteElement* _caretElement = nullptr;
+	Jauntlet::UISpriteElement* _drillIconElement = nullptr;
 	
 	bool _caretSet = false;
 
