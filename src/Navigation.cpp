@@ -55,7 +55,7 @@ Jauntlet::UIManager* Navigation::genNav() {
 	//draw background
 	_background = Jauntlet::UISpriteAnimatedElement(_navTexture, &_bgPos, glm::vec2(640, 1024), Jauntlet::UIElement::ORIGIN_PIN::CENTER, &_backgroundAnimation);
 	_uiManager.addElement(&_background, &GlobalContext::normalShader);
-	_backgroundAnimation.play(0, 2, 0.2f);
+	_backgroundAnimation.play(0, 2, 0.3f);
 
 	//draw drill icon
 	_drillIconElement = new Jauntlet::UISpriteElement(_drillIcon, &_iconPos, glm::vec2(60), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
