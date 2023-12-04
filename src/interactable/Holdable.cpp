@@ -1,6 +1,7 @@
 #include "Holdable.h"
 #include <Jauntlet/Rendering/ResourceManager.h>
 #include "../players/Player.h"
+#include "specificStations/Boiler.h"
 
 Holdable::Holdable(const std::string& texture, const glm::vec2& position, const glm::vec2& size, HoldableType type)
 : 
@@ -11,7 +12,7 @@ Holdable::Holdable(const std::string& texture, const glm::vec2& position, const 
 {
 	switch (type) {
 		case HoldableType::WATER:
-			_waterAmount = 60;
+			_waterAmount = Boiler::BOILER_MAX_WATER;
 			break;
 		default:
 			break;

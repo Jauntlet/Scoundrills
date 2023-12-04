@@ -54,7 +54,7 @@ public:
 	Jauntlet::TileMap drillFloor = Jauntlet::TileMap(_textureCache, 64);
 	Jauntlet::TileMap pipes = Jauntlet::TileMap(_textureCache, 64);
 
-	float boilerWater = 60.0f;
+	float boilerWater = Boiler::BOILER_MAX_WATER;
 	Navigation navigation;
 	PlayerResources resources;
 private:
