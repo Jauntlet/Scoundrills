@@ -10,6 +10,7 @@
 #include "../Navigation.h"
 #include "../interactable/Holdable.h"
 #include "../interactable/specificStations/Boiler.h"
+#include "../interactable/specificStations/WaterTank.h"
 
 class PlayerManager;
 
@@ -59,6 +60,7 @@ public:
 private:
 	DrillAssetRenderer _drillAssets;
 	Boiler _boiler;
+	WaterTank _waterTank;
 
 	Jauntlet::TextureCache _textureCache;
 
