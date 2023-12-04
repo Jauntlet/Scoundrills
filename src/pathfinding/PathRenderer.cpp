@@ -11,8 +11,14 @@ PathRenderer::PathRenderer(DrillManager* drill, PlayerManager* playerManager) :
 
 void PathRenderer::createPath(glm::vec2 start, glm::vec2 end) {
 	if (!_drill->isValidDestination(end, _players)) {
-		clearPath();
-		return;
+		PlayerStation* station;
+		if ((station = _drill->checkHoveringStation(end)) != nullptr) {
+			end = _drill->drillWalls.RoundWorldPos(station->getAnchorPoint());
+		}
+		else {
+			clearPath();
+			return;
+		}
 	}
 	std::vector<glm::vec2> path = Pathfinding::findPath(*_drill, *_players, start, end);
 
