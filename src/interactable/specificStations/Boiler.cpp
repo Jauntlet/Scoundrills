@@ -1,6 +1,8 @@
 #include "Boiler.h"
 #include "../../players/Player.h"
 
+const float Boiler::BOILER_MAX_WATER = 60.0f;
+
 Boiler::Boiler(float* waterAmt, std::string texture, glm::vec4 destination, unsigned int frames, glm::vec4 boundingBox, glm::vec2 anchorPointOffset) 
 	: AnimatedPlayerStation(texture, destination, frames, boundingBox, anchorPointOffset),
 	waterLevel(waterAmt) {
@@ -9,6 +11,6 @@ Boiler::Boiler(float* waterAmt, std::string texture, glm::vec4 destination, unsi
 
 void Boiler::onPlayerArrival(Player& player) {
 	if (player.heldItem != nullptr && player.heldItem->itemType == HoldableType::WATER) {
-		*waterLevel += player.heldItem->requestWater(60 - *waterLevel);
+		*waterLevel += player.heldItem->requestWater(BOILER_MAX_WATER - *waterLevel);
 	}
 }

@@ -16,10 +16,7 @@ void SelectedTileRenderer::draw(Jauntlet::Camera2D* activeCamera, Jauntlet::Inpu
 
 		// if a player is selected, we highlight the tile if its a valid pathfind pos or not
 		if (_players->isPlayerSelected()) {
-			if (_drill->checkHoveringStation(_lastPosition)) {
-				_drawColor = Jauntlet::Color(0, 0, 0, 0);
-			}
-			else if (_drill->isValidDestination(_selectedTilePos, _players)) {
+			if (_drill->isValidDestination(_selectedTilePos, _players) || _drill->checkHoveringStation(_lastPosition) != nullptr) {
 				_drawColor = Jauntlet::Color(0, 255, 0);
 			}
 			else {
@@ -32,7 +29,14 @@ void SelectedTileRenderer::draw(Jauntlet::Camera2D* activeCamera, Jauntlet::Inpu
 		}
 
 		_spriteBatch.begin();
-		_spriteBatch.draw({ _selectedTilePos.x, _selectedTilePos.y, 64, 64 }, _textureID, 0 , _drawColor);
+		
+		PlayerStation* station;
+		if ((station = _drill->checkHoveringStation(_lastPosition)) != nullptr) {
+			_spriteBatch.draw(station->getBoundingBox(), _textureID, 0, _drawColor);
+		}
+		else {
+			_spriteBatch.draw({ _selectedTilePos.x, _selectedTilePos.y, 64, 64 }, _textureID, 0 , _drawColor);
+		}
 		_spriteBatch.endAndRender();
 	}
 	else {

@@ -10,6 +10,7 @@
 #include "../Navigation.h"
 #include "../interactable/Holdable.h"
 #include "../interactable/specificStations/Boiler.h"
+#include "../interactable/specificStations/WaterTank.h"
 
 class PlayerManager;
 
@@ -53,17 +54,18 @@ public:
 	Jauntlet::TileMap drillFloor = Jauntlet::TileMap(_textureCache, 64);
 	Jauntlet::TileMap pipes = Jauntlet::TileMap(_textureCache, 64);
 
-	float boilerWater = 60.0f;
+	float boilerWater = Boiler::BOILER_MAX_WATER;
 	Navigation navigation;
+	PlayerResources resources;
 private:
 	DrillAssetRenderer _drillAssets;
 	Boiler _boiler;
+	WaterTank _waterTank;
 
 	Jauntlet::TextureCache _textureCache;
 
 	bool _drillOn = true;
 
-	PlayerResources _resources;
 
 	std::vector<Holdable*> _holdables;
 	Jauntlet::SpriteBatch _spriteBatch;

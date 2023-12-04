@@ -45,7 +45,7 @@ bool PlayerManager::processInput(DrillManager& drill, const Jauntlet::Camera2D& 
 		// a player is selected and we aren't clicking, so we draw the path via pathrenderer
 		if (_storedMousePos != drill.drillWalls.RoundWorldPos(mousePos)) {
 			_storedMousePos = drill.drillWalls.RoundWorldPos(mousePos);
-			if (drill.isValidDestination(_storedMousePos, this)) {
+			if (drill.isValidDestination(_storedMousePos, this) || drill.checkHoveringStation(_storedMousePos) != nullptr) {
 				_pathRenderer.createPath(_players[_selectedPlayer].getPosition(), _storedMousePos);
 			}
 			else {

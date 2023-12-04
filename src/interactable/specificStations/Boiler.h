@@ -9,6 +9,8 @@ public:
 	Boiler(float* waterLevel, std::string texture, glm::vec4 destination, unsigned int frames, glm::vec4 boundingBox, glm::vec2 anchorPointOffset);
 	
 	void onPlayerArrival(Player& player) override;
+
+	const static float BOILER_MAX_WATER;
 private:
 	float* waterLevel;
 };

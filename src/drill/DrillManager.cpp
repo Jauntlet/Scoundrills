@@ -10,9 +10,10 @@ const float heatFallScale = .1f; //1 heat every 10 seconds
 DrillManager::DrillManager(PlayerResources resourceManager, Jauntlet::Camera2D* camera)
 :
 	_drillAssets(camera),
-	_resources(resourceManager),
+	resources(resourceManager),
 	navigation(camera),
-	_boiler(&boilerWater, "Textures/BoilerTank.png", { 64 * 16, -64 * 1 - 10, 32 * 2, 43 * 2 }, 5, { 64 * 15.5, -64 * 2, 64 * 2, 96 * 2 }, { 16,-64 })
+	_boiler(&boilerWater, "Textures/BoilerTank.png", { 64 * 16, -64 * 1 - 10, 32 * 2, 43 * 2 }, 5, { 64 * 15.5, -64 * 2, 64 * 2, 96 * 2 }, { 16,-64 }),
+	_waterTank(*this, { 64, -64 * 12, 64, 64 }, { 64, -64 * 12, 64, 64 }, glm::vec2(0))
 {
 	drillFloor.loadTileMap("Levels/DrillFloor.JML");
 	drillWalls.loadTileMap("Levels/DrillWall.JML");
@@ -22,8 +23,6 @@ DrillManager::DrillManager(PlayerResources resourceManager, Jauntlet::Camera2D* 
 
 	navigation.genNav();
 
-	// DEBUGGING CODE
-	addHoldable("Textures/missing.png", glm::vec2(64 * 7, -64 * 6), glm::vec2(32), HoldableType::WATER);
 	addHoldable("Textures/pipeCarry.png", glm::vec2(64 * 6, -64 * 6), glm::vec2(32), HoldableType::PIPE);
 	for (int i = 0; i < 20; ++i)
 	bustRandomPipe();
@@ -34,12 +33,12 @@ void DrillManager::update() {
 	if (_drillOn) {
 		if (boilerWater > 0) {
 			boilerWater -= Jauntlet::Time::getDeltaTime();
-			_resources.heat += Jauntlet::Time::getDeltaTime() * (heatRiseScale + _brokenPipeLocations.size() * 0.1);
+			resources.heat += Jauntlet::Time::getDeltaTime() * (heatRiseScale + _brokenPipeLocations.size() * 0.1);
 			navigation.updateTravel();
 		}
 	}
 	else {
-		_resources.heat -= Jauntlet::Time::getDeltaTime() * (heatFallScale - _brokenPipeLocations.size() * 0.1);
+		resources.heat -= Jauntlet::Time::getDeltaTime() * (heatFallScale - _brokenPipeLocations.size() * 0.1);
 	}
 
 	if (boilerWater > 45) {
@@ -66,6 +65,7 @@ void DrillManager::drawLayerOne() {
 
 	_spriteBatch.begin();
 	_boiler.draw(_spriteBatch);
+	_waterTank.draw(_spriteBatch);
 	_spriteBatch.endAndRender();
 	
 }
@@ -155,13 +155,17 @@ PlayerStation* DrillManager::checkHoveringStation(glm::vec2 position) {
 	else if (_boiler.isColliding(position)) {
 		return &_boiler;
 	}
+	else if (_waterTank.isColliding(position)) {
+		return &_waterTank;
+	}
 	else {
 		return nullptr;
 	}
 }
 bool DrillManager::doesTileOverlapStations(glm::ivec2 tilePos) const  {
 	return drillWalls.doesTileOverlap(tilePos, _drillAssets.steeringWheel.getBoundingBox()) ||
-		drillWalls.doesTileOverlap(tilePos, _boiler.getBoundingBox());
+		drillWalls.doesTileOverlap(tilePos, _boiler.getBoundingBox()) ||
+		drillWalls.doesTileOverlap(tilePos, _waterTank.getBoundingBox());
 }
 
 void DrillManager::bustRandomPipe() {

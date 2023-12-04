@@ -15,7 +15,7 @@
 
 class UICoordinator {
 public:
-	UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRenderer* spriteFont, DrillManager* drillManager, PlayerResources* resources);
+	UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRenderer* spriteFont, DrillManager* drillManager);
 	~UICoordinator();
 
 	void draw();
@@ -28,7 +28,7 @@ private:
 	// Pointers
 	Jauntlet::Camera2D* _hudCamera;
 	Jauntlet::TextRenderer* _textRenderer;
-	PlayerResources* _playerResources;
+	DrillManager* _drill;
 
 	// UI Manager(s)
 	Jauntlet::UIManager _UIManager;
