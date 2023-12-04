@@ -20,7 +20,7 @@ MainGame::MainGame()
 	_players(3, &_drill),
 	_selectedTile(&_drill, &_players),
 	_textRenderer(&_hudCamera, "Fonts/HandelGo.ttf", 256),
-	_uiCoordinator(&_hudCamera, &_textRenderer, &_drill, &_resources),
+	_uiCoordinator(&_hudCamera, &_textRenderer, &_drill),
 	_resources(100,100,0,0,0)
 {
 	GlobalContext::window.setBackgroundColor(Jauntlet::Color(97, 60, 47));

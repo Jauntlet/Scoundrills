@@ -34,12 +34,12 @@ void DrillManager::update() {
 	if (_drillOn) {
 		if (boilerWater > 0) {
 			boilerWater -= Jauntlet::Time::getDeltaTime();
-			_resources.heat += Jauntlet::Time::getDeltaTime() * (heatRiseScale + _brokenPipeLocations.size() * 0.1);
+			resources.heat += Jauntlet::Time::getDeltaTime() * (heatRiseScale + _brokenPipeLocations.size() * 0.1);
 			navigation.updateTravel();
 		}
 	}
 	else {
-		_resources.heat -= Jauntlet::Time::getDeltaTime() * (heatFallScale - _brokenPipeLocations.size() * 0.1);
+		resources.heat -= Jauntlet::Time::getDeltaTime() * (heatFallScale - _brokenPipeLocations.size() * 0.1);
 	}
 
 	if (boilerWater > 45) {

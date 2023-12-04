@@ -55,6 +55,7 @@ public:
 
 	float boilerWater = 60.0f;
 	Navigation navigation;
+	PlayerResources resources;
 private:
 	DrillAssetRenderer _drillAssets;
 	Boiler _boiler;
@@ -63,7 +64,6 @@ private:
 
 	bool _drillOn = true;
 
-	PlayerResources _resources;
 
 	std::vector<Holdable*> _holdables;
 	Jauntlet::SpriteBatch _spriteBatch;

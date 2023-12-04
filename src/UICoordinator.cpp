@@ -7,13 +7,13 @@
 #include <Jauntlet/JMath.h>
 #include <string>
 
-UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRenderer* textRenderer, DrillManager* drillManager, PlayerResources* resources)
+UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRenderer* textRenderer, DrillManager* drillManager)
 	:
 	_hudCamera(hudCamera),
 	_textRenderer(textRenderer),
 	_UIManager(hudCamera),
+	_drill(drillManager),
 	navigation(&drillManager->navigation),
-	_playerResources(resources),
 	_waterIconTextElement(_textRenderer, &waterIconText, &_textColor, &_waterIconTextPosition, 0.25f),
 	_foodIconTextElement(_textRenderer, &foodIconText, &_textColor, &_foodIconTextPosition, 0.25f),
 	_partsIconTextElement(_textRenderer, &partsIconText, &_textColor, &_partsIconTextPosition, 0.25f)
@@ -52,9 +52,9 @@ UICoordinator::~UICoordinator() {
 }
 
 void UICoordinator::draw() {
-	waterIconText = JMath::Split(std::to_string(std::min(_playerResources->water, 999.0f)), '.')[0];
-	foodIconText = std::to_string(std::min(_playerResources->food, (unsigned int)999));
-	partsIconText = std::to_string(_playerResources->parts);
+	waterIconText = JMath::Split(std::to_string(std::min(_drill->resources.water, 999.0f)), '.')[0];
+	foodIconText = std::to_string(std::min(_drill->resources.food, (unsigned int)999));
+	partsIconText = std::to_string(_drill->resources.parts);
 	
 	_UIManager.draw();
 	navigation->update();
