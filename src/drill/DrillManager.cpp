@@ -34,26 +34,26 @@ void DrillManager::update() {
 	if (_drillOn) {
 		if (boilerWater > 0) {
 			boilerWater -= Jauntlet::Time::getDeltaTime();
-			_resources.heat += Jauntlet::Time::getDeltaTime() * heatRiseScale;
+			_resources.heat += Jauntlet::Time::getDeltaTime() * (heatRiseScale + _brokenPipeLocations.size() * 0.1);
 			navigation.updateTravel();
-
-			if (boilerWater > 45) {
-				_boiler.animation.stop(4);
-			} else if (boilerWater > 30) {
-				_boiler.animation.stop(3);
-			} else if (boilerWater > 15) {
-				_boiler.animation.stop(2);
-			} else if (boilerWater > 0) {
-				_boiler.animation.stop(1);
-			} else {
-				boilerWater = 0;
-				_boiler.animation.stop(0);
-				off();
-			}
 		}
 	}
 	else {
-		_resources.heat -= Jauntlet::Time::getDeltaTime() * heatFallScale;
+		_resources.heat -= Jauntlet::Time::getDeltaTime() * (heatFallScale - _brokenPipeLocations.size() * 0.1);
+	}
+
+	if (boilerWater > 45) {
+		_boiler.animation.stop(4);
+	} else if (boilerWater > 30) {
+		_boiler.animation.stop(3);
+	} else if (boilerWater > 15) {
+		_boiler.animation.stop(2);
+	} else if (boilerWater > 0) {
+		_boiler.animation.stop(1);
+	} else {
+		boilerWater = 0;
+		_boiler.animation.stop(0);
+		off();
 	}
 }
 
