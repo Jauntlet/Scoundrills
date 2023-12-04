@@ -65,21 +65,22 @@ Jauntlet::UIManager* Navigation::genNav() {
 	for (int y = 0; y < layerCount; y++) {
 		for (int x = 0; x < layerWidth; x++) {
 			int point = _map[y][x]; //The point type according to the generated "map," will determine the chance of encountering water, ores, etc. when arriving there.
-			_positions.emplace_back(125 * (x+1) - 62.5 * (layerWidth + 1), 187.5 * (y+1) - 93.75 * (layerCount + 1)); //0 is the center of the screen.
-			if (_positions[_positions.size() - 1].y < -250 || _positions[_positions.size() - 1].y > 500) continue;
+			if (point == 2) continue; // no X
+			_positions.emplace_back(125 * (x+1) - 62.5 * (layerWidth + 1), 187.5 * (y-1)); //0 is the center of the screen.
+			bool visible = true;
+			if (_positions[_positions.size() - 1].y < -250 || _positions[_positions.size() - 1].y > 500) visible = false;
 			if (point == 0) { // white X
 				int destID = _positions.size() - 1;
 				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID]() -> void { selectNav(destID); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+				button.visible = visible;
 				_points.push_back(button);
 				continue;
 			}
 			if (point == 1) { // blue X
 				int destID = _positions.size() - 1;
 				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID]() -> void { selectNav(destID); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+				button.visible = false;
 				_points.push_back(button);
-				continue;
-			}
-			if (point == 2) { // no X
 				continue;
 			}
 		}
@@ -131,7 +132,7 @@ bool Navigation::isNavOpen() {
 }
 
 void Navigation::selectNav(int id) {
-	if (id / layerCount > _nextRow) return;
+	if (!(_positions[id].y < -185 && _positions[id].y > -190)) return;
 	_caretSet = true;
 	_destination = id;
 	_caretPos = _positions[id] + glm::vec2(0, 37.5);
@@ -145,13 +146,12 @@ void Navigation::selectNav(int id) {
 void Navigation::updateTravel() { //TODO: Hide the nav points that get up above the drill icon
 	if (_destination != -1) {
 		_progress += Jauntlet::Time::getDeltaTime();
-		float newX = 0.0f;
+		float newX = _positions[_destination].x * 1.25f * Jauntlet::Time::getDeltaTime();
 		float newY = 187.5 * Jauntlet::Time::getDeltaTime();
 		refreshPositions(newX, newY);
 		if (_progress >= 1.0f) {
 			_destination = -1; //set dest
-			_nextRow++; //set the next available row to navigate to.
-			//remove caret
+			//_nextRow++; //set the next available row to navigate to.
 
 			_caretElement->visible = false;
 			//delete _caretElement;
@@ -168,7 +168,14 @@ void Navigation::refreshPositions(float shiftX, float shiftY) {
 		_positions[i] = glm::vec2(_positions[i].x - shiftX, _positions[i].y - shiftY);
 	}
 	_caretPos = glm::vec2(_caretPos.x - shiftX, _caretPos.y - shiftY);
+	updateVisibility(); //Update point visiblity
 	_uiManager.resolvePositions();
+}
+
+void Navigation::updateVisibility() {
+	for (int i = 0; i < _positions.size(); i++) {
+		_points[i].visible = !(_positions[i].y < -350 || _positions[i].y > 400) && !(_positions[i].x < -280 || _positions[i].x > 280);
+	}
 }
 
 Jauntlet::UIManager* Navigation::getUIManager() {
