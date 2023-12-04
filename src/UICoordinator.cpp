@@ -5,6 +5,7 @@
 #include "src/scenes/GlobalContext.h"
 #include <Jauntlet/Rendering/TextRenderer.h>
 #include <Jauntlet/JMath.h>
+#include <string>
 
 UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRenderer* textRenderer, DrillManager* drillManager, PlayerResources* resources)
 	:
@@ -13,11 +14,15 @@ UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRender
 	_UIManager(hudCamera),
 	navigation(&drillManager->navigation),
 	_playerResources(resources),
-	_waterIconTextElement(_textRenderer, &waterIconText, &_textColor, &_waterIconTextPosition, 0.5f)
+	_waterIconTextElement(_textRenderer, &waterIconText, &_textColor, &_waterIconTextPosition, 0.25f),
+	_foodIconTextElement(_textRenderer, &foodIconText, &_textColor, &_foodIconTextPosition, 0.25f),
+	_partsIconTextElement(_textRenderer, &partsIconText, &_textColor, &_partsIconTextPosition, 0.25f)
 {
 	_NavManager = navigation->getUIManager();
 
 	_UIManager.addElement(&_waterIconTextElement, &Jauntlet::TextRenderer::textShader);
+	_UIManager.addElement(&_foodIconTextElement, &Jauntlet::TextRenderer::textShader);
+	_UIManager.addElement(&_partsIconTextElement,&Jauntlet::TextRenderer::textShader);
 	_UIManager.addElement(&_waterIcon, &GlobalContext::normalShader);
 	_UIManager.addElement(&_foodIcon, &GlobalContext::normalShader);
 	_UIManager.addElement(&_partsIcon, &GlobalContext::normalShader);
@@ -47,7 +52,9 @@ UICoordinator::~UICoordinator() {
 }
 
 void UICoordinator::draw() {
-	waterIconText = std::to_string(_playerResources->water).substr(0,1);
+	waterIconText = JMath::Split(std::to_string(std::min(_playerResources->water, 999.0f)), '.')[0];
+	foodIconText = std::to_string(std::min(_playerResources->food, (unsigned int)999));
+	partsIconText = std::to_string(_playerResources->parts);
 	
 	_UIManager.draw();
 	navigation->update();
