@@ -1,6 +1,9 @@
 #include "Player.h"
 #include "PlayerManager.h"
+#include "src/drill/DrillManager.h"
+#include "src/interactable/Holdable.h"
 
+#include <iostream> // REMOVE
 
 Player::Player(float x, float y) : collider(Jauntlet::BoxCollider2D(glm::vec2(64), glm::vec2(x,y))) {
 	_position = glm::vec2(x, y);
@@ -52,19 +55,7 @@ void Player::update(DrillManager& drill) {
 			_path.pop_back();
 			
 			if (_path.empty()) {
-				// remove all stored velocity.
-				_storedVelocity = 0;
-
-				// detect if we landed on an item and pick it up.
-				Holdable* holdable = drill.getHoldable(_position);
-				if (holdable != nullptr) {
-					if (heldItem != nullptr) {
-						heldItem->position = _position;
-						heldItem->drop(&drill.drillWalls);
-					}
-					holdable->pickup(this);
-					heldItem = holdable;
-				}
+				onDestination(drill);
 			}
 		}
 		// update position of held item whenever we move
@@ -84,8 +75,6 @@ void Player::draw(Jauntlet::SpriteBatch& spriteBatch) {
 void Player::navigateTo(DrillManager& drill, PlayerManager& playerManager, glm::vec2 position) {
 	_path.clear();
 
-	// We add the final destination twice to the vector, because the final vector position for some reason gets destroyed at some point
-	// this is a weird bug that only occurs here, as the pathRenderer uses the same method and the result is fine. -xm
 	PlayerStation* storedStation;
 	if ((storedStation = drill.checkHoveringStation(position)) != nullptr) {
 		if (_station == storedStation) {
@@ -93,9 +82,14 @@ void Player::navigateTo(DrillManager& drill, PlayerManager& playerManager, glm::
 			return;
 		}
 		
+		if (pipeDest != nullptr) {
+			delete pipeDest;
+			pipeDest = nullptr;
+		}
+		
 		_station = storedStation;
 		if (!_station->isOccupied()) {
-			_station->Occupy(this);
+			_station->occupy();
 			
 			_path = Pathfinding::findPath(drill, playerManager, _position, _station->getAnchorPoint());
 			_path.erase(_path.begin());
@@ -110,12 +104,20 @@ void Player::navigateTo(DrillManager& drill, PlayerManager& playerManager, glm::
 	}
 	else {
 		if (_station != nullptr) {
-			_station->Occupy(nullptr);
+			_station->unoccupy();
 			_station = nullptr;
 		}
 		_path = Pathfinding::findPath(drill, playerManager, _position, drill.drillWalls.RoundWorldPos(position));
 		_path.erase(_path.begin());
-		_path.insert(_path.begin(), drill.drillWalls.RoundWorldPos(position));
+		if (!drill.DestMatchesRandomPipe(drill.pipes.RoundWorldPos(position))) {
+			if (pipeDest != nullptr) {
+				delete pipeDest;
+				pipeDest = nullptr;
+			}
+			_path.insert(_path.begin(), drill.drillWalls.RoundWorldPos(position));
+		} else {
+			pipeDest = new glm::vec2(position);
+		}
 	}
 }
 
@@ -132,4 +134,38 @@ glm::vec2 Player::getDestination() const {
 
 void Player::forceDropItem() {
 	heldItem = nullptr;
+}
+
+void Player::onDestination(DrillManager& drill) {
+	// remove all stored velocity.
+	_storedVelocity = 0;
+
+	// detect if we landed on an item and pick it up.
+	Holdable* holdable = drill.getHoldable(_position);
+	if (holdable != nullptr) {
+		if (heldItem != nullptr) {
+			heldItem->position = _position;
+			heldItem->drop(&drill.drillWalls);
+		}
+		holdable->pickup(this);
+		heldItem = holdable;
+	}
+
+	// run code for station on players arrival
+	if (_station != nullptr) {
+		_station->onPlayerArrival(*this);
+	}
+
+	// if destination is pipe, we try to repair it.
+	if (pipeDest != nullptr) {
+		if (heldItem != nullptr && heldItem->itemType == HoldableType::PIPE) {
+			// repair the pipe
+			drill.repairPipe(drill.pipes.RoundWorldPos(*pipeDest));
+			// remove stored destination
+			delete pipeDest;
+			pipeDest = nullptr;
+			// destroy the held item
+			drill.removeHoldable(heldItem);
+		}
+	}
 }

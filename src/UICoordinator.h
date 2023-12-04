@@ -23,7 +23,7 @@ public:
 	void applyNewScreenSize(glm::ivec2 screenSize);
 	
 	Navigation* navigation;
-	std::string waterIconText = "0";
+	std::string waterIconText = "0", foodIconText = "0", partsIconText = "0";
 private:
 	// Pointers
 	Jauntlet::Camera2D* _hudCamera;
@@ -36,18 +36,22 @@ private:
 
 	// Text handling
 	Jauntlet::Color _textColor = Jauntlet::Color(); // default to 255, 255, 255, 255
-	glm::vec2 _waterIconTextPosition = glm::vec2(0, 0);
+	glm::vec2 _waterIconTextPosition = glm::vec2(65, 5);
 	Jauntlet::UITextElement _waterIconTextElement;
+	glm::vec2 _foodIconTextPosition = glm::vec2(265, 5);
+	Jauntlet::UITextElement _foodIconTextElement;
+	glm::vec2 _partsIconTextPosition = glm::vec2(465, 5);
+	Jauntlet::UITextElement _partsIconTextElement;
 
 	// Icons
-	glm::vec2 _waterIconPosition = glm::vec2(75, 0);
-	Jauntlet::UISpriteElement _waterIcon = Jauntlet::UISpriteElement(Jauntlet::ResourceManager::getTexture("Textures/WaterResourceIcon.png").id, &_waterIconPosition, glm::vec2(100), Jauntlet::UIElement::ORIGIN_PIN::TOP_LEFT);
-	glm::vec2 _foodIconPosition = glm::vec2(225, 0);
-	Jauntlet::UISpriteElement _foodIcon = Jauntlet::UISpriteElement(Jauntlet::ResourceManager::getTexture("Textures/foodIcon.png").id, &_foodIconPosition, glm::vec2(100), Jauntlet::UIElement::ORIGIN_PIN::TOP_LEFT);
-	glm::vec2 _partsIconPosition = glm::vec2(375, 0);
-	Jauntlet::UISpriteElement _partsIcon = Jauntlet::UISpriteElement(Jauntlet::ResourceManager::getTexture("Textures/ResourceIcon.png").id, &_partsIconPosition, glm::vec2(100), Jauntlet::UIElement::ORIGIN_PIN::TOP_LEFT);
-	glm::vec2 _tempIconPosition = glm::vec2(525, 0);
-	Jauntlet::UISpriteElement _tempIcon = Jauntlet::UISpriteElement(Jauntlet::ResourceManager::getTexture("Textures/TemperatureIcon.png").id, &_tempIconPosition, glm::vec2(100), Jauntlet::UIElement::ORIGIN_PIN::TOP_LEFT);
+	glm::vec2 _waterIconPosition = glm::vec2(15, 15);
+	Jauntlet::UISpriteElement _waterIcon = Jauntlet::UISpriteElement(Jauntlet::ResourceManager::getTexture("Textures/WaterResourceIcon.png").id, &_waterIconPosition, glm::vec2(60), Jauntlet::UIElement::ORIGIN_PIN::TOP_LEFT);
+	glm::vec2 _foodIconPosition = glm::vec2(215, 15);
+	Jauntlet::UISpriteElement _foodIcon = Jauntlet::UISpriteElement(Jauntlet::ResourceManager::getTexture("Textures/foodIcon.png").id, &_foodIconPosition, glm::vec2(60), Jauntlet::UIElement::ORIGIN_PIN::TOP_LEFT);
+	glm::vec2 _partsIconPosition = glm::vec2(415, 15);
+	Jauntlet::UISpriteElement _partsIcon = Jauntlet::UISpriteElement(Jauntlet::ResourceManager::getTexture("Textures/ResourceIcon.png").id, &_partsIconPosition, glm::vec2(60), Jauntlet::UIElement::ORIGIN_PIN::TOP_LEFT);
+	glm::vec2 _tempIconPosition = glm::vec2(615, 15);
+	Jauntlet::UISpriteElement _tempIcon = Jauntlet::UISpriteElement(Jauntlet::ResourceManager::getTexture("Textures/TemperatureIcon.png").id, &_tempIconPosition, glm::vec2(60), Jauntlet::UIElement::ORIGIN_PIN::TOP_LEFT);
 
 	// Debug Button
 	GLuint _buttonTexture = 0;

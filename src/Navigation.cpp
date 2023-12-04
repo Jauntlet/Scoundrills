@@ -11,12 +11,13 @@
 const int layerCount = 5; //amt of layers (Y axis)
 const int layerWidth = 5; //amt of destinations on each layer (X axis)
 
-const std::string bgTextures[] = {"Textures/NavGround1.png"};
+const std::string bgTextures[] = {"Textures/NavBackgroundPrototype.png"};
 static int seed = std::chrono::system_clock::now().time_since_epoch().count(); //temp
 
 Navigation::Navigation(Jauntlet::Camera2D* camera) : 
 	_xTure(Jauntlet::ResourceManager::getTexture("Textures/xmark.png").id), 
 	_caret(Jauntlet::ResourceManager::getTexture("Textures/caret.png").id),
+	_drillIcon(Jauntlet::ResourceManager::getTexture("Textures/drillNav.png").id),
 	_uiManager(camera)
 {
 	//generate some randomness
@@ -31,8 +32,9 @@ Navigation::Navigation(Jauntlet::Camera2D* camera) :
 }
 
 Navigation::~Navigation() {
-	delete _background;
+	//delete _background;
 	delete _caretElement;
+	delete _drillIconElement;
 }
 
 Jauntlet::UIManager* Navigation::genNav() {
@@ -48,11 +50,17 @@ Jauntlet::UIManager* Navigation::genNav() {
 	//read in textures
 	_navTexture = Jauntlet::ResourceManager::getTexture(bgTextures[0]).id;
 
+	_bgPos = glm::vec2(0, 0);
+
 	//draw background
-	if (_background == NULL) {
-		_background = new Jauntlet::UISpriteAnimatedElement(_navTexture, &_bgPos, glm::vec2(640, 1024), Jauntlet::UIElement::ORIGIN_PIN::CENTER, &_backgroundAnimation);
-		_uiManager.addElement(_background, &GlobalContext::normalShader);
-	}
+	_background = Jauntlet::UISpriteAnimatedElement(_navTexture, &_bgPos, glm::vec2(640, 1024), Jauntlet::UIElement::ORIGIN_PIN::CENTER, &_backgroundAnimation);
+	_uiManager.addElement(&_background, &GlobalContext::normalShader);
+	_backgroundAnimation.play(0, 2, 0.2f);
+
+	//draw drill icon
+	_drillIconElement = new Jauntlet::UISpriteElement(_drillIcon, &_iconPos, glm::vec2(60), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+	_uiManager.addElement(_drillIconElement, &GlobalContext::normalShader);
+	_drillIconElement->visible = _navOpen;
 
 	for (int y = 0; y < layerCount; y++) {
 		for (int x = 0; x < layerWidth; x++) {
@@ -82,7 +90,7 @@ Jauntlet::UIManager* Navigation::genNav() {
 	}
 
 	//update visibility
-	_background->visible = _navOpen;
+	_background.visible = _navOpen;
 	for (int i = 0; i < _points.size(); ++i) {
 		_points[i].visible = _navOpen;
 	}
@@ -96,8 +104,8 @@ Jauntlet::UIManager* Navigation::genNav() {
 	return &_uiManager;
 
 	// optimize batches
-	//_uiManager.optimize();
-	//_uiManager.resolvePositions();
+	_uiManager.optimize();
+	_uiManager.resolvePositions();
 }
 
 void Navigation::update() {
@@ -107,14 +115,8 @@ void Navigation::update() {
 void Navigation::toggleNav() {
 	_navOpen = !_navOpen;
 	//update visibility
-	if (_navOpen) {
-		_background->visible = true;
-		_backgroundAnimation.play(0, 2, 1.0f);
-	}
-	else {
-		_background->visible = false;
-		_backgroundAnimation.stop();
-	}
+	_background.visible = _navOpen;
+	_drillIconElement->visible = _navOpen;
 	if (_caretSet) {
 		_caretElement->visible = _navOpen;
 	}
@@ -140,11 +142,11 @@ void Navigation::selectNav(int id) {
 	_uiManager.resolvePositions();
 }
 
-void Navigation::updateTravel() {
+void Navigation::updateTravel() { //TODO: Hide the nav points that get up above the drill icon
 	if (_destination != -1) {
 		_progress += Jauntlet::Time::getDeltaTime();
 		float newX = 0.0f;
-		float newY = 10 * Jauntlet::Time::getDeltaTime();
+		float newY = 187.5 * Jauntlet::Time::getDeltaTime();
 		refreshPositions(newX, newY);
 		if (_progress >= 1.0f) {
 			_destination = -1; //set dest
@@ -165,6 +167,8 @@ void Navigation::refreshPositions(float shiftX, float shiftY) {
 	for (int i = 0; i < _positions.size(); i++) {
 		_positions[i] = glm::vec2(_positions[i].x - shiftX, _positions[i].y - shiftY);
 	}
+	_caretPos = glm::vec2(_caretPos.x - shiftX, _caretPos.y - shiftY);
+	_uiManager.resolvePositions();
 }
 
 Jauntlet::UIManager* Navigation::getUIManager() {

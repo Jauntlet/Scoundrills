@@ -21,15 +21,15 @@ bool PlayerStation::isColliding(glm::vec2 position) {
 bool PlayerStation::isOccupied() const {
 	return _occupied;
 }
-void PlayerStation::Occupy(Player* player) {
-	// We pass in a player pointer which suggests that we can do stuff specifically to the player occupying
-	// the station, however we don't do anything with it within this class and its mostly needed for derived classes. -xm
-	if (player != nullptr) {
-		_occupied = true;
-	}
-	else {
-		_occupied = false;
-	}
+void PlayerStation::occupy() {
+	_occupied = true;
+}
+void PlayerStation::unoccupy() {
+	_occupied = false;
+}
+
+void PlayerStation::onPlayerArrival(Player& player) {
+	// Used by derived classes, but some don't so its intended for this empty method to run. -xm
 }
 
 glm::vec2 PlayerStation::getAnchorPoint() const {

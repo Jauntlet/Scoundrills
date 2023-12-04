@@ -7,7 +7,7 @@ Holdable::Holdable(const std::string& texture, const glm::vec2& position, const 
 	_textureID(Jauntlet::ResourceManager::getTexture(texture).id),
 	position(position),
 	_size(size),
-	_itemType(type)
+	itemType(type)
 {
 	switch (type) {
 		case HoldableType::WATER:
@@ -41,7 +41,7 @@ bool Holdable::isHeld() const {
 }
 
 uint32_t Holdable::requestWater(uint32_t requestedAmt) {
-	if (_itemType != HoldableType::WATER) {
+	if (itemType != HoldableType::WATER) {
 		return 0;
 	}
 
@@ -54,7 +54,7 @@ uint32_t Holdable::requestWater(uint32_t requestedAmt) {
 	return requestedAmt;
 }
 bool Holdable::isEmpty() const {
-	if (_itemType == HoldableType::WATER) {
+	if (itemType == HoldableType::WATER) {
 		return _waterAmount == 0;
 	}
 	else return false;

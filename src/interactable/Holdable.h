@@ -9,7 +9,7 @@
 class Player;
 
 enum class HoldableType {
-	WATER, NONE
+	WATER, PIPE, NONE
 };
 
 class Holdable
@@ -38,13 +38,13 @@ public:
 	bool isEmpty() const;
 
 	glm::vec2 position;
+	HoldableType itemType;
 protected:
 	Player* _player = nullptr;
 
 	GLuint _textureID;
 	glm::vec2 _size;
 private:
-	HoldableType _itemType;
 	union { // its expected that any class override for this will not use this union.
 		uint32_t _waterAmount;
 	};
