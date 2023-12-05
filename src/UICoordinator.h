@@ -24,6 +24,7 @@ public:
 	
 	Navigation* navigation;
 	std::string waterIconText = "0", foodIconText = "0", partsIconText = "0";
+	std::string tempIconText = "0";
 private:
 	// Pointers
 	Jauntlet::Camera2D* _hudCamera;
@@ -42,6 +43,9 @@ private:
 	Jauntlet::UITextElement _foodIconTextElement;
 	glm::vec2 _partsIconTextPosition = glm::vec2(465, 5);
 	Jauntlet::UITextElement _partsIconTextElement;
+	// TODO: make temperature different from the rest of the UI
+	glm::vec2 _tempIconTextPosition = glm::vec2(665, 5);
+	Jauntlet::UITextElement _tempIconTextElement;
 
 	// Icons
 	glm::vec2 _waterIconPosition = glm::vec2(15, 15);

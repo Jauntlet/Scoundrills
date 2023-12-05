@@ -135,6 +135,7 @@ void Navigation::selectNav(int id) {
 	if (!(_positions[id].y < -185 && _positions[id].y > -190)) return;
 	_caretSet = true;
 	_destination = id;
+	_shiftPos = glm::normalize(glm::vec2(_positions[id].x, 187.5)) * 187.5f;
 	_caretPos = _positions[id] + glm::vec2(0, 37.5);
 	if (!_caretElement->visible) {
 		_caretElement->visible = true;
@@ -146,8 +147,8 @@ void Navigation::selectNav(int id) {
 void Navigation::updateTravel() { //TODO: Hide the nav points that get up above the drill icon
 	if (_destination != -1) {
 		_progress += Jauntlet::Time::getDeltaTime();
-		float newX = _positions[_destination].x * 1.25f * Jauntlet::Time::getDeltaTime();
-		float newY = 187.5 * Jauntlet::Time::getDeltaTime();
+		float newX = _shiftPos.x * Jauntlet::Time::getDeltaTime();
+		float newY = _shiftPos.y * Jauntlet::Time::getDeltaTime();
 		refreshPositions(newX, newY);
 		if (_progress >= 1.0f) {
 			_destination = -1; //set dest
