@@ -61,13 +61,15 @@ void DrillManager::drawLayerOne() {
 	drillFloor.draw();
 	drillWalls.draw();
 	pipes.draw();
+
 	_drillAssets.drawLayerTwo();
 
 	_spriteBatch.begin();
 	_boiler.draw(_spriteBatch);
 	_waterTank.draw(_spriteBatch);
 	_spriteBatch.endAndRender();
-	
+
+	_drillAssets.drawLayerThree();
 }
 void DrillManager::drawLayerTwo() {
 	// draw all holdable items

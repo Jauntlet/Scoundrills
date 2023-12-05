@@ -44,10 +44,11 @@ void DrillAssetRenderer::drawLayerTwo() {
 	
 	_spriteBatch.draw(glm::vec4(64 * 15.5, -64 * 2, 64 * 2, 96 * 2), _boilerAnimation.getUV(), _boilerTexture);
 	
+	_spriteBatch.endAndRender();
+}
+void DrillAssetRenderer::drawLayerThree() {
 	_boilerSmoke.update();
 	_boilerSmoke.draw();
-
-	_spriteBatch.endAndRender();
 }
 
 void DrillAssetRenderer::stopAnimation() {

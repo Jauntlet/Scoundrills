@@ -16,6 +16,8 @@ public:
 	void drawLayerOne();
 	// draw the second layer of assets; this renders above the walls/floor of the drill
 	void drawLayerTwo();
+	// draw the third layer of assets; this renders above the second layer.
+	void drawLayerThree();
 	// stop the drill animation
 	void startAnimation();
 	// start the drill animation
