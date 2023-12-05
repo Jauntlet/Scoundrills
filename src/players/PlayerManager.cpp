@@ -10,7 +10,7 @@ PlayerManager::PlayerManager(int initialPlayers, DrillManager* drill)
 	_players.reserve(sizeof(Player) * initialPlayers);
 
 	for (int i = 0; i < initialPlayers; ++i) {
-		_players.emplace_back(64 * (i + 1) + 320, -64);
+		_players.emplace_back(64 * (i + 1) + 704, -64 * 10);
 	}
 }
 void PlayerManager::addPlayer(Player& player) {
