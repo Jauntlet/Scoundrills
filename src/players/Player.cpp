@@ -1,9 +1,5 @@
 #include "Player.h"
-#include "PlayerManager.h"
-#include "src/drill/DrillManager.h"
 #include "src/interactable/Holdable.h"
-
-#include <iostream> // REMOVE
 
 Player::Player(float x, float y) : collider(Jauntlet::BoxCollider2D(glm::vec2(64), glm::vec2(x,y))) {
 	_position = glm::vec2(x, y);
@@ -72,7 +68,7 @@ void Player::draw(Jauntlet::SpriteBatch& spriteBatch) {
 	spriteBatch.draw({ _position.x, _position.y, 64, 64 }, Jauntlet::ResourceManager::getTexture("Textures/Craig.png").id, 0);
 }
 
-void Player::navigateTo(DrillManager& drill, PlayerManager& playerManager, glm::vec2 position) {
+void Player::navigateTo(DrillManager& drill, PathRenderer& pathRenderer, glm::vec2 position) {
 	_path.clear();
 
 	PlayerStation* storedStation;
@@ -91,13 +87,15 @@ void Player::navigateTo(DrillManager& drill, PlayerManager& playerManager, glm::
 		if (!_station->isOccupied()) {
 			_station->occupy();
 			
-			_path = Pathfinding::findPath(drill, playerManager, _position, _station->getAnchorPoint());
+			_path = pathRenderer.getPath();
+			if (_path.empty()) return;
 			_path.erase(_path.begin());
 			// pathfind to the position of the station the player was assigned to.
 			_path.insert(_path.begin(), _station->getAnchorPoint() - glm::vec2(32, 32));
 		}
 		else {
-			_path = Pathfinding::findPath(drill, playerManager, _position, drill.drillWalls.RoundWorldPos(position));
+			_path = pathRenderer.getPath();
+			if (_path.empty()) return;
 			_path.erase(_path.begin());
 			_station = nullptr;
 		}
@@ -107,7 +105,8 @@ void Player::navigateTo(DrillManager& drill, PlayerManager& playerManager, glm::
 			_station->unoccupy();
 			_station = nullptr;
 		}
-		_path = Pathfinding::findPath(drill, playerManager, _position, drill.drillWalls.RoundWorldPos(position));
+		_path = pathRenderer.getPath();
+		if (_path.empty()) return;
 		_path.erase(_path.begin());
 		if (!drill.DestMatchesRandomPipe(drill.pipes.RoundWorldPos(position))) {
 			if (pipeDest != nullptr) {

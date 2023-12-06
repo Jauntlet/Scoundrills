@@ -10,7 +10,6 @@
       <Filter>players</Filter>
     </ClCompile>
     <ClCompile Include="src\CameraManager.cpp" />
-    <ClCompile Include="src\PlayerResources.cpp" />
     <ClCompile Include="src\drill\DrillAssetRenderer.cpp">
       <Filter>drill</Filter>
     </ClCompile>
@@ -18,7 +17,6 @@
       <Filter>drill</Filter>
     </ClCompile>
     <ClCompile Include="src\UICoordinator.cpp" />
-    <ClCompile Include="src\SelectedTileRenderer.cpp" />
     <ClCompile Include="src\pathfinding\Pathfinding.cpp">
       <Filter>pathfinding</Filter>
     </ClCompile>
@@ -52,6 +50,15 @@
     <ClCompile Include="src\interactable\specificStations\WaterTank.cpp">
       <Filter>interactable\specificStations</Filter>
     </ClCompile>
+    <ClCompile Include="src\interactable\specificStations\Forge.cpp">
+      <Filter>interactable\specificStations</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pathfinding\SelectedTileRenderer.cpp">
+      <Filter>pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="src\drill\PlayerResources.cpp">
+      <Filter>drill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Navigation.h" />
@@ -62,7 +69,6 @@
       <Filter>players</Filter>
     </ClInclude>
     <ClInclude Include="src\CameraManager.h" />
-    <ClInclude Include="src\PlayerResources.h" />
     <ClInclude Include="src\drill\DrillAssetRenderer.h">
       <Filter>drill</Filter>
     </ClInclude>
@@ -70,7 +76,6 @@
       <Filter>drill</Filter>
     </ClInclude>
     <ClInclude Include="src\UICoordinator.h" />
-    <ClInclude Include="src\SelectedTileRenderer.h" />
     <ClInclude Include="src\pathfinding\Pathfinding.h">
       <Filter>pathfinding</Filter>
     </ClInclude>
@@ -106,6 +111,15 @@
     </ClInclude>
     <ClInclude Include="src\interactable\specificStations\WaterTank.h">
       <Filter>interactable\specificStations</Filter>
+    </ClInclude>
+    <ClInclude Include="src\interactable\specificStations\Forge.h">
+      <Filter>interactable\specificStations</Filter>
+    </ClInclude>
+    <ClInclude Include="src\pathfinding\SelectedTileRenderer.h">
+      <Filter>pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="src\drill\PlayerResources.h">
+      <Filter>drill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

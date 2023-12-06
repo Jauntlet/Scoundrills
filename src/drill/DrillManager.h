@@ -6,11 +6,12 @@
 #include <Jauntlet/Tiles/TileMap.h>
 #include <Jauntlet/Inputs/InputManager.h>
 #include "DrillAssetRenderer.h"
-#include "../PlayerResources.h"
+#include "PlayerResources.h"
 #include "../Navigation.h"
 #include "../interactable/Holdable.h"
 #include "../interactable/specificStations/Boiler.h"
 #include "../interactable/specificStations/WaterTank.h"
+#include "../interactable/specificStations/Forge.h"
 
 class PlayerManager;
 
@@ -61,6 +62,7 @@ private:
 	DrillAssetRenderer _drillAssets;
 	Boiler _boiler;
 	WaterTank _waterTank;
+	Forge _forge;
 
 	Jauntlet::TextureCache _textureCache;
 

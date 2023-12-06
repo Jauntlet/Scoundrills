@@ -12,8 +12,8 @@
 #include <Jauntlet/UI/UIManager.h>
 #include <Jauntlet/UI/UITextElement.h>
 #include "../players/PlayerManager.h"
-#include "../PlayerResources.h"
-#include "../SelectedTileRenderer.h"
+#include "../drill/PlayerResources.h"
+#include "../pathfinding/SelectedTileRenderer.h"
 #include "../UICoordinator.h"
 
 class MainGame {
@@ -35,6 +35,8 @@ private:
 
 	DrillManager _drill;
 
+	Jauntlet::TextRenderer _textRenderer;
+	
 	UICoordinator _uiCoordinator;
 
 	CameraManager _cameraManager;
@@ -43,7 +45,6 @@ private:
 
 	SelectedTileRenderer _selectedTile;
 	
-	Jauntlet::TextRenderer _textRenderer;
 
 	Jauntlet::SpriteBatch _playerSpriteBatch;
 

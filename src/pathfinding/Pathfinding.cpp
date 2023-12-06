@@ -114,11 +114,6 @@ std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, glm::vec2 s
 			}
 		}
 
-		// reverse the list
-		for (int i = 0; i < _closedList.size(); ++i) {
-			output[0] = output.back();
-		}
-
 		// reset lists
 		_openList.clear();
 		_closedList.clear();
@@ -147,10 +142,6 @@ std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, glm::vec2 s
 		
 			output.push_back(map->TilePosToWorldPos(Node.position));
 		}
-	}
-	// reverse the list
-	for (int i = 0; i < _closedList.size(); ++i) {
-		output[0] = output.back();
 	}
 
 	// reset lists
@@ -257,11 +248,6 @@ std::vector<glm::vec2> Pathfinding::findPath(const DrillManager& drill, PlayerMa
 			}
 		}
 
-		// reverse the list
-		for (int i = 0; i < _closedList.size(); ++i) {
-			output[0] = output.back();
-		}
-
 		// reset lists
 		_openList.clear();
 		_closedList.clear();
@@ -290,10 +276,6 @@ std::vector<glm::vec2> Pathfinding::findPath(const DrillManager& drill, PlayerMa
 
 			output.push_back(drill.drillWalls.TilePosToWorldPos(Node.position));
 		}
-	}
-	// reverse the list
-	for (int i = 0; i < _closedList.size(); ++i) {
-		output[0] = output.back();
 	}
 
 	// reset lists

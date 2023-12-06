@@ -14,7 +14,10 @@ public:
 	void createPath(glm::vec2 start, glm::vec2 end);
 	void clearPath();
 	void drawPath();
+
+	std::vector<glm::vec2> getPath();
 private:
+	std::vector<glm::vec2> _path;
 	DrillManager* _drill;
 	PlayerManager* _players;
 

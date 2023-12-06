@@ -36,7 +36,7 @@ bool PlayerManager::processInput(DrillManager& drill, const Jauntlet::Camera2D& 
 		}
 		else { // we have selected a position for the player to move to.
 			if (drill.isValidDestination(_storedMousePos, this) || drill.checkHoveringStation(mousePos) != nullptr) {
-				_players[_selectedPlayer].navigateTo(drill, *this, mousePos);
+				_players[_selectedPlayer].navigateTo(drill, _pathRenderer, mousePos);
 			}
 			_pathRenderer.clearPath();
 			_selectedPlayer = -1;
