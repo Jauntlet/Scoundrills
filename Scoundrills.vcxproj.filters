@@ -52,6 +52,9 @@
     <ClCompile Include="src\interactable\specificStations\WaterTank.cpp">
       <Filter>interactable\specificStations</Filter>
     </ClCompile>
+    <ClCompile Include="src\interactable\specificStations\Forge.cpp">
+      <Filter>interactable\specificStations</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Navigation.h" />
@@ -105,6 +108,9 @@
       <Filter>interactable\specificStations</Filter>
     </ClInclude>
     <ClInclude Include="src\interactable\specificStations\WaterTank.h">
+      <Filter>interactable\specificStations</Filter>
+    </ClInclude>
+    <ClInclude Include="src\interactable\specificStations\Forge.h">
       <Filter>interactable\specificStations</Filter>
     </ClInclude>
   </ItemGroup>

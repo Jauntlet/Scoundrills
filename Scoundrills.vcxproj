@@ -26,6 +26,7 @@
     <ClCompile Include="src\interactable\Holdable.cpp" />
     <ClCompile Include="src\interactable\PlayerStation.cpp" />
     <ClCompile Include="src\interactable\specificStations\Boiler.cpp" />
+    <ClCompile Include="src\interactable\specificStations\Forge.cpp" />
     <ClCompile Include="src\interactable\specificStations\WaterTank.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Navigation.cpp" />
@@ -50,6 +51,7 @@
     <ClInclude Include="src\interactable\Holdable.h" />
     <ClInclude Include="src\interactable\PlayerStation.h" />
     <ClInclude Include="src\interactable\specificStations\Boiler.h" />
+    <ClInclude Include="src\interactable\specificStations\Forge.h" />
     <ClInclude Include="src\interactable\specificStations\WaterTank.h" />
     <ClInclude Include="src\Navigation.h" />
     <ClInclude Include="src\pathfinding\Pathfinding.h" />
