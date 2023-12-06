@@ -35,6 +35,8 @@ private:
 
 	DrillManager _drill;
 
+	Jauntlet::TextRenderer _textRenderer;
+	
 	UICoordinator _uiCoordinator;
 
 	CameraManager _cameraManager;
@@ -43,7 +45,6 @@ private:
 
 	SelectedTileRenderer _selectedTile;
 	
-	Jauntlet::TextRenderer _textRenderer;
 
 	Jauntlet::SpriteBatch _playerSpriteBatch;
 
