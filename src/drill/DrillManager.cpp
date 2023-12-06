@@ -4,7 +4,7 @@
 #include "src/interactable/Holdable.h"
 
 //Constants
-const float DrillManager::DISASTER_INTERVAL = 1.0f;
+const float DrillManager::DISASTER_INTERVAL = 15.0f;
 
 const float heatRiseScale = .3f; //1 heat every ~3 seconds
 const float heatFallScale = .1f; //1 heat every 10 seconds
