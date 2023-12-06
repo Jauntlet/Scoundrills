@@ -15,6 +15,8 @@
 
 class PlayerManager;
 
+
+
 class DrillManager {
 public:
 	DrillManager(PlayerResources resourceManager, Jauntlet::Camera2D* camera);
@@ -35,6 +37,7 @@ public:
 	void toggle();
 
 	bool isValidDestination(glm::vec2 worldPos, PlayerManager* playerManager) const;
+	bool isValidDestination(glm::vec2 worldPos) const;
 	bool isValidPath(glm::vec2 worldPos, PlayerManager* playerManager) const;
 
 	PlayerStation* checkHoveringStation(glm::vec2 position);
@@ -59,18 +62,33 @@ public:
 	Navigation navigation;
 	PlayerResources resources;
 private:
+	// Commits a random disaster
+	void DisasterEvent();
+	// places an ice item on the ground
+	void placeIce();
+	// places scrap on the ground
+	void placeScrap();
+
+	// Drill assets / Pieces
 	DrillAssetRenderer _drillAssets;
 	Boiler _boiler;
 	WaterTank _waterTank;
 	Forge _forge;
 
+	// Texture cache for tilemaps
 	Jauntlet::TextureCache _textureCache;
 
+	// Drill States
 	bool _drillOn = true;
+	float _disasterTime = DISASTER_INTERVAL;
 
-
+	// Holdable Item management
 	std::vector<Holdable*> _holdables;
 	Jauntlet::SpriteBatch _spriteBatch;
 
+	// Broken pipes
 	std::vector<glm::ivec2> _brokenPipeLocations;
+
+	// Static Values
+	static const float DISASTER_INTERVAL;
 };
