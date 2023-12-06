@@ -88,12 +88,14 @@ void Player::navigateTo(DrillManager& drill, PathRenderer& pathRenderer, glm::ve
 			_station->occupy();
 			
 			_path = pathRenderer.getPath();
+			if (_path.empty()) return;
 			_path.erase(_path.begin());
 			// pathfind to the position of the station the player was assigned to.
 			_path.insert(_path.begin(), _station->getAnchorPoint() - glm::vec2(32, 32));
 		}
 		else {
 			_path = pathRenderer.getPath();
+			if (_path.empty()) return;
 			_path.erase(_path.begin());
 			_station = nullptr;
 		}
@@ -104,6 +106,7 @@ void Player::navigateTo(DrillManager& drill, PathRenderer& pathRenderer, glm::ve
 			_station = nullptr;
 		}
 		_path = pathRenderer.getPath();
+		if (_path.empty()) return;
 		_path.erase(_path.begin());
 		if (!drill.DestMatchesRandomPipe(drill.pipes.RoundWorldPos(position))) {
 			if (pipeDest != nullptr) {
