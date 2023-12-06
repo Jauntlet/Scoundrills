@@ -26,24 +26,19 @@ void PathRenderer::createPath(glm::vec2 start, glm::vec2 end) {
 
 	glm::vec2 lastPos = start;
 	_path.pop_back();
-	// _path[0] = _path.back();
-	// _path.pop_back();
+
+	_spriteBatch.begin();
 	
 	if (_path.size() < 2) {
-		// path is too small to go anywhere
+		// path is too small to go anywhere, clear path rendering and stop
+		_spriteBatch.end();
 		return;
 	}
 
-	// path processing
-	// _path.pop_back();
-	// _path[0] = _path.back();
-	// _path.pop_back();
-
-	_spriteBatch.begin();
-	glm::ivec2 direction = glm::ivec2(0), lastDir  = glm::sign(_path[2] - _path[1]);
+	glm::ivec2 direction = glm::ivec2(0), lastDir  = glm::sign((_path.size() > 2 ? _path[2] : end) - _path[1]);
  	for (int i = 1; i < _path.size(); ++i) {
 		if (i != 1) {
-			direction = glm::sign(_path[i] - _path[i+1]);
+			direction = glm::sign(_path[i] - (i+1==_path.size() ? start : _path[i+1]));
 
 			if (direction != lastDir && lastDir != glm::ivec2(0)) {
 				if (lastDir.x == 1) {
@@ -93,7 +88,7 @@ void PathRenderer::createPath(glm::vec2 start, glm::vec2 end) {
 			else if (direction.y == 1) _spriteBatch.draw({ _path[i].x, _path[i].y, 64, 64 }, { (1.0f / 18.0f) * 2.0f, 0, (1.0f / 18.0f), 1 }, _textureID);
 
 			// correct the direction for the next line piece
-			direction = glm::sign(_path[i] - _path[i+1]);
+			if (_path.size() > 2) direction = glm::sign(_path[i] - _path[i+1]);
 		}
 		lastDir = direction;
 		//_path[i] = _path.back(); 
