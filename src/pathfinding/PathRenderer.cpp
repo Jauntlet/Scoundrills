@@ -35,7 +35,7 @@ void PathRenderer::createPath(glm::vec2 start, glm::vec2 end) {
 		return;
 	}
 
-	glm::ivec2 direction = glm::ivec2(0), lastDir  = glm::sign((_path.size() > 2 ? _path[2] : end) - _path[1]);
+	glm::ivec2 direction = glm::ivec2(0), lastDir  = glm::sign((_path.size() > 2 ? _path[2] : start) - _path[1]);
  	for (int i = 1; i < _path.size(); ++i) {
 		if (i != 1) {
 			direction = glm::sign(_path[i] - (i+1==_path.size() ? start : _path[i+1]));
