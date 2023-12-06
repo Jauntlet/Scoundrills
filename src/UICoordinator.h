@@ -37,14 +37,14 @@ private:
 
 	// Text handling
 	Jauntlet::Color _textColor = Jauntlet::Color(); // default to 255, 255, 255, 255
-	glm::vec2 _waterIconTextPosition = glm::vec2(65, 5);
+	glm::vec2 _waterIconTextPosition = glm::vec2(85, 5);
 	Jauntlet::UITextElement _waterIconTextElement;
-	glm::vec2 _foodIconTextPosition = glm::vec2(265, 5);
+	glm::vec2 _foodIconTextPosition = glm::vec2(285, 5);
 	Jauntlet::UITextElement _foodIconTextElement;
-	glm::vec2 _partsIconTextPosition = glm::vec2(465, 5);
+	glm::vec2 _partsIconTextPosition = glm::vec2(485, 5);
 	Jauntlet::UITextElement _partsIconTextElement;
 	// TODO: make temperature different from the rest of the UI
-	glm::vec2 _tempIconTextPosition = glm::vec2(665, 5);
+	glm::vec2 _tempIconTextPosition = glm::vec2(685, 5);
 	Jauntlet::UITextElement _tempIconTextElement;
 
 	// Icons
