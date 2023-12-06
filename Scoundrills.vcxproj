@@ -22,6 +22,7 @@
     <ClCompile Include="src\CameraManager.cpp" />
     <ClCompile Include="src\drill\DrillAssetRenderer.cpp" />
     <ClCompile Include="src\drill\DrillManager.cpp" />
+    <ClCompile Include="src\drill\PlayerResources.cpp" />
     <ClCompile Include="src\interactable\AnimatedPlayerStation.cpp" />
     <ClCompile Include="src\interactable\Holdable.cpp" />
     <ClCompile Include="src\interactable\PlayerStation.cpp" />
@@ -32,14 +33,13 @@
     <ClCompile Include="src\Navigation.cpp" />
     <ClCompile Include="src\pathfinding\Pathfinding.cpp" />
     <ClCompile Include="src\pathfinding\PathRenderer.cpp" />
-    <ClCompile Include="src\PlayerResources.cpp" />
+    <ClCompile Include="src\pathfinding\SelectedTileRenderer.cpp" />
     <ClCompile Include="src\players\Player.cpp" />
     <ClCompile Include="src\players\PlayerManager.cpp" />
     <ClCompile Include="src\scenes\GlobalContext.cpp" />
     <ClCompile Include="src\scenes\MainGame.cpp" />
     <ClCompile Include="src\scenes\MainMenu.cpp" />
     <ClCompile Include="src\scenes\SceneManager.cpp" />
-    <ClCompile Include="src\SelectedTileRenderer.cpp" />
     <ClCompile Include="src\UICoordinator.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -47,6 +47,7 @@
     <ClInclude Include="src\CameraManager.h" />
     <ClInclude Include="src\drill\DrillAssetRenderer.h" />
     <ClInclude Include="src\drill\DrillManager.h" />
+    <ClInclude Include="src\drill\PlayerResources.h" />
     <ClInclude Include="src\interactable\AnimatedPlayerStation.h" />
     <ClInclude Include="src\interactable\Holdable.h" />
     <ClInclude Include="src\interactable\PlayerStation.h" />
@@ -56,14 +57,13 @@
     <ClInclude Include="src\Navigation.h" />
     <ClInclude Include="src\pathfinding\Pathfinding.h" />
     <ClInclude Include="src\pathfinding\PathRenderer.h" />
-    <ClInclude Include="src\PlayerResources.h" />
+    <ClInclude Include="src\pathfinding\SelectedTileRenderer.h" />
     <ClInclude Include="src\players\Player.h" />
     <ClInclude Include="src\players\PlayerManager.h" />
     <ClInclude Include="src\scenes\GlobalContext.h" />
     <ClInclude Include="src\scenes\MainGame.h" />
     <ClInclude Include="src\scenes\MainMenu.h" />
     <ClInclude Include="src\scenes\SceneManager.h" />
-    <ClInclude Include="src\SelectedTileRenderer.h" />
     <ClInclude Include="src\UICoordinator.h" />
   </ItemGroup>
   <ItemGroup>

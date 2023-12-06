@@ -6,7 +6,7 @@
 #include <Jauntlet/Tiles/TileMap.h>
 #include <Jauntlet/Inputs/InputManager.h>
 #include "DrillAssetRenderer.h"
-#include "../PlayerResources.h"
+#include "PlayerResources.h"
 #include "../Navigation.h"
 #include "../interactable/Holdable.h"
 #include "../interactable/specificStations/Boiler.h"
