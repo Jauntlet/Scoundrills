@@ -31,7 +31,6 @@ void PathRenderer::createPath(glm::vec2 start, glm::vec2 end) {
 	
 	if (_path.size() < 2) {
 		// path is too small to go anywhere
-		clearPath();
 		return;
 	}
 
