@@ -38,6 +38,9 @@ void DrillManager::update() {
 	}
 	else {
 		resources.heat -= Jauntlet::Time::getDeltaTime() * (heatFallScale - _brokenPipeLocations.size() * 0.1);
+		if (resources.heat < 0) {
+			resources.heat = 0;
+		}
 	}
 
 	if (boilerWater > Boiler::BOILER_MAX_WATER * 0.75) {
