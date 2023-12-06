@@ -1,4 +1,5 @@
 #include "SelectedTileRenderer.h"
+#include "src/interactable/PlayerStation.h"
 
 SelectedTileRenderer::SelectedTileRenderer(DrillManager* drill, PlayerManager* playerManager) : 
 	_drawColor(255, 255, 255), 
@@ -16,7 +17,8 @@ void SelectedTileRenderer::draw(Jauntlet::Camera2D* activeCamera, Jauntlet::Inpu
 
 		// if a player is selected, we highlight the tile if its a valid pathfind pos or not
 		if (_players->isPlayerSelected()) {
-			if (_drill->isValidDestination(_selectedTilePos, _players) || _drill->checkHoveringStation(_lastPosition) != nullptr) {
+			PlayerStation* station;
+			if (_drill->isValidDestination(_selectedTilePos, _players) || ((station = _drill->checkHoveringStation(_lastPosition)) != nullptr && !station->isOccupied())) {
 				_drawColor = Jauntlet::Color(0, 255, 0);
 			}
 			else {
