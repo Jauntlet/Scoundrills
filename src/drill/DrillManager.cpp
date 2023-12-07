@@ -34,7 +34,7 @@ void DrillManager::update() {
 	stupid += Jauntlet::Time::getDeltaTime();
 
 	if (stupid > 5) {
-		_cameraManager.doExplosionShake();
+		//_cameraManager.doExplosionShake();
 	}
 	
 	// calculate the change in water/heat
