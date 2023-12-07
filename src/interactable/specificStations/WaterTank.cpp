@@ -1,7 +1,6 @@
 #include "WaterTank.h"
 #include "../../players/Player.h"
 #include "../../drill/DrillManager.h"
-#include "WaterTank.h"
 
 WaterTank::WaterTank(DrillManager& drill, glm::vec4 destination, glm::vec4 boundingBox, glm::vec2 anchorPointOffset)
 : PlayerStation("Textures/Water tank.png", destination, boundingBox, anchorPointOffset),
