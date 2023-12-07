@@ -255,13 +255,18 @@ void DrillManager::DisasterEvent() {
 	 
 	switch (disaster) {
 	case 0:
-		bustRandomPipe();
+		if (resources.heat > 120) {
+			bustRandomPipe();
+		}
+		else {
+			placeScrap();
+		}
 		break;
 	case 1:
-		placeIce();
+		placeScrap();
 		break;
 	case 2:
-		placeScrap();
+		placeIce();
 		break;
 	}
 	
@@ -274,7 +279,7 @@ void DrillManager::placeIce() {
 		position = drillFloor.TilePosToWorldPos(drillFloor.selectRandomTile(1));
 	}
 
-	addHoldable("Textures/Ice.png", position, glm::vec2(32), HoldableType::ICE);
+	addHoldable("Textures/ice chunks1.png", position, glm::vec2(64), HoldableType::ICE);
 }
 void DrillManager::placeScrap() {
 	glm::vec2 position = drillFloor.TilePosToWorldPos(drillFloor.selectRandomTile(1));
@@ -283,5 +288,5 @@ void DrillManager::placeScrap() {
 		position = drillFloor.TilePosToWorldPos(drillFloor.selectRandomTile(1));
 	}
 
-	addHoldable("Textures/Scrap.png", position, glm::vec2(32), HoldableType::SCRAP);
+	addHoldable("Textures/ResourceIcon.png", position, glm::vec2(32), HoldableType::SCRAP);
 }
