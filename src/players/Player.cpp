@@ -76,6 +76,9 @@ void Player::navigateTo(DrillManager& drill, PathRenderer& pathRenderer, glm::ve
 		if (_station == storedStation) {
 			// we are already at the correct station
 			return;
+		} else if (_station != nullptr) {
+			// unoccupy station we are already at
+			_station->unoccupy();
 		}
 		
 		if (pipeDest != nullptr) {
