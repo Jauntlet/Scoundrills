@@ -4,18 +4,20 @@
 #include "src/players/Player.h"
 #include "../drill/DrillManager.h"
 
-PlayerManager::PlayerManager(int initialPlayers, DrillManager* drill)
-	:
-	_pathRenderer(drill, this) {
+PlayerManager::PlayerManager(int initialPlayers, DrillManager* drill) :
+	_pathRenderer(drill, this)
+{
 	_players.reserve(sizeof(Player) * initialPlayers);
 
 	for (int i = 0; i < initialPlayers; ++i) {
 		_players.emplace_back(64 * (i + 1) + 704, -64 * 10);
 	}
 }
+
 void PlayerManager::addPlayer(Player& player) {
 	_players.push_back(player);
 }
+
 void PlayerManager::createPlayer(int x, int y) {
 	_players.emplace_back(x, y);
 }
@@ -33,8 +35,7 @@ bool PlayerManager::processInput(DrillManager& drill, const Jauntlet::Camera2D& 
 					return true;
 				}
 			}
-		}
-		else { // we have selected a position for the player to move to.
+		} else { // we have selected a position for the player to move to.
 			if (drill.isValidDestination(_storedMousePos, this) || drill.checkHoveringStation(mousePos) != nullptr) {
 				_players[_selectedPlayer].navigateTo(drill, _pathRenderer, mousePos);
 			}
@@ -47,8 +48,7 @@ bool PlayerManager::processInput(DrillManager& drill, const Jauntlet::Camera2D& 
 			_storedMousePos = drill.drillWalls.RoundWorldPos(mousePos);
 			if (drill.isValidDestination(_storedMousePos, this) || drill.checkHoveringStation(_storedMousePos) != nullptr) {
 				_pathRenderer.createPath(_players[_selectedPlayer].getPosition(), _storedMousePos);
-			}
-			else {
+			} else {
 				_pathRenderer.clearPath();
 			}
 		}
@@ -62,7 +62,9 @@ bool PlayerManager::isPlayerSelected() {
 Player* PlayerManager::getSelectedPlayer() {
 	if (_selectedPlayer == -1) {
 		return nullptr;
-	} else return &_players[_selectedPlayer];
+	} else {
+		return &_players[_selectedPlayer];
+	}
 }
 bool PlayerManager::posMatchesPlayerDest(const glm::vec2& worldPos) {
 	for (int i = 0; i < _players.size(); i++) {

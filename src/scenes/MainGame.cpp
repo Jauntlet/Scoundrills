@@ -11,8 +11,7 @@
 
 #include <Jauntlet/Rendering/Particles/Properties/ParticleGrow.h>
 
-MainGame::MainGame()
-	:
+MainGame::MainGame() :
 	_camera(GlobalContext::screenSize.x, GlobalContext::screenSize.y),
 	_hudCamera(GlobalContext::screenSize.x, GlobalContext::screenSize.y),
 	_drill(_resources, &_hudCamera),

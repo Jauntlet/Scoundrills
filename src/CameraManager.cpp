@@ -7,8 +7,8 @@
 
 const float CAMERA_SPEED = 500;
 
-CameraManager::CameraManager(Jauntlet::Camera2D* camera, PlayerManager* players, DrillManager* drill) 
-	: _moveDown(&GlobalContext::inputManager),
+CameraManager::CameraManager(Jauntlet::Camera2D* camera, PlayerManager* players, DrillManager* drill) :
+	_moveDown(&GlobalContext::inputManager),
 	_moveLeft(&GlobalContext::inputManager),
 	_moveUp(&GlobalContext::inputManager),
 	_moveRight(&GlobalContext::inputManager),
@@ -35,8 +35,7 @@ void CameraManager::processInput() {
 			_camera->clearTransitions();
 			_deltaMouse = Jauntlet::Time::getTimeScale() * glm::vec2(_oldMouse.x - GlobalContext::inputManager.getMouseCoords().x, GlobalContext::inputManager.getMouseCoords().y - _oldMouse.y);
 		}
-	}
-	else {
+	} else {
 		_deltaMouse -= _deltaMouse * (Jauntlet::Time::getDeltaTime() * 10);
 	}
 
@@ -44,14 +43,17 @@ void CameraManager::processInput() {
 		_camera->translate(glm::vec2(-CAMERA_SPEED * Jauntlet::Time::getDeltaTime(), 0));
 		_camera->clearTransition(Jauntlet::Camera2D::TRANSITION_TYPE::POSITION);
 	}
+	
 	if (_moveRight.isDown()) {
 		_camera->translate(glm::vec2(CAMERA_SPEED * Jauntlet::Time::getDeltaTime(), 0));
 		_camera->clearTransition(Jauntlet::Camera2D::TRANSITION_TYPE::POSITION);
 	}
+	
 	if (_moveUp.isDown()) {
 		_camera->translate(glm::vec2(0, CAMERA_SPEED * Jauntlet::Time::getDeltaTime()));
 		_camera->clearTransition(Jauntlet::Camera2D::TRANSITION_TYPE::POSITION);
 	}
+	
 	if (_moveDown.isDown()) {
 		_camera->translate(glm::vec2(0, -CAMERA_SPEED * Jauntlet::Time::getDeltaTime()));
 		_camera->clearTransition(Jauntlet::Camera2D::TRANSITION_TYPE::POSITION);

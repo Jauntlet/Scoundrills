@@ -10,8 +10,7 @@ void MainMenu::startGame() {
 	_sceneManager->switchScene(GameState::MAINGAME);
 }
 
-MainMenu::MainMenu(SceneManager* sceneManager)
-	:
+MainMenu::MainMenu(SceneManager* sceneManager) :
 	_camera(GlobalContext::screenSize.x, GlobalContext::screenSize.y),
 	_uiManager(&_camera),
 	_startButton(&GlobalContext::inputManager, std::bind(&MainMenu::startGame, this), Jauntlet::ResourceManager::getTexture("Textures/Start button.png").id, &_startButtonPos, glm::vec2(2.4,0.8), Jauntlet::UIElement::ORIGIN_PIN::CENTER),

@@ -7,8 +7,7 @@
 #include <Jauntlet/JMath.h>
 #include <string>
 
-UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRenderer* textRenderer, DrillManager* drillManager)
-	:
+UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRenderer* textRenderer, DrillManager* drillManager) :
 	_hudCamera(hudCamera),
 	_textRenderer(textRenderer),
 	_UIManager(hudCamera),

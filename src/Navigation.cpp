@@ -65,10 +65,18 @@ Jauntlet::UIManager* Navigation::genNav() {
 	for (int y = 0; y < layerCount; y++) {
 		for (int x = 0; x < layerWidth; x++) {
 			int point = _map[y][x]; //The point type according to the generated "map," will determine the chance of encountering water, ores, etc. when arriving there.
-			if (point == 2) continue; // no X
+			
+			if (point == 2) {
+				continue; // no X
+			}
+			
 			_positions.emplace_back(125 * (x+1) - 62.5 * (layerWidth + 1), 187.5 * (y-1)); //0 is the center of the screen.
 			bool visible = true;
-			if (_positions[_positions.size() - 1].y < -250 || _positions[_positions.size() - 1].y > 500) visible = false;
+			
+			if (_positions[_positions.size() - 1].y < -250 || _positions[_positions.size() - 1].y > 500) {
+				visible = false;
+			}
+
 			if (point == 0) { // white X
 				int destID = _positions.size() - 1;
 				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID]() -> void { selectNav(destID); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
@@ -76,6 +84,7 @@ Jauntlet::UIManager* Navigation::genNav() {
 				_points.push_back(button);
 				continue;
 			}
+
 			if (point == 1) { // blue X
 				int destID = _positions.size() - 1;
 				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID]() -> void { selectNav(destID); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
@@ -157,9 +166,7 @@ void Navigation::updateTravel() { //TODO: Hide the nav points that get up above 
 			_caretElement->visible = false;
 			//delete _caretElement;
 		}
-	}
-	else
-	{
+	} else {
 		_progress = 0.0f;
 	}
 }
