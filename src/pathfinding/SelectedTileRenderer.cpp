@@ -1,6 +1,5 @@
 #include "SelectedTileRenderer.h"
 #include "src/interactable/PlayerStation.h"
-#include "../scenes/GlobalContext.h"
 
 SelectedTileRenderer::SelectedTileRenderer(DrillManager* drill, PlayerManager* playerManager) : 
 	_drawColor(255, 255, 255), 
