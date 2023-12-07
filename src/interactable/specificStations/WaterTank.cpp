@@ -25,8 +25,19 @@ void WaterTank::onPlayerArrival(Player& player) {
 		water->pickup(&player);
 		player.heldItem = water;
 	}
-	else if (player.heldItem != nullptr && player.heldItem->itemType == HoldableType::WATER) {
-		// grab as much water as possible from the held item.
-		_drill->resources.water += player.heldItem->requestWater(1000);
+	else if (player.heldItem != nullptr) {
+		if (player.heldItem->itemType == HoldableType::WATER) {
+			// grab as much water as possible from the held item.
+			_drill->resources.water += player.heldItem->requestWater(1000);
+		} else if (player.heldItem->itemType == HoldableType::ICE) {
+			_icedWater += 5.0f;
+			_drill->removeHoldable(player.heldItem);
+		}
 	}
+}
+
+void WaterTank::update() {
+	float waterIncrease = std::min(_icedWater, Jauntlet::Time::getDeltaTime() * _drill->resources.heat / 200);
+	_icedWater -= waterIncrease;
+	_drill->resources.water += waterIncrease;
 }
