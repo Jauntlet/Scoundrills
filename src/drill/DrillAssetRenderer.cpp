@@ -27,7 +27,9 @@ void DrillAssetRenderer::drawLayerOne() {
 	// draw the drill
         _spriteBatch.draw({
 				(3 * 64 + (_shake ? (((float)rand()) / RAND_MAX) * SHAKE_AMOUNT - SHAKE_AMOUNT * 0.5f : 0)),
-				(-42 * 64), (18 * 64), (18 * 64)},
+				(-42 * 64),
+				(18 * 64),
+				(18 * 64)},
             _drillAnimation.getUV(),
             Jauntlet::ResourceManager::getTexture("Textures/Drill Head.png").id);
 
