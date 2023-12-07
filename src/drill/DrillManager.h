@@ -15,8 +15,6 @@
 
 class PlayerManager;
 
-
-
 class DrillManager {
 public:
 	DrillManager(PlayerResources resourceManager, Jauntlet::Camera2D* camera);

@@ -9,14 +9,13 @@ const float DrillManager::DISASTER_INTERVAL = 15.0f;
 const float heatRiseScale = .3f; //1 heat every ~3 seconds
 const float heatFallScale = .1f; //1 heat every 10 seconds
 
-DrillManager::DrillManager(PlayerResources resourceManager, Jauntlet::Camera2D* camera)
-:
+DrillManager::DrillManager(PlayerResources resourceManager, Jauntlet::Camera2D* camera) :
 	_drillAssets(camera),
 	resources(resourceManager),
 	navigation(camera),
 	_boiler(&boilerWater, "Textures/BoilerTank.png", { 64 * 16, -64 * 1 - 10, 32 * 2, 43 * 2 }, 5, { 64 * 15.5, -64 * 2, 64 * 2, 96 * 2 }, { 16,-64 }),
 	_waterTank(*this, { 64, -64 * 12, 64, 64 }, { 64, -64 * 12, 64, 64 }, glm::vec2(0)),
-	_forge({64 * 16, -64 * 13, 64, 64}, {64 * 16, -64 * 13, 64, 64}, glm::vec2(0))
+	_forge(*this, {64 * 16, -64 * 13, 64, 64}, {64 * 16, -64 * 13, 64, 64}, glm::vec2(0))
 {
 	drillFloor.loadTileMap("Levels/DrillFloor.JML");
 	drillWalls.loadTileMap("Levels/DrillWall.JML");
@@ -40,6 +39,7 @@ void DrillManager::update() {
 				DisasterEvent();
 			}
 			navigation.updateTravel();
+			_forge.update();
 		}
 	} else {
 		resources.heat -= Jauntlet::Time::getDeltaTime() * (heatFallScale - _brokenPipeLocations.size() * 0.1);
