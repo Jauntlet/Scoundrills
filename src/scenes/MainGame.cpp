@@ -14,7 +14,7 @@
 MainGame::MainGame() :
 	_camera(GlobalContext::screenSize.x, GlobalContext::screenSize.y),
 	_hudCamera(GlobalContext::screenSize.x, GlobalContext::screenSize.y),
-	_drill(_resources, &_hudCamera),
+	_drill(&_cameraManager, _resources, &_hudCamera),
 	_cameraManager(&_camera, &_players, &_drill),
 	_players(3, &_drill),
 	_selectedTile(&_drill, &_players),

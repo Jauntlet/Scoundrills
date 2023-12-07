@@ -10,8 +10,7 @@ const float DrillManager::DISASTER_INTERVAL = 15.0f;
 const float heatRiseScale = .3f; //1 heat every ~3 seconds
 const float heatFallScale = .1f; //1 heat every 10 seconds
 
-DrillManager::DrillManager(PlayerResources resourceManager, Jauntlet::Camera2D* camera) :
-DrillManager::DrillManager(CameraManager cameraManager, PlayerResources resourceManager, Jauntlet::Camera2D* camera) :
+DrillManager::DrillManager(CameraManager* cameraManager, PlayerResources resourceManager, Jauntlet::Camera2D* camera) :
 	_drillAssets(camera),
 	resources(resourceManager),
 	navigation(camera),
@@ -25,7 +24,7 @@ DrillManager::DrillManager(CameraManager cameraManager, PlayerResources resource
 	
 	on();
 
-	_camera = camera;
+	_cameraManager = cameraManager;
 
 	navigation.genNav();
 
@@ -36,7 +35,7 @@ void DrillManager::update() {
 	stupid += Jauntlet::Time::getDeltaTime();
 
 	if (stupid > 5) {
-		cameraManager.doExplosionShake();
+		_cameraManager.doExplosionShake();
 	}
 	
 	// calculate the change in water/heat

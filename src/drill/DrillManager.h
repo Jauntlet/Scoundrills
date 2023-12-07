@@ -16,10 +16,9 @@
 class PlayerManager;
 class CameraManager;
 
-
 class DrillManager {
 public:
-	DrillManager(CameraManager cameraManager, PlayerResources resourceManager, Jauntlet::Camera2D* camera);
+	DrillManager(CameraManager* cameraManager, PlayerResources resourceManager, Jauntlet::Camera2D* camera);
 	
 	// update parts of the drill
 	void update();
@@ -94,4 +93,5 @@ private:
 
 	float stupid = 0.0f;
 
+	CameraManager* _cameraManager;
 };
