@@ -2,6 +2,7 @@
 #include "DrillManager.h"
 #include "../players/PlayerManager.h"
 #include "src/interactable/Holdable.h"
+#include "../CameraManager.h"
 
 //Constants
 const float DrillManager::DISASTER_INTERVAL = 15.0f;
@@ -9,7 +10,7 @@ const float DrillManager::DISASTER_INTERVAL = 15.0f;
 const float heatRiseScale = .3f; //1 heat every ~3 seconds
 const float heatFallScale = .1f; //1 heat every 10 seconds
 
-DrillManager::DrillManager(PlayerResources resourceManager, Jauntlet::Camera2D* camera) :
+DrillManager::DrillManager(CameraManager* cameraManager, PlayerResources resourceManager, Jauntlet::Camera2D* camera) :
 	_drillAssets(camera),
 	resources(resourceManager),
 	navigation(camera),
@@ -23,12 +24,20 @@ DrillManager::DrillManager(PlayerResources resourceManager, Jauntlet::Camera2D* 
 	
 	on();
 
+	_cameraManager = cameraManager;
+
 	navigation.genNav();
 
 	addHoldable("Textures/pipeCarry.png", glm::vec2(64 * 6, -64 * 6), glm::vec2(32), HoldableType::PIPE);
 }
 
 void DrillManager::update() {
+	stupid += Jauntlet::Time::getDeltaTime();
+
+	if (stupid > 5) {
+		_cameraManager.doExplosionShake();
+	}
+	
 	// calculate the change in water/heat
 	if (_drillOn) {
 		if (boilerWater > 0) {

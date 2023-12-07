@@ -14,10 +14,11 @@
 #include "../interactable/specificStations/Forge.h"
 
 class PlayerManager;
+class CameraManager;
 
 class DrillManager {
 public:
-	DrillManager(PlayerResources resourceManager, Jauntlet::Camera2D* camera);
+	DrillManager(CameraManager* cameraManager, PlayerResources resourceManager, Jauntlet::Camera2D* camera);
 	
 	// update parts of the drill
 	void update();
@@ -89,4 +90,8 @@ private:
 
 	// Static Values
 	static const float DISASTER_INTERVAL;
+
+	float stupid = 0.0f;
+
+	CameraManager* _cameraManager;
 };
