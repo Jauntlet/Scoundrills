@@ -62,6 +62,8 @@ void DrillManager::update() {
 		_boiler.animation.stop(0);
 		off();
 	}
+
+	_waterTank.update();
 }
 
 void DrillManager::drawLayerOne() {
