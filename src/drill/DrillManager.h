@@ -12,6 +12,7 @@
 #include "../interactable/specificStations/Boiler.h"
 #include "../interactable/specificStations/WaterTank.h"
 #include "../interactable/specificStations/Forge.h"
+#include "../interactable/specificStations/PipeWorkbench.h"
 
 class PlayerManager;
 class CameraManager;
@@ -73,6 +74,7 @@ private:
 	Boiler _boiler;
 	WaterTank _waterTank;
 	Forge _forge;
+	PipeWorkbench _pipeWorkbench;
 
 	// Texture cache for tilemaps
 	Jauntlet::TextureCache _textureCache;
