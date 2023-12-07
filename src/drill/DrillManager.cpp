@@ -265,7 +265,7 @@ void DrillManager::DisasterEvent() {
 	 
 	switch (disaster) {
 	case 0:
-		if (resources.heat > 120) {
+		if (resources.heat > 80) {
 			bustRandomPipe();
 		} else {
 			placeScrap();
