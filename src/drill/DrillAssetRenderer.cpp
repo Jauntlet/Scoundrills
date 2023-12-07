@@ -25,15 +25,15 @@ void DrillAssetRenderer::drawLayerOne() {
 	_spriteBatch.begin();
 	
 	// draw the drill
-        _spriteBatch.draw({
-				(3 * 64 + (_shake ? (((float)rand()) / RAND_MAX) * SHAKE_AMOUNT - SHAKE_AMOUNT * 0.5f : 0)),
-				(-42 * 64),
-				(18 * 64),
-				(18 * 64)},
-            _drillAnimation.getUV(),
-            Jauntlet::ResourceManager::getTexture("Textures/Drill Head.png").id);
+	_spriteBatch.draw({
+			(3 * 64 + (_shake ? (((float)rand()) / RAND_MAX) * SHAKE_AMOUNT - SHAKE_AMOUNT * 0.5f : 0)),
+			(-42 * 64),
+			(18 * 64),
+			(18 * 64)},
+		_drillAnimation.getUV(),
+		Jauntlet::ResourceManager::getTexture("Textures/Drill Head.png").id);
 
-        _spriteBatch.endAndRender();
+	_spriteBatch.endAndRender();
 	
 	if (_shake) {
 		_drillAnimation.update();
@@ -41,6 +41,7 @@ void DrillAssetRenderer::drawLayerOne() {
 	
 	_boilerAnimation.update();
 }
+
 void DrillAssetRenderer::drawLayerTwo() {
 	// Layer two renders above the walls / floor of the tilemap
 	_spriteBatch.begin();
@@ -52,6 +53,7 @@ void DrillAssetRenderer::drawLayerTwo() {
 	
 	_spriteBatch.endAndRender();
 }
+
 void DrillAssetRenderer::drawLayerThree() {
 	_boilerSmoke.update();
 	_boilerSmoke.draw();

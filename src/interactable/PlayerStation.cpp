@@ -18,12 +18,15 @@ bool PlayerStation::isColliding(glm::vec2 position) {
 	Jauntlet::Collision2D collision;
 	return collision.calcCollision(&_collider, position);
 }
+
 bool PlayerStation::isOccupied() const {
 	return _occupied;
 }
+
 void PlayerStation::occupy() {
 	_occupied = true;
 }
+
 void PlayerStation::unoccupy() {
 	_occupied = false;
 }
@@ -35,6 +38,7 @@ void PlayerStation::onPlayerArrival(Player& player) {
 glm::vec2 PlayerStation::getAnchorPoint() const {
 	return _anchorPoint;
 }
+
 glm::vec4 PlayerStation::getBoundingBox() const {
 	return _destination;
 }

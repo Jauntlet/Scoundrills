@@ -21,12 +21,10 @@ void SelectedTileRenderer::draw(Jauntlet::Camera2D* activeCamera, Jauntlet::Inpu
 			PlayerStation* station;
 			if (_drill->isValidDestination(_selectedTilePos, _players) || ((station = _drill->checkHoveringStation(_lastPosition)) != nullptr && !station->isOccupied())) {
 				_drawColor = Jauntlet::Color(0, 255, 0);
-			}
-			else {
+			} else {
 				_drawColor = Jauntlet::Color(255, 0, 0);
 			}
-		}
-		else {
+		} else {
 			// player is not selected, tile is white.
 			_drawColor = Jauntlet::Color(255, 255, 255);
 		}
@@ -36,13 +34,11 @@ void SelectedTileRenderer::draw(Jauntlet::Camera2D* activeCamera, Jauntlet::Inpu
 		PlayerStation* station;
 		if ((station = _drill->checkHoveringStation(_lastPosition)) != nullptr) {
 			_spriteBatch.draw(station->getBoundingBox(), _textureID, 0, _drawColor);
-		}
-		else {
+		} else {
 			_spriteBatch.draw({ _selectedTilePos.x, _selectedTilePos.y, 64, 64 }, _textureID, 0 , _drawColor);
 		}
 		_spriteBatch.endAndRender();
-	}
-	else {
+	} else {
 		_spriteBatch.render();
 	}
 }

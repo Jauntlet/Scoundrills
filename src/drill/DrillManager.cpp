@@ -41,8 +41,7 @@ void DrillManager::update() {
 			}
 			navigation.updateTravel();
 		}
-	}
-	else {
+	} else {
 		resources.heat -= Jauntlet::Time::getDeltaTime() * (heatFallScale - _brokenPipeLocations.size() * 0.1);
 		if (resources.heat < 0) {
 			resources.heat = 0;
@@ -82,6 +81,7 @@ void DrillManager::drawLayerOne() {
 
 	_drillAssets.drawLayerThree();
 }
+
 void DrillManager::drawLayerTwo() {
 	// draw all holdable items
 	_spriteBatch.begin();
@@ -100,10 +100,12 @@ void DrillManager::on() {
 	_drillOn = true;
 	_drillAssets.startAnimation();
 }
+
 void DrillManager::off() {
 	_drillOn = false;
 	_drillAssets.stopAnimation();
 }
+
 void DrillManager::toggle() {
 	if (_drillOn) {
 		off();
@@ -125,17 +127,15 @@ bool DrillManager::isValidDestination(glm::vec2 worldPos, PlayerManager* playerM
 			}
 		}
 		return false;
-	}
-	else if (drillFloor.isTileEmpty(floorPos)) {
+	} else if (drillFloor.isTileEmpty(floorPos)) {
 		return false;
-	}
-	else if (playerManager->posMatchesPlayerDest(worldPos)) {
+	} else if (playerManager->posMatchesPlayerDest(worldPos)) {
 		return false;
+	} else {
+		return !doesTileOverlapStations(pos);
 	}
-	else return !doesTileOverlapStations(pos);
-	
-	//return Pathfinding::isReachable(&drillWalls, *playerManager, _players[_selectedPlayer].getPosition(), worldPos);
 }
+
 bool DrillManager::isValidDestination(glm::vec2 worldPos) const {
 	glm::ivec2 pos = drillWalls.WorldPosToTilePos(worldPos);
 	glm::vec2 floorPos = drillFloor.WorldPosToTilePos(worldPos);
@@ -149,14 +149,13 @@ bool DrillManager::isValidDestination(glm::vec2 worldPos) const {
 			}
 		}
 		return false;
-	}
-	else if (drillFloor.isTileEmpty(floorPos)) {
+	} else if (drillFloor.isTileEmpty(floorPos)) {
 		return false;
+	} else {
+		return !doesTileOverlapStations(pos);
 	}
-	else return !doesTileOverlapStations(pos);
-
-	//return Pathfinding::isReachable(&drillWalls, *playerManager, _players[_selectedPlayer].getPosition(), worldPos);
 }
+
 bool DrillManager::isValidPath(glm::vec2 worldPos, PlayerManager* playerManager) const {
 	glm::ivec2 pos = drillWalls.WorldPosToTilePos(worldPos);
 	glm::vec2 floorPos = drillFloor.WorldPosToTilePos(worldPos);
@@ -164,11 +163,9 @@ bool DrillManager::isValidPath(glm::vec2 worldPos, PlayerManager* playerManager)
 
 	if (drillWalls.tileHasCollision(pos) || !drillWalls.isValidTilePos(pos)) {
 		return false;
-	}
-	else if (drillFloor.isTileEmpty(floorPos)) {
+	} else if (drillFloor.isTileEmpty(floorPos)) {
 		return false;
-	}
-	else if (playerManager->posMatchesPlayerDest(worldPos)) {
+	} else if (playerManager->posMatchesPlayerDest(worldPos)) {
 		return false;
 	}
 	
@@ -185,20 +182,17 @@ bool DrillManager::isValidPath(glm::vec2 worldPos, PlayerManager* playerManager)
 PlayerStation* DrillManager::checkHoveringStation(glm::vec2 position) {
 	if (_drillAssets.steeringWheel.isColliding(position)) {
 		return &_drillAssets.steeringWheel;
-	}
-	else if (_boiler.isColliding(position)) {
+	} else if (_boiler.isColliding(position)) {
 		return &_boiler;
-	}
-	else if (_waterTank.isColliding(position)) {
+	} else if (_waterTank.isColliding(position)) {
 		return &_waterTank;
-	}
-	else if (_forge.isColliding(position)) {
+	} else if (_forge.isColliding(position)) {
 		return &_forge;
-	}
-	else {
+	} else {
 		return nullptr;
 	}
 }
+
 bool DrillManager::doesTileOverlapStations(glm::ivec2 tilePos) const  {
 	return drillWalls.doesTileOverlap(tilePos, _drillAssets.steeringWheel.getBoundingBox()) ||
 		drillWalls.doesTileOverlap(tilePos, _boiler.getBoundingBox()) ||
@@ -207,10 +201,12 @@ bool DrillManager::doesTileOverlapStations(glm::ivec2 tilePos) const  {
 }
 
 void DrillManager::bustRandomPipe() {
+	// im boutta buuust
 	// changes a random pipe of ID 1 (normal pipe) to a pipe of ID 2 (broken pipe)
 	_brokenPipeLocations.push_back(pipes.selectRandomTile(1));
 	pipes.UpdateTile(_brokenPipeLocations.back(), 2);
 }
+
 void DrillManager::repairPipe(const glm::vec2& worldPos) {
 	for (int i = 0; i < _brokenPipeLocations.size(); ++i) {
 		if (pipes.TilePosToWorldPos(_brokenPipeLocations[i]) == worldPos) {
@@ -259,8 +255,7 @@ void DrillManager::DisasterEvent() {
 	case 0:
 		if (resources.heat > 120) {
 			bustRandomPipe();
-		}
-		else {
+		} else {
 			placeScrap();
 		}
 		break;
@@ -274,6 +269,7 @@ void DrillManager::DisasterEvent() {
 	
 	_disasterTime = DISASTER_INTERVAL;
 }
+
 void DrillManager::placeIce() {
 	glm::vec2 position = drillFloor.TilePosToWorldPos(drillFloor.selectRandomTile(1));
 
@@ -283,6 +279,7 @@ void DrillManager::placeIce() {
 
 	addHoldable("Textures/ice chunks1.png", position, glm::vec2(64), HoldableType::ICE);
 }
+
 void DrillManager::placeScrap() {
 	glm::vec2 position = drillFloor.TilePosToWorldPos(drillFloor.selectRandomTile(1));
 
