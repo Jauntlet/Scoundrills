@@ -161,14 +161,21 @@ void Navigation::updateTravel() { //TODO: Hide the nav points that get up above 
 		_progress += Jauntlet::Time::getDeltaTime() * _speed;
 		refreshPositions(_shiftPos.x * Jauntlet::Time::getDeltaTime() * _speed, _shiftPos.y * Jauntlet::Time::getDeltaTime() * _speed);
 		if (_progress >= 1.0f) {
-			_destination = -1; //set dest
-			//_nextRow++; //set the next available row to navigate to.
-
 			_caretElement->visible = false;
 			//delete _caretElement;
 
 			//Call outcove event
-			spawnOutcove(_map[_destination/layerCount][_destination/layerWidth - _destination/layerCount]); //TODO: determine the specific map position based on destination ID
+			if (_mappedCoves.empty()) { //determine amt of mapped outcoves
+				for (int y = 0; y < layerCount; y++) {
+					for (int x = 0; x < layerWidth; x++) {
+						if (_map[y][x] != 3) _mappedCoves.push_back(_map[y][x]);
+					}
+				}
+			}
+
+			spawnOutcove(_mappedCoves[_destination]);
+			
+			_destination = -1; //set dest
 		}
 	} else {
 		_progress = 0.0f;
