@@ -137,6 +137,10 @@ glm::vec2 Player::getDestination() const {
 	return _path.size() > 0 ? _path[0] : _position;
 }
 
+PlayerStation* Player::getStation() const {
+	return _station;
+}
+
 void Player::forceDropItem() {
 	heldItem = nullptr;
 }
