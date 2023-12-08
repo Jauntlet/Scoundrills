@@ -1,3 +1,12 @@
+/*
+TODO:
+Cross-row destination availability (can select if no interference between destination)
+More Mappage
+
+BUGS:
+toggling drill makes all points visible even when nav is hidden
+*/
+
 #include "Navigation.h"
 #include "Jauntlet/UI/UIButtonElement.h"
 #include "src/scenes/GlobalContext.h"
