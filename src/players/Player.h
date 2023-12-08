@@ -30,6 +30,7 @@ public:
 
 	Jauntlet::BoxCollider2D collider;
 	Holdable* heldItem = nullptr;
+	float health = 30.0f;
 private:
 	// runs when player reaches destination
 	void onDestination(DrillManager& drill);
@@ -37,7 +38,7 @@ private:
 	glm::vec2 _position = glm::vec2(0,0);
 	std::vector<glm::vec2> _path;
 
-	float _speed = 300, _storedVelocity = 0;
+	float _speed = 300.0f, _storedVelocity = 0.0f;
 
 	PlayerStation* _station = nullptr;
 	glm::vec2* pipeDest = nullptr;
