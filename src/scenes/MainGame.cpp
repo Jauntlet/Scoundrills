@@ -74,7 +74,7 @@ void MainGame::drawGame() {
 	
 	_drill.drawLayerTwo();
 
-	_selectedTile.draw(&_camera, &GlobalContext::inputManager); // #TODO: make not pass in inputmanager
+	_selectedTile.draw(&_camera);
 
 	GlobalContext::normalShader.unuse();
 	

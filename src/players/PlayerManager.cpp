@@ -34,6 +34,10 @@ bool PlayerManager::processInput(DrillManager& drill, const Jauntlet::Camera2D& 
 					_selectedPlayer = i;
 					return true;
 				}
+				else if (_players[i].getStation() != nullptr && _players[i].getStation()->isColliding(mousePos)) {
+					_selectedPlayer = i;
+					return true;
+				}
 			}
 		} else { // we have selected a position for the player to move to.
 			if (drill.isValidDestination(_storedMousePos, this) || drill.checkHoveringStation(mousePos) != nullptr) {

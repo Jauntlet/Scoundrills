@@ -23,6 +23,7 @@ public:
 
 	glm::vec2 getPosition() const;
 	glm::vec2 getDestination() const;
+	PlayerStation* getStation() const;
 
 	// forces the player to drop his item; called when the item is destroyed
 	void forceDropItem();

@@ -40,5 +40,5 @@ glm::vec2 PlayerStation::getAnchorPoint() const {
 }
 
 glm::vec4 PlayerStation::getBoundingBox() const {
-	return _destination;
+	return _occupied ? glm::vec4(_anchorPoint - glm::vec2(32), 64, 64)  : _destination;
 }
