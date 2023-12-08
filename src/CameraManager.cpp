@@ -82,3 +82,13 @@ void CameraManager::processInput() {
 
 	_oldMouse = GlobalContext::inputManager.getMouseCoords(); // the old mouse position is now the current mouse position
 }
+
+void CameraManager::doExplosionShake() {
+	_cameraShakeCooldown = 5.0f;
+}
+
+void CameraManager::update() {
+	if (_cameraShakeCooldown > 0) {
+		_cameraShakeCooldown -= Jauntlet::Time::getDeltaTime();
+	}
+}
