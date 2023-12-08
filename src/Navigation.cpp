@@ -168,7 +168,7 @@ void Navigation::updateTravel() { //TODO: Hide the nav points that get up above 
 			if (_mappedCoves.empty()) { //determine amt of mapped outcoves
 				for (int y = 0; y < layerCount; y++) {
 					for (int x = 0; x < layerWidth; x++) {
-						if (_map[y][x] != 3) _mappedCoves.push_back(_map[y][x]);
+						if (_map[y][x] != 2) _mappedCoves.push_back(_map[y][x]);
 					}
 				}
 			}
@@ -202,5 +202,5 @@ Jauntlet::UIManager* Navigation::getUIManager() {
 }
 
 void Navigation::spawnOutcove(int type) {
-
+	std::cout << "type: " << type << std::endl;
 }
