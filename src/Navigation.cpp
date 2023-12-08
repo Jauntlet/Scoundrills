@@ -145,6 +145,7 @@ void Navigation::toggleNav() {
 	for (int i = 0; i < _points.size(); ++i) {
 		_points[i].visible = _navOpen;
 	}
+	updateVisibility();
 }
 
 bool Navigation::isNavOpen() {
@@ -202,7 +203,10 @@ void Navigation::refreshPositions(float shiftX, float shiftY) {
 
 void Navigation::updateVisibility() {
 	for (int i = 0; i < _positions.size(); i++) {
-		_points[i].visible = !(_positions[i].y < -350 || _positions[i].y > 400) && !(_positions[i].x < -280 || _positions[i].x > 280);
+		if (_navOpen)
+			_points[i].visible = !(_positions[i].y < -350 || _positions[i].y > 400) && !(_positions[i].x < -280 || _positions[i].x > 280);
+		else
+			_points[i].visible = false;
 	}
 }
 
