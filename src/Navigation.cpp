@@ -3,6 +3,7 @@
 #include "src/scenes/GlobalContext.h"
 
 #include <chrono>
+#include <Jauntlet/JMath.h>
 #include <Jauntlet/Rendering/ResourceManager.h>
 #include <random>
 
@@ -10,6 +11,7 @@
 
 const int layerCount = 5; //amt of layers (Y axis)
 const int layerWidth = 5; //amt of destinations on each layer (X axis)
+const float baseSpeed = 50; //This over distance determines the speed the drill moves to any destination; more is faster, less is slower
 
 const std::string bgTextures[] = {"Textures/NavBackgroundPrototype.png"};
 static int seed = std::chrono::system_clock::now().time_since_epoch().count(); //temp
@@ -144,7 +146,8 @@ void Navigation::selectNav(int id) {
 	if (!(_positions[id].y < -185 && _positions[id].y > -190)) return;
 	_caretSet = true;
 	_destination = id;
-	_shiftPos = glm::normalize(glm::vec2(_positions[id].x, 187.5)) * 187.5f;
+	_speed = baseSpeed/JMath::Distance(_iconPos, _positions[id]);
+	_shiftPos = glm::vec2(_positions[id].x, 187.5);
 	_caretPos = _positions[id] + glm::vec2(0, 37.5);
 	if (!_caretElement->visible) {
 		_caretElement->visible = true;
@@ -155,16 +158,17 @@ void Navigation::selectNav(int id) {
 
 void Navigation::updateTravel() { //TODO: Hide the nav points that get up above the drill icon
 	if (_destination != -1) {
-		_progress += Jauntlet::Time::getDeltaTime();
-		float newX = _shiftPos.x * Jauntlet::Time::getDeltaTime();
-		float newY = _shiftPos.y * Jauntlet::Time::getDeltaTime();
-		refreshPositions(newX, newY);
+		_progress += Jauntlet::Time::getDeltaTime() * _speed;
+		refreshPositions(_shiftPos.x * Jauntlet::Time::getDeltaTime() * _speed, _shiftPos.y * Jauntlet::Time::getDeltaTime() * _speed);
 		if (_progress >= 1.0f) {
 			_destination = -1; //set dest
 			//_nextRow++; //set the next available row to navigate to.
 
 			_caretElement->visible = false;
 			//delete _caretElement;
+
+			//Call outcove event
+			spawnOutcove(_map[_destination/layerCount][_destination/layerWidth - _destination/layerCount]); //TODO: determine the specific map position based on destination ID
 		}
 	} else {
 		_progress = 0.0f;
@@ -188,4 +192,8 @@ void Navigation::updateVisibility() {
 
 Jauntlet::UIManager* Navigation::getUIManager() {
 	return &_uiManager;
+}
+
+void Navigation::spawnOutcove(int type) {
+
 }
