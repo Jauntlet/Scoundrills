@@ -4,11 +4,11 @@
 #include "src/interactable/Holdable.h"
 #include "../CameraManager.h"
 
-//Constants
-const float DrillManager::DISASTER_INTERVAL = 10.0f;
+const float HEAT_RISE_SCALE = .3f; //1 heat every ~3 seconds.
+const float HEAT_FALL_SCALE = .1f; //1 heat every 10 seconds.
 
-const float heatRiseScale = .3f; //1 heat every ~3 seconds
-const float heatFallScale = .1f; //1 heat every 10 seconds
+const float PIPE_BURST_HEAT = 80.0f; // The minimum heat for pipes to be able to burst.
+const float PLAYER_HURT_HEAT = 200.0f; // The minimum heat for players to take damage from it.
 
 DrillManager::DrillManager(CameraManager* cameraManager, PlayerResources resourceManager, Jauntlet::Camera2D* camera) :
 	_drillAssets(camera),
@@ -41,7 +41,7 @@ void DrillManager::update() {
 	if (_drillOn) {
 		if (boilerWater > 0) {
 			boilerWater -= Jauntlet::Time::getDeltaTime() / 6;
-			resources.heat += Jauntlet::Time::getDeltaTime() * (heatRiseScale + _brokenPipeLocations.size() * 0.1);
+			resources.heat += Jauntlet::Time::getDeltaTime() * (HEAT_RISE_SCALE + _brokenPipeLocations.size() * 0.1);
 			_disasterTime -= Jauntlet::Time::getDeltaTime() * (resources.heat / 100);
 			if (_disasterTime < 0) {
 				DisasterEvent();
@@ -50,7 +50,7 @@ void DrillManager::update() {
 			_forge.update();
 		}
 	} else {
-		resources.heat -= Jauntlet::Time::getDeltaTime() * (heatFallScale - _brokenPipeLocations.size() * 0.1);
+		resources.heat -= Jauntlet::Time::getDeltaTime() * (HEAT_FALL_SCALE - _brokenPipeLocations.size() * 0.1);
 		if (resources.heat < 0) {
 			resources.heat = 0;
 		}
@@ -260,12 +260,12 @@ Holdable* DrillManager::getHoldable(glm::vec2 worldPos) {
 }
 
 void DrillManager::DisasterEvent() {
-	// 3 is the amount of disasters
+	                     // 3 is the amount of disasters possible
 	int disaster = rand() % 3;
 	 
 	switch (disaster) {
 	case 0:
-		if (resources.heat > 80) {
+		if (resources.heat > PIPE_BURST_HEAT) {
 			bustRandomPipe();
 		} else {
 			placeScrap();

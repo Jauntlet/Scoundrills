@@ -1,5 +1,6 @@
 #include "SelectedTileRenderer.h"
 #include "src/interactable/PlayerStation.h"
+#include <src/scenes/GlobalContext.h>
 
 SelectedTileRenderer::SelectedTileRenderer(DrillManager* drill, PlayerManager* playerManager) : 
 	_drawColor(255, 255, 255), 
@@ -10,9 +11,9 @@ SelectedTileRenderer::SelectedTileRenderer(DrillManager* drill, PlayerManager* p
 	// Empty
 }
 
-void SelectedTileRenderer::draw(Jauntlet::Camera2D* activeCamera, Jauntlet::InputManager* inputManager) {
-	if (_lastPosition != activeCamera->convertScreenToWorld(inputManager->getMouseCoords())) {
-		_lastPosition = activeCamera->convertScreenToWorld(inputManager->getMouseCoords());
+void SelectedTileRenderer::draw(Jauntlet::Camera2D* activeCamera) {
+	if (_lastPosition != activeCamera->convertScreenToWorld(GlobalContext::inputManager.getMouseCoords()) || GlobalContext::inputManager.isKeyPressed(SDL_BUTTON_LEFT)) {
+		_lastPosition = activeCamera->convertScreenToWorld(GlobalContext::inputManager.getMouseCoords());
 		glm::vec2 _selectedTilePos = _drill->drillWalls.RoundWorldPos(_lastPosition);
 
 		// if a player is selected, we highlight the tile if its a valid pathfind pos or not

@@ -2,7 +2,7 @@
  * Main Contributer(s): Xander Mooney
  */
 #pragma once
-#include <Jauntlet/Rendering/ResourceManager.h>
+#include <Jauntlet/Rendering/Textures/ResourceManager.h>
 #include <Jauntlet/Tiles/TileMap.h>
 #include <Jauntlet/Rendering/Cameras/Camera2D.h>
 #include <Jauntlet/Inputs/InputManager.h>
@@ -14,7 +14,7 @@ public:
 	SelectedTileRenderer(DrillManager* drill, PlayerManager* playerManager);
 
 	// draw the selected tile to screen
-	void draw(Jauntlet::Camera2D* activeCamera, Jauntlet::InputManager* inputManager);
+	void draw(Jauntlet::Camera2D* activeCamera);
 private:
 	GLuint _textureID;
 

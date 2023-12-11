@@ -17,6 +17,8 @@
 class PlayerManager;
 class CameraManager;
 
+const float DISASTER_INTERVAL = 10.0f;
+
 class DrillManager {
 public:
 	DrillManager(CameraManager* cameraManager, PlayerResources resourceManager, Jauntlet::Camera2D* camera);
@@ -89,9 +91,6 @@ private:
 
 	// Broken pipes
 	std::vector<glm::ivec2> _brokenPipeLocations;
-
-	// Static Values
-	static const float DISASTER_INTERVAL;
 
 	float stupid = 0.0f;
 

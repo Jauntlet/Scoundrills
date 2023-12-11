@@ -1,5 +1,5 @@
 #include "Holdable.h"
-#include <Jauntlet/Rendering/ResourceManager.h>
+#include <Jauntlet/Rendering/Textures/ResourceManager.h>
 #include "../players/Player.h"
 #include "specificStations/Boiler.h"
 

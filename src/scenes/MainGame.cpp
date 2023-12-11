@@ -1,6 +1,6 @@
 #include "GlobalContext.h"
-#include <Jauntlet/Rendering/ResourceManager.h>
-#include <Jauntlet/Rendering/TextureCache.h>
+#include <Jauntlet/Rendering/Textures/ResourceManager.h>
+#include <Jauntlet/Rendering/Textures/TextureCache.h>
 #include <Jauntlet/UI/UIElement.h>
 
 #include <Jauntlet/Rendering/Particles/Particle.h>
@@ -20,7 +20,7 @@ MainGame::MainGame() :
 	_selectedTile(&_drill, &_players),
 	_textRenderer(&_hudCamera, "Fonts/HandelGo.ttf", 256),
 	_uiCoordinator(&_hudCamera, &_textRenderer, &_drill),
-	_resources(100,100,0,0,0)
+	_resources(100,100,0,0)
 {
 	GlobalContext::window.setBackgroundColor(Jauntlet::Color(97, 60, 47));
 	_uiCoordinator.applyNewScreenSize(glm::ivec2(GlobalContext::screenSize.x, GlobalContext::screenSize.y));
@@ -74,7 +74,7 @@ void MainGame::drawGame() {
 	
 	_drill.drawLayerTwo();
 
-	_selectedTile.draw(&_camera, &GlobalContext::inputManager); // #TODO: make not pass in inputmanager
+	_selectedTile.draw(&_camera);
 
 	GlobalContext::normalShader.unuse();
 	

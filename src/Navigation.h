@@ -32,6 +32,7 @@ private:
 	GLuint _drillIcon = 0;
 	bool _navOpen = false; //visibility of menu
 	int _destination = -1; //id value
+	std::vector<int> _mappedCoves;
 	glm::vec2 _shiftPos = glm::vec2(0); //position determining how to move nav points when a destination is selected
 	float _progress = -1; //progress towards next destination
 	float _speed = 1;
