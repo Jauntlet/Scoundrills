@@ -7,6 +7,7 @@
 #include "../interactable/PlayerStation.h"
 #include "../interactable/Holdable.h"
 #include "../pathfinding/PathRenderer.h"
+#include <Jauntlet/Rendering/ProgressBar.h>
 
 class Player
 {
@@ -42,4 +43,6 @@ private:
 
 	PlayerStation* _station = nullptr;
 	glm::vec2* _pipeDest = nullptr;
+
+	Jauntlet::ProgressBar _healthBar;
 };

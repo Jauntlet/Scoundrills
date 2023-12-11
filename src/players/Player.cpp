@@ -1,8 +1,11 @@
 #include "Player.h"
 #include "src/interactable/Holdable.h"
 
-Player::Player(float x, float y) : collider(Jauntlet::BoxCollider2D(glm::vec2(64), glm::vec2(x,y))) {
-	_position = glm::vec2(x, y);
+Player::Player(float x, float y) :
+	collider(Jauntlet::BoxCollider2D(glm::vec2(64), glm::vec2(x, y))),
+	_position(glm::vec2(x, y)),
+	_healthBar("Textures/healthbar.png", glm::vec4(0, 0, 0.5, 0.5), glm::vec4(0.5), glm::vec4(_position.x + 8, _position.y + 68, 48, 8))
+{
 }
 
 void Player::update(DrillManager& drill) {
@@ -62,6 +65,10 @@ void Player::update(DrillManager& drill) {
 
 void Player::draw(Jauntlet::SpriteBatch& spriteBatch) {
 	spriteBatch.draw({ _position.x, _position.y, 64, 64 }, Jauntlet::ResourceManager::getTexture("Textures/Craig.png").id, 0);
+
+	_healthBar.setProgress(health / 30);
+	_healthBar.setPosition(glm::vec2(_position.x + 8, _position.y + 68));
+	_healthBar.draw(spriteBatch);
 }
 
 void Player::navigateTo(DrillManager& drill, PathRenderer& pathRenderer, glm::vec2 position) {
