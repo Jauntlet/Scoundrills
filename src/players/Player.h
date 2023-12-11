@@ -41,5 +41,5 @@ private:
 	float _speed = 300.0f, _storedVelocity = 0.0f;
 
 	PlayerStation* _station = nullptr;
-	glm::vec2* pipeDest = nullptr;
+	glm::vec2* _pipeDest = nullptr;
 };
