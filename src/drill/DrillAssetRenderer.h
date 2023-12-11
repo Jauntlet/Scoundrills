@@ -5,8 +5,8 @@
 #include <Jauntlet/Rendering/Animation/Animation.h>
 #include <Jauntlet/Rendering/Cameras/Camera2D.h>
 #include <Jauntlet/Rendering/Particles/Particle.h>
-#include <Jauntlet/Rendering/Images/ResourceManager.h>
-#include <Jauntlet/Rendering/Images/SpriteBatch.h>
+#include <Jauntlet/Rendering/Textures/ResourceManager.h>
+#include <Jauntlet/Rendering/Textures/SpriteBatch.h>
 #include "../interactable/AnimatedPlayerStation.h"
 
 class DrillAssetRenderer {

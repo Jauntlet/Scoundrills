@@ -2,7 +2,7 @@
  * Main Contributer(s): Xander Mooney
  */
 #pragma once
-#include <Jauntlet/Rendering/Images/ResourceManager.h>
+#include <Jauntlet/Rendering/Textures/ResourceManager.h>
 #include <Jauntlet/Tiles/TileMap.h>
 #include <Jauntlet/Rendering/Cameras/Camera2D.h>
 #include <Jauntlet/Inputs/InputManager.h>

@@ -1,7 +1,7 @@
 #include "MainMenu.h"
 #include "GlobalContext.h"
 #include "SceneManager.h"
-#include <Jauntlet/Rendering/Images/ResourceManager.h>
+#include <Jauntlet/Rendering/Textures/ResourceManager.h>
 
 #include <iostream>
 
