@@ -64,6 +64,8 @@ void DrillAssetRenderer::stopAnimation() {
 	_shake = false;
 
 	_boilerAnimation.play(2,5,0.1f,false);
+
+	_boilerSmoke.stopEmitting();
 }
 
 void DrillAssetRenderer::startAnimation() {
@@ -71,4 +73,5 @@ void DrillAssetRenderer::startAnimation() {
 	_shake = true;
 
 	_boilerAnimation.play(0, 2, 0.1f);
+	_boilerSmoke.resumeEmitting();
 }
