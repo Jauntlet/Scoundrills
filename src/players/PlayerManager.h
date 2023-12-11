@@ -6,7 +6,7 @@
 #include "../pathfinding/PathRenderer.h"
 #include <Jauntlet/Inputs/InputManager.h>
 #include <Jauntlet/Rendering/Cameras/Camera2D.h>
-#include <Jauntlet/Rendering/SpriteBatch.h>
+#include <Jauntlet/Rendering/Images/SpriteBatch.h>
 
 class DrillManager;
 

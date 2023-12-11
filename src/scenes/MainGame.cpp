@@ -1,6 +1,6 @@
 #include "GlobalContext.h"
-#include <Jauntlet/Rendering/ResourceManager.h>
-#include <Jauntlet/Rendering/TextureCache.h>
+#include <Jauntlet/Rendering/Images/ResourceManager.h>
+#include <Jauntlet/Rendering/Images/TextureCache.h>
 #include <Jauntlet/UI/UIElement.h>
 
 #include <Jauntlet/Rendering/Particles/Particle.h>

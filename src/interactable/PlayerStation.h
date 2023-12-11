@@ -4,8 +4,8 @@
 #pragma once
 #include <Jauntlet/Collision/Collider2D.h>
 #include <Jauntlet/Collision/Collision2D.h>
-#include <Jauntlet/Rendering/ResourceManager.h>
-#include <Jauntlet/Rendering/SpriteBatch.h>
+#include <Jauntlet/Rendering/Images/ResourceManager.h>
+#include <Jauntlet/Rendering/Images/SpriteBatch.h>
 
 class Player;
 
