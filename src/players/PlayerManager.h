@@ -20,6 +20,8 @@ public:
 	
 	// processes a click to see if we operate on the players, returns true if we are, false if we arent.
 	bool processInput(DrillManager& drill, const Jauntlet::Camera2D& activeCamera);
+	// tries to damage the players currently in the drill
+	void damageTick(const int& drillHeat);
 
 	// returns true if a player is selected
 	bool isPlayerSelected();
@@ -35,6 +37,7 @@ public:
 private:
 	std::vector<Player> _players;
 	int _selectedPlayer = -1;
+	float _damageTick = 0;
 
 	PathRenderer _pathRenderer;
 	glm::vec2 _storedMousePos = glm::vec2(0);

@@ -59,6 +59,21 @@ bool PlayerManager::processInput(DrillManager& drill, const Jauntlet::Camera2D& 
 	}
 	return false;
 }
+void PlayerManager::damageTick(const int& drillHeat) {
+	_damageTick += Jauntlet::Time::getDeltaTime() * (drillHeat / 200);
+
+	std::cout << _damageTick << std::endl;
+
+	if (_damageTick > 2.5) {
+		_damageTick = 0;
+		int Rand = rand() % _players.size();
+		_players[Rand].health -= 1;
+
+		if (_players[Rand].health == 0) {
+			_players.erase(_players.begin() + Rand);
+		}
+	}
+}
 
 bool PlayerManager::isPlayerSelected() {
 	return _selectedPlayer != -1;
