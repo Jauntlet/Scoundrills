@@ -66,9 +66,11 @@ void Player::update(DrillManager& drill) {
 void Player::draw(Jauntlet::SpriteBatch& spriteBatch) {
 	spriteBatch.draw({ _position.x, _position.y, 64, 64 }, Jauntlet::ResourceManager::getTexture("Textures/Craig.png").id, 0);
 
-	_healthBar.setProgress(health / 30);
-	_healthBar.setPosition(glm::vec2(_position.x + 8, _position.y + 68));
-	_healthBar.draw(spriteBatch);
+	if (health != 30) {
+		_healthBar.setProgress(health / 30);
+		_healthBar.setPosition(glm::vec2(_position.x + 8, _position.y + 68));
+		_healthBar.draw(spriteBatch);
+	}
 }
 
 void Player::navigateTo(DrillManager& drill, PathRenderer& pathRenderer, glm::vec2 position) {
