@@ -4,7 +4,7 @@ PlayerStation::PlayerStation(std::string texture, glm::vec4 destination, glm::ve
 	_textureID(Jauntlet::ResourceManager::getTexture(texture).id),
 	_collider(Jauntlet::BoxCollider2D(glm::vec2(boundingBox.z, boundingBox.w), glm::vec2(boundingBox.x, boundingBox.y))),
 	_destination(destination),
-	_anchorPoint(glm::vec2(boundingBox.x + (boundingBox.z / 2) + anchorPointOffset.x, boundingBox.y + (boundingBox.w / 2) + anchorPointOffset.y)) 
+	_anchorPoint(glm::vec2(boundingBox.x + (boundingBox.z * 0.5f) + anchorPointOffset.x, boundingBox.y + (boundingBox.w * 0.5f) + anchorPointOffset.y)) 
 {
 
 }
@@ -18,12 +18,15 @@ bool PlayerStation::isColliding(glm::vec2 position) {
 	Jauntlet::Collision2D collision;
 	return collision.calcCollision(&_collider, position);
 }
+
 bool PlayerStation::isOccupied() const {
 	return _occupied;
 }
+
 void PlayerStation::occupy() {
 	_occupied = true;
 }
+
 void PlayerStation::unoccupy() {
 	_occupied = false;
 }
@@ -35,6 +38,7 @@ void PlayerStation::onPlayerArrival(Player& player) {
 glm::vec2 PlayerStation::getAnchorPoint() const {
 	return _anchorPoint;
 }
+
 glm::vec4 PlayerStation::getBoundingBox() const {
-	return _destination;
+	return _occupied ? glm::vec4(_anchorPoint - glm::vec2(32), 64, 64)  : _destination;
 }

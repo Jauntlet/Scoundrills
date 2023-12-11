@@ -41,16 +41,14 @@ void SceneManager::gameLoop() {
             if (_gameState == GameState::MAINGAME) {
                 // run maingame window resize event.
                 _mainGame->windowResized();
-            }
-            else if (_gameState == GameState::MAINMENU) {
+            } else if (_gameState == GameState::MAINMENU) {
                 _mainMenu->windowResized();
             }
         }
 
         if (_gameState == GameState::MAINGAME) {
             _mainGame->gameLoop();
-        }
-        else if (_gameState == GameState::MAINMENU) {
+        } else if (_gameState == GameState::MAINMENU) {
             _mainMenu->gameLoop();
         }
 
@@ -75,8 +73,7 @@ void SceneManager::switchScene(GameState newState) {
         if (_mainMenu == nullptr) {
             _mainMenu = new MainMenu(this);
         }
-    }
-    else if (_mainMenu != nullptr) {
+    } else if (_mainMenu != nullptr) {
         delete _mainMenu;
     }
 }

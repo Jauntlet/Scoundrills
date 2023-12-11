@@ -10,6 +10,7 @@ const int TIMEOUT_LIMIT = 100;
 Pathfinding::Pathfinding() {
 	// Empty
 }
+
 std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, glm::vec2 start, glm::vec2 destination) {	
 	// translate world coords to tilemap coords.
 	destination = map->WorldPosToTilePos(destination);
@@ -126,8 +127,7 @@ std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, glm::vec2 s
 	if (!map->tileHasCollision(destination)) {
 		// add destination to final pos in output
 		output.push_back(map->TilePosToWorldPos(destination));
-	}
-	else {
+	} else {
 		// destination is blocked, so we output the next-best-tile as final position.
 		output.push_back(map->TilePosToWorldPos(_closedList.back().position));
 	}
@@ -260,8 +260,7 @@ std::vector<glm::vec2> Pathfinding::findPath(const DrillManager& drill, PlayerMa
 	if (!drill.drillWalls.tileHasCollision(destination)) {
 		// add destination to final pos in output
 		output.push_back(drill.drillWalls.TilePosToWorldPos(destination));
-	}
-	else {
+	} else {
 		// destination is blocked, so we output the next-best-tile as final position.
 		output.push_back(drill.drillWalls.TilePosToWorldPos(_closedList.back().position));
 	}
@@ -346,6 +345,7 @@ bool Pathfinding::isReachable(const DrillManager& drill, PlayerManager& players,
 						break;
 					}
 				}
+				
 				if (!isValidNode) continue;
 
 				// Loop through the closed list for tiles at the same position, with a lower score. If found, we skip this successor.
@@ -355,6 +355,7 @@ bool Pathfinding::isReachable(const DrillManager& drill, PlayerManager& players,
 						break;
 					}
 				}
+				
 				if (!isValidNode) continue;
 
 				_openList.push_back(currentNode);

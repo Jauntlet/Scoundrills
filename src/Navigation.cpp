@@ -1,15 +1,26 @@
+/*
+TODO:
+Cross-row destination availability (can select if no interference between destination)
+More Mappage
+
+BUGS:
+toggling drill makes all points visible even when nav is hidden
+*/
+
 #include "Navigation.h"
 #include "Jauntlet/UI/UIButtonElement.h"
 #include "src/scenes/GlobalContext.h"
 
 #include <chrono>
-#include <Jauntlet/Rendering/ResourceManager.h>
+#include <Jauntlet/JMath.h>
+#include <Jauntlet/Rendering/Textures/ResourceManager.h>
 #include <random>
 
 #include <iostream>
 
 const int layerCount = 5; //amt of layers (Y axis)
 const int layerWidth = 5; //amt of destinations on each layer (X axis)
+const float baseSpeed = 50; //This over distance determines the speed the drill moves to any destination; more is faster, less is slower
 
 const std::string bgTextures[] = {"Textures/NavBackgroundPrototype.png"};
 static int seed = std::chrono::system_clock::now().time_since_epoch().count(); //temp
@@ -65,10 +76,18 @@ Jauntlet::UIManager* Navigation::genNav() {
 	for (int y = 0; y < layerCount; y++) {
 		for (int x = 0; x < layerWidth; x++) {
 			int point = _map[y][x]; //The point type according to the generated "map," will determine the chance of encountering water, ores, etc. when arriving there.
-			if (point == 2) continue; // no X
+			
+			if (point == 2) {
+				continue; // no X
+			}
+			
 			_positions.emplace_back(125 * (x+1) - 62.5 * (layerWidth + 1), 187.5 * (y-1)); //0 is the center of the screen.
 			bool visible = true;
-			if (_positions[_positions.size() - 1].y < -250 || _positions[_positions.size() - 1].y > 500) visible = false;
+			
+			if (_positions[_positions.size() - 1].y < -250 || _positions[_positions.size() - 1].y > 500) {
+				visible = false;
+			}
+
 			if (point == 0) { // white X
 				int destID = _positions.size() - 1;
 				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID]() -> void { selectNav(destID); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
@@ -76,6 +95,7 @@ Jauntlet::UIManager* Navigation::genNav() {
 				_points.push_back(button);
 				continue;
 			}
+
 			if (point == 1) { // blue X
 				int destID = _positions.size() - 1;
 				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID]() -> void { selectNav(destID); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
@@ -125,6 +145,7 @@ void Navigation::toggleNav() {
 	for (int i = 0; i < _points.size(); ++i) {
 		_points[i].visible = _navOpen;
 	}
+	updateVisibility();
 }
 
 bool Navigation::isNavOpen() {
@@ -135,7 +156,8 @@ void Navigation::selectNav(int id) {
 	if (!(_positions[id].y < -185 && _positions[id].y > -190)) return;
 	_caretSet = true;
 	_destination = id;
-	_shiftPos = glm::normalize(glm::vec2(_positions[id].x, 187.5)) * 187.5f;
+	_speed = baseSpeed/JMath::Distance(_iconPos, _positions[id]);
+	_shiftPos = glm::vec2(_positions[id].x, 187.5);
 	_caretPos = _positions[id] + glm::vec2(0, 37.5);
 	if (!_caretElement->visible) {
 		_caretElement->visible = true;
@@ -146,20 +168,26 @@ void Navigation::selectNav(int id) {
 
 void Navigation::updateTravel() { //TODO: Hide the nav points that get up above the drill icon
 	if (_destination != -1) {
-		_progress += Jauntlet::Time::getDeltaTime();
-		float newX = _shiftPos.x * Jauntlet::Time::getDeltaTime();
-		float newY = _shiftPos.y * Jauntlet::Time::getDeltaTime();
-		refreshPositions(newX, newY);
+		_progress += Jauntlet::Time::getDeltaTime() * _speed;
+		refreshPositions(_shiftPos.x * Jauntlet::Time::getDeltaTime() * _speed, _shiftPos.y * Jauntlet::Time::getDeltaTime() * _speed);
 		if (_progress >= 1.0f) {
-			_destination = -1; //set dest
-			//_nextRow++; //set the next available row to navigate to.
-
 			_caretElement->visible = false;
 			//delete _caretElement;
+
+			//Call outcove event
+			if (_mappedCoves.empty()) { //determine amt of mapped outcoves
+				for (int y = 0; y < layerCount; y++) {
+					for (int x = 0; x < layerWidth; x++) {
+						if (_map[y][x] != 2) _mappedCoves.push_back(_map[y][x]);
+					}
+				}
+			}
+
+			spawnOutcove(_mappedCoves[_destination]);
+			
+			_destination = -1; //set dest
 		}
-	}
-	else
-	{
+	} else {
 		_progress = 0.0f;
 	}
 }
@@ -175,10 +203,17 @@ void Navigation::refreshPositions(float shiftX, float shiftY) {
 
 void Navigation::updateVisibility() {
 	for (int i = 0; i < _positions.size(); i++) {
-		_points[i].visible = !(_positions[i].y < -350 || _positions[i].y > 400) && !(_positions[i].x < -280 || _positions[i].x > 280);
+		if (_navOpen)
+			_points[i].visible = !(_positions[i].y < -350 || _positions[i].y > 400) && !(_positions[i].x < -280 || _positions[i].x > 280);
+		else
+			_points[i].visible = false;
 	}
 }
 
 Jauntlet::UIManager* Navigation::getUIManager() {
 	return &_uiManager;
+}
+
+void Navigation::spawnOutcove(int type) {
+	std::cout << "type: " << type << std::endl;
 }

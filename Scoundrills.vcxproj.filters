@@ -59,6 +59,9 @@
     <ClCompile Include="src\drill\PlayerResources.cpp">
       <Filter>drill</Filter>
     </ClCompile>
+    <ClCompile Include="src\interactable\specificStations\PipeWorkbench.cpp">
+      <Filter>interactable\specificStations</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Navigation.h" />
@@ -120,6 +123,9 @@
     </ClInclude>
     <ClInclude Include="src\drill\PlayerResources.h">
       <Filter>drill</Filter>
+    </ClInclude>
+    <ClInclude Include="src\interactable\specificStations\PipeWorkbench.h">
+      <Filter>interactable\specificStations</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

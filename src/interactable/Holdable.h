@@ -9,7 +9,7 @@
 class Player;
 
 enum class HoldableType {
-	WATER, PIPE, NONE
+	WATER, ICE, SCRAP, PIPE, NONE
 };
 
 class Holdable
