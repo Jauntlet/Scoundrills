@@ -62,8 +62,6 @@ bool PlayerManager::processInput(DrillManager& drill, const Jauntlet::Camera2D& 
 void PlayerManager::damageTick(const int& drillHeat) {
 	_damageTick += Jauntlet::Time::getDeltaTime() * (drillHeat / 200);
 
-	std::cout << _damageTick << std::endl;
-
 	if (_damageTick > 2.5) {
 		_damageTick = 0;
 		int Rand = rand() % _players.size();
