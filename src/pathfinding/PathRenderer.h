@@ -2,7 +2,7 @@
  * Main Contributer(s): Xander Mooney
  */
 #pragma once
-#include <Jauntlet/Rendering/ResourceManager.h>
+#include <Jauntlet/Rendering/Textures/ResourceManager.h>
 #include "../drill/DrillManager.h"
 #include "Pathfinding.h"
 

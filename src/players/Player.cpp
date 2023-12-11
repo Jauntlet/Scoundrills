@@ -1,8 +1,11 @@
 #include "Player.h"
 #include "src/interactable/Holdable.h"
 
-Player::Player(float x, float y) : collider(Jauntlet::BoxCollider2D(glm::vec2(64), glm::vec2(x,y))) {
-	_position = glm::vec2(x, y);
+Player::Player(float x, float y) :
+	collider(Jauntlet::BoxCollider2D(glm::vec2(64), glm::vec2(x, y))),
+	_position(glm::vec2(x, y)),
+	_healthBar("Textures/healthbar.png", glm::vec4(0, 0, 0.5, 0.5), glm::vec4(0.5), glm::vec4(_position.x + 8, _position.y + 68, 48, 8))
+{
 }
 
 void Player::update(DrillManager& drill) {
@@ -62,6 +65,12 @@ void Player::update(DrillManager& drill) {
 
 void Player::draw(Jauntlet::SpriteBatch& spriteBatch) {
 	spriteBatch.draw({ _position.x, _position.y, 64, 64 }, Jauntlet::ResourceManager::getTexture("Textures/Craig.png").id, 0);
+
+	if (health != 30) {
+		_healthBar.setProgress(health / 30);
+		_healthBar.setPosition(glm::vec2(_position.x + 8, _position.y + 68));
+		_healthBar.draw(spriteBatch);
+	}
 }
 
 void Player::navigateTo(DrillManager& drill, PathRenderer& pathRenderer, glm::vec2 position) {
@@ -77,9 +86,9 @@ void Player::navigateTo(DrillManager& drill, PathRenderer& pathRenderer, glm::ve
 			_station->unoccupy();
 		}
 		
-		if (pipeDest != nullptr) {
-			delete pipeDest;
-			pipeDest = nullptr;
+		if (_pipeDest != nullptr) {
+			delete _pipeDest;
+			_pipeDest = nullptr;
 		}
 		
 		_station = storedStation;
@@ -114,13 +123,13 @@ void Player::navigateTo(DrillManager& drill, PathRenderer& pathRenderer, glm::ve
 		if (_path.empty()) return;
 		_path.erase(_path.begin());
 		if (!drill.DestMatchesRandomPipe(drill.pipes.RoundWorldPos(position))) {
-			if (pipeDest != nullptr) {
-				delete pipeDest;
-				pipeDest = nullptr;
+			if (_pipeDest != nullptr) {
+				delete _pipeDest;
+				_pipeDest = nullptr;
 			}
 			_path.insert(_path.begin(), drill.drillWalls.RoundWorldPos(position));
 		} else {
-			pipeDest = new glm::vec2(position);
+			_pipeDest = new glm::vec2(position);
 		}
 	}
 }
@@ -166,13 +175,13 @@ void Player::onDestination(DrillManager& drill) {
 	}
 
 	// if destination is pipe, we try to repair it.
-	if (pipeDest != nullptr) {
+	if (_pipeDest != nullptr) {
 		if (heldItem != nullptr && heldItem->itemType == HoldableType::PIPE) {
 			// repair the pipe
-			drill.repairPipe(drill.pipes.RoundWorldPos(*pipeDest));
+			drill.repairPipe(drill.pipes.RoundWorldPos(*_pipeDest));
 			// remove stored destination
-			delete pipeDest;
-			pipeDest = nullptr;
+			delete _pipeDest;
+			_pipeDest = nullptr;
 			// destroy the held item
 			drill.removeHoldable(heldItem);
 		}

@@ -15,8 +15,8 @@ SceneManager::SceneManager() {
     switchScene(GameState::MAINMENU);
 #else
     // Feel free to change this to whatever you need for debugging. This will not compile on release builds.
-    //switchScene(GameState::MAINMENU);
-    switchScene(GameState::MAINGAME);
+    switchScene(GameState::MAINMENU);
+    //switchScene(GameState::MAINGAME);
 #endif
     gameLoop();
 }

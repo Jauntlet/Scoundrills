@@ -53,11 +53,11 @@ UICoordinator::~UICoordinator() {
 }
 
 void UICoordinator::draw() {
-	waterIconText = JMath::Split(std::to_string(std::min(_drill->resources.water, 999.0f)), '.')[0];
-	foodIconText = std::to_string(std::min(_drill->resources.food, (unsigned int)999));
-	partsIconText = std::to_string(_drill->resources.copper);
+	waterIconText = JMath::Split(std::to_string(std::min(_drill->resources->water, 999.0f)), '.')[0];
+	foodIconText = std::to_string(std::min(_drill->resources->food, (unsigned int)999));
+	partsIconText = std::to_string(_drill->resources->copper);
 
-	tempIconText = std::to_string(_drill->resources.heat).substr(0, 5);
+	tempIconText = std::to_string(_drill->resources->heat).substr(0, 5);
 
 	_UIManager.draw();
 	navigation->update();

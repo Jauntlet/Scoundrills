@@ -13,7 +13,7 @@ toggling drill makes all points visible even when nav is hidden
 
 #include <chrono>
 #include <Jauntlet/JMath.h>
-#include <Jauntlet/Rendering/ResourceManager.h>
+#include <Jauntlet/Rendering/Textures/ResourceManager.h>
 #include <random>
 
 #include <iostream>

@@ -7,6 +7,7 @@
 #include "../interactable/PlayerStation.h"
 #include "../interactable/Holdable.h"
 #include "../pathfinding/PathRenderer.h"
+#include <Jauntlet/Rendering/ProgressBar.h>
 
 class Player
 {
@@ -41,5 +42,7 @@ private:
 	float _speed = 300.0f, _storedVelocity = 0.0f;
 
 	PlayerStation* _station = nullptr;
-	glm::vec2* pipeDest = nullptr;
+	glm::vec2* _pipeDest = nullptr;
+
+	Jauntlet::ProgressBar _healthBar;
 };

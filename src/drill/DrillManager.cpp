@@ -8,11 +8,10 @@ const float HEAT_RISE_SCALE = .3f; //1 heat every ~3 seconds.
 const float HEAT_FALL_SCALE = .1f; //1 heat every 10 seconds.
 
 const float PIPE_BURST_HEAT = 80.0f; // The minimum heat for pipes to be able to burst.
-const float PLAYER_HURT_HEAT = 200.0f; // The minimum heat for players to take damage from it.
 
-DrillManager::DrillManager(CameraManager* cameraManager, PlayerResources resourceManager, Jauntlet::Camera2D* camera) :
+DrillManager::DrillManager(CameraManager* cameraManager, PlayerResources& resourceManager, Jauntlet::Camera2D* camera) :
 	_drillAssets(camera),
-	resources(resourceManager),
+	resources(&resourceManager),
 	navigation(camera),
 	_boiler(&boilerWater, "Textures/BoilerTank.png", { 64 * 16, -64 * 1 - 10, 32 * 2, 43 * 2 }, 5, { 64 * 15.5, -64 * 2, 64 * 2, 96 * 2 }, { 16,-64 }),
 	_waterTank(*this, { 64, -64 * 12, 64, 64 }, { 64, -64 * 12, 64, 64 }, glm::vec2(0)),
@@ -41,8 +40,8 @@ void DrillManager::update() {
 	if (_drillOn) {
 		if (boilerWater > 0) {
 			boilerWater -= Jauntlet::Time::getDeltaTime() / 6;
-			resources.heat += Jauntlet::Time::getDeltaTime() * (HEAT_RISE_SCALE + _brokenPipeLocations.size() * 0.1);
-			_disasterTime -= Jauntlet::Time::getDeltaTime() * (resources.heat / 100);
+			resources->heat += Jauntlet::Time::getDeltaTime() * (HEAT_RISE_SCALE + _brokenPipeLocations.size() * 0.1);
+			_disasterTime -= Jauntlet::Time::getDeltaTime() * (resources->heat / 100);
 			if (_disasterTime < 0) {
 				DisasterEvent();
 			}
@@ -50,9 +49,9 @@ void DrillManager::update() {
 			_forge.update();
 		}
 	} else {
-		resources.heat -= Jauntlet::Time::getDeltaTime() * (HEAT_FALL_SCALE - _brokenPipeLocations.size() * 0.1);
-		if (resources.heat < 0) {
-			resources.heat = 0;
+		resources->heat -= Jauntlet::Time::getDeltaTime() * (HEAT_FALL_SCALE - _brokenPipeLocations.size() * 0.1);
+		if (resources->heat < 0) {
+			resources->heat = 0;
 		}
 	}
 
@@ -265,7 +264,7 @@ void DrillManager::DisasterEvent() {
 	 
 	switch (disaster) {
 	case 0:
-		if (resources.heat > PIPE_BURST_HEAT) {
+		if (resources->heat > PIPE_BURST_HEAT) {
 			bustRandomPipe();
 		} else {
 			placeScrap();

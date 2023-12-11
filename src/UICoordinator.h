@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <Jauntlet/Rendering/ResourceManager.h>
+#include <Jauntlet/Rendering/Textures/ResourceManager.h>
 #include <Jauntlet/Rendering/GLSLProgram.h>
 #include <Jauntlet/UI/UIButtonToggleableElement.h>
 #include <Jauntlet/UI/UIManager.h>

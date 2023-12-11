@@ -10,15 +10,15 @@ WaterTank::WaterTank(DrillManager& drill, glm::vec4 destination, glm::vec4 bound
 }
 
 void WaterTank::onPlayerArrival(Player& player) {
-	if (player.heldItem == nullptr && _drill->resources.water > 0) {
+	if (player.heldItem == nullptr && _drill->resources->water > 0) {
 		Holdable* water = _drill->addHoldable("Textures/missing.png", glm::vec2(64 * 7, -64 * 6), glm::vec2(32), HoldableType::WATER);
 		
-		if (_drill->resources.water < Boiler::BOILER_MAX_WATER) {
-			water->requestWater(Boiler::BOILER_MAX_WATER - _drill->resources.water);
-			_drill->resources.water = 0;
+		if (_drill->resources->water < Boiler::BOILER_MAX_WATER) {
+			water->requestWater(Boiler::BOILER_MAX_WATER - _drill->resources->water);
+			_drill->resources->water = 0;
 		}
 		else {
-			_drill->resources.water -= Boiler::BOILER_MAX_WATER;
+			_drill->resources->water -= Boiler::BOILER_MAX_WATER;
 		}
 		
 		water->pickup(&player);
@@ -27,7 +27,7 @@ void WaterTank::onPlayerArrival(Player& player) {
 	else if (player.heldItem != nullptr) {
 		if (player.heldItem->itemType == HoldableType::WATER) {
 			// grab as much water as possible from the held item.
-			_drill->resources.water += player.heldItem->requestWater(1000);
+			_drill->resources->water += player.heldItem->requestWater(1000);
 		} else if (player.heldItem->itemType == HoldableType::ICE) {
 			_icedWater += 5.0f;
 			_drill->removeHoldable(player.heldItem);
@@ -36,7 +36,7 @@ void WaterTank::onPlayerArrival(Player& player) {
 }
 
 void WaterTank::update() {
-	float waterIncrease = std::min(_icedWater, Jauntlet::Time::getDeltaTime() * _drill->resources.heat / 200);
+	float waterIncrease = std::min(_icedWater, Jauntlet::Time::getDeltaTime() * _drill->resources->heat / 200);
 	_icedWater -= waterIncrease;
-	_drill->resources.water += waterIncrease;
+	_drill->resources->water += waterIncrease;
 }
