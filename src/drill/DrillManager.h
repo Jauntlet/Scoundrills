@@ -21,7 +21,7 @@ const float DISASTER_INTERVAL = 10.0f;
 
 class DrillManager {
 public:
-	DrillManager(CameraManager* cameraManager, PlayerResources resourceManager, Jauntlet::Camera2D* camera);
+	DrillManager(CameraManager* cameraManager, PlayerResources& resourceManager, Jauntlet::Camera2D* camera);
 	
 	// update parts of the drill
 	void update();
@@ -62,7 +62,7 @@ public:
 
 	float boilerWater = Boiler::BOILER_MAX_WATER;
 	Navigation navigation;
-	PlayerResources resources;
+	PlayerResources* resources;
 private:
 	// Commits a random disaster
 	void DisasterEvent();

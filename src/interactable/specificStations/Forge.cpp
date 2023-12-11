@@ -18,10 +18,10 @@ void Forge::onPlayerArrival(Player& player) {
 
 void Forge::update() {
 	if (_heldScrap > 0) {
-		_meltingScrap += _drill->resources.heat / 1000 * Jauntlet::Time::getDeltaTime();
+		_meltingScrap += _drill->resources->heat / 1000 * Jauntlet::Time::getDeltaTime();
 		if (_meltingScrap >= 1) {
 			--_heldScrap;
-			++_drill->resources.copper;
+			++_drill->resources->copper;
 			_meltingScrap = 0;
 		}
 	}
