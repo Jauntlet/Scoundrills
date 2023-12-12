@@ -20,7 +20,7 @@ public:
 
 	bool isNavOpen(); //returns if the thing is thinging
 	void toggleNav(); //toggles visibility (on/off)
-	void selectNav(int id); //sets selected destination
+	void selectNav(int id, glm::ivec2 xy); //sets selected destination
 	void updateTravel(); //Updates the "tick" of travel; Moves the points closer to the drill to simulate going to the outcove. When reaching the destination, set destination to null.
 	void spawnOutcove(int type);
 
@@ -32,11 +32,12 @@ private:
 	GLuint _drillIcon = 0;
 	bool _navOpen = false; //visibility of menu
 	int _destination = -1; //id value
+	int _columnOver = 2; //the column the drill icon rests over currently
+	int _drillRow = -1; //the drill's current row (-1 is above row 0 on the map)
 	std::vector<int> _mappedCoves;
 	glm::vec2 _shiftPos = glm::vec2(0); //position determining how to move nav points when a destination is selected
 	float _progress = -1; //progress towards next destination
 	float _speed = 1;
-	//int _nextRow = 1; //the row which is selectable to navigate to
 	Jauntlet::UIManager _uiManager;
 	std::vector<Jauntlet::UIButtonElement> _points;
 	glm::vec2 _bgPos = glm::vec2(0);

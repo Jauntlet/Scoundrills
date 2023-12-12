@@ -90,7 +90,7 @@ Jauntlet::UIManager* Navigation::genNav() {
 
 			if (point == 0) { // white X
 				int destID = _positions.size() - 1;
-				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID]() -> void { selectNav(destID); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID, x, y]() -> void { selectNav(destID, glm::ivec2(x, y)); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
 				button.visible = visible;
 				_points.push_back(button);
 				continue;
@@ -98,7 +98,7 @@ Jauntlet::UIManager* Navigation::genNav() {
 
 			if (point == 1) { // blue X
 				int destID = _positions.size() - 1;
-				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID]() -> void { selectNav(destID); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID, x, y]() -> void { selectNav(destID, glm::ivec2(x, y)); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
 				button.visible = false;
 				_points.push_back(button);
 				continue;
@@ -152,13 +152,23 @@ bool Navigation::isNavOpen() {
 	return _navOpen;
 }
 
-void Navigation::selectNav(int id) {
-	if (!(_positions[id].y < -185 && _positions[id].y > -190)) return;
+void Navigation::selectNav(int id, glm::ivec2 xy) {
+	if (_destination != -1) return;
+	//check for interference
+	if (_drillRow != xy.y - 1) {
+		for (int y = xy.y-1; y > _drillRow; y--) { //loop for amount of layers to traverse
+			if (_columnOver == xy.x) {
+				if (_map[y][xy.x] != 2) return;
+			}
+		}
+	}
 	_caretSet = true;
 	_destination = id;
 	_speed = baseSpeed/JMath::Distance(_iconPos, _positions[id]);
-	_shiftPos = glm::vec2(_positions[id].x, 187.5);
+	_shiftPos = glm::vec2(_positions[id].x, 187.5 * (xy.y - _drillRow));
 	_caretPos = _positions[id] + glm::vec2(0, 37.5);
+	_columnOver = xy.x;
+	_drillRow = xy.y;
 	if (!_caretElement->visible) {
 		_caretElement->visible = true;
 	}
