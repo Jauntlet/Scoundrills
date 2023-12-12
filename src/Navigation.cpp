@@ -156,9 +156,18 @@ void Navigation::selectNav(int id, glm::ivec2 xy) {
 	if (_destination != -1) return;
 	//check for interference
 	if (_drillRow != xy.y - 1) {
+		int tempX = xy.x;
 		for (int y = xy.y-1; y > _drillRow; y--) { //loop for amount of layers to traverse
-			if (_columnOver == xy.x) {
+			if (_columnOver == xy.x) { //straight up/down
 				if (_map[y][xy.x] != 2) return;
+			}
+			else if (_columnOver < tempX) { //drill to left
+				tempX--;
+				if (_map[y][tempX] != 2) return;
+			}
+			else if (_columnOver > tempX) { //drill to right
+				tempX++;
+				//if (_map[y][tempX] != 2) return;
 			}
 		}
 	}
