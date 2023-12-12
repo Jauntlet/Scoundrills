@@ -18,7 +18,7 @@ MainGame::MainGame() :
 	_hudCamera(GlobalContext::screenSize.x, GlobalContext::screenSize.y),
 	_drill(&_cameraManager, _resources, &_hudCamera),
 	_cameraManager(&_camera, &_players, &_drill),
-	_players(3, &_drill),
+	_players(&_drill),
 	_selectedTile(&_drill, &_players),
 	_textRenderer(&_hudCamera, "Fonts/HandelGo.ttf", 256),
 	_uiCoordinator(&_hudCamera, &_textRenderer, &_drill),
@@ -26,6 +26,11 @@ MainGame::MainGame() :
 {
 	GlobalContext::window.setBackgroundColor(Jauntlet::Color(97, 60, 47));
 	_uiCoordinator.applyNewScreenSize(glm::ivec2(GlobalContext::screenSize.x, GlobalContext::screenSize.y));
+
+	// TEMPORARY
+	for (int i = 0; i < 3; ++i) {
+		_players.createPlayer(glm::vec2(64 * (i + 1) + 704, -64 * 10), "Textures/Craig.png");
+	}
 }
 
 void MainGame::gameLoop() {

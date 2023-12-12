@@ -4,25 +4,18 @@
 #include "src/players/Player.h"
 #include "../drill/DrillManager.h"
 
-PlayerManager::PlayerManager(int initialPlayers, DrillManager* drill) :
-	_pathRenderer(drill, this)
+PlayerManager::PlayerManager(DrillManager* drill) :
+	_pathRenderer(drill, this),
+	_drill(drill)
 {
-	_players.reserve(sizeof(Player) * initialPlayers);
-
-	for (int i = 0; i < initialPlayers; ++i) {
-		_players.emplace_back(64 * (i + 1) + 704, -64 * 10);
-	}
+	// Empty
 }
 
-void PlayerManager::addPlayer(Player& player) {
-	_players.push_back(player);
+void PlayerManager::createPlayer(const glm::vec2& position, const std::string& texture) {
+	_players.emplace_back(position, texture);
 }
 
-void PlayerManager::createPlayer(int x, int y) {
-	_players.emplace_back(x, y);
-}
-
-bool PlayerManager::processInput(DrillManager& drill, const Jauntlet::Camera2D& activeCamera) {
+bool PlayerManager::processInput(const Jauntlet::Camera2D& activeCamera) {
 	glm::vec2 mousePos = activeCamera.convertScreenToWorld(GlobalContext::inputManager.getMouseCoords());
 	// if we click
 	if (GlobalContext::inputManager.isKeyPressed(SDL_BUTTON_LEFT)) {
@@ -40,17 +33,17 @@ bool PlayerManager::processInput(DrillManager& drill, const Jauntlet::Camera2D& 
 				}
 			}
 		} else { // we have selected a position for the player to move to.
-			if (drill.isValidDestination(_storedMousePos, this) || drill.checkHoveringStation(mousePos) != nullptr) {
-				_players[_selectedPlayer].navigateTo(drill, _pathRenderer, mousePos);
+			if (_drill->isValidDestination(_storedMousePos, this) || _drill->checkHoveringStation(mousePos) != nullptr) {
+				_players[_selectedPlayer].navigateTo(*_drill, _pathRenderer, mousePos);
 			}
 			_pathRenderer.clearPath();
 			_selectedPlayer = -1;
 		}
 	} else if (_selectedPlayer != -1) {
 		// a player is selected and we aren't clicking, so we draw the path via pathrenderer
-		if (_storedMousePos != drill.drillWalls.RoundWorldPos(mousePos)) {
-			_storedMousePos = drill.drillWalls.RoundWorldPos(mousePos);
-			if (drill.isValidDestination(_storedMousePos, this) || drill.checkHoveringStation(_storedMousePos) != nullptr) {
+		if (_storedMousePos != _drill->drillWalls.RoundWorldPos(mousePos)) {
+			_storedMousePos = _drill->drillWalls.RoundWorldPos(mousePos);
+			if (_drill->isValidDestination(_storedMousePos, this) || _drill->checkHoveringStation(_storedMousePos) != nullptr) {
 				_pathRenderer.createPath(_players[_selectedPlayer].getPosition(), _storedMousePos);
 			} else {
 				_pathRenderer.clearPath();
@@ -68,6 +61,7 @@ void PlayerManager::damageTick(const int& drillHeat) {
 		_players[Rand].health -= 1;
 
 		if (_players[Rand].health == 0) {
+			_players[Rand].heldItem->drop(&_drill->drillFloor);
 			_players.erase(_players.begin() + Rand);
 		}
 	}

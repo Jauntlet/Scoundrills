@@ -28,7 +28,7 @@ void CameraManager::processInput() {
 		_camera->transitionToScale(0.5f);
 	}
 
-	bool clickOnPlayers = _players->processInput(*_drill, *_camera);
+	bool clickOnPlayers = _players->processInput(*_camera);
 	
 	if (GlobalContext::inputManager.isKeyDown(SDL_BUTTON_LEFT)) {
 		if (!clickOnPlayers) {

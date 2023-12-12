@@ -12,7 +12,7 @@
 class Player
 {
 public:
-	Player(float x, float y);
+	Player(const glm::vec2& position, const std::string& texture);
 
 	void update(DrillManager& drill);
 	void draw(Jauntlet::SpriteBatch& spriteBatch);
@@ -44,5 +44,7 @@ private:
 	PlayerStation* _station = nullptr;
 	glm::vec2* _pipeDest = nullptr;
 
+	// Rendering
+	GLuint _texture;
 	Jauntlet::ProgressBar _healthBar;
 };

@@ -1,15 +1,15 @@
 #include "Player.h"
 #include "src/interactable/Holdable.h"
 
-Player::Player(float x, float y) :
-	collider(Jauntlet::BoxCollider2D(glm::vec2(64), glm::vec2(x, y))),
-	_position(glm::vec2(x, y)),
-	_healthBar("Textures/healthbar.png", glm::vec4(0, 0, 0.5, 0.5), glm::vec4(0.5), glm::vec4(_position.x + 8, _position.y + 68, 48, 8))
+Player::Player(const glm::vec2& position, const std::string& texture) :
+	collider(Jauntlet::BoxCollider2D(glm::vec2(64), position)),
+	_position(position),
+	_healthBar("Textures/healthbar.png", glm::vec4(0, 0, 0.5, 0.5), glm::vec4(0.5), glm::vec4(_position.x + 8, _position.y + 68, 48, 8)),
+	_texture(Jauntlet::ResourceManager::getTexture(texture).id)
 {
 }
 
 void Player::update(DrillManager& drill) {
-	
 	// we have a path to follow
 	if (!_path.empty()) {
 		glm::vec2 direction = glm::vec2(_path.back().x - _position.x, _path.back().y - _position.y);
