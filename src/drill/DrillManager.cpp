@@ -144,26 +144,6 @@ bool DrillManager::isValidDestination(glm::vec2 worldPos, PlayerManager* playerM
 	}
 }
 
-bool DrillManager::isValidDestination(glm::vec2 worldPos) const {
-	glm::ivec2 pos = drillWalls.WorldPosToTilePos(worldPos);
-	glm::vec2 floorPos = drillFloor.WorldPosToTilePos(worldPos);
-	worldPos = drillWalls.RoundWorldPos(worldPos);
-
-	if (drillWalls.tileHasCollision(pos) || !drillWalls.isValidTilePos(pos)) {
-		// The tile is in a wall, but theres a chance it is a broken pipe, so we loop through all broken pipes.
-		for (int i = 0; i < _brokenPipeLocations.size(); ++i) {
-			if (pipes.TilePosToWorldPos(_brokenPipeLocations[i]) == worldPos + glm::vec2(0, _brokenPipeLocations[i].y != 0 ? 64 : 0)) {
-				return true;
-			}
-		}
-		return false;
-	} else if (drillFloor.isTileEmpty(floorPos)) {
-		return false;
-	} else {
-		return !doesTileOverlapStations(pos);
-	}
-}
-
 bool DrillManager::isValidPath(glm::vec2 worldPos, PlayerManager* playerManager) const {
 	glm::ivec2 pos = drillWalls.WorldPosToTilePos(worldPos);
 	glm::vec2 floorPos = drillFloor.WorldPosToTilePos(worldPos);
@@ -180,6 +160,27 @@ bool DrillManager::isValidPath(glm::vec2 worldPos, PlayerManager* playerManager)
 	// Prevent pathing through items on the floor.
 	for (int i = 0; i < _holdables.size(); ++i) {	
 		if (_holdables[i]->position == worldPos + glm::vec2(0,64)) {
+			return false;
+		}
+	}
+
+	return !doesTileOverlapStations(pos);
+}
+bool DrillManager::isValidPath(glm::vec2 worldPos) const {
+	glm::ivec2 pos = drillWalls.WorldPosToTilePos(worldPos);
+	glm::vec2 floorPos = drillFloor.WorldPosToTilePos(worldPos);
+	worldPos = drillWalls.RoundWorldPos(worldPos);
+
+	if (drillWalls.tileHasCollision(pos) || !drillWalls.isValidTilePos(pos)) {
+		return false;
+	}
+	else if (drillFloor.isTileEmpty(floorPos)) {
+		return false;
+	}
+
+	// Prevent pathing through items on the floor.
+	for (int i = 0; i < _holdables.size(); ++i) {
+		if (_holdables[i]->position == worldPos + glm::vec2(0, 64)) {
 			return false;
 		}
 	}
@@ -284,7 +285,7 @@ void DrillManager::DisasterEvent() {
 void DrillManager::placeIce() {
 	glm::vec2 position = drillFloor.TilePosToWorldPos(drillFloor.selectRandomTile(1));
 
-	while (!isValidDestination(position)) {
+	while (!isValidPath(position)) {
 		position = drillFloor.TilePosToWorldPos(drillFloor.selectRandomTile(1));
 	}
 
@@ -294,7 +295,7 @@ void DrillManager::placeIce() {
 void DrillManager::placeScrap() {
 	glm::vec2 position = drillFloor.TilePosToWorldPos(drillFloor.selectRandomTile(1));
 
-	while (!isValidDestination(position)) {
+	while (!isValidPath(position)) {
 		position = drillFloor.TilePosToWorldPos(drillFloor.selectRandomTile(1));
 	}
 
