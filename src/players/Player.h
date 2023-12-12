@@ -51,4 +51,5 @@ private:
 	Jauntlet::Animation _animation = Jauntlet::Animation(28);
 	Jauntlet::ProgressBar _healthBar;
 	glm::vec2 _moveDir = glm::vec2(0);
+	bool _flipped = false;
 };
