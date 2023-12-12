@@ -8,6 +8,7 @@
 #include "../interactable/Holdable.h"
 #include "../pathfinding/PathRenderer.h"
 #include <Jauntlet/Rendering/ProgressBar.h>
+#include <Jauntlet/Rendering/Animation/Animation.h>
 
 class Player
 {
@@ -46,5 +47,7 @@ private:
 
 	// Rendering
 	GLuint _texture;
+	Jauntlet::Animation _animation = Jauntlet::Animation(28);
 	Jauntlet::ProgressBar _healthBar;
+	glm::vec2 _moveDir = glm::vec2(0);
 };

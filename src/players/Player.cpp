@@ -7,6 +7,7 @@ Player::Player(const glm::vec2& position, const std::string& texture) :
 	_healthBar("Textures/healthbar.png", glm::vec4(0, 0, 0.5, 0.5), glm::vec4(0.5), glm::vec4(_position.x + 8, _position.y + 68, 48, 8)),
 	_texture(Jauntlet::ResourceManager::getTexture(texture).id)
 {
+	_animation.play(0,1,0.5f);
 }
 
 void Player::update(DrillManager& drill) {
@@ -52,19 +53,36 @@ void Player::update(DrillManager& drill) {
 			if (_path.empty()) {
 				onDestination(drill);
 			}
+			else {
+				// Update animation
+				direction = glm::vec2(glm::sign(_path.back().x - _position.x), glm::sign(_path.back().y - _position.y));
+				
+				if (direction != _moveDir) {
+					_moveDir = direction;
+					if (_moveDir.x != 0) {
+						_animation.play(22, 27, 0.05f);
+					} else if (_moveDir.y > 0) {
+						_animation.play(12, 19, 0.025f);
+					}
+					else {
+						_animation.play(2, 9, 0.025f);
+					}
+				}
+			}
 		}
 		// update position of held item whenever we move
 		if (heldItem != nullptr) {
 			heldItem->position = _position;
 		}
 	}
+	_animation.update();
 	
 	//update collider
 	collider.position = _position;
 }
 
 void Player::draw(Jauntlet::SpriteBatch& spriteBatch) {
-	spriteBatch.draw({ _position.x, _position.y, 64, 64 }, Jauntlet::ResourceManager::getTexture("Textures/Craig.png").id, 0);
+	spriteBatch.draw({ _position.x, _position.y, 64, 64 }, _animation.getUV(), _texture, 0);
 
 	if (health != 30) {
 		_healthBar.setProgress(health / 30);
@@ -131,6 +149,18 @@ void Player::navigateTo(DrillManager& drill, PathRenderer& pathRenderer, glm::ve
 		} else {
 			_pipeDest = new glm::vec2(position);
 		}
+
+		_moveDir = glm::vec2(glm::sign(_path.back().x - _position.x), glm::sign(_path.back().y - _position.y));
+		if (_moveDir.x != 0) {
+			_animation.play(22, 27, 0.05f);
+		}
+		else if (_moveDir.y > 0) {
+			_animation.play(12, 19, 0.05f);
+		}
+		else {
+			_animation.play(2, 9, 0.05f);
+		}
+
 	}
 }
 
@@ -157,6 +187,18 @@ void Player::forceDropItem() {
 void Player::onDestination(DrillManager& drill) {
 	// remove all stored velocity.
 	_storedVelocity = 0;
+
+	// Play idle animation
+	if (_moveDir.x != 0) {
+		_animation.stop(20);
+		_animation.play(20, 21, 0.5f);
+	} else if (_moveDir.y > 0) {
+		_animation.stop(10);
+		_animation.play(10, 11, 0.5f);
+	} else {
+		_animation.stop(0);
+		_animation.play(0, 1, 0.5f);
+	}
 
 	// detect if we landed on an item and pick it up.
 	Holdable* holdable = drill.getHoldable(_position);
