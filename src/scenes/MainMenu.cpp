@@ -18,6 +18,7 @@ MainMenu::MainMenu(SceneManager* sceneManager) :
 
 	_uiManager.setScale(GlobalContext::screenSize.y / 1080.0f);
 	_uiManager.addElement(&_startButton, &GlobalContext::normalShader);
+	_uiManager.addElement(&_titleTextElement, &Jauntlet::TextRenderer::textShader);
 	_uiManager.optimize();
 	_uiManager.resolvePositions();
 }
