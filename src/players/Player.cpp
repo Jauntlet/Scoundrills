@@ -9,6 +9,11 @@ Player::Player(const glm::vec2& position, const std::string& texture) :
 {
 	_animation.play(0,1,0.5f);
 }
+Player::~Player() {
+	if (_station != nullptr) {
+		_station->unoccupy();
+	}
+}
 
 void Player::update(DrillManager& drill) {
 	// we have a path to follow

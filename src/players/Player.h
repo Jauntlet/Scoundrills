@@ -14,6 +14,7 @@ class Player
 {
 public:
 	Player(const glm::vec2& position, const std::string& texture);
+	~Player();
 
 	void update(DrillManager& drill);
 	void draw(Jauntlet::SpriteBatch& spriteBatch);
