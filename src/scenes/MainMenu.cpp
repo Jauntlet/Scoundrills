@@ -4,11 +4,8 @@
 #include "SceneManager.h"
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
 
-#include <iostream>
-
 void MainMenu::startGame() {
-	std::cout << "BUTTON CLICKED" << std::endl;
-	_sceneManager->switchScene(GameState::MAINGAME);
+	_switch = true;
 }
 
 MainMenu::MainMenu(SceneManager* sceneManager) :
@@ -48,6 +45,10 @@ void MainMenu::gameLoop() {
 	}
 	_camera.update();
 	_uiManager.draw();
+
+	if (_switch) {
+		_sceneManager->switchScene(GameState::MAINGAME);
+	}
 }
 
 void MainMenu::windowResized() {

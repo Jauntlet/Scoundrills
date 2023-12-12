@@ -15,6 +15,8 @@ public:
 private:
 	void startGame();
 
+	bool _switch = false; // true when switching to next scene
+
 	Jauntlet::Camera2D _camera;
 	Jauntlet::UIManager _uiManager;
 
