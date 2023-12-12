@@ -24,26 +24,6 @@ MainMenu::MainMenu(SceneManager* sceneManager) :
 }
 
 void MainMenu::gameLoop() {
-	if (GlobalContext::inputManager.isKeyDown(SDLK_a)) {
-		_camera.translate(glm::vec2(10 * Jauntlet::Time::getDeltaTime(),0));
-		_uiManager.resolvePositions();
-	}
-	if (GlobalContext::inputManager.isKeyDown(SDLK_d)) {
-		_camera.translate(glm::vec2(-10 * Jauntlet::Time::getDeltaTime(),0));
-		_uiManager.resolvePositions();
-	}
-	if (GlobalContext::inputManager.isKeyDown(SDLK_s)) {
-		_camera.translate(glm::vec2(0,10 * Jauntlet::Time::getDeltaTime()));
-		_uiManager.resolvePositions();
-	}
-	if (GlobalContext::inputManager.isKeyDown(SDLK_w)) {
-		_camera.translate(glm::vec2(0,-10 * Jauntlet::Time::getDeltaTime()));
-		_uiManager.resolvePositions();
-	}
-	if (GlobalContext::inputManager.isKeyDown(SDLK_r)) {
-		_camera.setPosition(glm::vec2(0,0));
-		_uiManager.resolvePositions();
-	}
 	_camera.update();
 	_uiManager.draw();
 
