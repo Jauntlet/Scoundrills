@@ -65,11 +65,14 @@ void Player::update(DrillManager& drill) {
 				if (direction != _moveDir) {
 					_moveDir = direction;
 					if (_moveDir.x != 0) {
+						_flipped = _moveDir.x < 0;
 						_animation.play(22, 27, 0.05f);
 					} else if (_moveDir.y > 0) {
+						_flipped = false;
 						_animation.play(12, 19, 0.025f);
 					}
 					else {
+						_flipped = false;
 						_animation.play(2, 9, 0.025f);
 					}
 				}
@@ -87,7 +90,12 @@ void Player::update(DrillManager& drill) {
 }
 
 void Player::draw(Jauntlet::SpriteBatch& spriteBatch) {
-	spriteBatch.draw({ _position.x, _position.y, 64, 64 }, _animation.getUV(), _texture, 0);
+	if (_flipped) {
+		spriteBatch.draw({ _position.x + 64, _position.y, -64, 64 }, _animation.getUV(), _texture, 0);
+	}
+	else {
+		spriteBatch.draw({ _position.x, _position.y, 64, 64 }, _animation.getUV(), _texture, 0);
+	}
 
 	if (health != 30) {
 		_healthBar.setProgress(health / 30);
@@ -157,12 +165,15 @@ void Player::navigateTo(DrillManager& drill, PathRenderer& pathRenderer, glm::ve
 
 		_moveDir = glm::vec2(glm::sign(_path.back().x - _position.x), glm::sign(_path.back().y - _position.y));
 		if (_moveDir.x != 0) {
+			_flipped = _moveDir.x < 0;
 			_animation.play(22, 27, 0.05f);
 		}
 		else if (_moveDir.y > 0) {
+			_flipped = false;
 			_animation.play(12, 19, 0.05f);
 		}
 		else {
+			_flipped = false;
 			_animation.play(2, 9, 0.05f);
 		}
 
@@ -195,12 +206,15 @@ void Player::onDestination(DrillManager& drill) {
 
 	// Play idle animation
 	if (_moveDir.x != 0) {
+		_flipped = _moveDir.x < 0;
 		_animation.stop(20);
 		_animation.play(20, 21, 0.5f);
 	} else if (_moveDir.y > 0) {
+		_flipped = false;
 		_animation.stop(10);
 		_animation.play(10, 11, 0.5f);
 	} else {
+		_flipped = true;
 		_animation.stop(0);
 		_animation.play(0, 1, 0.5f);
 	}
