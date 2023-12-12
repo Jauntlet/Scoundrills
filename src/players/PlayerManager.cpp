@@ -61,7 +61,9 @@ void PlayerManager::damageTick(const int& drillHeat) {
 		_players[Rand].health -= 1;
 
 		if (_players[Rand].health == 0) {
-			_players[Rand].heldItem->drop(&_drill->drillFloor);
+			if (_players[Rand].heldItem != nullptr) {
+				_players[Rand].heldItem->drop(&_drill->drillFloor);
+			}
 			_players.erase(_players.begin() + Rand);
 		}
 	}
