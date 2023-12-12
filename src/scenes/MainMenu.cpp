@@ -11,7 +11,7 @@ void MainMenu::startGame() {
 MainMenu::MainMenu(SceneManager* sceneManager) :
 	_camera(GlobalContext::screenSize.x, GlobalContext::screenSize.y),
 	_uiManager(&_camera),
-	_startButton(&GlobalContext::inputManager, std::bind(&MainMenu::startGame, this), Jauntlet::ResourceManager::getTexture("Textures/Startbutton.png").id, &_startButtonPos, glm::vec2(100,100), Jauntlet::UIElement::ORIGIN_PIN::CENTER),
+	_startButton(&GlobalContext::inputManager, std::bind(&MainMenu::startGame, this), Jauntlet::ResourceManager::getTexture("Textures/Start button.png").id, &_startButtonPos, glm::vec2(600,200), Jauntlet::UIElement::ORIGIN_PIN::CENTER),
 	_sceneManager(sceneManager)
 {
 	GlobalContext::window.setBackgroundColor(Jauntlet::Color("6B7973"));
