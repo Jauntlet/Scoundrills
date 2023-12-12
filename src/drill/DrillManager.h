@@ -45,7 +45,7 @@ public:
 	PlayerStation* checkHoveringStation(glm::vec2 position);
 	bool doesTileOverlapStations(glm::ivec2 tilePos) const;
 
-	void bustRandomPipe();
+	void burstRandomPipe();
 	void repairPipe(const glm::vec2& worldPos);
 	bool DestMatchesRandomPipe(const glm::vec2& worldPos) const;
 
@@ -91,8 +91,6 @@ private:
 
 	// Broken pipes
 	std::vector<glm::ivec2> _brokenPipeLocations;
-
-	float stupid = 0.0f;
 
 	CameraManager* _cameraManager;
 };

@@ -30,12 +30,6 @@ DrillManager::DrillManager(CameraManager* cameraManager, PlayerResources& resour
 }
 
 void DrillManager::update() {
-	stupid += Jauntlet::Time::getDeltaTime();
-
-	if (stupid > 5) {
-		//_cameraManager.doExplosionShake();
-	}
-	
 	// calculate the change in water/heat
 	if (_drillOn) {
 		if (boilerWater > 0) {
@@ -212,8 +206,8 @@ bool DrillManager::doesTileOverlapStations(glm::ivec2 tilePos) const  {
 		drillWalls.doesTileOverlap(tilePos, _pipeWorkbench.getBoundingBox());
 }
 
-void DrillManager::bustRandomPipe() {
-	// im boutta buuust
+void DrillManager::burstRandomPipe() {
+	_cameraManager->doExplosionShake();
 	// changes a random pipe of ID 1 (normal pipe) to a pipe of ID 2 (broken pipe)
 	_brokenPipeLocations.push_back(pipes.selectRandomTile(1));
 	pipes.UpdateTile(_brokenPipeLocations.back(), 2);
@@ -266,7 +260,7 @@ void DrillManager::DisasterEvent() {
 	switch (disaster) {
 	case 0:
 		if (resources->heat > PIPE_BURST_HEAT) {
-			bustRandomPipe();
+			burstRandomPipe();
 		} else {
 			placeScrap();
 		}
