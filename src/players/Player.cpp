@@ -4,7 +4,7 @@
 Player::Player(const glm::vec2& position, const std::string& texture) :
 	collider(Jauntlet::BoxCollider2D(glm::vec2(64), position)),
 	_position(position),
-	_healthBar("Textures/healthbar.png", glm::vec4(0, 0, 0.5, 0.5), glm::vec4(0.5), glm::vec4(_position.x + 8, _position.y + 68, 48, 8)),
+	_healthBar("Textures/healthbar.png", glm::vec4(0, 0, 0.5, 1), glm::vec4(0.5,0,0.5,1), glm::vec4(_position.x + 8, _position.y + 68, 48, 8)),	
 	_texture(Jauntlet::ResourceManager::getTexture(texture).id)
 {
 	_animation.play(0,1,0.5f);
