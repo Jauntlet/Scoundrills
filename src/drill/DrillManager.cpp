@@ -101,11 +101,13 @@ void DrillManager::drawLayerTwo() {
 void DrillManager::on() {
 	_drillOn = true;
 	_drillAssets.startAnimation();
+	_forge.animation.play(0, 2, 0.3f);
 }
 
 void DrillManager::off() {
 	_drillOn = false;
 	_drillAssets.stopAnimation();
+	_forge.animation.play(3, 5, 0.3f, false);
 }
 
 void DrillManager::toggle() {
@@ -133,9 +135,9 @@ bool DrillManager::isValidDestination(glm::vec2 worldPos, PlayerManager* playerM
 		return false;
 	} else if (playerManager->posMatchesPlayerDest(worldPos)) {
 		return false;
-	} else {
-		return !doesTileOverlapStations(pos);
-	}
+	} else if (doesTileOverlapStations(pos)) {
+		return false;
+	} else return Pathfinding::isReachable(*this, *playerManager, playerManager->getSelectedPlayer()->getPosition(), worldPos + glm::vec2(0,64));
 }
 
 bool DrillManager::isValidPath(glm::vec2 worldPos, PlayerManager* playerManager) const {
