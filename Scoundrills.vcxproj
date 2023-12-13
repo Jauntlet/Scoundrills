@@ -40,6 +40,7 @@
     <ClCompile Include="src\scenes\GlobalContext.cpp" />
     <ClCompile Include="src\scenes\MainGame.cpp" />
     <ClCompile Include="src\scenes\MainMenu.cpp" />
+    <ClCompile Include="src\scenes\PauseMenu.cpp" />
     <ClCompile Include="src\scenes\SceneManager.cpp" />
     <ClCompile Include="src\UICoordinator.cpp" />
   </ItemGroup>
@@ -65,6 +66,7 @@
     <ClInclude Include="src\scenes\GlobalContext.h" />
     <ClInclude Include="src\scenes\MainGame.h" />
     <ClInclude Include="src\scenes\MainMenu.h" />
+    <ClInclude Include="src\scenes\PauseMenu.h" />
     <ClInclude Include="src\scenes\SceneManager.h" />
     <ClInclude Include="src\UICoordinator.h" />
   </ItemGroup>

@@ -2,6 +2,7 @@
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
 #include "MainGame.h"
 #include "src/UICoordinator.h"
+#include "PauseMenu.h"
 
 const float PLAYER_HURT_HEAT = 200.0f; // The minimum heat for players to take damage from it.
 
@@ -49,14 +50,14 @@ void MainGame::processInput() {
 		_uiCoordinator.navigation->toggleNav();
 	}
 
-	if (GlobalContext::inputManager.isKeyPressed(SDLK_SPACE)) {
-		paused = !paused;
+	if (GlobalContext::inputManager.isKeyPressed(SDLK_ESCAPE)) {
+		GlobalContext::pauseMenu.togglePauseMenu();	
+	}
 
-		if (paused) {
-			Jauntlet::Time::setTimeScale(0.0f);
-		} else {
-			Jauntlet::Time::setTimeScale(1.0f);
-		}
+	if (GlobalContext::pauseMenu.isPaused()) {
+		Jauntlet::Time::setTimeScale(0.0f);
+	} else {
+		Jauntlet::Time::setTimeScale(1.0f);
 	}
 
 	//mouse hover over navigation
@@ -78,7 +79,9 @@ void MainGame::drawGame() {
 	
 	_drill.drawLayerTwo();
 
-	_selectedTile.draw(&_camera);
+	if (!GlobalContext::pauseMenu.isPaused()) {
+		_selectedTile.draw(&_camera);
+	}
 
 	GlobalContext::normalShader.unuse();
 	
