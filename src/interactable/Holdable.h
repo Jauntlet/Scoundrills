@@ -4,7 +4,7 @@
 #pragma once
 #include <Jauntlet/Tiles/TileMap.h>
 #include <cstdint>
-#include <glm/fwd.hpp>
+#include <glm/ext/vector_float2.hpp>
 
 class Player;
 
