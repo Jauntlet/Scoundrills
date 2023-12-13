@@ -1,10 +1,9 @@
 /*
 TODO:
-Cross-row destination availability (can select if no interference between destination)
 More Mappage
 
 BUGS:
-toggling drill makes all points visible even when nav is hidden
+
 */
 
 #include "Navigation.h"
@@ -26,7 +25,11 @@ const std::string bgTextures[] = {"Textures/NavBackgroundPrototype.png"};
 static int seed = std::chrono::system_clock::now().time_since_epoch().count(); //temp
 
 Navigation::Navigation(Jauntlet::Camera2D* camera) : 
-	_xTure(Jauntlet::ResourceManager::getTexture("Textures/xmark.png").id), 
+	_xTure(Jauntlet::ResourceManager::getTexture("Textures/Nav Icon/NavIcon1.png").id), 
+	_waTure(Jauntlet::ResourceManager::getTexture("Textures/Nav Icon/NavIcon2.png").id), 
+	_approaTure(Jauntlet::ResourceManager::getTexture("Textures/Nav Icon/NavIcon3.png").id), 
+	_dangTure(Jauntlet::ResourceManager::getTexture("Textures/Nav Icon/NavIcon4.png").id), 
+	_coppTure(Jauntlet::ResourceManager::getTexture("Textures/Nav Icon/NavIcon5.png").id), 
 	_caret(Jauntlet::ResourceManager::getTexture("Textures/caret.png").id),
 	_drillIcon(Jauntlet::ResourceManager::getTexture("Textures/drillNav.png").id),
 	_uiManager(camera)
@@ -37,7 +40,7 @@ Navigation::Navigation(Jauntlet::Camera2D* camera) :
 	//create navPoints
 	for (int y = 0; y < layerCount; y++) {
 		for (int x = 0; x < layerWidth; x++) {
-			_map[y][x] = (random() % 3); //0, 1, 2
+			_map[y][x] = (random() % 6); //0, 1, 2, 3, 4, 5
 		}
 	}
 }
@@ -77,7 +80,7 @@ Jauntlet::UIManager* Navigation::genNav() {
 		for (int x = 0; x < layerWidth; x++) {
 			int point = _map[y][x]; //The point type according to the generated "map," will determine the chance of encountering water, ores, etc. when arriving there.
 			
-			if (point == 2) {
+			if (point == 0) {
 				continue; // no X
 			}
 			
@@ -88,7 +91,7 @@ Jauntlet::UIManager* Navigation::genNav() {
 				visible = false;
 			}
 
-			if (point == 0) { // white X
+			if (point == 1) { // white X
 				int destID = _positions.size() - 1;
 				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID, x, y]() -> void { selectNav(destID, glm::ivec2(x, y)); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
 				button.visible = visible;
@@ -96,9 +99,33 @@ Jauntlet::UIManager* Navigation::genNav() {
 				continue;
 			}
 
-			if (point == 1) { // blue X
+			if (point == 2) { // water icon
 				int destID = _positions.size() - 1;
-				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID, x, y]() -> void { selectNav(destID, glm::ivec2(x, y)); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID, x, y]() -> void { selectNav(destID, glm::ivec2(x, y)); }, _waTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+				button.visible = false;
+				_points.push_back(button);
+				continue;
+			}
+
+			if (point == 3) { // approacher icon
+				int destID = _positions.size() - 1;
+				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID, x, y]() -> void { selectNav(destID, glm::ivec2(x, y)); }, _approaTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+				button.visible = false;
+				_points.push_back(button);
+				continue;
+			}
+
+			if (point == 4) { // danger icon
+				int destID = _positions.size() - 1;
+				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID, x, y]() -> void { selectNav(destID, glm::ivec2(x, y)); }, _dangTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+				button.visible = false;
+				_points.push_back(button);
+				continue;
+			}
+
+			if (point == 5) { // copper icon
+				int destID = _positions.size() - 1;
+				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID, x, y]() -> void { selectNav(destID, glm::ivec2(x, y)); }, _coppTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
 				button.visible = false;
 				_points.push_back(button);
 				continue;
@@ -159,15 +186,15 @@ void Navigation::selectNav(int id, glm::ivec2 xy) {
 		int tempX = xy.x;
 		for (int y = xy.y-1; y > _drillRow; y--) { //loop for amount of layers to traverse
 			if (_columnOver == xy.x) { //straight up/down
-				if (_map[y][xy.x] != 2) return;
+				if (_map[y][xy.x] != 0) return;
 			}
 			else if (_columnOver < tempX) { //drill to left
 				tempX--;
-				if (_map[y][tempX] != 2) return;
+				if (_map[y][tempX] != 0) return;
 			}
 			else if (_columnOver > tempX) { //drill to right
 				tempX++;
-				//if (_map[y][tempX] != 2) return;
+				if (_map[y][tempX] != 0) return;
 			}
 		}
 	}

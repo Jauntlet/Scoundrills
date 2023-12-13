@@ -28,6 +28,10 @@ public:
 private:
 	GLuint _navTexture = 0;
 	GLuint _xTure = 0;
+	GLuint _waTure = 0;
+	GLuint _approaTure = 0;
+	GLuint _dangTure = 0;
+	GLuint _coppTure = 0;
 	GLuint _caret = 0;
 	GLuint _drillIcon = 0;
 	bool _navOpen = false; //visibility of menu
