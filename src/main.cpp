@@ -1,6 +1,7 @@
 #include "scenes/SceneManager.h"
+#include "Database.h"
 
 int main(int argc, char** argv) {
-	SceneManager scene;
+	Database db;
 	return 0;
 }
