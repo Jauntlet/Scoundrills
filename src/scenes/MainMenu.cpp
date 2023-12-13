@@ -1,6 +1,5 @@
 #include "MainMenu.h"
 #include "GlobalContext.h"
-#include "Jauntlet/Time.h"
 #include "SceneManager.h"
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
 
