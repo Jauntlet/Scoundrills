@@ -167,7 +167,7 @@ void Navigation::selectNav(int id, glm::ivec2 xy) {
 			}
 			else if (_columnOver > tempX) { //drill to right
 				tempX++;
-				//if (_map[y][tempX] != 2) return;
+				if (_map[y][tempX] != 2) return;
 			}
 		}
 	}
