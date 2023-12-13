@@ -5,14 +5,8 @@
 #include "../CameraManager.h"
 #include "../drill/DrillManager.h"
 #include <Jauntlet/Jauntlet.h>
-#include <Jauntlet/Rendering/Particles/Particle.h>
 #include <Jauntlet/Rendering/Window.h>
 #include <Jauntlet/Time.h>
-#include <Jauntlet/UI/UIButtonElement.h>
-#include <Jauntlet/UI/UIManager.h>
-#include <Jauntlet/UI/UITextElement.h>
-#include "../players/PlayerManager.h"
-#include "../drill/PlayerResources.h"
 #include "../pathfinding/SelectedTileRenderer.h"
 #include "../UICoordinator.h"
 

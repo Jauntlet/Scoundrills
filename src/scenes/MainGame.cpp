@@ -1,15 +1,7 @@
 #include "GlobalContext.h"
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
-#include <Jauntlet/Rendering/Textures/TextureCache.h>
-#include <Jauntlet/UI/UIElement.h>
-
-#include <Jauntlet/Rendering/Particles/Particle.h>
-#include <Jauntlet/Rendering/Particles/Properties/ParticleProperty.h>
-#include <Jauntlet/Time.h>
 #include "MainGame.h"
 #include "src/UICoordinator.h"
-
-#include <Jauntlet/Rendering/Particles/Properties/ParticleGrow.h>
 
 const float PLAYER_HURT_HEAT = 200.0f; // The minimum heat for players to take damage from it.
 
