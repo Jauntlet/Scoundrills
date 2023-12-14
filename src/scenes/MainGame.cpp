@@ -13,7 +13,7 @@ MainGame::MainGame() :
 	_cameraManager(&_camera, &_players, &_drill),
 	_players(&_drill),
 	_selectedTile(&_drill, &_players),
-	_textRenderer(&_hudCamera, "Fonts/HandelGo.ttf", 256),
+	_textRenderer("Fonts/HandelGo.ttf", 256),
 	_uiCoordinator(&_hudCamera, &_textRenderer, &_drill),
 	_resources(100,100,0,0)
 {

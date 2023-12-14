@@ -21,7 +21,7 @@ private:
 
 	Jauntlet::Camera2D _camera;
 	Jauntlet::UIManager _uiManager;
-	Jauntlet::TextRenderer _textRenderer = Jauntlet::TextRenderer(&_camera, "Fonts/HandelGo.ttf", 256);
+	Jauntlet::TextRenderer _textRenderer = Jauntlet::TextRenderer("Fonts/HandelGo.ttf", 256);
 
 	Jauntlet::UIButtonElement _startButton;
 	glm::vec2 _startButtonPos = glm::vec2(0,0);
