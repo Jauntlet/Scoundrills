@@ -2,6 +2,7 @@
 #include <Jauntlet/Time.h>
 #include "GlobalContext.h"
 #include "MainGame.h"
+#include "PauseMenu.h"
 
 SceneManager::SceneManager() {
     Jauntlet::init();
@@ -34,6 +35,7 @@ void SceneManager::gameLoop() {
             break;
         }
 
+
         if (GlobalContext::inputManager.windowResized()) {
             GlobalContext::window.resolveWindowSize();
             GlobalContext::screenSize = GlobalContext::window.getWindowSize();
@@ -44,6 +46,8 @@ void SceneManager::gameLoop() {
             } else if (_gameState == GameState::MAINMENU) {
                 _mainMenu->windowResized();
             }
+
+            GlobalContext::pauseMenu.windowResized();
         }
 
         if (_gameState == GameState::MAINGAME) {
@@ -51,6 +55,8 @@ void SceneManager::gameLoop() {
         } else if (_gameState == GameState::MAINMENU) {
             _mainMenu->gameLoop();
         }
+        GlobalContext::pauseMenu.update();
+        GlobalContext::pauseMenu.draw();
 
         GlobalContext::window.swapBuffer();
         Jauntlet::Time::endFrame();
@@ -59,6 +65,8 @@ void SceneManager::gameLoop() {
 
 void SceneManager::switchScene(GameState newState) {
     _gameState = newState;
+
+    GlobalContext::pauseMenu.hideAll();
 
     // Toggle state of MainGame
     if (_gameState == GameState::MAINGAME) {
