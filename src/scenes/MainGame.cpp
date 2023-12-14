@@ -51,10 +51,10 @@ void MainGame::processInput() {
 	}
 
 	if (GlobalContext::inputManager.isKeyPressed(SDLK_ESCAPE)) {
-		GlobalContext::pauseMenu.togglePauseMenu();	
+		GlobalContext::pauseMenu->togglePauseMenu();	
 	}
 
-	if (GlobalContext::pauseMenu.isPaused()) {
+	if (GlobalContext::pauseMenu->isPaused()) {
 		Jauntlet::Time::setTimeScale(0.0f);
 	} else {
 		Jauntlet::Time::setTimeScale(1.0f);
@@ -79,7 +79,7 @@ void MainGame::drawGame() {
 	
 	_drill.drawLayerTwo();
 
-	if (!GlobalContext::pauseMenu.isPaused()) {
+	if (!GlobalContext::pauseMenu->isPaused()) {
 		_selectedTile.draw(&_camera);
 	}
 
