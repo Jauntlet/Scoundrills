@@ -9,7 +9,7 @@ SceneManager::SceneManager() {
     Jauntlet::ResourceManager::setMissingTexture("Textures/missing.png");
     
     GlobalContext::initContext();
-    
+    GlobalContext::pauseMenu = new PauseMenu(this);
     // Start at specified scene
 #if NDEBUG
     // do NOT change, release builds always build to main menu.
@@ -25,6 +25,7 @@ SceneManager::SceneManager() {
 void SceneManager::gameLoop() {
     Jauntlet::Time::setMaxFPS(-1);
 
+    // This is the loop that plays every frame in the game.
     while (true) {
         Jauntlet::Time::beginFrame();
         GlobalContext::window.clearScreen();

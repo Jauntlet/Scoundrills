@@ -7,12 +7,13 @@
 #include <Jauntlet/UI/UITextElement.h>
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
 #include "GlobalContext.h"
+#include "SceneManager.h"
 
 class PauseMenu {
 private:
 	enum class PauseState { HIDDEN, SETTINGS, PAUSED };
 public:
-	PauseMenu(Jauntlet::TextureCache& textureCache);
+	PauseMenu(SceneManager* sceneManager);
 
 	void update();
 	void draw();
@@ -26,9 +27,13 @@ public:
 private:
 	void switchState(PauseState state);
 
-	PauseState _state = PauseState::HIDDEN;
+	// For the quit button to exit to main menu.
+	void toMainMenu();
+
+	SceneManager* _sceneManager;
 
 	// Default UI parameters
+	PauseState _state = PauseState::HIDDEN;
 	Jauntlet::Camera2D _camera = Jauntlet::Camera2D(GlobalContext::screenSize);
 	Jauntlet::UIManager _uiManager = Jauntlet::UIManager(&_camera);
 	Jauntlet::Color _textColor = Jauntlet::Color(0, 0, 0);

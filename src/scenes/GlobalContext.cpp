@@ -20,7 +20,6 @@ void GlobalContext::initContext() {
 	normalShader.linkShaders();
 
 	textRenderer = new Jauntlet::TextRenderer("Fonts/HandelGo.ttf", 256);
-	pauseMenu = new PauseMenu(_textureCache);
 }
 void GlobalContext::destroyContext() {
 	if (pauseMenu != nullptr) {
