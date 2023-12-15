@@ -203,8 +203,10 @@ void Navigation::selectNav(int id, glm::ivec2 xy) {
 	_speed = baseSpeed/JMath::Distance(_iconPos, _positions[id]);
 	_shiftPos = glm::vec2(_positions[id].x, 187.5 * (xy.y - _drillRow));
 	_caretPos = _positions[id] + glm::vec2(0, 37.5);
+	_rowsTravelled = xy.y - _drillRow;
 	_columnOver = xy.x;
 	_drillRow = xy.y;
+
 	if (!_caretElement->visible) {
 		_caretElement->visible = true;
 	}
@@ -217,15 +219,22 @@ void Navigation::updateTravel() { //TODO: Hide the nav points that get up above 
 		_progress += Jauntlet::Time::getDeltaTime() * _speed;
 		refreshPositions(_shiftPos.x * Jauntlet::Time::getDeltaTime() * _speed, _shiftPos.y * Jauntlet::Time::getDeltaTime() * _speed);
 		if (_progress >= 1.0f) {
+			//remove selector caret
 			_caretElement->visible = false;
-			//delete _caretElement;
+			
+			//adjust for rows travelled
+			std::cout << _rowsTravelled << std::endl;
+			
+			recycleMap(_rowsTravelled);
+			_rowsTravelled = 0; //reset rows travelled
+			_columnOver = 0; //reset to middle
+			_drillRow = -1; //reset drill's row
 
 			//Call outcove event
-			if (_mappedCoves.empty()) { //determine amt of mapped outcoves
-				for (int y = 0; y < layerCount; y++) {
-					for (int x = 0; x < layerWidth; x++) {
-						if (_map[y][x] != 2) _mappedCoves.push_back(_map[y][x]);
-					}
+			_mappedCoves.clear();
+			for (int y = 0; y < layerCount; y++) {
+				for (int x = 0; x < layerWidth; x++) {
+					if (_map[y][x] != 2) _mappedCoves.push_back(_map[y][x]);
 				}
 			}
 
@@ -245,6 +254,103 @@ void Navigation::refreshPositions(float shiftX, float shiftY) {
 	_caretPos = glm::vec2(_caretPos.x - shiftX, _caretPos.y - shiftY);
 	updateVisibility(); //Update point visiblity
 	_uiManager.resolvePositions();
+}
+
+void Navigation::recycleMap(int r) {
+	//move old ones up
+	for (int j = 0; j < r; j++) {
+		for (int x = 0; x < layerWidth; x++) {
+			_map[j][x] = _map[r+j][x];
+		}
+	}
+
+	//generate new
+	std::mt19937 random = std::mt19937(seed); //random number
+
+	for (int j = r; j < layerCount; j++) {
+		for (int x = 0; x < layerWidth; x++) {
+			_map[j][x] = (random() % 6); //0, 1, 2, 3, 4, 5
+		}
+	}
+
+	//clear buttons
+	for (int j = 0; j < _points.size(); j++) {
+		_uiManager.removeElement(&_points[j]);
+	}
+
+	_points.clear();
+	_positions.clear();
+
+	//regenerate nav points
+	for (int y = 0; y < layerCount; y++) {
+		for (int x = 0; x < layerWidth; x++) {
+			//redo above code (genNav)
+			int point = _map[y][x]; //The point type according to the generated "map"
+
+			if (point == 0) {
+				continue; // no X
+			}
+
+			_positions.emplace_back(125 * (x + 1) - 62.5 * (layerWidth + 1), 187.5 * (y - 1)); //0 is the center of the screen.
+			bool visible = true;
+
+			if (_positions[_positions.size() - 1].y < -250 || _positions[_positions.size() - 1].y > 500) {
+				visible = false;
+			}
+
+			if (point == 1) { // white X
+				int destID = _positions.size() - 1;
+				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID, x, y]() -> void { selectNav(destID, glm::ivec2(x, y)); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+				button.visible = visible;
+				_points.push_back(button);
+				_uiManager.addElement(&_points[_points.size() - 1], &GlobalContext::normalShader);
+				continue;
+			}
+
+			if (point == 2) { // water icon
+				int destID = _positions.size() - 1;
+				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID, x, y]() -> void { selectNav(destID, glm::ivec2(x, y)); }, _waTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+				button.visible = false;
+				_points.push_back(button);
+				_uiManager.addElement(&_points[_points.size() - 1], &GlobalContext::normalShader);
+				continue;
+			}
+
+			if (point == 3) { // approacher icon
+				int destID = _positions.size() - 1;
+				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID, x, y]() -> void { selectNav(destID, glm::ivec2(x, y)); }, _approaTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+				button.visible = false;
+				_points.push_back(button);
+				_uiManager.addElement(&_points[_points.size() - 1], &GlobalContext::normalShader);
+				continue;
+			}
+
+			if (point == 4) { // danger icon
+				int destID = _positions.size() - 1;
+				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID, x, y]() -> void { selectNav(destID, glm::ivec2(x, y)); }, _dangTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+				button.visible = false;
+				_points.push_back(button);
+				_uiManager.addElement(&_points[_points.size() - 1], &GlobalContext::normalShader);
+				continue;
+			}
+
+			if (point == 5) { // copper icon
+				int destID = _positions.size() - 1;
+				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID, x, y]() -> void { selectNav(destID, glm::ivec2(x, y)); }, _coppTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+				button.visible = false;
+				_points.push_back(button);
+				_uiManager.addElement(&_points[_points.size() - 1], &GlobalContext::normalShader);
+				continue;
+			}
+		}
+	}
+
+	//basic upkeep
+	_uiManager.optimize();
+	_uiManager.resolvePositions();
+
+	//update visibility
+	updateVisibility();
 }
 
 void Navigation::updateVisibility() {
