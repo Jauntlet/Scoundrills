@@ -29,6 +29,8 @@ private:
 
 	// For the quit button to exit to main menu.
 	void toMainMenu();
+	// Toggle fullscreen
+	void toggleFullscreen();
 
 	SceneManager* _sceneManager;
 
@@ -51,5 +53,12 @@ private:
 	Jauntlet::UITextElement _resumeTextElement;
 	Jauntlet::UITextElement _settingsTextElement;
 	Jauntlet::UITextElement _quitTextElement;
+
+	// Settings Menu
+	glm::vec2 _fullscreenButtonPos = glm::vec2(-100, 0);
+	Jauntlet::UIButtonElement _fullscreenButton;
+	glm::vec2 _fullscreenTextPos = glm::vec2(0);
+	std::string _fullscreenText = "Fullscreened";
+	Jauntlet::UITextElement _fullscreenTextElement;
 };
 

@@ -1,5 +1,7 @@
 #include "PauseMenu.h"
 #include "Jauntlet/Rendering/Textures/ResourceManager.h"
+#include "Jauntlet/UI/UIElement.h"
+#include "src/scenes/GlobalContext.h"
 #include "src/scenes/SceneManager.h"
 PauseMenu::PauseMenu(SceneManager* sceneManager) :
 	_sceneManager(sceneManager),
@@ -8,10 +10,13 @@ PauseMenu::PauseMenu(SceneManager* sceneManager) :
 	_quitButton(&GlobalContext::inputManager, std::bind(&PauseMenu::toMainMenu, this), Jauntlet::ResourceManager::getTexture("Textures/UIbutton.png").id, &_quitButtonPos, glm::vec2(600, 200), Jauntlet::UIElement::ORIGIN_PIN::CENTER),
 	_resumeTextElement(GlobalContext::textRenderer, &_resumeText, &_textColor, &_resumeButtonPos, Jauntlet::UIElement::ORIGIN_PIN::CENTER, 0.5f),
 	_settingsTextElement(GlobalContext::textRenderer, &_settingsText, &_textColor, &_settingsButtonPos, Jauntlet::UIElement::ORIGIN_PIN::CENTER, 0.5f),
-	_quitTextElement(GlobalContext::textRenderer, &_quitText, &_textColor, &_quitButtonPos, Jauntlet::UIElement::ORIGIN_PIN::CENTER, 0.5f)
+	_quitTextElement(GlobalContext::textRenderer, &_quitText, &_textColor, &_quitButtonPos, Jauntlet::UIElement::ORIGIN_PIN::CENTER, 0.5f),
+	_fullscreenButton(&GlobalContext::inputManager, std::bind(&PauseMenu::toggleFullscreen, this), Jauntlet::ResourceManager::getTexture("Textures/missing.png").id, &_fullscreenButtonPos, glm::vec2(200), Jauntlet::UIElement::ORIGIN_PIN::CENTER),
+	_fullscreenTextElement(GlobalContext::textRenderer, &_fullscreenText, &_textColor, &_fullscreenTextPos, Jauntlet::UIElement::ORIGIN_PIN::CENTER, 0.5f)
 {
 	_uiManager.setScale(GlobalContext::screenSize.y / 1080.0f);
 
+	// Pause Menu
 	_uiManager.addElement(&_resumeButton, &GlobalContext::normalShader);
 	_uiManager.addElement(&_resumeTextElement, &Jauntlet::TextRenderer::textShader);
 	_uiManager.addElement(&_settingsButton, &GlobalContext::normalShader);
@@ -19,6 +24,10 @@ PauseMenu::PauseMenu(SceneManager* sceneManager) :
 	_uiManager.addElement(&_quitButton, &GlobalContext::normalShader);
 	_uiManager.addElement(&_quitTextElement, &Jauntlet::TextRenderer::textShader);
 	
+	// Settings Menu
+	_uiManager.addElement(&_fullscreenButton, &GlobalContext::normalShader);
+	_uiManager.addElement(&_fullscreenTextElement, &Jauntlet::TextRenderer::textShader);
+
 	_uiManager.optimize();
 	_uiManager.resolvePositions();
 }
@@ -46,6 +55,8 @@ void PauseMenu::hideAll() {
 	_settingsTextElement.visible = false;
 	_quitButton.visible = false;
 	_quitTextElement.visible = false;
+	_fullscreenButton.visible = false;
+	_fullscreenTextElement.visible = false;
 }
 
 void PauseMenu::windowResized() {
@@ -71,8 +82,15 @@ void PauseMenu::switchState(PauseState state) {
 		_quitButton.visible = true;
 		_quitTextElement.visible = true;
 	}
+	else if (_state == PauseState::SETTINGS) {
+		_fullscreenButton.visible = true;
+		_fullscreenTextElement.visible = true;
+	}
 }
 
 void PauseMenu::toMainMenu() {
 	hideAll();
+}
+void PauseMenu::toggleFullscreen() {
+	GlobalContext::window.toggleFullscreen();
 }
