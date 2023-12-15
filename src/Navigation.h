@@ -38,6 +38,7 @@ private:
 	int _destination = -1; //id value
 	int _columnOver = 2; //the column the drill icon rests over currently
 	int _drillRow = -1; //the drill's current row (-1 is above row 0 on the map)
+	int _rowsTravelled = 0;
 	std::vector<int> _mappedCoves;
 	glm::vec2 _shiftPos = glm::vec2(0); //position determining how to move nav points when a destination is selected
 	float _progress = -1; //progress towards next destination
@@ -58,5 +59,6 @@ private:
 	bool _caretSet = false;
 
 	void refreshPositions(float shiftX, float shiftY);
+	void recycleMap(int rows);
 	void updateVisibility();
 };

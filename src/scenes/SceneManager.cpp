@@ -9,7 +9,7 @@ SceneManager::SceneManager() {
     Jauntlet::ResourceManager::setMissingTexture("Textures/missing.png");
     
     GlobalContext::initContext();
-    
+    GlobalContext::pauseMenu = new PauseMenu(this);
     // Start at specified scene
 #if NDEBUG
     // do NOT change, release builds always build to main menu.
@@ -25,6 +25,7 @@ SceneManager::SceneManager() {
 void SceneManager::gameLoop() {
     Jauntlet::Time::setMaxFPS(-1);
 
+    // This is the loop that plays every frame in the game.
     while (true) {
         Jauntlet::Time::beginFrame();
         GlobalContext::window.clearScreen();
@@ -47,7 +48,7 @@ void SceneManager::gameLoop() {
                 _mainMenu->windowResized();
             }
 
-            GlobalContext::pauseMenu.windowResized();
+            GlobalContext::pauseMenu->windowResized();
         }
 
         if (_gameState == GameState::MAINGAME) {
@@ -55,18 +56,20 @@ void SceneManager::gameLoop() {
         } else if (_gameState == GameState::MAINMENU) {
             _mainMenu->gameLoop();
         }
-        GlobalContext::pauseMenu.update();
-        GlobalContext::pauseMenu.draw();
+        GlobalContext::pauseMenu->update();
+        GlobalContext::pauseMenu->draw();
 
         GlobalContext::window.swapBuffer();
         Jauntlet::Time::endFrame();
     }
+    // Game loop is over, destroy leftover data
+    GlobalContext::destroyContext();
 }
 
 void SceneManager::switchScene(GameState newState) {
     _gameState = newState;
 
-    GlobalContext::pauseMenu.hideAll();
+    GlobalContext::pauseMenu->hideAll();
 
     // Toggle state of MainGame
     if (_gameState == GameState::MAINGAME) {
