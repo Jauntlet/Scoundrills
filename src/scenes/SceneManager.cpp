@@ -47,7 +47,7 @@ void SceneManager::gameLoop() {
                 _mainMenu->windowResized();
             }
 
-            GlobalContext::pauseMenu.windowResized();
+            GlobalContext::pauseMenu->windowResized();
         }
 
         if (_gameState == GameState::MAINGAME) {
@@ -55,18 +55,20 @@ void SceneManager::gameLoop() {
         } else if (_gameState == GameState::MAINMENU) {
             _mainMenu->gameLoop();
         }
-        GlobalContext::pauseMenu.update();
-        GlobalContext::pauseMenu.draw();
+        GlobalContext::pauseMenu->update();
+        GlobalContext::pauseMenu->draw();
 
         GlobalContext::window.swapBuffer();
         Jauntlet::Time::endFrame();
     }
+    // Game loop is over, destroy leftover data
+    GlobalContext::destroyContext();
 }
 
 void SceneManager::switchScene(GameState newState) {
     _gameState = newState;
 
-    GlobalContext::pauseMenu.hideAll();
+    GlobalContext::pauseMenu->hideAll();
 
     // Toggle state of MainGame
     if (_gameState == GameState::MAINGAME) {
