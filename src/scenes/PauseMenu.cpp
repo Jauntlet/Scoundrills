@@ -72,3 +72,7 @@ void PauseMenu::switchState(PauseState state) {
 		_quitTextElement.visible = true;
 	}
 }
+
+void PauseMenu::toMainMenu() {
+	hideAll();
+}
