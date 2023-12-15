@@ -60,5 +60,6 @@ private:
 	glm::vec2 _fullscreenTextPos = glm::vec2(0);
 	std::string _fullscreenText = "Fullscreened";
 	Jauntlet::UITextElement _fullscreenTextElement;
+	bool _quitting = false;
 };
 

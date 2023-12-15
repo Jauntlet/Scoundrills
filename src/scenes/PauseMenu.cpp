@@ -18,21 +18,26 @@ PauseMenu::PauseMenu(SceneManager* sceneManager) :
 
 	// Pause Menu
 	_uiManager.addElement(&_resumeButton, &GlobalContext::normalShader);
-	_uiManager.addElement(&_resumeTextElement, &Jauntlet::TextRenderer::textShader);
 	_uiManager.addElement(&_settingsButton, &GlobalContext::normalShader);
-	_uiManager.addElement(&_settingsTextElement, &Jauntlet::TextRenderer::textShader);
 	_uiManager.addElement(&_quitButton, &GlobalContext::normalShader);
+	
+	_uiManager.addElement(&_fullscreenButton, &GlobalContext::normalShader);
+	
+	_uiManager.addElement(&_resumeTextElement, &Jauntlet::TextRenderer::textShader);
+	_uiManager.addElement(&_settingsTextElement, &Jauntlet::TextRenderer::textShader);
 	_uiManager.addElement(&_quitTextElement, &Jauntlet::TextRenderer::textShader);
 	
-	// Settings Menu
-	_uiManager.addElement(&_fullscreenButton, &GlobalContext::normalShader);
 	_uiManager.addElement(&_fullscreenTextElement, &Jauntlet::TextRenderer::textShader);
-
-	_uiManager.optimize();
+	
 	_uiManager.resolvePositions();
+	_uiManager.optimize();
 }
 
 void PauseMenu::update() {
+	if (_quitting) {
+		_sceneManager->switchScene(GameState::MAINMENU);
+		_quitting = false;
+	}
 	_camera.update();
 }
 void PauseMenu::draw() {
@@ -45,7 +50,7 @@ bool PauseMenu::isPaused() {
 }
 
 void PauseMenu::togglePauseMenu() {
-	switchState(_state == PauseState::PAUSED ? PauseState::HIDDEN : PauseState::PAUSED);
+	switchState(_state == PauseState::HIDDEN ? PauseState::PAUSED : PauseState::HIDDEN);
 }
 
 void PauseMenu::hideAll() {
@@ -89,7 +94,7 @@ void PauseMenu::switchState(PauseState state) {
 }
 
 void PauseMenu::toMainMenu() {
-	hideAll();
+	_quitting = true;
 }
 void PauseMenu::toggleFullscreen() {
 	GlobalContext::window.toggleFullscreen();
