@@ -62,6 +62,7 @@
     <ClCompile Include="src\interactable\specificStations\PipeWorkbench.cpp">
       <Filter>interactable\specificStations</Filter>
     </ClCompile>
+    <ClCompile Include="src\Database.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Navigation.h" />
@@ -127,6 +128,7 @@
     <ClInclude Include="src\interactable\specificStations\PipeWorkbench.h">
       <Filter>interactable\specificStations</Filter>
     </ClInclude>
+    <ClInclude Include="src\Database.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="players">
