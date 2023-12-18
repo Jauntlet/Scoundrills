@@ -78,6 +78,7 @@ void SceneManager::switchScene(GameState newState) {
         }
     } else if (_mainGame != nullptr) {
             delete _mainGame;
+            _mainGame = nullptr;
     }
 
     if (_gameState == GameState::MAINMENU) {
@@ -86,5 +87,6 @@ void SceneManager::switchScene(GameState newState) {
         }
     } else if (_mainMenu != nullptr) {
         delete _mainMenu;
+        _mainMenu = nullptr;
     }
 }
