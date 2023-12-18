@@ -1,13 +1,11 @@
 /* Purpose: Manages inputs directed towards the camera and any other info the camera needs to function.
  * Main Contributer(s): Jack Kennedy / Xander Mooney
  */
-
 #pragma once
 
 #include "drill/DrillManager.h"
 #include "src/players/PlayerManager.h"
 #include <Jauntlet/Rendering/Cameras/Camera2D.h>
-#include <Jauntlet/Inputs/InputManager.h>
 #include <Jauntlet/Inputs/InputKey.h>
 
 class CameraManager {
