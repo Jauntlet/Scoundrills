@@ -29,7 +29,7 @@ private:
 	Jauntlet::Color _textColor = Jauntlet::Color(255,255,255);
 	glm::vec2 _titlePosition = glm::vec2(0);
 	std::string _titleText = "Scoundrills";
-	Jauntlet::UITextElement _titleTextElement = Jauntlet::UITextElement(GlobalContext::textRenderer, &_titleText, &_textColor, &_titlePosition, Jauntlet::UIButtonElement::ORIGIN_PIN::RIGHT, 0.5f);
+	Jauntlet::UITextElement _titleTextElement = Jauntlet::UITextElement(GlobalContext::textRenderer, &_titleText, &_textColor, &_titlePosition, Jauntlet::UIButtonElement::ORIGIN_PIN::TOP, 0.5f);
 
 	SceneManager* _sceneManager;
 };
