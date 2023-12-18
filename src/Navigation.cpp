@@ -3,7 +3,8 @@ TODO:
 More Mappage
 
 BUGS:
-
+moving on X axis breaks
+(due to improperly storing/recalling the values from the map to shift them over)
 */
 
 #include "Navigation.h"
@@ -13,7 +14,6 @@ BUGS:
 #include <chrono>
 #include <Jauntlet/JMath.h>
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
-#include <random>
 
 #include <iostream>
 
@@ -37,7 +37,7 @@ Navigation::Navigation(Jauntlet::Camera2D* camera) :
 	_uiManager(camera)
 {
 	//generate some randomness
-	std::mt19937 random = std::mt19937(seed);
+	random = std::mt19937(seed);
 
 	//create navPoints
 	for (int y = 0; y < layerCount; y++) {
@@ -50,7 +50,9 @@ Navigation::Navigation(Jauntlet::Camera2D* camera) :
 Navigation::~Navigation() {
 	//delete _background;
 	delete _caretElement;
+	_caretElement = nullptr;
 	delete _drillIconElement;
+	_drillIconElement = nullptr;
 }
 
 Jauntlet::UIManager* Navigation::genNav() {
@@ -74,9 +76,14 @@ Jauntlet::UIManager* Navigation::genNav() {
 	_backgroundAnimation.play(0, 2, 0.3f);
 
 	//draw drill icon
-	_drillIconElement = new Jauntlet::UISpriteElement(_drillIcon, &_iconPos, glm::vec2(60), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+	if (_drillIconElement == nullptr)
+		_drillIconElement = new Jauntlet::UISpriteElement(_drillIcon, &_iconPos, glm::vec2(60), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
 	_uiManager.addElement(_drillIconElement, &GlobalContext::normalShader);
 	_drillIconElement->visible = _navOpen;
+
+	//console print the map to debug
+	for (int j = 0; j < layerCount; j++)
+		std::cout << _map[j][0] << _map[j][1] << _map[j][2] << _map[j][3] << _map[j][4] << std::endl;
 
 	for (int y = 0; y < layerCount; y++) {
 		for (int x = 0; x < layerWidth; x++) {
@@ -146,16 +153,17 @@ Jauntlet::UIManager* Navigation::genNav() {
 	}
 
 	//create caret (selector icon)
-	_caretElement = new Jauntlet::UISpriteElement(_caret, &_caretPos, glm::vec2(31.25, 18.75), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+	if (_caretElement == nullptr)
+		_caretElement = new Jauntlet::UISpriteElement(_caret, &_caretPos, glm::vec2(31.25, 18.75), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
 	_uiManager.addElement(_caretElement, &GlobalContext::normalShader);
 	_caretElement->visible = false;
-
-	//Return UIManager
-	return &_uiManager;
 
 	// optimize batches
 	_uiManager.optimize();
 	_uiManager.resolvePositions();
+
+	//Return UIManager
+	return &_uiManager;
 }
 
 void Navigation::update() {
@@ -259,8 +267,6 @@ void Navigation::refreshPositions(float shiftX, float shiftY) {
 }
 
 void Navigation::recycleMap(int r) {
-	std::mt19937 random = std::mt19937(seed); //random number
-	
 	//shift by y
 	for (int y = r; y < layerCount+r; y++) {
 		for (int x = 0; x < layerWidth; x++) {
@@ -318,10 +324,6 @@ void Navigation::recycleMap(int r) {
 
 	//clear buttons
 	_uiManager.removeAllElements();
-
-	//for good measure (remade in genNav)
-	delete _caretElement;
-	delete _drillIconElement;
 
 	//gen a nav :)
 	genNav();

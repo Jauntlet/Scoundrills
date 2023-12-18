@@ -7,6 +7,7 @@
 #include <Jauntlet/UI/UIManager.h>
 #include <Jauntlet/UI/UIButtonElement.h>
 #include <Jauntlet/UI/UISpriteAnimatedElement.h>
+#include <random>
 #include <vector>
 
 class Navigation {
@@ -26,6 +27,7 @@ public:
 
 	Jauntlet::UIManager* getUIManager();
 private:
+	std::mt19937 random;
 	GLuint _navTexture = 0;
 	GLuint _xTure = 0;
 	GLuint _waTure = 0;
