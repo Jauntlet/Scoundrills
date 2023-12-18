@@ -42,8 +42,8 @@ UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRender
 	_UIManager.optimize();
 	_UIManager.resolvePositions();
 
-	_NavManager->optimize();
-	_NavManager->resolvePositions();
+	//_NavManager->optimize();
+	//_NavManager->resolvePositions();
 }
 
 UICoordinator::~UICoordinator() {
