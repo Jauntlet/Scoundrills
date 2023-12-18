@@ -94,7 +94,7 @@ Database::Database(int saveID) {
 }
 
 bool Database::TrySave(DrillManager& drill, PlayerManager& playerManager) {
-    if (!TrySaveDrill(drill.resources)) {
+    if (!TrySaveDrill(*drill.resources)) {
         Jauntlet::error("Failed to save drill!");
         return false;
     }
