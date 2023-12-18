@@ -5,9 +5,15 @@
 #include "src/drill/PlayerResources.h"
 #include "src/players/Player.h"
 #include <Jauntlet/Errors.h>
+#include <Jauntlet/Filesystems/FileManager.h>
 
 Database::Database() {
-	sqlite3_open("bruh.db", &database);
+    _saveID = 1;
+    while (Jauntlet::FileManager::findFile(std::to_string(_saveID) + ".db")) {
+        ++_saveID;
+    }
+
+	sqlite3_open((std::to_string(_saveID) + ".db").c_str(), &database);
 
     sqlite3_exec(database, "DROP TABLE Players", nullptr, nullptr, nullptr);
     sqlite3_exec(database, "DROP TABLE Drills" , nullptr, nullptr, nullptr);

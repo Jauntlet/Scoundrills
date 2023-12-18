@@ -13,6 +13,8 @@
 class Database {
 public:
 	Database();
+
+	Database(int saveID);
 private:
 	sqlite3* database;
 
