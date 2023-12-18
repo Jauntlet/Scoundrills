@@ -46,6 +46,74 @@ Database::Database() {
 	sqlite3_close(database);
 }
 
+Database::Database(int saveID) {
+    _saveID = saveID;
+    sqlite3_open((std::to_string(_saveID) + ".db").c_str(), &database);
+
+    sqlite3_exec(database, "DROP TABLE Players", nullptr, nullptr, nullptr);
+    sqlite3_exec(database, "DROP TABLE Drills", nullptr, nullptr, nullptr);
+    sqlite3_exec(database, "DROP TABLE Items", nullptr, nullptr, nullptr);
+
+    sqlite3_exec(database,
+        "CREATE TABLE IF NOT EXISTS Players ("
+        "saveID INTEGER,"
+        "positionX REAL,"
+        "positionY REAL,"
+        "heldItemId INTEGER,"
+        "health INTEGER,"
+        "textureId INTEGER"
+        ");",
+        nullptr, nullptr, nullptr);
+
+    sqlite3_exec(database,
+        "CREATE TABLE IF NOT EXISTS Drills ("
+        "saveID INTEGER,"
+        "heat REAL,"
+        "water REAL,"
+        "food INTEGER,"
+        "copper INTEGER"
+        ");",
+        nullptr, nullptr, nullptr);
+
+    sqlite3_exec(database,
+        "CREATE TABLE IF NOT EXISTS Items ("
+        "saveID INTEGER,"
+        "positionX REAL,"
+        "positionY REAL,"
+        "type TEXT"
+        ");",
+        nullptr, nullptr, nullptr);
+
+    sqlite3_close(database);
+}
+
+bool Database::TrySave(DrillManager& drill, PlayerManager& playerManager) {
+    if (!TrySaveDrill(drill.resources)) {
+        Jauntlet::error("Failed to save drill!");
+        return false;
+    }
+
+    std::vector<Holdable*> holdables = drill.getAllHoldables();
+
+    for (int i = 0; i < holdables.size(); ++i) {
+        if (!TrySaveItem(*holdables[i])) {
+            Jauntlet::error("Failed to save holdable #" + std::to_string(i));
+            return false;
+        }
+    }
+
+    std::vector<Player*> players = playerManager.getAllPlayers();
+
+    for (int i = 0; i < players.size(); ++i) {
+        if (!TrySavePlayer(*players[i])) {
+            Jauntlet::error("Failed to save player #" + std::to_string(i));
+            return false;
+        }
+    }
+
+    return true;
+}
+
 bool Database::TrySavePlayer(const Player& player) {
     int saveID      = _saveID;
     float positionX = player.getPosition().x;

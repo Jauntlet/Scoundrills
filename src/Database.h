@@ -7,15 +7,16 @@
 #include <string>
 #include <sqlite3.h>
 
-#include "players/Player.h"
+#include "players/PlayerManager.h"
 #include "drill/PlayerResources.h"
-#include "interactable/Holdable.h"
-
+#include "drill/DrillManager.h"
 class Database {
 public:
 	Database();
 private:
 	sqlite3* database;
+
+	bool TrySave(DrillManager& drill, PlayerManager& playerManager);
 
 	bool TrySavePlayer(const Player& player);
 
