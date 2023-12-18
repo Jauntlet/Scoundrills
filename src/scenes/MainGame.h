@@ -5,14 +5,8 @@
 #include "../CameraManager.h"
 #include "../drill/DrillManager.h"
 #include <Jauntlet/Jauntlet.h>
-#include <Jauntlet/Rendering/Particles/Particle.h>
 #include <Jauntlet/Rendering/Window.h>
 #include <Jauntlet/Time.h>
-#include <Jauntlet/UI/UIButtonElement.h>
-#include <Jauntlet/UI/UIManager.h>
-#include <Jauntlet/UI/UITextElement.h>
-#include "../players/PlayerManager.h"
-#include "../drill/PlayerResources.h"
 #include "../pathfinding/SelectedTileRenderer.h"
 #include "../UICoordinator.h"
 
@@ -47,8 +41,6 @@ private:
 	
 
 	Jauntlet::SpriteBatch _playerSpriteBatch;
-
-	bool paused = false;
 
 	// defines scale of movement for the camera. if set to 1, the camera will follow the mouse, if set to 0, the mouse has no control over the camera.
 	const float _CAMERA_MOVEMENT_SCALE = 0.5f;

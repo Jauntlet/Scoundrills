@@ -37,14 +37,13 @@ UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRender
 
 	Jauntlet::UIButtonToggleableElement* _button = new Jauntlet::UIButtonToggleableElement(&GlobalContext::inputManager, _buttonMethod, _buttonTexture, buttonPos, glm::vec2(256, 256), Jauntlet::UIElement::ORIGIN_PIN::BOTTOM_LEFT);
 	_UIManager.addElement(_button, &GlobalContext::normalShader);
-
 	
 	// optimize batches
 	_UIManager.optimize();
 	_UIManager.resolvePositions();
 
-	_NavManager->optimize();
-	_NavManager->resolvePositions();
+	//_NavManager->optimize();
+	//_NavManager->resolvePositions();
 }
 
 UICoordinator::~UICoordinator() {
@@ -53,11 +52,11 @@ UICoordinator::~UICoordinator() {
 }
 
 void UICoordinator::draw() {
-	waterIconText = JMath::Split(std::to_string(std::min(_drill->resources.water, 999.0f)), '.')[0];
-	foodIconText = std::to_string(std::min(_drill->resources.food, (unsigned int)999));
-	partsIconText = std::to_string(_drill->resources.copper);
+	waterIconText = JMath::Split(std::to_string(std::min(_drill->resources->water, 999.0f)), '.')[0];
+	foodIconText = std::to_string(std::min(_drill->resources->food, (unsigned int)999));
+	partsIconText = std::to_string(_drill->resources->copper);
 
-	tempIconText = std::to_string(_drill->resources.heat).substr(0, 5);
+	tempIconText = std::to_string(_drill->resources->heat).substr(0, 5);
 
 	_UIManager.draw();
 	navigation->update();

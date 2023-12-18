@@ -12,7 +12,7 @@ to compile on Debian:
 
 get dependencies
 ```
-sudo apt install ninja-build cmake libglm-dev libsdl2-dev libglew-dev g++ libfreetype-dev libsqlite3-dev
+sudo apt install ninja-build cmake libglm-dev libsdl2-dev libglew-dev g++ libfreetype-dev libsqlite3-dev libopenal-dev
 ```
 it is worth noting that libfreetype should be installed under `/usr/include/freetype2/` or **must** have its path manually changed in `CMakeLists.txt`
 clone and enter the repository

@@ -1,12 +1,21 @@
 #include "Player.h"
 #include "src/interactable/Holdable.h"
 
-Player::Player(float x, float y) : collider(Jauntlet::BoxCollider2D(glm::vec2(64), glm::vec2(x,y))) {
-	_position = glm::vec2(x, y);
+Player::Player(const glm::vec2& position, const std::string& texture) :
+	collider(Jauntlet::BoxCollider2D(glm::vec2(64), position)),
+	_position(position),
+	_healthBar("Textures/healthbar.png", glm::vec4(0, 0, 0.5, 1), glm::vec4(0.5,0,0.5,1), glm::vec4(_position.x + 8, _position.y + 68, 48, 8)),	
+	_texture(Jauntlet::ResourceManager::getTexture(texture).id)
+{
+	_animation.play(0,1,0.5f);
+}
+Player::~Player() {
+	if (_station != nullptr) {
+		_station->unoccupy();
+	}
 }
 
 void Player::update(DrillManager& drill) {
-	
 	// we have a path to follow
 	if (!_path.empty()) {
 		glm::vec2 direction = glm::vec2(_path.back().x - _position.x, _path.back().y - _position.y);
@@ -49,19 +58,50 @@ void Player::update(DrillManager& drill) {
 			if (_path.empty()) {
 				onDestination(drill);
 			}
+			else {
+				// Update animation
+				direction = glm::vec2(glm::sign(_path.back().x - _position.x), glm::sign(_path.back().y - _position.y));
+				
+				if (direction != _moveDir) {
+					_moveDir = direction;
+					if (_moveDir.x != 0) {
+						_flipped = _moveDir.x < 0;
+						_animation.play(22, 27, 0.05f);
+					} else if (_moveDir.y > 0) {
+						_flipped = false;
+						_animation.play(12, 19, 0.025f);
+					}
+					else {
+						_flipped = false;
+						_animation.play(2, 9, 0.025f);
+					}
+				}
+			}
 		}
 		// update position of held item whenever we move
 		if (heldItem != nullptr) {
 			heldItem->position = _position;
 		}
 	}
+	_animation.update();
 	
 	//update collider
 	collider.position = _position;
 }
 
 void Player::draw(Jauntlet::SpriteBatch& spriteBatch) {
-	spriteBatch.draw({ _position.x, _position.y, 64, 64 }, Jauntlet::ResourceManager::getTexture("Textures/Craig.png").id, 0);
+	if (_flipped) {
+		spriteBatch.draw({ _position.x + 64, _position.y, -64, 64 }, _animation.getUV(), _texture, 0);
+	}
+	else {
+		spriteBatch.draw({ _position.x, _position.y, 64, 64 }, _animation.getUV(), _texture, 0);
+	}
+
+	if (health != 30) {
+		_healthBar.setProgress(health / 30);
+		_healthBar.setPosition(glm::vec2(_position.x + 8, _position.y + 68));
+		_healthBar.draw(spriteBatch);
+	}
 }
 
 void Player::navigateTo(DrillManager& drill, PathRenderer& pathRenderer, glm::vec2 position) {
@@ -77,9 +117,9 @@ void Player::navigateTo(DrillManager& drill, PathRenderer& pathRenderer, glm::ve
 			_station->unoccupy();
 		}
 		
-		if (pipeDest != nullptr) {
-			delete pipeDest;
-			pipeDest = nullptr;
+		if (_pipeDest != nullptr) {
+			delete _pipeDest;
+			_pipeDest = nullptr;
 		}
 		
 		_station = storedStation;
@@ -114,14 +154,29 @@ void Player::navigateTo(DrillManager& drill, PathRenderer& pathRenderer, glm::ve
 		if (_path.empty()) return;
 		_path.erase(_path.begin());
 		if (!drill.DestMatchesRandomPipe(drill.pipes.RoundWorldPos(position))) {
-			if (pipeDest != nullptr) {
-				delete pipeDest;
-				pipeDest = nullptr;
+			if (_pipeDest != nullptr) {
+				delete _pipeDest;
+				_pipeDest = nullptr;
 			}
 			_path.insert(_path.begin(), drill.drillWalls.RoundWorldPos(position));
 		} else {
-			pipeDest = new glm::vec2(position);
+			_pipeDest = new glm::vec2(position);
 		}
+
+		_moveDir = glm::vec2(glm::sign(_path.back().x - _position.x), glm::sign(_path.back().y - _position.y));
+		if (_moveDir.x != 0) {
+			_flipped = _moveDir.x < 0;
+			_animation.play(22, 27, 0.05f);
+		}
+		else if (_moveDir.y > 0) {
+			_flipped = false;
+			_animation.play(12, 19, 0.05f);
+		}
+		else {
+			_flipped = false;
+			_animation.play(2, 9, 0.05f);
+		}
+
 	}
 }
 
@@ -149,6 +204,21 @@ void Player::onDestination(DrillManager& drill) {
 	// remove all stored velocity.
 	_storedVelocity = 0;
 
+	// Play idle animation
+	if (_moveDir.x != 0) {
+		_flipped = _moveDir.x < 0;
+		_animation.stop(20);
+		_animation.play(20, 21, 0.5f);
+	} else if (_moveDir.y > 0) {
+		_flipped = false;
+		_animation.stop(10);
+		_animation.play(10, 11, 0.5f);
+	} else {
+		_flipped = true;
+		_animation.stop(0);
+		_animation.play(0, 1, 0.5f);
+	}
+
 	// detect if we landed on an item and pick it up.
 	Holdable* holdable = drill.getHoldable(_position);
 	if (holdable != nullptr) {
@@ -166,13 +236,13 @@ void Player::onDestination(DrillManager& drill) {
 	}
 
 	// if destination is pipe, we try to repair it.
-	if (pipeDest != nullptr) {
+	if (_pipeDest != nullptr) {
 		if (heldItem != nullptr && heldItem->itemType == HoldableType::PIPE) {
 			// repair the pipe
-			drill.repairPipe(drill.pipes.RoundWorldPos(*pipeDest));
+			drill.repairPipe(drill.pipes.RoundWorldPos(*_pipeDest));
 			// remove stored destination
-			delete pipeDest;
-			pipeDest = nullptr;
+			delete _pipeDest;
+			_pipeDest = nullptr;
 			// destroy the held item
 			drill.removeHoldable(heldItem);
 		}

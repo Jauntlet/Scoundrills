@@ -2,13 +2,13 @@
  * Main Contributer(s): Xander Mooney
  */
  #pragma once
- #include "../PlayerStation.h"
+ #include "../AnimatedPlayerStation.h"
 
 class DrillManager;
 
-class Forge : public PlayerStation {
+class Forge : public AnimatedPlayerStation {
 public:
-    Forge(DrillManager& drill, glm::vec4 destination, glm::vec4 boundingBox, glm::vec2 anchorPointOffset);
+    Forge(DrillManager& drill, glm::vec4 destination, glm::vec2 anchorPointOffset);
 
     void onPlayerArrival(Player& player) override;
 
@@ -18,4 +18,5 @@ private:
 
     int _heldScrap = 0;
     float _meltingScrap = 0.0f;
+
 };

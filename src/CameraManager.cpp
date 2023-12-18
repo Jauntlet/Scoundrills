@@ -1,9 +1,6 @@
-#include <Jauntlet/Time.h>
-#include <Jauntlet/Rendering/Cameras/Camera2D.h>
 #include "CameraManager.h"
-#include "drill/DrillManager.h"
-#include "src/players/PlayerManager.h"
 #include "src/scenes/GlobalContext.h"
+#include "scenes/PauseMenu.h"
 
 const float CAMERA_SPEED = 500;
 
@@ -23,12 +20,14 @@ CameraManager::CameraManager(Jauntlet::Camera2D* camera, PlayerManager* players,
 }
 
 void CameraManager::processInput() {
+	if (GlobalContext::pauseMenu->isPaused()) return;
+
 	if (GlobalContext::inputManager.isKeyDown(SDLK_r)) {
 		_camera->transitionToPosition(glm::vec2(24 * 64 * 0.5f, 30 * 64 * 0.5f * -1));
 		_camera->transitionToScale(0.5f);
 	}
 
-	bool clickOnPlayers = _players->processInput(*_drill, *_camera);
+	bool clickOnPlayers = _players->processInput(*_camera);
 	
 	if (GlobalContext::inputManager.isKeyDown(SDL_BUTTON_LEFT)) {
 		if (!clickOnPlayers) {

@@ -21,7 +21,7 @@ const float DISASTER_INTERVAL = 10.0f;
 
 class DrillManager {
 public:
-	DrillManager(CameraManager* cameraManager, PlayerResources resourceManager, Jauntlet::Camera2D* camera);
+	DrillManager(CameraManager* cameraManager, PlayerResources& resourceManager, Jauntlet::Camera2D* camera);
 	
 	// update parts of the drill
 	void update();
@@ -39,13 +39,13 @@ public:
 	void toggle();
 
 	bool isValidDestination(glm::vec2 worldPos, PlayerManager* playerManager) const;
-	bool isValidDestination(glm::vec2 worldPos) const;
 	bool isValidPath(glm::vec2 worldPos, PlayerManager* playerManager) const;
+	bool isValidPath(glm::vec2 worldPos) const;
 
 	PlayerStation* checkHoveringStation(glm::vec2 position);
 	bool doesTileOverlapStations(glm::ivec2 tilePos) const;
 
-	void bustRandomPipe();
+	void burstRandomPipe();
 	void repairPipe(const glm::vec2& worldPos);
 	bool DestMatchesRandomPipe(const glm::vec2& worldPos) const;
 
@@ -65,7 +65,7 @@ public:
 
 	float boilerWater = Boiler::BOILER_MAX_WATER;
 	Navigation navigation;
-	PlayerResources resources;
+	PlayerResources* resources;
 private:
 	// Commits a random disaster
 	void DisasterEvent();
@@ -94,8 +94,6 @@ private:
 
 	// Broken pipes
 	std::vector<glm::ivec2> _brokenPipeLocations;
-
-	float stupid = 0.0f;
 
 	CameraManager* _cameraManager;
 };

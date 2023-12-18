@@ -8,15 +8,14 @@ const float HEAT_RISE_SCALE = .3f; //1 heat every ~3 seconds.
 const float HEAT_FALL_SCALE = .1f; //1 heat every 10 seconds.
 
 const float PIPE_BURST_HEAT = 80.0f; // The minimum heat for pipes to be able to burst.
-const float PLAYER_HURT_HEAT = 200.0f; // The minimum heat for players to take damage from it.
 
-DrillManager::DrillManager(CameraManager* cameraManager, PlayerResources resourceManager, Jauntlet::Camera2D* camera) :
+DrillManager::DrillManager(CameraManager* cameraManager, PlayerResources& resourceManager, Jauntlet::Camera2D* camera) :
 	_drillAssets(camera),
-	resources(resourceManager),
+	resources(&resourceManager),
 	navigation(camera),
 	_boiler(&boilerWater, "Textures/BoilerTank.png", { 64 * 16, -64 * 1 - 10, 32 * 2, 43 * 2 }, 5, { 64 * 15.5, -64 * 2, 64 * 2, 96 * 2 }, { 16,-64 }),
-	_waterTank(*this, { 64, -64 * 12, 64, 64 }, { 64, -64 * 12, 64, 64 }, glm::vec2(0)),
-	_forge(*this, {64 * 16, -64 * 13, 64, 64}, {64 * 16, -64 * 13, 64, 64}, glm::vec2(0)),
+	_waterTank(*this, { 64, -64 * 12, 128, 256 }, glm::vec2(0,-64)),
+	_forge(*this, {64 * 15, -64 * 13, 64 * 2, 64 * 2}, glm::vec2(0, -32)),
 	_pipeWorkbench(*this, { 64 * 18, -64 * 13, 64, 64 }, { 64 * 18, -64 * 13, 64, 64 }, glm::vec2(0))
 {
 	drillFloor.loadTileMap("Levels/DrillFloor.JML");
@@ -31,18 +30,12 @@ DrillManager::DrillManager(CameraManager* cameraManager, PlayerResources resourc
 }
 
 void DrillManager::update() {
-	stupid += Jauntlet::Time::getDeltaTime();
-
-	if (stupid > 5) {
-		//_cameraManager.doExplosionShake();
-	}
-	
 	// calculate the change in water/heat
 	if (_drillOn) {
 		if (boilerWater > 0) {
 			boilerWater -= Jauntlet::Time::getDeltaTime() / 6;
-			resources.heat += Jauntlet::Time::getDeltaTime() * (HEAT_RISE_SCALE + _brokenPipeLocations.size() * 0.1);
-			_disasterTime -= Jauntlet::Time::getDeltaTime() * (resources.heat / 100);
+			resources->heat += Jauntlet::Time::getDeltaTime() * (HEAT_RISE_SCALE + _brokenPipeLocations.size() * 0.1);
+			_disasterTime -= Jauntlet::Time::getDeltaTime() * (resources->heat / 100);
 			if (_disasterTime < 0) {
 				DisasterEvent();
 			}
@@ -50,9 +43,9 @@ void DrillManager::update() {
 			_forge.update();
 		}
 	} else {
-		resources.heat -= Jauntlet::Time::getDeltaTime() * (HEAT_FALL_SCALE - _brokenPipeLocations.size() * 0.1);
-		if (resources.heat < 0) {
-			resources.heat = 0;
+		resources->heat -= Jauntlet::Time::getDeltaTime() * (HEAT_FALL_SCALE - _brokenPipeLocations.size() * 0.1);
+		if (resources->heat < 0) {
+			resources->heat = 0;
 		}
 	}
 
@@ -108,11 +101,13 @@ void DrillManager::drawLayerTwo() {
 void DrillManager::on() {
 	_drillOn = true;
 	_drillAssets.startAnimation();
+	_forge.animation.play(0, 2, 0.3f);
 }
 
 void DrillManager::off() {
 	_drillOn = false;
 	_drillAssets.stopAnimation();
+	_forge.animation.play(3, 5, 0.3f, false);
 }
 
 void DrillManager::toggle() {
@@ -140,29 +135,9 @@ bool DrillManager::isValidDestination(glm::vec2 worldPos, PlayerManager* playerM
 		return false;
 	} else if (playerManager->posMatchesPlayerDest(worldPos)) {
 		return false;
-	} else {
-		return !doesTileOverlapStations(pos);
-	}
-}
-
-bool DrillManager::isValidDestination(glm::vec2 worldPos) const {
-	glm::ivec2 pos = drillWalls.WorldPosToTilePos(worldPos);
-	glm::vec2 floorPos = drillFloor.WorldPosToTilePos(worldPos);
-	worldPos = drillWalls.RoundWorldPos(worldPos);
-
-	if (drillWalls.tileHasCollision(pos) || !drillWalls.isValidTilePos(pos)) {
-		// The tile is in a wall, but theres a chance it is a broken pipe, so we loop through all broken pipes.
-		for (int i = 0; i < _brokenPipeLocations.size(); ++i) {
-			if (pipes.TilePosToWorldPos(_brokenPipeLocations[i]) == worldPos + glm::vec2(0, _brokenPipeLocations[i].y != 0 ? 64 : 0)) {
-				return true;
-			}
-		}
+	} else if (doesTileOverlapStations(pos)) {
 		return false;
-	} else if (drillFloor.isTileEmpty(floorPos)) {
-		return false;
-	} else {
-		return !doesTileOverlapStations(pos);
-	}
+	} else return Pathfinding::isReachable(*this, *playerManager, playerManager->getSelectedPlayer()->getPosition(), worldPos + glm::vec2(0,64));
 }
 
 bool DrillManager::isValidPath(glm::vec2 worldPos, PlayerManager* playerManager) const {
@@ -181,6 +156,27 @@ bool DrillManager::isValidPath(glm::vec2 worldPos, PlayerManager* playerManager)
 	// Prevent pathing through items on the floor.
 	for (int i = 0; i < _holdables.size(); ++i) {	
 		if (_holdables[i]->position == worldPos + glm::vec2(0,64)) {
+			return false;
+		}
+	}
+
+	return !doesTileOverlapStations(pos);
+}
+bool DrillManager::isValidPath(glm::vec2 worldPos) const {
+	glm::ivec2 pos = drillWalls.WorldPosToTilePos(worldPos);
+	glm::vec2 floorPos = drillFloor.WorldPosToTilePos(worldPos);
+	worldPos = drillWalls.RoundWorldPos(worldPos);
+
+	if (drillWalls.tileHasCollision(pos) || !drillWalls.isValidTilePos(pos)) {
+		return false;
+	}
+	else if (drillFloor.isTileEmpty(floorPos)) {
+		return false;
+	}
+
+	// Prevent pathing through items on the floor.
+	for (int i = 0; i < _holdables.size(); ++i) {
+		if (_holdables[i]->position == worldPos + glm::vec2(0, 64)) {
 			return false;
 		}
 	}
@@ -212,8 +208,8 @@ bool DrillManager::doesTileOverlapStations(glm::ivec2 tilePos) const  {
 		drillWalls.doesTileOverlap(tilePos, _pipeWorkbench.getBoundingBox());
 }
 
-void DrillManager::bustRandomPipe() {
-	// im boutta buuust
+void DrillManager::burstRandomPipe() {
+	_cameraManager->doExplosionShake();
 	// changes a random pipe of ID 1 (normal pipe) to a pipe of ID 2 (broken pipe)
 	_brokenPipeLocations.push_back(pipes.selectRandomTile(1));
 	pipes.UpdateTile(_brokenPipeLocations.back(), 2);
@@ -269,8 +265,8 @@ void DrillManager::DisasterEvent() {
 	 
 	switch (disaster) {
 	case 0:
-		if (resources.heat > PIPE_BURST_HEAT) {
-			bustRandomPipe();
+		if (resources->heat > PIPE_BURST_HEAT) {
+			burstRandomPipe();
 		} else {
 			placeScrap();
 		}
@@ -289,7 +285,7 @@ void DrillManager::DisasterEvent() {
 void DrillManager::placeIce() {
 	glm::vec2 position = drillFloor.TilePosToWorldPos(drillFloor.selectRandomTile(1));
 
-	while (!isValidDestination(position)) {
+	while (!isValidPath(position)) {
 		position = drillFloor.TilePosToWorldPos(drillFloor.selectRandomTile(1));
 	}
 
@@ -299,7 +295,7 @@ void DrillManager::placeIce() {
 void DrillManager::placeScrap() {
 	glm::vec2 position = drillFloor.TilePosToWorldPos(drillFloor.selectRandomTile(1));
 
-	while (!isValidDestination(position)) {
+	while (!isValidPath(position)) {
 		position = drillFloor.TilePosToWorldPos(drillFloor.selectRandomTile(1));
 	}
 

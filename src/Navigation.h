@@ -7,6 +7,7 @@
 #include <Jauntlet/UI/UIManager.h>
 #include <Jauntlet/UI/UIButtonElement.h>
 #include <Jauntlet/UI/UISpriteAnimatedElement.h>
+#include <random>
 #include <vector>
 
 class Navigation {
@@ -20,23 +21,31 @@ public:
 
 	bool isNavOpen(); //returns if the thing is thinging
 	void toggleNav(); //toggles visibility (on/off)
-	void selectNav(int id); //sets selected destination
+	void selectNav(int id, glm::ivec2 xy); //sets selected destination
 	void updateTravel(); //Updates the "tick" of travel; Moves the points closer to the drill to simulate going to the outcove. When reaching the destination, set destination to null.
 	void spawnOutcove(int type);
 
 	Jauntlet::UIManager* getUIManager();
 private:
+	std::mt19937 random;
 	GLuint _navTexture = 0;
 	GLuint _xTure = 0;
+	GLuint _waTure = 0;
+	GLuint _approaTure = 0;
+	GLuint _dangTure = 0;
+	GLuint _coppTure = 0;
 	GLuint _caret = 0;
 	GLuint _drillIcon = 0;
 	bool _navOpen = false; //visibility of menu
 	int _destination = -1; //id value
+	int _columnOver = 2; //the column the drill icon rests over currently
+	int _drillRow = -1; //the drill's current row (-1 is above row 0 on the map)
+	int _rowsTravelled = 0; //y movement
+	int _columnsTravelled = 0; //x movement
 	std::vector<int> _mappedCoves;
 	glm::vec2 _shiftPos = glm::vec2(0); //position determining how to move nav points when a destination is selected
 	float _progress = -1; //progress towards next destination
 	float _speed = 1;
-	//int _nextRow = 1; //the row which is selectable to navigate to
 	Jauntlet::UIManager _uiManager;
 	std::vector<Jauntlet::UIButtonElement> _points;
 	glm::vec2 _bgPos = glm::vec2(0);
@@ -53,5 +62,6 @@ private:
 	bool _caretSet = false;
 
 	void refreshPositions(float shiftX, float shiftY);
+	void recycleMap(int rows);
 	void updateVisibility();
 };

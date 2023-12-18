@@ -7,11 +7,14 @@
 #include "../interactable/PlayerStation.h"
 #include "../interactable/Holdable.h"
 #include "../pathfinding/PathRenderer.h"
+#include <Jauntlet/Rendering/ProgressBar.h>
+#include <Jauntlet/Rendering/Animation/Animation.h>
 
 class Player
 {
 public:
-	Player(float x, float y);
+	Player(const glm::vec2& position, const std::string& texture);
+	~Player();
 
 	void update(DrillManager& drill);
 	void draw(Jauntlet::SpriteBatch& spriteBatch);
@@ -41,5 +44,12 @@ private:
 	float _speed = 300.0f, _storedVelocity = 0.0f;
 
 	PlayerStation* _station = nullptr;
-	glm::vec2* pipeDest = nullptr;
+	glm::vec2* _pipeDest = nullptr;
+
+	// Rendering
+	GLuint _texture;
+	Jauntlet::Animation _animation = Jauntlet::Animation(28);
+	Jauntlet::ProgressBar _healthBar;
+	glm::vec2 _moveDir = glm::vec2(0);
+	bool _flipped = false;
 };

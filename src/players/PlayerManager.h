@@ -12,14 +12,14 @@ class DrillManager;
 
 class PlayerManager {
 public: 
-	PlayerManager(int initialPlayers, DrillManager* drill);
-	// adds an already defined player to the player manager
-	void addPlayer(Player& player);
+	PlayerManager(DrillManager* drill);
 	// creates a new player and places it into the player manager
-	void createPlayer(int x, int y);
+	void createPlayer(const glm::vec2& position, const std::string& texture);
 	
 	// processes a click to see if we operate on the players, returns true if we are, false if we arent.
-	bool processInput(DrillManager& drill, const Jauntlet::Camera2D& activeCamera);
+	bool processInput(const Jauntlet::Camera2D& activeCamera);
+	// tries to damage the players currently in the drill
+	void damageTick(const int& drillHeat);
 
 	// returns true if a player is selected
 	bool isPlayerSelected();
@@ -37,6 +37,9 @@ public:
 private:
 	std::vector<Player> _players;
 	int _selectedPlayer = -1;
+	float _damageTick = 0;
+
+	DrillManager* _drill;
 
 	PathRenderer _pathRenderer;
 	glm::vec2 _storedMousePos = glm::vec2(0);
