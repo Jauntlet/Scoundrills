@@ -286,16 +286,13 @@ void Navigation::recycleMap(int r) {
 				}
 				else { //drill goes from right to left
 					if (x >= layerWidth) {
-						std::cout << "layerwidth reached" << std::endl;
 						break;
 					}
 					if (x < glm::abs(_columnsTravelled)) { //first few -- store and generate
-						std::cout << _map[y][x] << std::endl;
 						temp[x] = _map[y][x];
 						_map[y][x] = (random() % 6);
 					}
 					else { //get from storage to add back
-						std::cout << temp[x + _columnsTravelled] << std::endl;
 						temp[x] = _map[y][x];
 						_map[y][x] = temp[x + _columnsTravelled];
 					}
