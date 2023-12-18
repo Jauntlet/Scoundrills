@@ -1,10 +1,6 @@
 /*
-TODO:
-More Mappage
-
 BUGS:
-moving on X axis breaks
-(due to improperly storing/recalling the values from the map to shift them over)
+moving to the RIGHT and NOT LEFT while moving by NOT ONE but rather TWO SPECFICIALLY points will break the nav background???
 */
 
 #include "Navigation.h"
@@ -81,10 +77,7 @@ Jauntlet::UIManager* Navigation::genNav() {
 	_uiManager.addElement(_drillIconElement, &GlobalContext::normalShader);
 	_drillIconElement->visible = _navOpen;
 
-	//console print the map to debug
-	for (int j = 0; j < layerCount; j++)
-		std::cout << _map[j][0] << _map[j][1] << _map[j][2] << _map[j][3] << _map[j][4] << std::endl;
-
+	//loop to generate points
 	for (int y = 0; y < layerCount; y++) {
 		for (int x = 0; x < layerWidth; x++) {
 			int point = _map[y][x]; //The point type according to the generated "map," will determine the chance of encountering water, ores, etc. when arriving there.
@@ -214,6 +207,7 @@ void Navigation::selectNav(int id, glm::ivec2 xy) {
 	_shiftPos = glm::vec2(_positions[id].x, 187.5 * (xy.y - _drillRow));
 	_caretPos = _positions[id] + glm::vec2(0, 37.5);
 	_rowsTravelled = xy.y - _drillRow;
+	_columnsTravelled = xy.x - _columnOver;
 	_columnOver = xy.x;
 	_drillRow = xy.y;
 
@@ -237,6 +231,7 @@ void Navigation::updateTravel() { //TODO: Hide the nav points that get up above 
 			
 			recycleMap(_rowsTravelled);
 			_rowsTravelled = 0; //reset rows travelled
+			_columnsTravelled = 0; //reset columns travelled
 			_columnOver = layerWidth/2; //reset to middle
 			_drillRow = -1; //reset drill's row
 
@@ -272,7 +267,6 @@ void Navigation::recycleMap(int r) {
 		for (int x = 0; x < layerWidth; x++) {
 			if (layerCount <= y) {
 				_map[y - r][x] = (random() % 6);
-				std::cout << _map[y - r][x] << std::endl;
 				continue;
 			}
 
@@ -285,38 +279,30 @@ void Navigation::recycleMap(int r) {
 	if (_columnOver != layerWidth/2) {
 		for (int y = 0; y < layerCount; y++) {
 			int temp[layerWidth]; //space for maximum possible temporarily stored points to shift to the right
-			for (int x = 0; x < layerWidth+glm::abs((layerWidth/2)-_columnOver); x++) {
-				if (_columnOver < layerWidth/2) {
-					if (x > glm::abs((layerWidth / 2) - _columnOver)) {
-						//store this point to move later
-						temp[x] = _map[y][x];
-
-						//generate new at [y][x]
-						_map[y][x] = (random() % 6);
-						continue;
+			for (int x = 0; x < layerWidth+glm::abs(_columnsTravelled); x++) {
+				if (_columnsTravelled > 0) { //drill goes from left to right
+					if (x + _columnsTravelled < layerWidth) {
+						_map[y][x] = _map[y][x + _columnsTravelled];
 					}
-
-					//store point
-					temp[x] = _map[y][x];
-
-					//shift right
-					_map[y][x - glm::abs((layerWidth / 2) - _columnOver)] = temp[x - glm::abs((layerWidth / 2) - _columnOver)];
+					else { //gen new
+						_map[y][x] = (random() % 6);
+					}
 				}
-				else {
-					//are we within bounds
-					if (x < glm::abs((layerWidth / 2) - _columnOver)) {
-						continue;
+				else { //drill goes from right to left
+					if (x >= layerWidth) {
+						std::cout << "layerwidth reached" << std::endl;
+						break;
 					}
-
-					//check if already exists
-					if (x > layerWidth) {
-						//generate new at [y][x]
+					if (x < glm::abs(_columnsTravelled)) { //first few -- store and generate
+						std::cout << _map[y][x] << std::endl;
+						temp[x] = _map[y][x];
 						_map[y][x] = (random() % 6);
-						continue;
 					}
-
-					//shift left
-					_map[y][x - glm::abs((layerWidth / 2) - _columnOver)] = _map[y][x];
+					else { //get from storage to add back
+						std::cout << temp[x + _columnsTravelled] << std::endl;
+						temp[x] = _map[y][x];
+						_map[y][x] = temp[x + _columnsTravelled];
+					}
 				}
 			}
 		}
