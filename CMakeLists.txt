@@ -42,7 +42,7 @@ endif()
 target_link_libraries(scoundrills PRIVATE jauntlet)
 
 # Link scoundrills with its dependencies
-target_link_libraries(scoundrills PRIVATE ${SDL2_LIBRARIES} ${GLEW_LIBRARIES} ${OPENGL_LIBRARIES} ${FREETYPE_LIBRARIES} ${SQLITE_LIBRARIES})${OPENAL_LIBRARIES})
+target_link_libraries(scoundrills PRIVATE ${SDL2_LIBRARIES} ${GLEW_LIBRARIES} ${OPENGL_LIBRARIES} ${FREETYPE_LIBRARIES} ${SQLITE_LIBRARIES} ${OPENAL_LIBRARIES})
 
 # Specify include directories for the "Jauntlet" directory (outside of it)
 target_include_directories(scoundrills PRIVATE "${CMAKE_SOURCE_DIR}")
