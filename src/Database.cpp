@@ -100,31 +100,48 @@ bool Database::TrySave(DrillManager& drill, PlayerManager& playerManager) {
     }
 
     std::vector<Holdable*> holdables = drill.getAllHoldables();
+    std::vector<Player*> players = playerManager.getAllPlayers();
+
+    // loop through all players not holding an item and save them
+    for (int i = 0; i < players.size(); ++i) {
+        if (players[i]->heldItem == nullptr) {
+            if (!TrySavePlayer(*players[i], 0)) {
+                Jauntlet::error("Failed to save non-item holding player #" + std::to_string(i));
+                return false;
+            }
+            players.erase(players.begin() + i);
+            --i;
+        }
+    }
 
     for (int i = 0; i < holdables.size(); ++i) {
-        if (!TrySaveItem(*holdables[i])) {
+        if (!TrySaveItem(*holdables[i], i + 1)) { // ID 0 is reserved for no item, so we add 1 to i
             Jauntlet::error("Failed to save holdable #" + std::to_string(i));
             return false;
         }
-    }
-
-    std::vector<Player*> players = playerManager.getAllPlayers();
-
-    for (int i = 0; i < players.size(); ++i) {
-        if (!TrySavePlayer(*players[i])) {
-            Jauntlet::error("Failed to save player #" + std::to_string(i));
-            return false;
+        for (int j = 0; j < players.size(); ++j) {
+            // save players holding items with correct itemID
+            if (players[j]->heldItem == holdables[i]) {
+                if (!TrySavePlayer(*players[j], i + 1)) {
+                    Jauntlet::error("Failed to save player holding item ID #" + std::to_string(i + 1));
+                    return false;
+                }
+                players.erase(players.begin() + j);
+                break;
+            }
         }
     }
+
+
 
     return true;
 }
 
-bool Database::TrySavePlayer(const Player& player) {
+bool Database::TrySavePlayer(const Player& player, int itemID) {
     int saveID      = _saveID;
     float positionX = player.getPosition().x;
     float positionY = player.getPosition().y;
-    int heldItemID  = NULL;
+    int heldItemID  = itemID;
     int health      = player.health;
     int texture     = player.getPlayerID();
     
@@ -160,8 +177,9 @@ bool Database::TrySaveDrill(const PlayerResources& playerResources) {
 	return rc == SQLITE_OK;
 }
 
-bool Database::TrySaveItem(const Holdable& holdable) {
+bool Database::TrySaveItem(const Holdable& holdable, int itemSaveID) {
     int saveID       = _saveID;
+    int itemID       = itemSaveID; // not currently implemented into SQL tables; FIXME!!!!
     float positionX  = holdable.position.x;
     float positionY  = holdable.position.y;
     std::string type = "";

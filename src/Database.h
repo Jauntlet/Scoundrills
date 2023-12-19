@@ -20,11 +20,11 @@ private:
 
 	bool TrySave(DrillManager& drill, PlayerManager& playerManager);
 
-	bool TrySavePlayer(const Player& player);
+	bool TrySavePlayer(const Player& player, int itemID);
 
 	bool TrySaveDrill(const PlayerResources& playerResources);
 
-	bool TrySaveItem(const Holdable& holdable);
+	bool TrySaveItem(const Holdable& holdable, int itemID);
 
 	int _saveID = 1;
 };
