@@ -1,6 +1,7 @@
 #include <functional>
 #include <Jauntlet/UI/UIButtonToggleableElement.h>
 
+#include "Jauntlet/Rendering/Textures/SpriteBatch.h"
 #include "UICoordinator.h"
 #include "src/scenes/GlobalContext.h"
 #include <Jauntlet/Rendering/TextRenderer.h>
@@ -61,6 +62,16 @@ void UICoordinator::draw() {
 	_UIManager.draw();
 	navigation->update();
 	_NavManager->draw();
+
+	if (_tempProgressBar.getProgress() == 1) {
+		_tempProgressBar.setProgress(0);
+	}
+	_tempProgressBar.setProgress(std::min(_tempProgressBar.getProgress() + Jauntlet::Time::getDeltaTime(), 1.0f));
+	GlobalContext::normalShader.use();
+	Jauntlet::SpriteBatch spriteBatch = Jauntlet::SpriteBatch();
+	spriteBatch.begin();
+	_tempProgressBar.draw(spriteBatch);
+	spriteBatch.endAndRender();
 }
 
 void UICoordinator::applyNewScreenSize(glm::ivec2 screenSize) {
