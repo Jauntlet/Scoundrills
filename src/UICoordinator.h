@@ -11,7 +11,7 @@
 #include <Jauntlet/UI/UITextElement.h>
 #include <Jauntlet/Rendering/ProgressBar.h>
 
-#include "Navigation.h"
+#include "piloting/Navigation.h"
 #include "drill/DrillManager.h"
 
 class UICoordinator {
