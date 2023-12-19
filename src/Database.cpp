@@ -126,7 +126,7 @@ bool Database::TrySavePlayer(const Player& player) {
     float positionY = player.getPosition().y;
     int heldItemID  = NULL;
     int health      = player.health;
-    int texture     = NULL;
+    int texture     = player.getPlayerID();
     
 	std::string command = "INSERT INTO Players (saveID, positionX, positionY, heldItemId, health, textureId) VALUES("
 		+ std::to_string(saveID)     + ", "
@@ -164,7 +164,24 @@ bool Database::TrySaveItem(const Holdable& holdable) {
     int saveID       = _saveID;
     float positionX  = holdable.position.x;
     float positionY  = holdable.position.y;
-    std::string type = NULL;
+    std::string type = "";
+    switch (holdable.itemType) {
+        case (HoldableType::ICE):
+            type = "ICE";
+            break;
+        case (HoldableType::PIPE):
+            type = "PIPE";
+            break;
+        case (HoldableType::SCRAP):
+            type = "SCRAP";
+            break;
+        case (HoldableType::WATER):
+            type = "WATER";
+            break;
+        default:
+            Jauntlet::error("INVALID ITEM TYPE ATTEMPTED SAVED");
+            return false;
+    }
     
     std::string command = "INSERT INTO Items (saveID, positionX, positionY, type) VALUES("
 		+ std::to_string(saveID)    + ", "
