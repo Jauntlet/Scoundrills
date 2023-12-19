@@ -84,6 +84,7 @@ Database::Database(int saveID) {
     sqlite3_exec(database,
         "CREATE TABLE IF NOT EXISTS Items ("
         "saveID INTEGER,"
+        "itemID INTEGER,"
         "positionX REAL,"
         "positionY REAL,"
         "type TEXT"
@@ -201,8 +202,9 @@ bool Database::TrySaveItem(const Holdable& holdable, int itemSaveID) {
             return false;
     }
     
-    std::string command = "INSERT INTO Items (saveID, positionX, positionY, type) VALUES("
+    std::string command = "INSERT INTO Items (saveID, itemID, positionX, positionY, type) VALUES("
 		+ std::to_string(saveID)    + ", "
+        + std::to_string(itemID)    + ", "
         + std::to_string(positionX) + ", "
 		+ std::to_string(positionY) + ", "
         +                type       + ");";
