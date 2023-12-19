@@ -52,16 +52,24 @@ UICoordinator::~UICoordinator() {
 }
 
 void UICoordinator::draw() {
-	waterIconText = JMath::Split(std::to_string(_drill->resources->water), '.')[0];
-	_waterIconTextPosition.x = _waterIconPosition.x + (120 - GlobalContext::textRenderer->calculateTextSize(waterIconText, glm::vec2(0.4f)).x) * 0.5;
+	
+	if (waterIconText != JMath::Split(std::to_string(_drill->resources->water), '.')[0]) {
+		waterIconText = JMath::Split(std::to_string(_drill->resources->water), '.')[0];
+		_waterIconTextPosition.x = _waterIconPosition.x + (120 - GlobalContext::textRenderer->calculateTextSize(waterIconText, glm::vec2(0.4f)).x) * 0.5f;
+		_UIManager.resolvePositions();
+	}
 
-	foodIconText = std::to_string(_drill->resources->food);
-	_foodIconTextPosition.x = _foodIconPosition.x + (120 - GlobalContext::textRenderer->calculateTextSize(foodIconText, glm::vec2(0.4f)).x) * 0.5;
+	if (foodIconText != std::to_string(_drill->resources->food)) {
+		foodIconText = std::to_string(_drill->resources->food);
+		_foodIconTextPosition.x = _foodIconPosition.x + (120 - GlobalContext::textRenderer->calculateTextSize(foodIconText, glm::vec2(0.4f)).x) * 0.5f;
+		_UIManager.resolvePositions();
+	}
 
-	partsIconText = std::to_string(_drill->resources->copper);
-	_partsIconTextPosition.x = _partsIconPosition.x + (120 - GlobalContext::textRenderer->calculateTextSize(partsIconText, glm::vec2(0.4f)).x) * 0.5;
-
-	tempIconText = std::to_string(_drill->resources->heat).substr(0, 5);
+	if (partsIconText != std::to_string(_drill->resources->copper)) {
+		partsIconText = std::to_string(_drill->resources->copper);
+		_partsIconTextPosition.x = _partsIconPosition.x + (120 - GlobalContext::textRenderer->calculateTextSize(partsIconText, glm::vec2(0.4f)).x) * 0.5f;
+		_UIManager.resolvePositions();
+	}
 
 	_tempProgressBar.progress = (_drill->resources->heat / 300) * 0.7 + 0.3;
 	

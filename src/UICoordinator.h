@@ -26,7 +26,6 @@ public:
 	
 	Navigation* navigation;
 	std::string waterIconText = "0", foodIconText = "0", partsIconText = "0";
-	std::string tempIconText = "0";
 private:
 	// Pointers
 	Jauntlet::Camera2D* _hudCamera;
