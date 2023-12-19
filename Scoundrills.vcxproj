@@ -35,6 +35,7 @@
     <ClCompile Include="src\pathfinding\PathRenderer.cpp" />
     <ClCompile Include="src\pathfinding\SelectedTileRenderer.cpp" />
     <ClCompile Include="src\piloting\Navigation.cpp" />
+    <ClCompile Include="src\piloting\Outcove.cpp" />
     <ClCompile Include="src\players\Player.cpp" />
     <ClCompile Include="src\players\PlayerManager.cpp" />
     <ClCompile Include="src\scenes\GlobalContext.cpp" />
@@ -61,6 +62,7 @@
     <ClInclude Include="src\pathfinding\PathRenderer.h" />
     <ClInclude Include="src\pathfinding\SelectedTileRenderer.h" />
     <ClInclude Include="src\piloting\Navigation.h" />
+    <ClInclude Include="src\piloting\Outcove.h" />
     <ClInclude Include="src\players\Player.h" />
     <ClInclude Include="src\players\PlayerManager.h" />
     <ClInclude Include="src\scenes\GlobalContext.h" />

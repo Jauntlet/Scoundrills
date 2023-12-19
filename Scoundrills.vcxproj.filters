@@ -67,6 +67,9 @@
     <ClCompile Include="src\piloting\Navigation.cpp">
       <Filter>piloting</Filter>
     </ClCompile>
+    <ClCompile Include="src\piloting\Outcove.cpp">
+      <Filter>piloting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\players\Player.h">
@@ -135,6 +138,9 @@
       <Filter>scenes</Filter>
     </ClInclude>
     <ClInclude Include="src\piloting\Navigation.h">
+      <Filter>piloting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\piloting\Outcove.h">
       <Filter>piloting</Filter>
     </ClInclude>
   </ItemGroup>
