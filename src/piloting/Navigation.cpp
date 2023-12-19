@@ -1,8 +1,3 @@
-/*
-BUGS:
-moving to the RIGHT and NOT LEFT while moving by NOT ONE but rather TWO SPECFICIALLY points will break the nav background???
-*/
-
 #include "Navigation.h"
 #include "Jauntlet/UI/UIButtonElement.h"
 #include "src/scenes/GlobalContext.h"
@@ -41,6 +36,8 @@ Navigation::Navigation(Jauntlet::Camera2D* camera) :
 			_map[y][x] = (random() % 6); //0, 1, 2, 3, 4, 5
 		}
 	}
+
+	_backgroundAnimation.play(0, 2, 0.3f);
 }
 
 Navigation::~Navigation() {
@@ -69,7 +66,6 @@ Jauntlet::UIManager* Navigation::genNav() {
 	//draw background
 	//_background = Jauntlet::UISpriteAnimatedElement(_navTexture, &_bgPos, glm::vec2(640, 1024), Jauntlet::UIElement::ORIGIN_PIN::CENTER, &_backgroundAnimation);
 	_uiManager.addElement(&_background, &GlobalContext::normalShader);
-	_backgroundAnimation.play(0, 2, 0.3f);
 
 	//draw drill icon
 	if (_drillIconElement == nullptr)
@@ -284,22 +280,19 @@ void Navigation::recycleMap(int r) {
 					if (x + _columnsTravelled < layerWidth) {
 						_map[y][x] = _map[y][x + _columnsTravelled];
 					}
-					else { //gen new
+					else if (x < layerWidth) { //gen new
 						_map[y][x] = (random() % 6);
 					}
 				}
 				else { //drill goes from right to left
 					if (x >= layerWidth) {
-						std::cout << "layerwidth reached" << std::endl;
 						break;
 					}
 					if (x < glm::abs(_columnsTravelled)) { //first few -- store and generate
-						std::cout << _map[y][x] << std::endl;
 						temp[x] = _map[y][x];
 						_map[y][x] = (random() % 6);
 					}
 					else { //get from storage to add back
-						std::cout << temp[x + _columnsTravelled] << std::endl;
 						temp[x] = _map[y][x];
 						_map[y][x] = temp[x + _columnsTravelled];
 					}

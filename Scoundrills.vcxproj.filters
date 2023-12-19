@@ -2,7 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Navigation.cpp" />
     <ClCompile Include="src\players\Player.cpp">
       <Filter>players</Filter>
     </ClCompile>
@@ -65,9 +64,14 @@
     <ClCompile Include="src\scenes\PauseMenu.cpp">
       <Filter>scenes</Filter>
     </ClCompile>
+    <ClCompile Include="src\piloting\Navigation.cpp">
+      <Filter>piloting</Filter>
+    </ClCompile>
+    <ClCompile Include="src\piloting\Outcove.cpp">
+      <Filter>piloting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Navigation.h" />
     <ClInclude Include="src\players\Player.h">
       <Filter>players</Filter>
     </ClInclude>
@@ -133,6 +137,12 @@
     <ClInclude Include="src\scenes\PauseMenu.h">
       <Filter>scenes</Filter>
     </ClInclude>
+    <ClInclude Include="src\piloting\Navigation.h">
+      <Filter>piloting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\piloting\Outcove.h">
+      <Filter>piloting</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="players">
@@ -155,6 +165,9 @@
     </Filter>
     <Filter Include="interactable\specificStations">
       <UniqueIdentifier>{3d4451f7-c2a9-4cba-a76e-a716df923c16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="piloting">
+      <UniqueIdentifier>{cca6c21a-9e97-456a-9a26-08b6651bd00b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

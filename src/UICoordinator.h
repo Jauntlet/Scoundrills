@@ -9,6 +9,7 @@
 #include <Jauntlet/UI/UIButtonToggleableElement.h>
 #include <Jauntlet/UI/UIManager.h>
 #include <Jauntlet/UI/UITextElement.h>
+#include <Jauntlet/Rendering/ProgressBar.h>
 
 #include "Navigation.h"
 #include "drill/DrillManager.h"
@@ -46,6 +47,8 @@ private:
 	// TODO: make temperature different from the rest of the UI
 	glm::vec2 _tempIconTextPosition = glm::vec2(685, 5);
 	Jauntlet::UITextElement _tempIconTextElement;
+
+	Jauntlet::ProgressBar _tempProgressBar = Jauntlet::ProgressBar("Textures/TempBar.png", glm::vec4(0.5,0,0.5,1), glm::vec4(0,0,0.5,1), glm::vec4(0, 0, 3.125 * 60, 60));
 
 	// Icons
 	glm::vec2 _waterIconPosition = glm::vec2(15, 15);
