@@ -98,8 +98,8 @@ void Player::draw(Jauntlet::SpriteBatch& spriteBatch) {
 	}
 
 	if (health != 30) {
-		_healthBar.setProgress(health / 30);
-		_healthBar.setPosition(glm::vec2(_position.x + 8, _position.y + 68));
+		_healthBar.progress = health / 30;
+		_healthBar.position += glm::vec2(8, 68);
 		_healthBar.draw(spriteBatch);
 	}
 }

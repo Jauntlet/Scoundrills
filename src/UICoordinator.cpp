@@ -16,19 +16,17 @@ UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRender
 	navigation(&drillManager->navigation),
 	_waterIconTextElement(_textRenderer, &waterIconText, &_textColor, &_waterIconTextPosition, 0.25f),
 	_foodIconTextElement(_textRenderer, &foodIconText, &_textColor, &_foodIconTextPosition, 0.25f),
-	_partsIconTextElement(_textRenderer, &partsIconText, &_textColor, &_partsIconTextPosition, 0.25f),
-	_tempIconTextElement(_textRenderer, &tempIconText, &_textColor, &_tempIconTextPosition, 0.25f)
+	_partsIconTextElement(_textRenderer, &partsIconText, &_textColor, &_partsIconTextPosition, 0.25f)
 {
 	_NavManager = navigation->getUIManager();
 
 	_UIManager.addElement(&_waterIconTextElement, &Jauntlet::TextRenderer::textShader);
 	_UIManager.addElement(&_foodIconTextElement, &Jauntlet::TextRenderer::textShader);
 	_UIManager.addElement(&_partsIconTextElement,&Jauntlet::TextRenderer::textShader);
-	_UIManager.addElement(&_tempIconTextElement, &Jauntlet::TextRenderer::textShader);
 	_UIManager.addElement(&_waterIcon, &GlobalContext::normalShader);
 	_UIManager.addElement(&_foodIcon, &GlobalContext::normalShader);
 	_UIManager.addElement(&_partsIcon, &GlobalContext::normalShader);
-	_UIManager.addElement(&_tempIcon, &GlobalContext::normalShader);
+	_UIManager.addElement(&_tempProgressBar, &GlobalContext::normalShader);
 
 	GLuint _buttonTexture = Jauntlet::ResourceManager::getTexture("Textures/button.png").id;
 	glm::vec2* buttonPos = new glm::vec2(10, 10);
@@ -59,19 +57,12 @@ void UICoordinator::draw() {
 
 	tempIconText = std::to_string(_drill->resources->heat).substr(0, 5);
 
+	_tempProgressBar.progress = (_drill->resources->heat / 300) * 0.7 + 0.3;
+	
 	_UIManager.draw();
 	navigation->update();
 	_NavManager->draw();
 
-	if (_tempProgressBar.getProgress() == 1) {
-		_tempProgressBar.setProgress(0);
-	}
-	_tempProgressBar.setProgress(std::min(_tempProgressBar.getProgress() + Jauntlet::Time::getDeltaTime(), 1.0f));
-	GlobalContext::normalShader.use();
-	Jauntlet::SpriteBatch spriteBatch = Jauntlet::SpriteBatch();
-	spriteBatch.begin();
-	_tempProgressBar.draw(spriteBatch);
-	spriteBatch.endAndRender();
 }
 
 void UICoordinator::applyNewScreenSize(glm::ivec2 screenSize) {
