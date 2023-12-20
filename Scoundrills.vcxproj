@@ -34,14 +34,15 @@
     <ClCompile Include="src\pathfinding\Pathfinding.cpp" />
     <ClCompile Include="src\pathfinding\PathRenderer.cpp" />
     <ClCompile Include="src\pathfinding\SelectedTileRenderer.cpp" />
+    <ClCompile Include="src\piloting\Cavern.cpp" />
     <ClCompile Include="src\piloting\Navigation.cpp" />
-    <ClCompile Include="src\piloting\Outcove.cpp" />
     <ClCompile Include="src\players\Player.cpp" />
     <ClCompile Include="src\players\PlayerManager.cpp" />
     <ClCompile Include="src\scenes\GlobalContext.cpp" />
     <ClCompile Include="src\scenes\MainGame.cpp" />
     <ClCompile Include="src\scenes\MainMenu.cpp" />
     <ClCompile Include="src\scenes\PauseMenu.cpp" />
+    <ClCompile Include="src\scenes\SaveInfoElement\SaveInfoElement.cpp" />
     <ClCompile Include="src\scenes\SceneManager.cpp" />
     <ClCompile Include="src\UICoordinator.cpp" />
   </ItemGroup>
@@ -61,14 +62,15 @@
     <ClInclude Include="src\pathfinding\Pathfinding.h" />
     <ClInclude Include="src\pathfinding\PathRenderer.h" />
     <ClInclude Include="src\pathfinding\SelectedTileRenderer.h" />
+    <ClInclude Include="src\piloting\Cavern.h" />
     <ClInclude Include="src\piloting\Navigation.h" />
-    <ClInclude Include="src\piloting\Outcove.h" />
     <ClInclude Include="src\players\Player.h" />
     <ClInclude Include="src\players\PlayerManager.h" />
     <ClInclude Include="src\scenes\GlobalContext.h" />
     <ClInclude Include="src\scenes\MainGame.h" />
     <ClInclude Include="src\scenes\MainMenu.h" />
     <ClInclude Include="src\scenes\PauseMenu.h" />
+    <ClInclude Include="src\scenes\SaveInfoElement\SaveInfoElement.h" />
     <ClInclude Include="src\scenes\SceneManager.h" />
     <ClInclude Include="src\UICoordinator.h" />
   </ItemGroup>

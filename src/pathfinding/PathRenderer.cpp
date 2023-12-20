@@ -16,6 +16,11 @@ void PathRenderer::createPath(glm::vec2 start, glm::vec2 end) {
 		PlayerStation* station;
 		if ((station = _drill->checkHoveringStation(end)) != nullptr && !station->isOccupied()) {
 			end = _drill->drillWalls.RoundWorldPos(station->getAnchorPoint());
+
+			if (!Pathfinding::isReachable(*_drill, *_players, start, end)) {
+				clearPath();
+				return;
+			}
 		} else {
 			clearPath();
 			return;

@@ -5,7 +5,7 @@
  #include "MainGame.h"
  #include "MainMenu.h"
 
-enum class GameState { MAINMENU, MAINGAME };
+enum class GameState { MAINMENU, MAINGAME, QUITTING };
 
 class SceneManager {
 public:
@@ -14,6 +14,8 @@ public:
     void gameLoop();
 
     void switchScene(GameState newState);
+
+    void quitGame();
 private:
     GameState _gameState;
 
