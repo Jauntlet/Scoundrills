@@ -26,7 +26,7 @@ void SceneManager::gameLoop() {
     Jauntlet::Time::setMaxFPS(-1);
 
     // This is the loop that plays every frame in the game.
-    while (true) {
+    while (_gameState != GameState::QUITTING) {
         Jauntlet::Time::beginFrame();
         GlobalContext::window.clearScreen();
 
@@ -89,4 +89,8 @@ void SceneManager::switchScene(GameState newState) {
         delete _mainMenu;
         _mainMenu = nullptr;
     }
+}
+
+void SceneManager::quitGame() {
+    _gameState = GameState::QUITTING;
 }
