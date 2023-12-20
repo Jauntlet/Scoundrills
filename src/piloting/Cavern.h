@@ -9,5 +9,9 @@
 #include <Jauntlet/UI/UISpriteAnimatedElement.h>
 
 class Outcove {
+public:
+
+private:
+	Jauntlet::UIManager _uiManager;
 
 };
