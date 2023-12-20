@@ -1,4 +1,5 @@
 #include "SaveInfoElement.h"
+#include <Jauntlet/Filesystems/FileManager.h>
 
 SaveInfoElement::SaveInfoElement(float yPos) : 
 	_position(0, yPos),
@@ -30,4 +31,5 @@ void SaveInfoElement::deleteSave(int id) {
 	// unimplemented
 	_hasSaveInfo = false;
 	setVisibility(_playTextElement.visible);
+	Jauntlet::FileManager::deleteFile((std::to_string(id) + ".db").c_str());
 }
