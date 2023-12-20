@@ -9,6 +9,8 @@
 #include <Jauntlet/UI/UISpriteAnimatedElement.h>
 #include <random>
 #include <vector>
+#include "../drill/PlayerResources.h"
+#include "Cavern.h"
 
 class Navigation {
 public:
