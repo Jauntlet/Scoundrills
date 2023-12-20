@@ -2,6 +2,6 @@
 #include "Database.h"
 
 int main(int argc, char** argv) {
-	Database db;
+	SceneManager scene;
 	return 0;
 }
