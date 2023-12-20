@@ -108,6 +108,7 @@ void PauseMenu::switchState(PauseState state) {
 void PauseMenu::toMainMenu() {
 	_quitting = true;
 	Jauntlet::Time::setTimeScale(1.0f);
+	switchState(PauseState::HIDDEN);
 }
 void PauseMenu::toggleFullscreen() {
 	GlobalContext::window.toggleFullscreen();

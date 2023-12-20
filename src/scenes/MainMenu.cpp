@@ -15,9 +15,11 @@ MainMenu::MainMenu(SceneManager* sceneManager) :
 	_uiManager.setScale(GlobalContext::screenSize.y / 1080.0f);
 	_uiManager.addElement(&_startButton, &GlobalContext::normalShader);
 	_uiManager.addElement(&_settingsButton, &GlobalContext::normalShader);
+	_uiManager.addElement(&_quitButton, &GlobalContext::normalShader);
 	_uiManager.addElement(&_titleTextElement, &Jauntlet::TextRenderer::textShader);
 	_uiManager.addElement(&_startButtonText, &Jauntlet::TextRenderer::textShader);
 	_uiManager.addElement(&_settingsTextElement, &Jauntlet::TextRenderer::textShader);
+	_uiManager.addElement(&_quitTextElement, &Jauntlet::TextRenderer::textShader);
 	_uiManager.optimize();
 	_uiManager.resolvePositions();
 }
@@ -44,6 +46,9 @@ void MainMenu::windowResized() {
 void MainMenu::startGame() {
 	_switch = true;
 }
+void MainMenu::quitGame() {
+	_sceneManager->quitGame();
+}
 
 void MainMenu::toggleSettingsMenu() {
 	GlobalContext::pauseMenu->togglePauseMenu();
@@ -53,12 +58,28 @@ void MainMenu::toggleSettingsMenu() {
 		_startButtonText.visible = false;
 		_settingsButton.visible = false;
 		_settingsTextElement.visible = false;
+		_quitButton.visible = false;
+		_quitTextElement.visible = false;
 		_titleTextElement.visible = false;
 	} else {
 		_startButton.visible = true;
 		_startButtonText.visible = true;
 		_settingsButton.visible = true;
 		_settingsTextElement.visible = true;
+		_quitButton.visible = true;
+		_quitTextElement.visible = true;
 		_titleTextElement.visible = true;
 	}
+}
+
+SaveInfoElement::SaveInfoElement(float yPos) : 
+	_position(20, yPos)
+{
+	// Empty
+}
+void SaveInfoElement::addToManager(Jauntlet::UIManager& uiManager) {
+	uiManager.addElement(&_background, &GlobalContext::normalShader);
+}
+void SaveInfoElement::setVisibility(bool visible) {
+	_background.visible = visible;
 }
