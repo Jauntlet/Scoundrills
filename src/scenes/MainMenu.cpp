@@ -20,6 +20,12 @@ MainMenu::MainMenu(SceneManager* sceneManager) :
 	_uiManager.addElement(&_startButtonText, &Jauntlet::TextRenderer::textShader);
 	_uiManager.addElement(&_settingsTextElement, &Jauntlet::TextRenderer::textShader);
 	_uiManager.addElement(&_quitTextElement, &Jauntlet::TextRenderer::textShader);
+
+	for (int i = 0; i < 3; ++i) {
+		_saveInfoElements[i].addToManager(_uiManager);
+		_saveInfoElements[i].setVisibility(false);
+	}
+
 	_uiManager.optimize();
 	_uiManager.resolvePositions();
 }
@@ -61,6 +67,9 @@ void MainMenu::toggleSettingsMenu() {
 		_quitButton.visible = false;
 		_quitTextElement.visible = false;
 		_titleTextElement.visible = false;
+		for (int i = 0; i < 3; ++i) {
+			_saveInfoElements[i].setVisibility(false);
+		}
 	} else {
 		_startButton.visible = true;
 		_startButtonText.visible = true;
@@ -72,14 +81,31 @@ void MainMenu::toggleSettingsMenu() {
 	}
 }
 
-SaveInfoElement::SaveInfoElement(float yPos) : 
-	_position(20, yPos)
-{
-	// Empty
-}
-void SaveInfoElement::addToManager(Jauntlet::UIManager& uiManager) {
-	uiManager.addElement(&_background, &GlobalContext::normalShader);
-}
-void SaveInfoElement::setVisibility(bool visible) {
-	_background.visible = visible;
+void MainMenu::toggleSavesMenu() {
+	if (_startButton.visible) {
+		_startButton.visible = false;
+		_startButtonText.visible = false;
+		_settingsButton.visible = false;
+		_settingsTextElement.visible = false;
+		_quitButton.visible = false;
+		_quitTextElement.visible = false;
+		_titleTextElement.visible = false;
+
+		for (int i = 0; i < 3; ++i) {
+			_saveInfoElements[i].setVisibility(true);
+		}
+	}
+	else {
+		_startButton.visible = true;
+		_startButtonText.visible = true;
+		_settingsButton.visible = true;
+		_settingsTextElement.visible = true;
+		_quitButton.visible = true;
+		_quitTextElement.visible = true;
+		_titleTextElement.visible = true;
+
+		for (int i = 0; i < 3; ++i) {
+			_saveInfoElements[i].setVisibility(false);
+		}
+	}
 }
