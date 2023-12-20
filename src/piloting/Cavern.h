@@ -5,13 +5,18 @@
 
 #include <Jauntlet/Rendering/GLSLProgram.h>
 #include <Jauntlet/UI/UIManager.h>
-#include <Jauntlet/UI/UIButtonElement.h>
-#include <Jauntlet/UI/UISpriteAnimatedElement.h>
+#include "../drill/PlayerResources.h"
 
-class Outcove {
+class Cavern {
 public:
+	Cavern(PlayerResources* resourceManager, Jauntlet::Camera2D* Camera, int type);
+
+	void setType(int type);
+	void display();
+	void updateResources();
 
 private:
 	Jauntlet::UIManager _uiManager;
-
+	PlayerResources* _resources;
+	int _type = 0; //determines what you find -- set by navigation
 };

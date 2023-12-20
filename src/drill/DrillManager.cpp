@@ -12,7 +12,7 @@ const float PIPE_BURST_HEAT = 80.0f; // The minimum heat for pipes to be able to
 DrillManager::DrillManager(CameraManager* cameraManager, PlayerResources& resourceManager, Jauntlet::Camera2D* camera) :
 	_drillAssets(camera),
 	resources(&resourceManager),
-	navigation(camera),
+	navigation(camera, &resourceManager),
 	_boiler(&boilerWater, "Textures/BoilerTank.png", { 64 * 16, -64 * 1 - 10, 32 * 2, 43 * 2 }, 5, { 64 * 15.5, -64 * 2, 64 * 2, 96 * 2 }, { 16,-64 }),
 	_waterTank(*this, { 64, -64 * 12, 128, 256 }, glm::vec2(0,-64)),
 	_forge(*this, {64 * 15, -64 * 13, 64 * 2, 64 * 2}, glm::vec2(0, -32)),

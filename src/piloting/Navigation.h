@@ -12,7 +12,7 @@
 
 class Navigation {
 public:
-	Navigation(Jauntlet::Camera2D* camera);
+	Navigation(Jauntlet::Camera2D* camera, PlayerResources* resourceManager);
 	~Navigation(); //deletes hanging references
 
 	Jauntlet::UIManager* genNav(); //new nav positions
@@ -23,7 +23,7 @@ public:
 	void toggleNav(); //toggles visibility (on/off)
 	void selectNav(int id, glm::ivec2 xy); //sets selected destination
 	void updateTravel(); //Updates the "tick" of travel; Moves the points closer to the drill to simulate going to the outcove. When reaching the destination, set destination to null.
-	void spawnOutcove(int type);
+	void spawnCavern(int type);
 
 	Jauntlet::UIManager* getUIManager();
 private:
@@ -53,6 +53,7 @@ private:
 	glm::vec2 _iconPos = glm::vec2(0, -365);
 	std::vector<glm::vec2> _positions;
 	int _map[5][5]; //Y (count) first X (width) second
+	Cavern _cavern; //event handler
 
 	Jauntlet::Animation _backgroundAnimation = Jauntlet::Animation(3);
 	Jauntlet::UISpriteAnimatedElement _background;

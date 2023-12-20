@@ -1,6 +1,7 @@
 #include "Navigation.h"
 #include "Jauntlet/UI/UIButtonElement.h"
 #include "src/scenes/GlobalContext.h"
+#include "Cavern.h"
 
 #include <chrono>
 #include <Jauntlet/JMath.h>
@@ -15,7 +16,7 @@ const float baseSpeed = 50; //This over distance determines the speed the drill 
 const std::string bgTextures[] = {"Textures/NavBackgroundPrototype.png"};
 static int seed = std::chrono::system_clock::now().time_since_epoch().count(); //temp
 
-Navigation::Navigation(Jauntlet::Camera2D* camera) : 
+Navigation::Navigation(Jauntlet::Camera2D* camera, PlayerResources* resourceManager) : 
 	_navTexture(Jauntlet::ResourceManager::getTexture(bgTextures[0]).id),
 	_xTure(Jauntlet::ResourceManager::getTexture("Textures/Nav Icon/NavIcon1.png").id), 
 	_waTure(Jauntlet::ResourceManager::getTexture("Textures/Nav Icon/NavIcon2.png").id), 
@@ -25,7 +26,8 @@ Navigation::Navigation(Jauntlet::Camera2D* camera) :
 	_caret(Jauntlet::ResourceManager::getTexture("Textures/caret.png").id),
 	_drillIcon(Jauntlet::ResourceManager::getTexture("Textures/drillNav.png").id),
 	_background(Jauntlet::UISpriteAnimatedElement(_navTexture, &_bgPos, glm::vec2(640, 1024), Jauntlet::UIElement::ORIGIN_PIN::CENTER, &_backgroundAnimation)),
-	_uiManager(camera)
+	_uiManager(camera),
+	_cavern(resourceManager, camera, 0)
 {
 	//generate some randomness
 	random = std::mt19937(seed);
@@ -239,7 +241,7 @@ void Navigation::updateTravel() { //TODO: Hide the nav points that get up above 
 				}
 			}
 
-			spawnOutcove(_mappedCoves[_destination]);
+			spawnCavern(_mappedCoves[_destination]);
 			
 			_destination = -1; //set dest
 		}
@@ -324,6 +326,9 @@ Jauntlet::UIManager* Navigation::getUIManager() {
 	return &_uiManager;
 }
 
-void Navigation::spawnOutcove(int type) {
+void Navigation::spawnCavern(int type) {
 	std::cout << "type: " << type << std::endl;
+	_cavern.setType(type);
+	_cavern.display();
+	_cavern.updateResources();
 }
