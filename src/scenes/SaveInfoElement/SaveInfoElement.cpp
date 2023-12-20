@@ -1,9 +1,10 @@
 #include "SaveInfoElement.h"
 #include <Jauntlet/Filesystems/FileManager.h>
 
-SaveInfoElement::SaveInfoElement(float yPos) : 
+SaveInfoElement::SaveInfoElement(float yPos, int saveID) : 
 	_position(0, yPos),
 	_hasSaveInfo(true),
+	_saveID(saveID),
 	_playPos(250, yPos + 200),
 	_deletePos(-50, yPos + 200)
 {
@@ -27,9 +28,9 @@ void SaveInfoElement::setVisibility(bool visible) {
 	_deleteButton.visible = _hasSaveInfo ? visible : false;
 	_deleteTextElement.visible = _hasSaveInfo ? visible : false;
 }
-void SaveInfoElement::deleteSave(int id) {
+void SaveInfoElement::deleteSave() {
 	// unimplemented
 	_hasSaveInfo = false;
 	setVisibility(_playTextElement.visible);
-	Jauntlet::FileManager::deleteFile((std::to_string(id) + ".db").c_str());
+	Jauntlet::FileManager::deleteFile((std::to_string(_saveID) + ".db").c_str());
 }

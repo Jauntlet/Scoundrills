@@ -13,13 +13,14 @@
 
 class SaveInfoElement {
 public:
-	SaveInfoElement(float yPos);
+	SaveInfoElement(float yPos, int saveID);
 
 	void addToManager(Jauntlet::UIManager& uiManager);
 	void setVisibility(bool visible);
-	void deleteSave(int id);
+	void deleteSave();
 private:
 	bool _hasSaveInfo;
+	int _saveID;
 
 	Jauntlet::Color _textColor = Jauntlet::Color(250, 250, 250);
 	Jauntlet::Color _deleteTextColor = Jauntlet::Color(250, 0, 0);
