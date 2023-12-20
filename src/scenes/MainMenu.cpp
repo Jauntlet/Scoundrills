@@ -11,6 +11,9 @@ MainMenu::MainMenu(SceneManager* sceneManager) :
 	_sceneManager(sceneManager)
 {
 	GlobalContext::window.setBackgroundColor(Jauntlet::Color("6B7973"));
+	
+	GlobalContext::listener.setPosition(glm::vec3(0, 0, 0));
+	_music.playWAV("Sounds/Menu Music.wav", true);
 
 	_uiManager.setScale(GlobalContext::screenSize.y / 1080.0f);
 	_uiManager.addElement(&_settingsButton, &GlobalContext::normalShader);
@@ -33,6 +36,7 @@ MainMenu::MainMenu(SceneManager* sceneManager) :
 void MainMenu::gameLoop() {
 	_camera.update();
 	_uiManager.draw();
+	_music.update();
 
 	if (_switch) {
 		_sceneManager->switchScene(GameState::MAINGAME);

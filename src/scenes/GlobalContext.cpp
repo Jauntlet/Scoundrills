@@ -9,6 +9,7 @@ glm::ivec2 GlobalContext::screenSize = glm::ivec2(1024, 768);
 Jauntlet::Window GlobalContext::window = Jauntlet::Window("Scoundrills", screenSize.x, screenSize.y, Jauntlet::WindowFlags::RESIZEABLE);
 Jauntlet::TextRenderer* GlobalContext::textRenderer;
 PauseMenu* GlobalContext::pauseMenu;
+Jauntlet::AudioListener GlobalContext::listener;
 
 void GlobalContext::initContext() {
 	window.setWindowIcon("Textures/Icon.png");

@@ -30,6 +30,7 @@ private:
 	bool _switch = false; // true when switching to next scene
 
 	Jauntlet::Camera2D _camera;
+	Jauntlet::AudioSource _music = Jauntlet::AudioSource(glm::vec3(0, 0, 0));
 	Jauntlet::UIManager _uiManager;
 
 	Jauntlet::Color _textColor = Jauntlet::Color(17, 17, 17);
