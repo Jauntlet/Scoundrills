@@ -13,11 +13,9 @@ MainMenu::MainMenu(SceneManager* sceneManager) :
 	GlobalContext::window.setBackgroundColor(Jauntlet::Color("6B7973"));
 
 	_uiManager.setScale(GlobalContext::screenSize.y / 1080.0f);
-	_uiManager.addElement(&_startButton, &GlobalContext::normalShader);
 	_uiManager.addElement(&_settingsButton, &GlobalContext::normalShader);
 	_uiManager.addElement(&_quitButton, &GlobalContext::normalShader);
 	_uiManager.addElement(&_titleTextElement, &Jauntlet::TextRenderer::textShader);
-	_uiManager.addElement(&_startButtonText, &Jauntlet::TextRenderer::textShader);
 	_uiManager.addElement(&_settingsTextElement, &Jauntlet::TextRenderer::textShader);
 	_uiManager.addElement(&_quitTextElement, &Jauntlet::TextRenderer::textShader);
 
@@ -25,6 +23,8 @@ MainMenu::MainMenu(SceneManager* sceneManager) :
 		_saveInfoElements[i].addToManager(_uiManager);
 		_saveInfoElements[i].setVisibility(false);
 	}
+	_uiManager.addElement(&_startButton, &GlobalContext::normalShader);
+	_uiManager.addElement(&_startButtonText, &Jauntlet::TextRenderer::textShader);
 
 	_uiManager.optimize();
 	_uiManager.resolvePositions();
