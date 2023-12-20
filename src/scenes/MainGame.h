@@ -13,6 +13,7 @@
 class MainGame {
 public:
 	MainGame();
+	MainGame(int saveID);
 
 	void windowResized();
 	void gameLoop();
@@ -23,23 +24,21 @@ private:
 
 	// called whenever the window is resized.
 
-	Jauntlet::Camera2D _camera, _hudCamera;
+	Jauntlet::Camera2D _camera = Jauntlet::Camera2D(GlobalContext::screenSize.x, GlobalContext::screenSize.y),
+					   _hudCamera = Jauntlet::Camera2D(GlobalContext::screenSize.x, GlobalContext::screenSize.y);
 
 	PlayerResources _resources;
 
-	DrillManager _drill;
-
-	Jauntlet::TextRenderer _textRenderer;
+	DrillManager _drill = DrillManager(&_cameraManager, _resources, &_hudCamera);
 	
-	UICoordinator _uiCoordinator;
+	UICoordinator _uiCoordinator = UICoordinator(&_hudCamera, GlobalContext::textRenderer, &_drill);
 
-	CameraManager _cameraManager;
+	CameraManager _cameraManager = CameraManager(&_camera, &_players, &_drill);
 
-	PlayerManager _players;
+	PlayerManager _players = PlayerManager(&_drill);
 
-	SelectedTileRenderer _selectedTile;
+	SelectedTileRenderer _selectedTile = SelectedTileRenderer(&_drill, &_players);
 	
-
 	Jauntlet::SpriteBatch _playerSpriteBatch;
 
 	// defines scale of movement for the camera. if set to 1, the camera will follow the mouse, if set to 0, the mouse has no control over the camera.

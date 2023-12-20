@@ -3,18 +3,11 @@
 #include "MainGame.h"
 #include "src/UICoordinator.h"
 #include "PauseMenu.h"
+#include "../Database.h"
 
 const float PLAYER_HURT_HEAT = 200.0f; // The minimum heat for players to take damage from it.
 
 MainGame::MainGame() :
-	_camera(GlobalContext::screenSize.x, GlobalContext::screenSize.y),
-	_hudCamera(GlobalContext::screenSize.x, GlobalContext::screenSize.y),
-	_drill(&_cameraManager, _resources, &_hudCamera),
-	_cameraManager(&_camera, &_players, &_drill),
-	_players(&_drill),
-	_selectedTile(&_drill, &_players),
-	_textRenderer("Fonts/HandelGo.ttf", 256),
-	_uiCoordinator(&_hudCamera, &_textRenderer, &_drill),
 	_resources(100,100,0,0)
 {
 	GlobalContext::window.setBackgroundColor(Jauntlet::Color(97, 60, 47));
@@ -24,6 +17,14 @@ MainGame::MainGame() :
 	for (int i = 0; i < 3; ++i) {
 		_players.createPlayer(glm::vec2(64 * (i + 1) + 704, -64 * 10), "Textures/Craig.png");
 	}
+}
+
+MainGame::MainGame(int saveID) {
+	GlobalContext::window.setBackgroundColor(Jauntlet::Color(97, 60, 47));
+	_uiCoordinator.applyNewScreenSize(glm::ivec2(GlobalContext::screenSize.x, GlobalContext::screenSize.y));
+
+	Database database = Database(saveID);
+
 }
 
 void MainGame::gameLoop() {
