@@ -14,6 +14,7 @@ public:
     void gameLoop();
 
     void switchScene(GameState newState);
+    void loadGame(int ID);
 
     void quitGame();
 private:

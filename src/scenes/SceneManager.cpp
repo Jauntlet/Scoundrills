@@ -90,6 +90,18 @@ void SceneManager::switchScene(GameState newState) {
         _mainMenu = nullptr;
     }
 }
+void SceneManager::loadGame(int ID) {
+    if (_mainMenu != nullptr) {
+        delete _mainMenu;
+        _mainMenu = nullptr;
+    }
+    if (_mainGame != nullptr) {
+        delete _mainGame;
+        _mainGame = nullptr;
+    }
+
+    _mainGame = new MainGame(ID);
+}
 
 void SceneManager::quitGame() {
     _gameState = GameState::QUITTING;
