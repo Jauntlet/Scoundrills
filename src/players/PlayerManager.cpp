@@ -79,6 +79,14 @@ Player* PlayerManager::getSelectedPlayer() {
 		return &_players[_selectedPlayer];
 	}
 }
+std::vector<Player*> PlayerManager::getAllPlayers() {
+	std::vector<Player*> output;
+	for (int i = 0; i < _players.size(); ++i) {
+		output.push_back(&_players[i]);
+	}
+	return output;
+}
+
 bool PlayerManager::posMatchesPlayerDest(const glm::vec2& worldPos) {
 	for (int i = 0; i < _players.size(); i++) {
 		if (worldPos == _players[i].getDestination() - glm::vec2(0, 64)) {

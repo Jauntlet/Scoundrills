@@ -61,6 +61,7 @@
     <ClCompile Include="src\interactable\specificStations\PipeWorkbench.cpp">
       <Filter>interactable\specificStations</Filter>
     </ClCompile>
+    <ClCompile Include="src\Database.cpp" />
     <ClCompile Include="src\scenes\PauseMenu.cpp">
       <Filter>scenes</Filter>
     </ClCompile>
@@ -137,6 +138,7 @@
     <ClInclude Include="src\interactable\specificStations\PipeWorkbench.h">
       <Filter>interactable\specificStations</Filter>
     </ClInclude>
+    <ClInclude Include="src\Database.h" />
     <ClInclude Include="src\scenes\PauseMenu.h">
       <Filter>scenes</Filter>
     </ClInclude>

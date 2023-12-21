@@ -255,6 +255,10 @@ Holdable* DrillManager::getHoldable(glm::vec2 worldPos) {
 	return nullptr;
 }
 
+std::vector<Holdable*> DrillManager::getAllHoldables() const {
+	return _holdables;
+}
+
 void DrillManager::DisasterEvent() {
 	                     // 3 is the amount of disasters possible
 	int disaster = rand() % 3;

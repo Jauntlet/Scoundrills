@@ -25,6 +25,8 @@ public:
 	bool isPlayerSelected();
 	// returns a pointer to the selected player
 	Player* getSelectedPlayer();
+	// returns a vector to all players
+	std::vector<Player*> getAllPlayers();
 
 	bool posMatchesPlayerDest(const glm::vec2& worldPos);
 

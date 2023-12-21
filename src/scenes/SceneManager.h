@@ -14,10 +14,13 @@ public:
     void gameLoop();
 
     void switchScene(GameState newState);
+    void loadGame(int ID);
 
     void quitGame();
 private:
-    GameState _gameState;
+    void queuedSwitchScene();
+    GameState _gameState, _queuedState;
+    int _queuedID;
 
     MainGame* _mainGame = nullptr;
     MainMenu* _mainMenu = nullptr;

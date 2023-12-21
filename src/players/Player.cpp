@@ -195,6 +195,9 @@ glm::vec2 Player::getDestination() const {
 PlayerStation* Player::getStation() const {
 	return _station;
 }
+uint16_t Player::getPlayerID() const {
+	return _playerID;
+}
 
 void Player::forceDropItem() {
 	heldItem = nullptr;

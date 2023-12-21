@@ -10,6 +10,7 @@ SceneManager::SceneManager() {
     
     GlobalContext::initContext();
     GlobalContext::pauseMenu = new PauseMenu(this);
+    queuedSwitchScene();
     // Start at specified scene
 #if NDEBUG
     // do NOT change, release builds always build to main menu.
@@ -30,12 +31,15 @@ void SceneManager::gameLoop() {
         Jauntlet::Time::beginFrame();
         GlobalContext::window.clearScreen();
 
+        if (_gameState != _queuedState) {
+            queuedSwitchScene();
+        }
+
         GlobalContext::inputManager.processInput();
 
         if (GlobalContext::inputManager.quitGameCalled()) {
             break;
         }
-
 
         if (GlobalContext::inputManager.windowResized()) {
             GlobalContext::window.resolveWindowSize();
@@ -67,18 +71,35 @@ void SceneManager::gameLoop() {
 }
 
 void SceneManager::switchScene(GameState newState) {
-    _gameState = newState;
+    _queuedState = newState;
+}
+void SceneManager::loadGame(int ID) {
+    _queuedState = GameState::MAINGAME;
+    _queuedID = ID;
+}
+
+void SceneManager::quitGame() {
+    _gameState = GameState::QUITTING;
+}
+
+void SceneManager::queuedSwitchScene() {
+    _gameState = _queuedState;
 
     GlobalContext::pauseMenu->hideAll();
 
     // Toggle state of MainGame
     if (_gameState == GameState::MAINGAME) {
         if (_mainGame == nullptr) {
+            if (_queuedID != 0) {
+                _mainGame = new MainGame(_queuedID);
+                _queuedID = 0;
+            } else {
                 _mainGame = new MainGame();
+            }
         }
     } else if (_mainGame != nullptr) {
-            delete _mainGame;
-            _mainGame = nullptr;
+        delete _mainGame;
+        _mainGame = nullptr;
     }
 
     if (_gameState == GameState::MAINMENU) {
@@ -89,8 +110,4 @@ void SceneManager::switchScene(GameState newState) {
         delete _mainMenu;
         _mainMenu = nullptr;
     }
-}
-
-void SceneManager::quitGame() {
-    _gameState = GameState::QUITTING;
 }

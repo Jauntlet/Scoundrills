@@ -27,6 +27,8 @@ public:
 	glm::vec2 getPosition() const;
 	glm::vec2 getDestination() const;
 	PlayerStation* getStation() const;
+	// this is specifically for saving players; player ID in the playerManager is different.
+	uint16_t getPlayerID() const;
 
 	// forces the player to drop his item; called when the item is destroyed
 	void forceDropItem();
@@ -52,4 +54,7 @@ private:
 	Jauntlet::ProgressBar _healthBar;
 	glm::vec2 _moveDir = glm::vec2(0);
 	bool _flipped = false;
+
+	// data stored specifically for saving
+	uint16_t _playerID = 0;	
 };

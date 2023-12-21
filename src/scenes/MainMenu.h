@@ -58,6 +58,6 @@ private:
 	std::string _titleText = "Scoundrills";
 	Jauntlet::UITextElement _titleTextElement = Jauntlet::UITextElement(GlobalContext::textRenderer, &_titleText, &_titleTextColor, &_titlePosition, Jauntlet::UIButtonElement::ORIGIN_PIN::TOP, 0.5f);
 
-	SaveInfoElement _saveInfoElements[3] = { SaveInfoElement(50.0f), SaveInfoElement(400.0f), SaveInfoElement(750.0f) };
+	SaveInfoElement _saveInfoElements[3] = { SaveInfoElement(50.0f, 1, _sceneManager), SaveInfoElement(400.0f, 2, _sceneManager), SaveInfoElement(750.0f, 3, _sceneManager) };
 };
 
