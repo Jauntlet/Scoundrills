@@ -1,8 +1,8 @@
 #include "MainMenu.h"
-#include "GlobalContext.h"
+#include "../GlobalContext.h"
 #include "Jauntlet/Rendering/TextRenderer.h"
-#include "SceneManager.h"
-#include "PauseMenu.h"
+#include "../SceneManager.h"
+#include "../PauseMenu.h"
 #include <SDL2/SDL_keycode.h>
 
 MainMenu::MainMenu(SceneManager* sceneManager) :

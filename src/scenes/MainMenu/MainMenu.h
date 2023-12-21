@@ -7,10 +7,10 @@
 #include "Jauntlet/UI/UITextElement.h"
 #include <Jauntlet/UI/UIManager.h>
 #include <Jauntlet/UI/UIButtonElement.h>
-#include "GlobalContext.h"
+#include "../GlobalContext.h"
 #include <Jauntlet/Rendering/TextRenderer.h>
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
-#include "SaveInfoElement/SaveInfoElement.h"
+#include "SaveInfoElement.h"
 
 class SceneManager;
 

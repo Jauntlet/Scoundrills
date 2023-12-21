@@ -31,9 +31,6 @@
     <ClCompile Include="src\scenes\MainGame.cpp">
       <Filter>scenes</Filter>
     </ClCompile>
-    <ClCompile Include="src\scenes\MainMenu.cpp">
-      <Filter>scenes</Filter>
-    </ClCompile>
     <ClCompile Include="src\interactable\AnimatedPlayerStation.cpp">
       <Filter>interactable</Filter>
     </ClCompile>
@@ -68,11 +65,14 @@
     <ClCompile Include="src\piloting\Navigation.cpp">
       <Filter>piloting</Filter>
     </ClCompile>
-    <ClCompile Include="src\scenes\SaveInfoElement\SaveInfoElement.cpp">
-      <Filter>scenes\SaveInfoElement</Filter>
-    </ClCompile>
     <ClCompile Include="src\piloting\Cavern.cpp">
       <Filter>piloting</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scenes\MainMenu\MainMenu.cpp">
+      <Filter>scenes\MainMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scenes\MainMenu\SaveInfoElement.cpp">
+      <Filter>scenes\MainMenu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -106,9 +106,6 @@
       <Filter>scenes</Filter>
     </ClInclude>
     <ClInclude Include="src\scenes\MainGame.h">
-      <Filter>scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="src\scenes\MainMenu.h">
       <Filter>scenes</Filter>
     </ClInclude>
     <ClInclude Include="src\interactable\AnimatedPlayerStation.h">
@@ -145,11 +142,14 @@
     <ClInclude Include="src\piloting\Navigation.h">
       <Filter>piloting</Filter>
     </ClInclude>
-    <ClInclude Include="src\scenes\SaveInfoElement\SaveInfoElement.h">
-      <Filter>scenes\SaveInfoElement</Filter>
-    </ClInclude>
     <ClInclude Include="src\piloting\Cavern.h">
       <Filter>piloting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scenes\MainMenu\MainMenu.h">
+      <Filter>scenes\MainMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scenes\MainMenu\SaveInfoElement.h">
+      <Filter>scenes\MainMenu</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -177,8 +177,11 @@
     <Filter Include="piloting">
       <UniqueIdentifier>{cca6c21a-9e97-456a-9a26-08b6651bd00b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="scenes\SaveInfoElement">
-      <UniqueIdentifier>{2579226d-e2af-4ea9-a41f-6b010eacaacc}</UniqueIdentifier>
+    <Filter Include="scenes\MainMenu">
+      <UniqueIdentifier>{2e624d76-d418-4ac2-957c-42ca4ead06ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scenes\RogueGallery">
+      <UniqueIdentifier>{3d7d877f-2d16-471b-b447-af967462bcbf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

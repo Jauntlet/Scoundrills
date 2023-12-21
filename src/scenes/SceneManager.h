@@ -3,7 +3,7 @@
  */
  #pragma once
  #include "MainGame.h"
- #include "MainMenu.h"
+ #include "MainMenu/MainMenu.h"
 
 enum class GameState { MAINMENU, MAINGAME, QUITTING };
 
