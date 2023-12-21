@@ -7,6 +7,7 @@
 #include <Jauntlet/Rendering/Window.h>
 #include <Jauntlet/Rendering/Textures/TextureCache.h>
 #include <Jauntlet/Rendering/TextRenderer.h>
+#include <Jauntlet/Audio/AudioListener.h>
 
 class PauseMenu;
 
@@ -22,5 +23,6 @@ public:
     static glm::ivec2 screenSize;
     static Jauntlet::Window window;
     static Jauntlet::TextRenderer* textRenderer;
-    static PauseMenu* pauseMenu;
+    static PauseMenu* pauseMenu; 
+    static Jauntlet::AudioListener listener;
  };
