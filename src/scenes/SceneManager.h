@@ -1,11 +1,12 @@
 /* Purpose: Controls what parts of the game are loaded at what times, as well as manages the global context
- * Main Contributer(s): Xander Mooney
- */
- #pragma once
- #include "MainGame.h"
- #include "MainMenu/MainMenu.h"
+* Main Contributer(s): Xander Mooney
+*/
+#pragma once
+#include "MainGame.h"
+#include "MainMenu/MainMenu.h"
+#include "RogueGallery/RogueGallery.h"
 
-enum class GameState { MAINMENU, MAINGAME, QUITTING };
+enum class GameState { MAINMENU, MAINGAME, ROGUEGALLERY, QUITTING };
 
 class SceneManager {
 public:
@@ -24,4 +25,5 @@ private:
 
     MainGame* _mainGame = nullptr;
     MainMenu* _mainMenu = nullptr;
+    RogueGallery* _rogueGallery = nullptr;
 };

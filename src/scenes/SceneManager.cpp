@@ -11,15 +11,10 @@ SceneManager::SceneManager() {
     GlobalContext::initContext();
     GlobalContext::pauseMenu = new PauseMenu(this);
     queuedSwitchScene();
-    // Start at specified scene
-#if NDEBUG
-    // do NOT change, release builds always build to main menu.
+    
+    // Start at specified scene, for builds it should be GameState::MAINMENU
     switchScene(GameState::MAINMENU);
-#else
-    // Feel free to change this to whatever you need for debugging. This will not compile on release builds.
-    switchScene(GameState::MAINMENU);
-    //switchScene(GameState::MAINGAME);
-#endif
+    
     gameLoop();
 }
 
@@ -45,21 +40,33 @@ void SceneManager::gameLoop() {
             GlobalContext::window.resolveWindowSize();
             GlobalContext::screenSize = GlobalContext::window.getWindowSize();
             
-            if (_gameState == GameState::MAINGAME) {
-                // run maingame window resize event.
-                _mainGame->windowResized();
-            } else if (_gameState == GameState::MAINMENU) {
-                _mainMenu->windowResized();
+            switch (_gameState) {
+                case (GameState::MAINGAME):
+                    _mainGame->windowResized();
+                    break;
+                case (GameState::MAINMENU):
+                    _mainMenu->windowResized();
+                    break;
+                case (GameState::ROGUEGALLERY):
+                    _rogueGallery->windowResized();
+                    break;
             }
 
             GlobalContext::pauseMenu->windowResized();
         }
 
-        if (_gameState == GameState::MAINGAME) {
+        switch (_gameState) {
+        case (GameState::MAINGAME):
             _mainGame->gameLoop();
-        } else if (_gameState == GameState::MAINMENU) {
+            break;
+        case (GameState::MAINMENU):
             _mainMenu->gameLoop();
+            break;
+        case (GameState::ROGUEGALLERY):
+            _rogueGallery->gameLoop();
+            break;
         }
+ 
         GlobalContext::pauseMenu->update();
         GlobalContext::pauseMenu->draw();
 
@@ -109,5 +116,14 @@ void SceneManager::queuedSwitchScene() {
     } else if (_mainMenu != nullptr) {
         delete _mainMenu;
         _mainMenu = nullptr;
+    }
+
+    if (_gameState == GameState::ROGUEGALLERY) {
+        if (_rogueGallery == nullptr) {
+            _rogueGallery = new RogueGallery(this);
+        }
+    } else if (_rogueGallery != nullptr) {
+        delete _rogueGallery;
+        _rogueGallery = nullptr;
     }
 }

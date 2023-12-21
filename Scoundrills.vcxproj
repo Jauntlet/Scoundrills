@@ -44,6 +44,7 @@
     <ClCompile Include="src\scenes\MainMenu\MainMenu.cpp" />
     <ClCompile Include="src\scenes\MainMenu\SaveInfoElement.cpp" />
     <ClCompile Include="src\scenes\PauseMenu.cpp" />
+    <ClCompile Include="src\scenes\RogueGallery\RogueGallery.cpp" />
     <ClCompile Include="src\scenes\SceneManager.cpp" />
     <ClCompile Include="src\UICoordinator.cpp" />
   </ItemGroup>
@@ -73,7 +74,7 @@
     <ClInclude Include="src\scenes\MainMenu\MainMenu.h" />
     <ClInclude Include="src\scenes\MainMenu\SaveInfoElement.h" />
     <ClInclude Include="src\scenes\PauseMenu.h" />
-    <ClInclude Include="src\scenes\SaveInfoElement\SaveInfoElement.h" />
+    <ClInclude Include="src\scenes\RogueGallery\RogueGallery.h" />
     <ClInclude Include="src\scenes\SceneManager.h" />
     <ClInclude Include="src\UICoordinator.h" />
   </ItemGroup>
