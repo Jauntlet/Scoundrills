@@ -21,7 +21,8 @@ public:
 	
 	glm::vec2 position;
 private:
-	bool _selected;
+	bool _selected = false;
+	Jauntlet::Color _color = Jauntlet::Color(255, 255, 255);
 
 	int _playerID;
 	GLuint _texture;

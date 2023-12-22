@@ -22,6 +22,10 @@ void RogueGallery::windowResized() {
 	_uiManager.optimize();
 	_uiManager.resolvePositions();
 
+	_selectedCrew.push_back(&_crew[0]);
+	_selectedCrew.push_back(&_crew[1]);
+	_selectedCrew.push_back(&_crew[2]);
+
 	for (int i = 0; i < INMATE_COUNT; ++i) {
 		_crew[i].position.x = -(GlobalContext::screenSize.x / 2.0f) + (GlobalContext::screenSize.x / (INMATE_COUNT + 1.0f) * (i + 1.0f)) - 120.0f;
 		_crew[i].position.y = -120;
@@ -38,6 +42,14 @@ void RogueGallery::gameLoop() {
 
 	_batch.begin();
 	for (int i = 0; i < INMATE_COUNT; ++i) {
+		if (!_crew[i].isSelected() && _crew[i].wasClicked(_camera)) {
+			_crew[i].Select();
+			_selectedCrew.push_back(&_crew[i]);
+			
+			_selectedCrew[0]->unSelect();
+			_selectedCrew.pop_front();
+		}
+		
 		_crew[i].draw(_batch);
 	}
 
