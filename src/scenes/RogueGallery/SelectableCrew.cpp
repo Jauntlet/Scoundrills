@@ -14,6 +14,8 @@ SelectableCrew::SelectableCrew(int playerID, const glm::vec2& position) :
 	case (2):
 		_texture = Jauntlet::ResourceManager::getTexture("Textures/Criminals/Sean Arson Burnes.png").id;
 		break;
+	case (3):
+		_texture = Jauntlet::ResourceManager::getTexture("Textures/Criminals/Rob evan truly.png").id;
 	default:
 		Jauntlet::error("Player ID " + std::to_string(playerID) + " is not a valid ID!");
 		break;
