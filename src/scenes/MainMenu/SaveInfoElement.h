@@ -11,11 +11,11 @@
 #include <Jauntlet/Rendering/TextRenderer.h>
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
 
-class SceneManager;
+class MainMenu;
 
 class SaveInfoElement {
 public:
-	SaveInfoElement(float yPos, int saveID, SceneManager* sceneManager);
+	SaveInfoElement(float yPos, int saveID, MainMenu* mainMenu);
 
 	void addToManager(Jauntlet::UIManager& uiManager);
 	void setVisibility(bool visible);
@@ -24,7 +24,7 @@ public:
 private:
 	bool _hasSaveInfo;
 	int _saveID;
-	SceneManager* _scene;
+	MainMenu* _mainMenu;
 
 	Jauntlet::Color _textColor = Jauntlet::Color(250, 250, 250);
 	Jauntlet::Color _deleteTextColor = Jauntlet::Color(250, 0, 0);

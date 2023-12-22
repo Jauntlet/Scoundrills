@@ -18,9 +18,20 @@ MainMenu::MainMenu(SceneManager* sceneManager) :
 	_uiManager.setScale(GlobalContext::screenSize.y / 1080.0f);
 	_uiManager.addElement(&_settingsButton, &GlobalContext::normalShader);
 	_uiManager.addElement(&_quitButton, &GlobalContext::normalShader);
+	_uiManager.addElement(&_noButton, &GlobalContext::normalShader);
+	_noButton.visible = false;
+	_uiManager.addElement(&_yesButton, &GlobalContext::normalShader);
+	_yesButton.visible = false;
+
 	_uiManager.addElement(&_titleTextElement, &Jauntlet::TextRenderer::textShader);
 	_uiManager.addElement(&_settingsTextElement, &Jauntlet::TextRenderer::textShader);
 	_uiManager.addElement(&_quitTextElement, &Jauntlet::TextRenderer::textShader);
+	_uiManager.addElement(&_tutTextElement, &Jauntlet::TextRenderer::textShader);
+	_tutTextElement.visible = false;
+	_uiManager.addElement(&_noTextElement, &Jauntlet::TextRenderer::textShader);
+	_noTextElement.visible = false;
+	_uiManager.addElement(&_yesTextElement, &Jauntlet::TextRenderer::textShader);
+	_yesTextElement.visible = false;
 
 	for (int i = 0; i < 3; ++i) {
 		_saveInfoElements[i].addToManager(_uiManager);
@@ -38,10 +49,7 @@ void MainMenu::gameLoop() {
 	_uiManager.draw();
 	_music.update();
 
-	if (_switch) {
-		_sceneManager->switchScene(GameState::MAINGAME);
-	}
-	else if (GlobalContext::inputManager.isKeyPressed(SDLK_ESCAPE) && GlobalContext::pauseMenu->inSettings()) {
+	if (GlobalContext::inputManager.isKeyPressed(SDLK_ESCAPE) && GlobalContext::pauseMenu->inSettings()) {
 		toggleSettingsMenu();
 	}
 }
@@ -53,9 +61,27 @@ void MainMenu::windowResized() {
 	_uiManager.resolvePositions();
 }
 
-void MainMenu::startGame() {
-	_switch = true;
+void MainMenu::promptTutorial() {
+	_uiManager.hideAllElements();
+
+	_tutTextElement.visible = true;
+	_noButton.visible = true;
+	_noTextElement.visible = true;
+	_yesButton.visible = true;
+	_yesTextElement.visible = true;
 }
+
+void MainMenu::startSavedGame(int ID) {
+	_sceneManager->loadGame(ID);
+}
+void MainMenu::startGame() {
+	_sceneManager->switchScene(GameState::ROGUEGALLERY);
+}
+
+void MainMenu::startTutorial() {
+	_sceneManager->switchScene(GameState::ROGUEGALLERY);
+}
+
 void MainMenu::quitGame() {
 	_sceneManager->quitGame();
 }
@@ -63,18 +89,8 @@ void MainMenu::quitGame() {
 void MainMenu::toggleSettingsMenu() {
 	GlobalContext::pauseMenu->togglePauseMenu();
 
-	if (_startButton.visible) {
-		_startButton.visible = false;
-		_startButtonText.visible = false;
-		_settingsButton.visible = false;
-		_settingsTextElement.visible = false;
-		_quitButton.visible = false;
-		_quitTextElement.visible = false;
-		_titleTextElement.visible = false;
-		for (int i = 0; i < 3; ++i) {
-			_saveInfoElements[i].setVisibility(false);
-		}
-	} else {
+	if (!_startButton.visible) {
+		_uiManager.hideAllElements();
 		_startButton.visible = true;
 		_startButtonText.visible = true;
 		_settingsButton.visible = true;
@@ -82,24 +98,21 @@ void MainMenu::toggleSettingsMenu() {
 		_quitButton.visible = true;
 		_quitTextElement.visible = true;
 		_titleTextElement.visible = true;
+	} else {
+		_uiManager.hideAllElements();
 	}
+
 }
 
 void MainMenu::toggleSavesMenu() {
 	if (_startButton.visible) {
-		_startButton.visible = false;
-		_startButtonText.visible = false;
-		_settingsButton.visible = false;
-		_settingsTextElement.visible = false;
-		_quitButton.visible = false;
-		_quitTextElement.visible = false;
-		_titleTextElement.visible = false;
-
+		_uiManager.hideAllElements();
 		for (int i = 0; i < 3; ++i) {
 			_saveInfoElements[i].setVisibility(true);
 		}
 	}
 	else {
+		_uiManager.hideAllElements();
 		_startButton.visible = true;
 		_startButtonText.visible = true;
 		_settingsButton.visible = true;
@@ -107,9 +120,5 @@ void MainMenu::toggleSavesMenu() {
 		_quitButton.visible = true;
 		_quitTextElement.visible = true;
 		_titleTextElement.visible = true;
-
-		for (int i = 0; i < 3; ++i) {
-			_saveInfoElements[i].setVisibility(false);
-		}
 	}
 }

@@ -1,11 +1,11 @@
 #include "SaveInfoElement.h"
 #include <Jauntlet/Filesystems/FileManager.h>
-#include "../SceneManager.h"
+#include "MainMenu.h"
 
-SaveInfoElement::SaveInfoElement(float yPos, int saveID, SceneManager* sceneManager) : 
+SaveInfoElement::SaveInfoElement(float yPos, int saveID, MainMenu* mainMenu) :
 	_position(0, yPos),
 	_hasSaveInfo(false),
-	_scene(sceneManager),
+	_mainMenu(mainMenu),
 	_saveID(saveID),
 	_playPos(250, yPos + 200),
 	_deletePos(-50, yPos + 200)
@@ -31,16 +31,15 @@ void SaveInfoElement::setVisibility(bool visible) {
 	_deleteTextElement.visible = _hasSaveInfo ? visible : false;
 }
 void SaveInfoElement::deleteSave() {
-	// unimplemented
 	_hasSaveInfo = false;
 	setVisibility(_playTextElement.visible);
 	Jauntlet::FileManager::deleteFile((std::to_string(_saveID) + ".db").c_str());
 }
 void SaveInfoElement::loadSave() {
 	if (_hasSaveInfo) {
-		_scene->loadGame(_saveID);
+		_mainMenu->startSavedGame(_saveID);
 	}
 	else {
-		_scene->switchScene(GameState::MAINGAME);
+		_mainMenu->promptTutorial();
 	}
 }

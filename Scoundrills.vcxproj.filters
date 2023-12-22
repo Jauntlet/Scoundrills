@@ -77,6 +77,9 @@
     <ClCompile Include="src\scenes\RogueGallery\RogueGallery.cpp">
       <Filter>scenes\RogueGallery</Filter>
     </ClCompile>
+    <ClCompile Include="src\scenes\RogueGallery\SelectableCrew.cpp">
+      <Filter>scenes\RogueGallery</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\players\Player.h">
@@ -155,6 +158,9 @@
       <Filter>scenes\MainMenu</Filter>
     </ClInclude>
     <ClInclude Include="src\scenes\RogueGallery\RogueGallery.h">
+      <Filter>scenes\RogueGallery</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scenes\RogueGallery\SelectableCrew.h">
       <Filter>scenes\RogueGallery</Filter>
     </ClInclude>
   </ItemGroup>
