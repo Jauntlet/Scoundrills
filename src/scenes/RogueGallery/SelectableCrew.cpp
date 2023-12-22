@@ -38,9 +38,13 @@ bool SelectableCrew::isSelected() {
 }
 
 bool SelectableCrew::wasClicked(Jauntlet::Camera2D& camera) {
+	if (!GlobalContext::inputManager.isKeyPressed(SDL_BUTTON_LEFT)) {
+		return false;
+	}
+
 	glm::vec2 mousecoords = camera.convertScreenToWorld(GlobalContext::inputManager.getMouseCoords());
 
-	return mousecoords.x > position.x && mousecoords.x < position.x + 128 && mousecoords.y > position.y && mousecoords.y < position.y + 128;
+	return mousecoords.x > position.x && mousecoords.x < position.x + 240 && mousecoords.y > position.y && mousecoords.y < position.y + 240;
 }
 
 void SelectableCrew::draw(Jauntlet::SpriteBatch& spriteBatch) {
