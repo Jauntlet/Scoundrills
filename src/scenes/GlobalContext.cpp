@@ -30,3 +30,17 @@ void GlobalContext::destroyContext() {
 		delete textRenderer;
 	}
 }
+
+std::string GlobalContext::playerIDtoTexture(uint8_t playerID) {
+	switch (playerID) {
+	case (1):
+		return "Textures/Criminals/Will Sabot Togue.png";
+	case (2):
+		return "Textures/Criminals/Sean Arson Burnes.png";
+	case (3):
+		return "Textures/Criminals/Rob evan truly.png";
+	default:
+		Jauntlet::error("Player ID " + std::to_string(playerID) + " is not a valid ID!");
+		return "Textures/Craig.png";
+	}
+}

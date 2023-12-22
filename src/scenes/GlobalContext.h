@@ -18,6 +18,8 @@ public:
     static void initContext();
     static void destroyContext();
 
+    static std::string playerIDtoTexture(uint8_t playerID);
+
     static Jauntlet::GLSLProgram normalShader;
     static Jauntlet::InputManager inputManager;
     static glm::ivec2 screenSize;

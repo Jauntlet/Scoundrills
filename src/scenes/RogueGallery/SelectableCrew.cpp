@@ -3,30 +3,16 @@
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
 #include "../GlobalContext.h"
 
-SelectableCrew::SelectableCrew(int playerID, const glm::vec2& position) :
+SelectableCrew::SelectableCrew(uint8_t playerID, const glm::vec2& position) :
 	_playerID(playerID),
 	position(position)
 {
 	_animation.stop(0);
 	_animation.play(0, 1, 0.5f);
-
-	switch (playerID) {
-	case (1):
-		_texture = Jauntlet::ResourceManager::getTexture("Textures/Criminals/Will Sabot Togue.png").id;
-		Select();
-		break;
-	case (2):
-		_texture = Jauntlet::ResourceManager::getTexture("Textures/Criminals/Sean Arson Burnes.png").id;
-		Select();
-		break;
-	case (3):
-		_texture = Jauntlet::ResourceManager::getTexture("Textures/Criminals/Rob evan truly.png").id;
-		Select();
-		break;
-	default:
-		Jauntlet::error("Player ID " + std::to_string(playerID) + " is not a valid ID!");
-		break;
-	}
+	
+	_texture = Jauntlet::ResourceManager::getTexture(GlobalContext::playerIDtoTexture(playerID)).id;
+	// select the first 3 players
+	playerID < 4 ? Select() : unSelect();
 }
 
 void SelectableCrew::unSelect() {
@@ -53,6 +39,10 @@ bool SelectableCrew::wasClicked(Jauntlet::Camera2D& camera) {
 	glm::vec2 mousecoords = camera.convertScreenToWorld(GlobalContext::inputManager.getMouseCoords());
 
 	return mousecoords.x > position.x && mousecoords.x < position.x + 240 && mousecoords.y > position.y && mousecoords.y < position.y + 240;
+}
+
+uint8_t SelectableCrew::getPlayerID() {
+	return _playerID;
 }
 
 void SelectableCrew::draw(Jauntlet::SpriteBatch& spriteBatch) {

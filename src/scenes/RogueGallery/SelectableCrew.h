@@ -9,13 +9,15 @@
 class SelectableCrew
 {
 public:
-	SelectableCrew(int playerID, const glm::vec2& position);
+	SelectableCrew(uint8_t playerID, const glm::vec2& position);
 
 	void unSelect();
 	void Select();
 	bool isSelected();
 
 	bool wasClicked(Jauntlet::Camera2D& camera);
+
+	uint8_t getPlayerID();
 
 	void draw(Jauntlet::SpriteBatch& spriteBatch);
 	
