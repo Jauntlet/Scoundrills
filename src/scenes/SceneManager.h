@@ -16,12 +16,14 @@ public:
 
     void switchScene(GameState newState);
     void loadGame(int ID);
+    void loadGame(const std::vector<uint8_t>& playerIDs);
 
     void quitGame();
 private:
     void queuedSwitchScene();
     GameState _gameState, _queuedState;
     int _queuedID;
+    std::vector<uint8_t> _storedPlayerIDs;
 
     MainGame* _mainGame = nullptr;
     MainMenu* _mainMenu = nullptr;

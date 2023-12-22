@@ -12,7 +12,7 @@
 
 class MainGame {
 public:
-	MainGame();
+	MainGame(const std::vector<uint8_t>& playerIDs);
 	MainGame(int saveID);
 
 	void windowResized();

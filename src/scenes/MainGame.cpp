@@ -7,15 +7,14 @@
 
 const float PLAYER_HURT_HEAT = 200.0f; // The minimum heat for players to take damage from it.
 
-MainGame::MainGame() :
+MainGame::MainGame(const std::vector<uint8_t>& playerIDs) :
 	_resources(100,100,0,0)
 {
 	GlobalContext::window.setBackgroundColor(Jauntlet::Color(97, 60, 47));
 	_uiCoordinator.applyNewScreenSize(glm::ivec2(GlobalContext::screenSize.x, GlobalContext::screenSize.y));
 
-	// TEMPORARY
-	for (int i = 0; i < 3; ++i) {
-		_players.createPlayer(glm::vec2(64 * (i + 1) + 704, -64 * 10), "Textures/Craig.png");
+	for (int i = 0; i < playerIDs.size(); ++i) {
+		_players.createPlayer(glm::vec2(64 * (i + 1) + 704, -64 * 10), GlobalContext::playerIDtoTexture(playerIDs[i]));
 	}
 }
 

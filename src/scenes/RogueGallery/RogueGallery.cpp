@@ -60,6 +60,10 @@ void RogueGallery::loadGame() {
 	if (_goToTutorial) {
 		// we will go to the tutorial once its implemented LOSER
 	} else {
-		_scene->switchScene(GameState::MAINGAME);
+		std::vector<uint8_t> IDS;
+		for (int i = 0; i < _selectedCrew.size(); ++i) {
+			IDS.push_back(_selectedCrew[i]->getPlayerID());
+		}
+		_scene->loadGame(IDS);
 	}
 }

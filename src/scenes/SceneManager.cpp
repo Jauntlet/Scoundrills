@@ -84,6 +84,10 @@ void SceneManager::loadGame(int ID) {
     _queuedState = GameState::MAINGAME;
     _queuedID = ID;
 }
+void SceneManager::loadGame(const std::vector<uint8_t>& playerIDs) {
+    _queuedState = GameState::MAINGAME;
+    _storedPlayerIDs = playerIDs;
+}
 
 void SceneManager::quitGame() {
     _gameState = GameState::QUITTING;
@@ -100,8 +104,12 @@ void SceneManager::queuedSwitchScene() {
             if (_queuedID != 0) {
                 _mainGame = new MainGame(_queuedID);
                 _queuedID = 0;
+            }
+            else if (!_storedPlayerIDs.empty()) {
+                _mainGame = new MainGame(_storedPlayerIDs);
+                _storedPlayerIDs.clear();
             } else {
-                _mainGame = new MainGame();
+                Jauntlet::fatalError("MainGame was loaded in an invalid way!");
             }
         }
     } else if (_mainGame != nullptr) {
