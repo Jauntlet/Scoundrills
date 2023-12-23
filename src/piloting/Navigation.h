@@ -28,6 +28,8 @@ public:
 	void spawnCavern(int type);
 
 	Jauntlet::UIManager* getUIManager();
+	Jauntlet::UIManager* getCavernManager();
+
 private:
 	std::mt19937 random;
 	GLuint _navTexture = 0;

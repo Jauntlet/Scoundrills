@@ -35,6 +35,7 @@ private:
 	// UI Manager(s)
 	Jauntlet::UIManager _UIManager;
 	Jauntlet::UIManager* _NavManager;
+	Jauntlet::UIManager* _CavernManager;
 
 	// Text handling
 	Jauntlet::Color _textColor = Jauntlet::Color(); // default to 255, 255, 255, 255

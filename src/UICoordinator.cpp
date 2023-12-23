@@ -18,6 +18,7 @@ UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRender
 	_partsIconTextElement(_textRenderer, &partsIconText, &_textColor, &_partsIconTextPosition, 0.4f)
 {
 	_NavManager = navigation->getUIManager();
+	_CavernManager = navigation->getCavernManager();
 
 	_UIManager.addElement(&_waterIcon, &GlobalContext::normalShader);
 	_UIManager.addElement(&_foodIcon, &GlobalContext::normalShader);
@@ -76,7 +77,7 @@ void UICoordinator::draw() {
 	_UIManager.draw();
 	navigation->update();
 	_NavManager->draw();
-
+	_CavernManager->draw();
 }
 
 void UICoordinator::applyNewScreenSize(glm::ivec2 screenSize) {
@@ -85,4 +86,7 @@ void UICoordinator::applyNewScreenSize(glm::ivec2 screenSize) {
 
 	_NavManager->setScale(((screenSize.y / 1080.0f)));
 	_NavManager->resolvePositions();
+
+	_CavernManager->setScale(((screenSize.y / 1080.0f)));
+	_CavernManager->resolvePositions();
 }

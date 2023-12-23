@@ -1,8 +1,16 @@
 #include "Cavern.h"
+#include "src/scenes/GlobalContext.h"
 
-Cavern::Cavern(PlayerResources* resourceManager, Jauntlet::Camera2D* Camera, int type) : _uiManager(Camera), _resources(resourceManager)
+#include <Jauntlet/Rendering/Textures/ResourceManager.h>
+
+Cavern::Cavern(PlayerResources* resourceManager, Jauntlet::Camera2D* Camera) : _uiManager(Camera), _resources(resourceManager)
 {
-	_type = type;
+	_confirmTexture = Jauntlet::ResourceManager::getTexture("Textures/CheckBox.png").id; //temporary texture
+	_confirmButton = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&]() -> void { updateResources(); }, _confirmTexture, &_confirmPos, glm::vec2(100), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+	_uiManager.addElement(&_confirmButton, &GlobalContext::normalShader);
+	_confirmButton.visible = false;
+	_uiManager.optimize();
+	_uiManager.resolvePositions();
 }
 
 void Cavern::setType(int type) {
@@ -10,7 +18,8 @@ void Cavern::setType(int type) {
 }
 
 void Cavern::display() {
-
+	//make all elements visible
+	_confirmButton.visible = true;
 }
 
 void Cavern::updateResources() {
@@ -38,4 +47,11 @@ void Cavern::updateResources() {
 		//invalid location
 		break;
 	}
+
+	//update visibility
+	_confirmButton.visible = false;
+}
+
+Jauntlet::UIManager* Cavern::getUIManager() {
+	return &_uiManager;
 }

@@ -27,7 +27,7 @@ Navigation::Navigation(Jauntlet::Camera2D* camera, PlayerResources* resourceMana
 	_drillIcon(Jauntlet::ResourceManager::getTexture("Textures/drillNav.png").id),
 	_background(Jauntlet::UISpriteAnimatedElement(_navTexture, &_bgPos, glm::vec2(640, 1024), Jauntlet::UIElement::ORIGIN_PIN::CENTER, &_backgroundAnimation)),
 	_uiManager(camera),
-	_cavern(resourceManager, camera, 0)
+	_cavern(resourceManager, camera)
 {
 	//generate some randomness
 	random = std::mt19937(seed);
@@ -303,6 +303,10 @@ void Navigation::recycleMap(int r) {
 		}
 	}
 
+	for (int j = 0; j < _points.size(); j++) {
+		_points[j].visible = false;
+	}
+
 	//clear buttons
 	_uiManager.removeAllElements();
 
@@ -326,9 +330,12 @@ Jauntlet::UIManager* Navigation::getUIManager() {
 	return &_uiManager;
 }
 
+Jauntlet::UIManager* Navigation::getCavernManager() {
+	return _cavern.getUIManager();
+}
+
 void Navigation::spawnCavern(int type) {
 	std::cout << "type: " << type << std::endl;
 	_cavern.setType(type);
 	_cavern.display();
-	_cavern.updateResources();
 }
