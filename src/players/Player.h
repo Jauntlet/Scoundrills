@@ -9,6 +9,7 @@
 #include "../pathfinding/PathRenderer.h"
 #include <Jauntlet/Rendering/ProgressBar.h>
 #include <Jauntlet/Rendering/Animation/Animation.h>
+#include <Jauntlet/Audio/AudioSource.h>
 
 class Player
 {
@@ -58,6 +59,9 @@ private:
 	Jauntlet::ProgressBar _healthBar;
 	glm::vec2 _moveDir = glm::vec2(0);
 	bool _flipped = false;
+
+	// Sounds
+	Jauntlet::AudioSource _soundSource = Jauntlet::AudioSource(glm::vec3(_position, 0));
 
 	// data stored specifically for saving
 	uint8_t _playerID = 0;	

@@ -84,7 +84,8 @@ void Player::update(DrillManager& drill) {
 		}
 	}
 	_animation.update();
-	
+	_soundSource.update();
+
 	//update collider
 	collider.position = _position;
 	_healthBar.position = _position + glm::vec2(8, 68);
@@ -185,6 +186,9 @@ void Player::setSpeed(float newSpeed) {
 }
 bool Player::damage(int damage) {
 	_health -= damage;
+
+	_soundSource.setPosition(glm::vec3(_position, 0));
+	_soundSource.playWAV("Sounds/hurt.wav");
 
 	return _health <= 0;
 }
