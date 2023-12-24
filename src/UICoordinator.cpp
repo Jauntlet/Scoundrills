@@ -6,10 +6,11 @@
 #include <Jauntlet/JMath.h>
 #include <string>
 #include <glm/glm.hpp>
+#include "scenes/GlobalContext.h"
+#include "scenes/SceneManager.h"
 
-UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRenderer* textRenderer, DrillManager* drillManager) :
+UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, DrillManager* drillManager) :
 	_hudCamera(hudCamera),
-	_textRenderer(textRenderer),
 	_UIManager(hudCamera),
 	_drill(drillManager),
 	navigation(&drillManager->navigation)
@@ -22,7 +23,9 @@ UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRender
 	_UIManager.addElement(&_partsIcon, &GlobalContext::normalShader);
 	_UIManager.addElement(&_tempProgressBar, &GlobalContext::normalShader);
 	_UIManager.addElement(&_lostBcgElemet, &GlobalContext::normalShader);
+	_UIManager.addElement(&_restartButton, &GlobalContext::normalShader);
 	_lostBcgElemet.visible = false;
+	_restartButton.visible = false;
 
 	GLuint _buttonTexture = Jauntlet::ResourceManager::getTexture("Textures/button.png").id;
 	glm::vec2* buttonPos = new glm::vec2(10, 10);
@@ -38,7 +41,9 @@ UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRender
 	_UIManager.addElement(&_foodIconTextElement, &Jauntlet::TextRenderer::textShader);
 	_UIManager.addElement(&_partsIconTextElement, &Jauntlet::TextRenderer::textShader);
 	_UIManager.addElement(&_loseTitleElement, &Jauntlet::TextRenderer::textShader);
+	_UIManager.addElement(&_restartTextElement, &Jauntlet::TextRenderer::textShader);
 	_loseTitleElement.visible = false;
+	_restartTextElement.visible = false;
 
 	// optimize batches
 	_UIManager.optimize();
@@ -92,4 +97,10 @@ void UICoordinator::applyNewScreenSize(glm::ivec2 screenSize) {
 void UICoordinator::showLoseScreen() {
 	_lostBcgElemet.visible = true;
 	_loseTitleElement.visible = true;
+	_restartButton.visible = true;
+	_restartTextElement.visible = true;
+}
+
+void UICoordinator::restartGame() {
+	GlobalContext::sceneManager->switchScene(GameState::ROGUEGALLERY);
 }

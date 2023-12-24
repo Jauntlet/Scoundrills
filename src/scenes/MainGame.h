@@ -31,7 +31,7 @@ private:
 
 	DrillManager _drill = DrillManager(&_cameraManager, _resources, &_hudCamera);
 	
-	UICoordinator _uiCoordinator = UICoordinator(&_hudCamera, GlobalContext::textRenderer, &_drill);
+	UICoordinator _uiCoordinator = UICoordinator(&_hudCamera, &_drill);
 
 	CameraManager _cameraManager = CameraManager(&_camera, &_players, &_drill);
 
