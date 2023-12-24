@@ -102,5 +102,6 @@ void UICoordinator::showLoseScreen() {
 }
 
 void UICoordinator::restartGame() {
+	Jauntlet::Time::setTimeScale(1);
 	GlobalContext::sceneManager->switchScene(GameState::ROGUEGALLERY);
 }
