@@ -53,6 +53,8 @@ bool PlayerManager::processInput(const Jauntlet::Camera2D& activeCamera) {
 	return false;
 }
 void PlayerManager::damageTick(const int& drillHeat) {
+	if (_players.size() == 0) return;
+
 	_damageTick += Jauntlet::Time::getDeltaTime() * (drillHeat / 200);
 
 	if (_damageTick > 2.5) {
