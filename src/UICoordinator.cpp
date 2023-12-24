@@ -1,4 +1,3 @@
-#include <functional>
 #include <Jauntlet/UI/UIButtonToggleableElement.h>
 
 #include "Jauntlet/Rendering/Textures/SpriteBatch.h"
@@ -6,6 +5,7 @@
 #include <Jauntlet/Rendering/TextRenderer.h>
 #include <Jauntlet/JMath.h>
 #include <string>
+#include <glm/glm.hpp>
 
 UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRenderer* textRenderer, DrillManager* drillManager) :
 	_hudCamera(hudCamera),
@@ -70,7 +70,7 @@ void UICoordinator::draw() {
 		_UIManager.resolvePositions();
 	}
 
-	_tempProgressBar.progress = min((_drill->resources->heat / 300) * 0.7 + 0.3, 1.0f);
+	_tempProgressBar.progress = glm::min((_drill->resources->heat / 300.0f) * 0.7f + 0.3f, 1.0f);
 	
 	_UIManager.draw();
 	navigation->update();
