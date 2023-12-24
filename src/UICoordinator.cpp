@@ -12,10 +12,7 @@ UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRender
 	_textRenderer(textRenderer),
 	_UIManager(hudCamera),
 	_drill(drillManager),
-	navigation(&drillManager->navigation),
-	_waterIconTextElement(_textRenderer, &waterIconText, &_textColor, &_waterIconTextPosition, 0.4f),
-	_foodIconTextElement(_textRenderer, &foodIconText, &_textColor, &_foodIconTextPosition, 0.4f),
-	_partsIconTextElement(_textRenderer, &partsIconText, &_textColor, &_partsIconTextPosition, 0.4f)
+	navigation(&drillManager->navigation)
 {
 	_NavManager = navigation->getUIManager();
 	_CavernManager = navigation->getCavernManager();
@@ -24,6 +21,8 @@ UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRender
 	_UIManager.addElement(&_foodIcon, &GlobalContext::normalShader);
 	_UIManager.addElement(&_partsIcon, &GlobalContext::normalShader);
 	_UIManager.addElement(&_tempProgressBar, &GlobalContext::normalShader);
+	_UIManager.addElement(&_lostBcgElemet, &GlobalContext::normalShader);
+	_lostBcgElemet.visible = false;
 
 	GLuint _buttonTexture = Jauntlet::ResourceManager::getTexture("Textures/button.png").id;
 	glm::vec2* buttonPos = new glm::vec2(10, 10);
@@ -38,13 +37,12 @@ UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, Jauntlet::TextRender
 	_UIManager.addElement(&_waterIconTextElement, &Jauntlet::TextRenderer::textShader);
 	_UIManager.addElement(&_foodIconTextElement, &Jauntlet::TextRenderer::textShader);
 	_UIManager.addElement(&_partsIconTextElement, &Jauntlet::TextRenderer::textShader);
+	_UIManager.addElement(&_loseTitleElement, &Jauntlet::TextRenderer::textShader);
+	_loseTitleElement.visible = false;
 
 	// optimize batches
 	_UIManager.optimize();
 	_UIManager.resolvePositions();
-
-	//_NavManager->optimize();
-	//_NavManager->resolvePositions();
 }
 
 UICoordinator::~UICoordinator() {
@@ -72,7 +70,7 @@ void UICoordinator::draw() {
 		_UIManager.resolvePositions();
 	}
 
-	_tempProgressBar.progress = (_drill->resources->heat / 300) * 0.7 + 0.3;
+	_tempProgressBar.progress = min((_drill->resources->heat / 300) * 0.7 + 0.3, 1.0f);
 	
 	_UIManager.draw();
 	navigation->update();
@@ -89,4 +87,9 @@ void UICoordinator::applyNewScreenSize(glm::ivec2 screenSize) {
 
 	_CavernManager->setScale(((screenSize.y / 1080.0f)));
 	_CavernManager->resolvePositions();
+}
+
+void UICoordinator::showLoseScreen() {
+	_lostBcgElemet.visible = true;
+	_loseTitleElement.visible = true;
 }
