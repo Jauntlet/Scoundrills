@@ -60,9 +60,9 @@ void PlayerManager::damageTick(const int& drillHeat) {
 	if (_damageTick > 2.5) {
 		_damageTick = 0;
 		int Rand = rand() % _players.size();
-		_players[Rand].health -= 1;
 
-		if (_players[Rand].health == 0) {
+		// is true if the player dies
+		if (_players[Rand].damage(1)) {
 			if (_players[Rand].heldItem != nullptr) {
 				_players[Rand].heldItem->drop(&_drill->drillFloor);
 			}

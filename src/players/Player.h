@@ -23,6 +23,10 @@ public:
 	void navigateTo(DrillManager& drill, PathRenderer& pathRenderer, glm::vec2 position);
 
 	void setSpeed(float newSpeed);
+	// Returns true if the player dies
+	bool damage(int damage);
+	// returns health of the player
+	int getHealth() const;
 
 	glm::vec2 getPosition() const;
 	glm::vec2 getDestination() const;
@@ -35,7 +39,6 @@ public:
 
 	Jauntlet::BoxCollider2D collider;
 	Holdable* heldItem = nullptr;
-	float health = 30.0f;
 private:
 	// runs when player reaches destination
 	void onDestination(DrillManager& drill);
@@ -43,6 +46,7 @@ private:
 	glm::vec2 _position = glm::vec2(0,0);
 	std::vector<glm::vec2> _path;
 
+	int _health = 30;
 	float _speed = 300.0f, _storedVelocity = 0.0f;
 
 	PlayerStation* _station = nullptr;
@@ -56,5 +60,5 @@ private:
 	bool _flipped = false;
 
 	// data stored specifically for saving
-	uint16_t _playerID = 0;	
+	uint8_t _playerID = 0;	
 };

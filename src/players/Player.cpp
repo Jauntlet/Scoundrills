@@ -98,8 +98,8 @@ void Player::draw(Jauntlet::SpriteBatch& spriteBatch) {
 		spriteBatch.draw({ _position.x, _position.y, 64, 64 }, _animation.getUV(), _texture, 0);
 	}
 
-	if (health != 30) {
-		_healthBar.progress = health / 30;
+	if (_health != 30) {
+		_healthBar.progress = _health / 30.0f;
 		_healthBar.draw(spriteBatch);
 	}
 }
@@ -182,6 +182,14 @@ void Player::navigateTo(DrillManager& drill, PathRenderer& pathRenderer, glm::ve
 
 void Player::setSpeed(float newSpeed) {
 	_speed = newSpeed;
+}
+bool Player::damage(int damage) {
+	_health -= damage;
+
+	return _health <= 0;
+}
+int Player::getHealth() const {
+	return _health;
 }
 
 glm::vec2 Player::getPosition() const {
