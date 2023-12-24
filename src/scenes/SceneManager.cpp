@@ -1,14 +1,11 @@
 #include "SceneManager.h"
 #include <Jauntlet/Time.h>
 #include "GlobalContext.h"
-#include "MainGame.h"
 #include "PauseMenu.h"
 
 SceneManager::SceneManager() {
-    Jauntlet::init();
     Jauntlet::ResourceManager::setMissingTexture("Textures/missing.png");
     
-    GlobalContext::initContext();
     GlobalContext::pauseMenu = new PauseMenu(this);
     queuedSwitchScene();
     

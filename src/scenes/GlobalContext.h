@@ -10,6 +10,7 @@
 #include <Jauntlet/Audio/AudioListener.h>
 
 class PauseMenu;
+class SceneManager;
 
  class GlobalContext {
 private:
@@ -20,6 +21,7 @@ public:
 
     static std::string playerIDtoTexture(uint8_t playerID);
 
+    static SceneManager* sceneManager;
     static Jauntlet::GLSLProgram normalShader;
     static Jauntlet::InputManager inputManager;
     static glm::ivec2 screenSize;

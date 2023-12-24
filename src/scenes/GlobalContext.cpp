@@ -1,7 +1,9 @@
 #include "GlobalContext.h"
 #include "Jauntlet/Rendering/Window.h"
 #include "PauseMenu.h"
+#include "SceneManager.h"
 
+SceneManager* GlobalContext::sceneManager;
 Jauntlet::TextureCache GlobalContext::_textureCache;
 Jauntlet::GLSLProgram GlobalContext::normalShader;
 Jauntlet::InputManager GlobalContext::inputManager;
@@ -21,6 +23,7 @@ void GlobalContext::initContext() {
 	normalShader.linkShaders();
 
 	textRenderer = new Jauntlet::TextRenderer("Fonts/HandelGo.ttf", 256);
+	sceneManager = new SceneManager();
 }
 void GlobalContext::destroyContext() {
 	if (pauseMenu != nullptr) {
@@ -28,6 +31,9 @@ void GlobalContext::destroyContext() {
 	}
 	if (textRenderer != nullptr) {
 		delete textRenderer;
+	}
+	if (sceneManager != nullptr) {
+		delete sceneManager;
 	}
 }
 

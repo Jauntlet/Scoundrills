@@ -1,7 +1,8 @@
-#include "scenes/SceneManager.h"
-#include "Database.h"
+#include "scenes/GlobalContext.h"
+#include <Jauntlet/Jauntlet.h>
 
 int main(int argc, char** argv) {
-	SceneManager scene;
+	Jauntlet::init();
+	GlobalContext::initContext();
 	return 0;
 }
