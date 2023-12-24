@@ -5,10 +5,9 @@
 #include "../PauseMenu.h"
 #include <SDL2/SDL_keycode.h>
 
-MainMenu::MainMenu(SceneManager* sceneManager) :
+MainMenu::MainMenu() :
 	_camera(GlobalContext::screenSize.x, GlobalContext::screenSize.y),
-	_uiManager(&_camera),
-	_sceneManager(sceneManager)
+	_uiManager(&_camera)
 {
 	GlobalContext::window.setBackgroundColor(Jauntlet::Color("6B7973"));
 	
@@ -72,18 +71,18 @@ void MainMenu::promptTutorial() {
 }
 
 void MainMenu::startSavedGame(int ID) {
-	_sceneManager->loadGame(ID);
+	GlobalContext::sceneManager->loadGame(ID);
 }
 void MainMenu::startGame() {
-	_sceneManager->switchScene(GameState::ROGUEGALLERY);
+	GlobalContext::sceneManager->switchScene(GameState::ROGUEGALLERY);
 }
 
 void MainMenu::startTutorial() {
-	_sceneManager->switchScene(GameState::ROGUEGALLERY);
+	GlobalContext::sceneManager->switchScene(GameState::ROGUEGALLERY);
 }
 
 void MainMenu::quitGame() {
-	_sceneManager->quitGame();
+	GlobalContext::sceneManager->quitGame();
 }
 
 void MainMenu::toggleSettingsMenu() {

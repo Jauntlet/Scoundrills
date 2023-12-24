@@ -6,7 +6,7 @@
 SceneManager::SceneManager() {
     Jauntlet::ResourceManager::setMissingTexture("Textures/missing.png");
     
-    GlobalContext::pauseMenu = new PauseMenu(this);
+    GlobalContext::pauseMenu = new PauseMenu();
     queuedSwitchScene();
     
     // Start at specified scene, for builds it should be GameState::MAINMENU
@@ -116,7 +116,7 @@ void SceneManager::queuedSwitchScene() {
 
     if (_gameState == GameState::MAINMENU) {
         if (_mainMenu == nullptr) {
-            _mainMenu = new MainMenu(this);
+            _mainMenu = new MainMenu();
         }
     } else if (_mainMenu != nullptr) {
         delete _mainMenu;
@@ -125,7 +125,7 @@ void SceneManager::queuedSwitchScene() {
 
     if (_gameState == GameState::ROGUEGALLERY) {
         if (_rogueGallery == nullptr) {
-            _rogueGallery = new RogueGallery(this);
+            _rogueGallery = new RogueGallery();
         }
     } else if (_rogueGallery != nullptr) {
         delete _rogueGallery;

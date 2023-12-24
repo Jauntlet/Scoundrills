@@ -17,14 +17,13 @@ const uint16_t INMATE_COUNT = 3;
 
 class RogueGallery {
 public:
-	RogueGallery(SceneManager* sceneManager);
+	RogueGallery();
 
 	void windowResized();
 	void gameLoop();
 private:
 	void loadGame();
 
-	SceneManager* _scene;
 	bool _goToTutorial = false; // TO BE IMPLEMENTED
 
 	Jauntlet::Camera2D _camera = Jauntlet::Camera2D(GlobalContext::screenSize.x, GlobalContext::screenSize.y);

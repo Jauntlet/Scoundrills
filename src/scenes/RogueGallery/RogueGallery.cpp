@@ -1,9 +1,7 @@
 #include "RogueGallery.h"
 #include "../SceneManager.h"
 
-RogueGallery::RogueGallery(SceneManager* sceneManager) :
-	_scene(sceneManager)
-{
+RogueGallery::RogueGallery() {
 	GlobalContext::window.setBackgroundColor(Jauntlet::Color(200,200,200));
 
 	_uiManager.addElement(&_confirmButton, &GlobalContext::normalShader);
@@ -64,6 +62,6 @@ void RogueGallery::loadGame() {
 		for (int i = 0; i < _selectedCrew.size(); ++i) {
 			IDS.push_back(_selectedCrew[i]->getPlayerID());
 		}
-		_scene->loadGame(IDS);
+		GlobalContext::sceneManager->loadGame(IDS);
 	}
 }
