@@ -87,6 +87,7 @@ void Player::update(DrillManager& drill) {
 	
 	//update collider
 	collider.position = _position;
+	_healthBar.position = _position + glm::vec2(8, 68);
 }
 
 void Player::draw(Jauntlet::SpriteBatch& spriteBatch) {
@@ -99,7 +100,6 @@ void Player::draw(Jauntlet::SpriteBatch& spriteBatch) {
 
 	if (health != 30) {
 		_healthBar.progress = health / 30;
-		_healthBar.position += glm::vec2(8, 68);
 		_healthBar.draw(spriteBatch);
 	}
 }
