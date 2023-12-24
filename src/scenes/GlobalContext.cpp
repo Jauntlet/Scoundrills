@@ -24,6 +24,7 @@ void GlobalContext::initContext() {
 
 	textRenderer = new Jauntlet::TextRenderer("Fonts/HandelGo.ttf", 256);
 	sceneManager = new SceneManager();
+	sceneManager->gameLoop();
 }
 void GlobalContext::destroyContext() {
 	if (pauseMenu != nullptr) {

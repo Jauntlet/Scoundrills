@@ -8,11 +8,9 @@ SceneManager::SceneManager() {
     
     GlobalContext::pauseMenu = new PauseMenu();
     queuedSwitchScene();
-    
+
     // Start at specified scene, for builds it should be GameState::MAINMENU
     switchScene(GameState::MAINMENU);
-    
-    gameLoop();
 }
 
 void SceneManager::gameLoop() {
