@@ -33,7 +33,7 @@ void SelectedTileRenderer::draw(Jauntlet::Camera2D* activeCamera) {
 		
 		PlayerStation* station;
 		if ((station = _drill->checkHoveringStation(_lastPosition)) != nullptr) {
-			_spriteBatch.draw(station->getBoundingBox(), _textureID, 0, _drawColor);
+			_spriteBatch.draw(station->getDisplayBox(), _textureID, 0, _drawColor);
 		} else {
 			_spriteBatch.draw({ _selectedTilePos.x, _selectedTilePos.y, 64, 64 }, _textureID, 0 , _drawColor);
 		}
