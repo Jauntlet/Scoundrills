@@ -26,6 +26,7 @@ public:
 	void selectNav(int id, glm::ivec2 xy); //sets selected destination
 	void updateTravel(); //Updates the "tick" of travel; Moves the points closer to the drill to simulate going to the outcove. When reaching the destination, set destination to null.
 	void spawnCavern(int type);
+	int getDepth();
 
 	Jauntlet::UIManager* getUIManager();
 	Jauntlet::UIManager* getCavernManager();
@@ -63,7 +64,7 @@ private:
 	//these variables specifically relate to progress towards the next selected destination
 	float _progress = -1; //progress towards next destination
 	float _speed = 1; //change this to adjust time to reach destination. 1 is full speed (really fast actually, about 10 seconds) 0 is no movement.
-	int _depth = 0;
+	int _depth = 0; //higher number means "deeper" underground. May change later.
 
 	//positions of elements on screen
 	glm::vec2 _bgPos = glm::vec2(0);

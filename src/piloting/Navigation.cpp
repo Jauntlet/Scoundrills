@@ -232,6 +232,7 @@ void Navigation::updateTravel() { //TODO: Hide the nav points that get up above 
 			_columnsTravelled = 0; //reset columns travelled
 			_columnOver = layerWidth/2; //reset to middle
 			_drillRow = -1; //reset drill's row
+			_depth++; //increase depth
 
 			//Call outcove event
 			_mappedCoves.clear();
@@ -338,4 +339,8 @@ void Navigation::spawnCavern(int type) {
 	std::cout << "type: " << type << std::endl;
 	_cavern.setType(type);
 	_cavern.display();
+}
+
+int Navigation::getDepth() {
+	return _depth;
 }
