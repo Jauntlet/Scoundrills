@@ -227,6 +227,15 @@ void Navigation::updateTravel() { //TODO: Hide the nav points that get up above 
 			//adjust for rows travelled
 			//std::cout << _rowsTravelled << std::endl;
 			
+			//remap coves linearly
+			_mappedCoves.clear();
+			for (int y = 0; y < layerCount; y++) {
+				for (int x = 0; x < layerWidth; x++) {
+					if (_map[y][x] != 0) _mappedCoves.push_back(_map[y][x]);
+				}
+			}
+			
+			//recycle map (spawn new points and remove old ones
 			recycleMap(_rowsTravelled);
 			_rowsTravelled = 0; //reset rows travelled
 			_columnsTravelled = 0; //reset columns travelled
@@ -235,13 +244,6 @@ void Navigation::updateTravel() { //TODO: Hide the nav points that get up above 
 			_depth++; //increase depth
 
 			//Call outcove event
-			_mappedCoves.clear();
-			for (int y = 0; y < layerCount; y++) {
-				for (int x = 0; x < layerWidth; x++) {
-					if (_map[y][x] != 2) _mappedCoves.push_back(_map[y][x]);
-				}
-			}
-
 			spawnCavern(_mappedCoves[_destination]);
 			
 			_destination = -1; //set dest
