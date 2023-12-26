@@ -28,6 +28,8 @@ public:
 	bool damage(int damage);
 	// returns health of the player
 	int getHealth() const;
+	// returns if the player is currently moving
+	bool isMoving() const;
 
 	glm::vec2 getPosition() const;
 	glm::vec2 getDestination() const;
@@ -58,7 +60,7 @@ private:
 	Jauntlet::Animation _animation = Jauntlet::Animation(28);
 	Jauntlet::ProgressBar _healthBar;
 	glm::vec2 _moveDir = glm::vec2(0);
-	bool _flipped = false;
+	bool _flipped = false, _moving = false;
 
 	// Sounds
 	Jauntlet::AudioSource _soundSource = Jauntlet::AudioSource(glm::vec3(_position, 0));

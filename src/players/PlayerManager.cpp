@@ -41,7 +41,7 @@ bool PlayerManager::processInput(const Jauntlet::Camera2D& activeCamera) {
 		}
 	} else if (_selectedPlayer != -1) {
 		// a player is selected and we aren't clicking, so we draw the path via pathrenderer
-		if (_storedMousePos != _drill->drillWalls.RoundWorldPos(mousePos)) {
+		if (_storedMousePos != _drill->drillWalls.RoundWorldPos(mousePos) || _players[_selectedPlayer].isMoving()) {
 			_storedMousePos = _drill->drillWalls.RoundWorldPos(mousePos);
 			if (_drill->isValidDestination(_storedMousePos, this) || _drill->checkHoveringStation(_storedMousePos) != nullptr) {
 				_pathRenderer.createPath(_players[_selectedPlayer].getPosition(), _storedMousePos);

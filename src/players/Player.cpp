@@ -178,6 +178,7 @@ void Player::navigateTo(DrillManager& drill, PathRenderer& pathRenderer, glm::ve
 			_animation.play(2, 9, 0.05f);
 		}
 
+		_moving = true;
 	}
 }
 
@@ -194,6 +195,9 @@ bool Player::damage(int damage) {
 }
 int Player::getHealth() const {
 	return _health;
+}
+bool Player::isMoving() const {
+	return _moving;
 }
 
 glm::vec2 Player::getPosition() const {
@@ -262,4 +266,6 @@ void Player::onDestination(DrillManager& drill) {
 			drill.removeHoldable(heldItem);
 		}
 	}
+
+	_moving = false;
 }
