@@ -299,5 +299,5 @@ void DrillManager::placeScrap() {
 		position = drillFloor.TilePosToWorldPos(drillFloor.selectRandomTile(1));
 	}
 
-	addHoldable("Textures/ResourceIcon.png", position, glm::vec2(32), HoldableType::SCRAP);
+	addHoldable("Textures/Scrap.png", position, glm::vec2(32), HoldableType::SCRAP);
 }
