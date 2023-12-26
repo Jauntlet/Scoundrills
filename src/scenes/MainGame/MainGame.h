@@ -2,13 +2,13 @@
  * Main Contributer(s): Xander Mooney / Jack Kennedy / Christopher Kowalewski
  */
 #pragma once
-#include "../CameraManager.h"
-#include "../drill/DrillManager.h"
+#include "CameraManager.h"
+#include "src/drill/DrillManager.h"
 #include <Jauntlet/Jauntlet.h>
 #include <Jauntlet/Rendering/Window.h>
 #include <Jauntlet/Time.h>
-#include "../pathfinding/SelectedTileRenderer.h"
-#include "../UICoordinator.h"
+#include "src/pathfinding/SelectedTileRenderer.h"
+#include "UICoordinator.h"
 
 class MainGame {
 public:

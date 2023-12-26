@@ -2,7 +2,7 @@
 #include "DrillManager.h"
 #include "../players/PlayerManager.h"
 #include "src/interactable/Holdable.h"
-#include "../CameraManager.h"
+#include "../scenes/MainGame/CameraManager.h"
 
 const float HEAT_RISE_SCALE = .3f; //1 heat every ~3 seconds.
 const float HEAT_FALL_SCALE = .1f; //1 heat every 10 seconds.

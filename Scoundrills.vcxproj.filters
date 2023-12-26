@@ -8,14 +8,12 @@
     <ClCompile Include="src\players\PlayerManager.cpp">
       <Filter>players</Filter>
     </ClCompile>
-    <ClCompile Include="src\CameraManager.cpp" />
     <ClCompile Include="src\drill\DrillAssetRenderer.cpp">
       <Filter>drill</Filter>
     </ClCompile>
     <ClCompile Include="src\drill\DrillManager.cpp">
       <Filter>drill</Filter>
     </ClCompile>
-    <ClCompile Include="src\UICoordinator.cpp" />
     <ClCompile Include="src\pathfinding\Pathfinding.cpp">
       <Filter>pathfinding</Filter>
     </ClCompile>
@@ -26,9 +24,6 @@
       <Filter>scenes</Filter>
     </ClCompile>
     <ClCompile Include="src\scenes\SceneManager.cpp">
-      <Filter>scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="src\scenes\MainGame.cpp">
       <Filter>scenes</Filter>
     </ClCompile>
     <ClCompile Include="src\interactable\AnimatedPlayerStation.cpp">
@@ -80,6 +75,15 @@
     <ClCompile Include="src\scenes\RogueGallery\SelectableCrew.cpp">
       <Filter>scenes\RogueGallery</Filter>
     </ClCompile>
+    <ClCompile Include="src\scenes\MainGame\MainGame.cpp">
+      <Filter>scenes\MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scenes\MainGame\CameraManager.cpp">
+      <Filter>scenes\MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scenes\MainGame\UICoordinator.cpp">
+      <Filter>scenes\MainGame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\players\Player.h">
@@ -88,14 +92,12 @@
     <ClInclude Include="src\players\PlayerManager.h">
       <Filter>players</Filter>
     </ClInclude>
-    <ClInclude Include="src\CameraManager.h" />
     <ClInclude Include="src\drill\DrillAssetRenderer.h">
       <Filter>drill</Filter>
     </ClInclude>
     <ClInclude Include="src\drill\DrillManager.h">
       <Filter>drill</Filter>
     </ClInclude>
-    <ClInclude Include="src\UICoordinator.h" />
     <ClInclude Include="src\pathfinding\Pathfinding.h">
       <Filter>pathfinding</Filter>
     </ClInclude>
@@ -109,9 +111,6 @@
       <Filter>scenes</Filter>
     </ClInclude>
     <ClInclude Include="src\scenes\SceneManager.h">
-      <Filter>scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="src\scenes\MainGame.h">
       <Filter>scenes</Filter>
     </ClInclude>
     <ClInclude Include="src\interactable\AnimatedPlayerStation.h">
@@ -163,6 +162,15 @@
     <ClInclude Include="src\scenes\RogueGallery\SelectableCrew.h">
       <Filter>scenes\RogueGallery</Filter>
     </ClInclude>
+    <ClInclude Include="src\scenes\MainGame\MainGame.h">
+      <Filter>scenes\MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scenes\MainGame\CameraManager.h">
+      <Filter>scenes\MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scenes\MainGame\UICoordinator.h">
+      <Filter>scenes\MainGame</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="players">
@@ -194,6 +202,9 @@
     </Filter>
     <Filter Include="scenes\RogueGallery">
       <UniqueIdentifier>{3d7d877f-2d16-471b-b447-af967462bcbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scenes\MainGame">
+      <UniqueIdentifier>{73e52784-114f-4f0d-b664-922ca86f1bc3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

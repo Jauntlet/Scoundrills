@@ -1,9 +1,9 @@
-#include "GlobalContext.h"
+#include "../GlobalContext.h"
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
 #include "MainGame.h"
-#include "src/UICoordinator.h"
-#include "PauseMenu.h"
-#include "../Database.h"
+#include "UICoordinator.h"
+#include "../PauseMenu.h"
+#include "../../Database.h"
 
 const float PLAYER_HURT_HEAT = 200.0f; // The minimum heat for players to take damage from it.
 
@@ -23,7 +23,7 @@ MainGame::MainGame(int saveID) {
 	_uiCoordinator.applyNewScreenSize(glm::ivec2(GlobalContext::screenSize.x, GlobalContext::screenSize.y));
 
 	Database database = Database(saveID);
-
+	// Loading database stuff here
 }
 
 void MainGame::gameLoop() {

@@ -2,7 +2,7 @@
 * Main Contributer(s): Xander Mooney
 */
 #pragma once
-#include "MainGame.h"
+#include "MainGame/MainGame.h"
 #include "MainMenu/MainMenu.h"
 #include "RogueGallery/RogueGallery.h"
 

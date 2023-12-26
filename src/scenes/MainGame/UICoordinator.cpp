@@ -6,8 +6,8 @@
 #include <Jauntlet/JMath.h>
 #include <string>
 #include <glm/glm.hpp>
-#include "scenes/GlobalContext.h"
-#include "scenes/SceneManager.h"
+#include "../GlobalContext.h"
+#include "../SceneManager.h"
 
 UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, DrillManager* drillManager) :
 	_hudCamera(hudCamera),

@@ -12,9 +12,9 @@
 #include <Jauntlet/UI/UIProgressBarElement.h>
 #include <Jauntlet/UI/UIButtonToggleableElement.h>
 
-#include "scenes/GlobalContext.h"
-#include "piloting/Navigation.h"
-#include "drill/DrillManager.h"
+#include "../GlobalContext.h"
+#include "src/piloting/Navigation.h"
+#include "src/drill/DrillManager.h"
 
 class UICoordinator {
 public:

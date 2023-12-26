@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\CameraManager.cpp" />
     <ClCompile Include="src\Database.cpp" />
     <ClCompile Include="src\drill\DrillAssetRenderer.cpp" />
     <ClCompile Include="src\drill\DrillManager.cpp" />
@@ -40,18 +39,18 @@
     <ClCompile Include="src\players\Player.cpp" />
     <ClCompile Include="src\players\PlayerManager.cpp" />
     <ClCompile Include="src\scenes\GlobalContext.cpp" />
-    <ClCompile Include="src\scenes\MainGame.cpp" />
+    <ClCompile Include="src\scenes\MainGame\CameraManager.cpp" />
+    <ClCompile Include="src\scenes\MainGame\MainGame.cpp" />
+    <ClCompile Include="src\scenes\MainGame\UICoordinator.cpp" />
     <ClCompile Include="src\scenes\MainMenu\MainMenu.cpp" />
     <ClCompile Include="src\scenes\MainMenu\SaveInfoElement.cpp" />
     <ClCompile Include="src\scenes\PauseMenu.cpp" />
     <ClCompile Include="src\scenes\RogueGallery\RogueGallery.cpp" />
     <ClCompile Include="src\scenes\RogueGallery\SelectableCrew.cpp" />
     <ClCompile Include="src\scenes\SceneManager.cpp" />
-    <ClCompile Include="src\UICoordinator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="src\CameraManager.h" />
     <ClInclude Include="src\Database.h" />
     <ClInclude Include="src\drill\DrillAssetRenderer.h" />
     <ClInclude Include="src\drill\DrillManager.h" />
@@ -71,14 +70,15 @@
     <ClInclude Include="src\players\Player.h" />
     <ClInclude Include="src\players\PlayerManager.h" />
     <ClInclude Include="src\scenes\GlobalContext.h" />
-    <ClInclude Include="src\scenes\MainGame.h" />
+    <ClInclude Include="src\scenes\MainGame\CameraManager.h" />
+    <ClInclude Include="src\scenes\MainGame\MainGame.h" />
+    <ClInclude Include="src\scenes\MainGame\UICoordinator.h" />
     <ClInclude Include="src\scenes\MainMenu\MainMenu.h" />
     <ClInclude Include="src\scenes\MainMenu\SaveInfoElement.h" />
     <ClInclude Include="src\scenes\PauseMenu.h" />
     <ClInclude Include="src\scenes\RogueGallery\RogueGallery.h" />
     <ClInclude Include="src\scenes\RogueGallery\SelectableCrew.h" />
     <ClInclude Include="src\scenes\SceneManager.h" />
-    <ClInclude Include="src\UICoordinator.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Scoundrills.rc" />
