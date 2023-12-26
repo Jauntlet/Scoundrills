@@ -80,8 +80,8 @@ void PathRenderer::createPath(glm::vec2 start, glm::vec2 end) {
 			} else {
 				_spriteBatch.draw({ _path[i].x, _path[i].y, 64, 64 }, { (1.0f / 18.0f) * 5.0f, 0, (1.0f / 18.0f), 1 }, M_PI /*180 degrees in radians*/, _textureID);
 			}
-		} else { // we are at the part of the line, we draw the arrow head.
-			direction = glm::sign(_path[1] - _path[0]);
+		} else { // we are at the part of the line where we draw the arrow head.
+			direction = glm::sign(_path[1] - end);
 
 			if (direction != lastDir) {
 				if (direction.x == 1) {
@@ -123,8 +123,6 @@ void PathRenderer::createPath(glm::vec2 start, glm::vec2 end) {
 			}
 		}
 		lastDir = direction;
-		//_path[i] = _path.back(); 
-		//_path.pop_back();
 	}
 	_spriteBatch.end();
 }
