@@ -5,8 +5,7 @@
 #include "src/scenes/GlobalContext.h"
 #include "src/scenes/SceneManager.h"
 #include <SDL2/SDL_keycode.h>
-PauseMenu::PauseMenu(SceneManager* sceneManager) :
-	_sceneManager(sceneManager),
+PauseMenu::PauseMenu() :
 	_resumeButton(&GlobalContext::inputManager, std::bind(&PauseMenu::switchState, this, PauseState::HIDDEN), Jauntlet::ResourceManager::getTexture("Textures/UIbutton.png").id, &_resumeButtonPos, glm::vec2(600, 200), Jauntlet::UIElement::ORIGIN_PIN::CENTER),
 	_settingsButton(&GlobalContext::inputManager, std::bind(&PauseMenu::switchState, this, PauseState::SETTINGS), Jauntlet::ResourceManager::getTexture("Textures/UIbutton.png").id, &_settingsButtonPos, glm::vec2(600, 200), Jauntlet::UIElement::ORIGIN_PIN::CENTER),
 	_quitButton(&GlobalContext::inputManager, std::bind(&PauseMenu::toMainMenu, this), Jauntlet::ResourceManager::getTexture("Textures/UIbutton.png").id, &_quitButtonPos, glm::vec2(600, 200), Jauntlet::UIElement::ORIGIN_PIN::CENTER),
@@ -38,7 +37,7 @@ PauseMenu::PauseMenu(SceneManager* sceneManager) :
 
 void PauseMenu::update() {
 	if (_quitting) {
-		_sceneManager->switchScene(GameState::MAINMENU);
+		GlobalContext::sceneManager->switchScene(GameState::MAINMENU);
 		_quitting = false;
 	}
 	_camera.update();

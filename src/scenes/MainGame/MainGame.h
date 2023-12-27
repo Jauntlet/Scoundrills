@@ -2,17 +2,17 @@
  * Main Contributer(s): Xander Mooney / Jack Kennedy / Christopher Kowalewski
  */
 #pragma once
-#include "../CameraManager.h"
-#include "../drill/DrillManager.h"
+#include "CameraManager.h"
+#include "src/drill/DrillManager.h"
 #include <Jauntlet/Jauntlet.h>
 #include <Jauntlet/Rendering/Window.h>
 #include <Jauntlet/Time.h>
-#include "../pathfinding/SelectedTileRenderer.h"
-#include "../UICoordinator.h"
+#include "src/pathfinding/SelectedTileRenderer.h"
+#include "UICoordinator.h"
 
 class MainGame {
 public:
-	MainGame();
+	MainGame(const std::vector<uint8_t>& playerIDs);
 	MainGame(int saveID);
 
 	void windowResized();
@@ -31,7 +31,7 @@ private:
 
 	DrillManager _drill = DrillManager(&_cameraManager, _resources, &_hudCamera);
 	
-	UICoordinator _uiCoordinator = UICoordinator(&_hudCamera, GlobalContext::textRenderer, &_drill);
+	UICoordinator _uiCoordinator = UICoordinator(&_hudCamera, &_drill);
 
 	CameraManager _cameraManager = CameraManager(&_camera, &_players, &_drill);
 

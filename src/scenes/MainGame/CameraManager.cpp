@@ -1,6 +1,6 @@
 #include "CameraManager.h"
 #include "src/scenes/GlobalContext.h"
-#include "scenes/PauseMenu.h"
+#include "../PauseMenu.h"
 
 const float CAMERA_SPEED = 500;
 

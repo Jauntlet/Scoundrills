@@ -37,6 +37,8 @@ public:
 	glm::vec2 getAnchorPoint() const;
 	// Returns the collision bounding box of the player station
 	glm::vec4 getBoundingBox() const;
+	// Returns either the bounding box or the anchor point, if its occupied or not
+	glm::vec4 getDisplayBox() const;
 protected:
 	bool _occupied = false;
 

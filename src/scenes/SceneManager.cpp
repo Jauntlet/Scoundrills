@@ -1,21 +1,16 @@
 #include "SceneManager.h"
 #include <Jauntlet/Time.h>
 #include "GlobalContext.h"
-#include "MainGame.h"
 #include "PauseMenu.h"
 
 SceneManager::SceneManager() {
-    Jauntlet::init();
     Jauntlet::ResourceManager::setMissingTexture("Textures/missing.png");
     
-    GlobalContext::initContext();
-    GlobalContext::pauseMenu = new PauseMenu(this);
+    GlobalContext::pauseMenu = new PauseMenu();
     queuedSwitchScene();
-    
+
     // Start at specified scene, for builds it should be GameState::MAINMENU
     switchScene(GameState::MAINMENU);
-    
-    gameLoop();
 }
 
 void SceneManager::gameLoop() {
@@ -84,6 +79,10 @@ void SceneManager::loadGame(int ID) {
     _queuedState = GameState::MAINGAME;
     _queuedID = ID;
 }
+void SceneManager::loadGame(const std::vector<uint8_t>& playerIDs) {
+    _queuedState = GameState::MAINGAME;
+    _storedPlayerIDs = playerIDs;
+}
 
 void SceneManager::quitGame() {
     _gameState = GameState::QUITTING;
@@ -100,8 +99,12 @@ void SceneManager::queuedSwitchScene() {
             if (_queuedID != 0) {
                 _mainGame = new MainGame(_queuedID);
                 _queuedID = 0;
+            }
+            else if (!_storedPlayerIDs.empty()) {
+                _mainGame = new MainGame(_storedPlayerIDs);
+                _storedPlayerIDs.clear();
             } else {
-                _mainGame = new MainGame();
+                Jauntlet::fatalError("MainGame was loaded in an invalid way!");
             }
         }
     } else if (_mainGame != nullptr) {
@@ -111,7 +114,7 @@ void SceneManager::queuedSwitchScene() {
 
     if (_gameState == GameState::MAINMENU) {
         if (_mainMenu == nullptr) {
-            _mainMenu = new MainMenu(this);
+            _mainMenu = new MainMenu();
         }
     } else if (_mainMenu != nullptr) {
         delete _mainMenu;
@@ -120,7 +123,7 @@ void SceneManager::queuedSwitchScene() {
 
     if (_gameState == GameState::ROGUEGALLERY) {
         if (_rogueGallery == nullptr) {
-            _rogueGallery = new RogueGallery(this);
+            _rogueGallery = new RogueGallery();
         }
     } else if (_rogueGallery != nullptr) {
         delete _rogueGallery;

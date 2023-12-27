@@ -13,18 +13,17 @@
 
 class SceneManager;
 
-const uint16_t INMATE_COUNT = 2;
+const uint16_t INMATE_COUNT = 3;
 
 class RogueGallery {
 public:
-	RogueGallery(SceneManager* sceneManager);
+	RogueGallery();
 
 	void windowResized();
 	void gameLoop();
 private:
 	void loadGame();
 
-	SceneManager* _scene;
 	bool _goToTutorial = false; // TO BE IMPLEMENTED
 
 	Jauntlet::Camera2D _camera = Jauntlet::Camera2D(GlobalContext::screenSize.x, GlobalContext::screenSize.y);
@@ -33,7 +32,7 @@ private:
 	Jauntlet::AudioSource _music = Jauntlet::AudioSource(glm::vec3(0,0,0));
 
 	Jauntlet::SpriteBatch _batch;
-	SelectableCrew _crew[INMATE_COUNT] = { SelectableCrew(1, glm::vec2(0,0)), SelectableCrew(2, glm::vec2(192,0)) };
+	SelectableCrew _crew[INMATE_COUNT] = { SelectableCrew(1, glm::vec2(0,0)), SelectableCrew(2, glm::vec2(0,0)), SelectableCrew(3, glm::vec2(0,0)) };
 	std::deque<SelectableCrew*> _selectedCrew;
 
 	// Title text

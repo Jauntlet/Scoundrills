@@ -16,7 +16,7 @@ class SceneManager;
 
 class MainMenu {
 public:
-	MainMenu(SceneManager* sceneManager);
+	MainMenu();
 
 	void gameLoop();
 
@@ -39,8 +39,6 @@ private:
 	Jauntlet::Color _textColor = Jauntlet::Color(17, 17, 17);
 	Jauntlet::Color _titleTextColor = Jauntlet::Color(255, 255, 255);
 	GLuint _buttonTexture = Jauntlet::ResourceManager::getTexture("Textures/UIbutton.png").id;
-
-	SceneManager* _sceneManager;
 
 	// Main Menu Elements
 	glm::vec2 _startButtonPos = glm::vec2(0, -200);

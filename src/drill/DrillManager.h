@@ -57,7 +57,6 @@ public:
 	Holdable* getHoldable(glm::vec2 worldPos);
 	// Returns all holdable items
 	std::vector<Holdable*> getAllHoldables() const;
-	PlayerResources* getResources() const;
 
 	Jauntlet::TileMap drillWalls = Jauntlet::TileMap(_textureCache, 64);
 	Jauntlet::TileMap drillFloor = Jauntlet::TileMap(_textureCache, 64);

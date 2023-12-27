@@ -27,7 +27,7 @@ Navigation::Navigation(Jauntlet::Camera2D* camera, PlayerResources* resourceMana
 	_drillIcon(Jauntlet::ResourceManager::getTexture("Textures/drillNav.png").id),
 	_background(Jauntlet::UISpriteAnimatedElement(_navTexture, &_bgPos, glm::vec2(640, 1024), Jauntlet::UIElement::ORIGIN_PIN::CENTER, &_backgroundAnimation)),
 	_uiManager(camera),
-	_cavern(resourceManager, camera, 0)
+	_cavern(resourceManager, camera)
 {
 	//generate some randomness
 	random = std::mt19937(seed);
@@ -227,20 +227,23 @@ void Navigation::updateTravel() { //TODO: Hide the nav points that get up above 
 			//adjust for rows travelled
 			//std::cout << _rowsTravelled << std::endl;
 			
+			//remap coves linearly
+			_mappedCoves.clear();
+			for (int y = 0; y < layerCount; y++) {
+				for (int x = 0; x < layerWidth; x++) {
+					if (_map[y][x] != 0) _mappedCoves.push_back(_map[y][x]);
+				}
+			}
+			
+			//recycle map (spawn new points and remove old ones
 			recycleMap(_rowsTravelled);
 			_rowsTravelled = 0; //reset rows travelled
 			_columnsTravelled = 0; //reset columns travelled
 			_columnOver = layerWidth/2; //reset to middle
 			_drillRow = -1; //reset drill's row
+			_depth++; //increase depth
 
 			//Call outcove event
-			_mappedCoves.clear();
-			for (int y = 0; y < layerCount; y++) {
-				for (int x = 0; x < layerWidth; x++) {
-					if (_map[y][x] != 2) _mappedCoves.push_back(_map[y][x]);
-				}
-			}
-
 			spawnCavern(_mappedCoves[_destination]);
 			
 			_destination = -1; //set dest
@@ -303,6 +306,10 @@ void Navigation::recycleMap(int r) {
 		}
 	}
 
+	for (int j = 0; j < _points.size(); j++) {
+		_points[j].visible = false;
+	}
+
 	//clear buttons
 	_uiManager.removeAllElements();
 
@@ -326,9 +333,16 @@ Jauntlet::UIManager* Navigation::getUIManager() {
 	return &_uiManager;
 }
 
+Jauntlet::UIManager* Navigation::getCavernManager() {
+	return _cavern.getUIManager();
+}
+
 void Navigation::spawnCavern(int type) {
 	std::cout << "type: " << type << std::endl;
 	_cavern.setType(type);
 	_cavern.display();
-	_cavern.updateResources();
+}
+
+int Navigation::getDepth() {
+	return _depth;
 }

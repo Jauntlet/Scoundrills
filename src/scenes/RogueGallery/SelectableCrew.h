@@ -9,7 +9,7 @@
 class SelectableCrew
 {
 public:
-	SelectableCrew(int playerID, const glm::vec2& position);
+	SelectableCrew(uint8_t playerID, const glm::vec2& position);
 
 	void unSelect();
 	void Select();
@@ -17,11 +17,14 @@ public:
 
 	bool wasClicked(Jauntlet::Camera2D& camera);
 
+	uint8_t getPlayerID();
+
 	void draw(Jauntlet::SpriteBatch& spriteBatch);
 	
 	glm::vec2 position;
 private:
-	bool _selected;
+	bool _selected = false;
+	Jauntlet::Color _color = Jauntlet::Color(255, 255, 255);
 
 	int _playerID;
 	GLuint _texture;

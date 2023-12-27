@@ -3,7 +3,7 @@
  */
 #pragma once
 
-#include "drill/DrillManager.h"
+#include "src/drill/DrillManager.h"
 #include "src/players/PlayerManager.h"
 #include <Jauntlet/Rendering/Cameras/Camera2D.h>
 #include <Jauntlet/Inputs/InputKey.h>
