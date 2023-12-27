@@ -1,3 +1,4 @@
+#include <cmath>
 #include <cstddef>
 #include <iostream>
 
@@ -6,6 +7,7 @@
 #include "src/players/Player.h"
 #include <Jauntlet/Errors.h>
 #include <Jauntlet/Filesystems/FileManager.h>
+#include <vector>
 
 Database::Database() {
     _saveID = 1;
@@ -50,7 +52,23 @@ Database::Database() {
         nullptr, nullptr, nullptr);
 
 	sqlite3_close(database);
+
+    PlayerResources _playerResources;
+
+    _playerResources.heat = 1.0f;
+    _playerResources.water =  2.0f;
+    _playerResources.food = 3;
+    _playerResources.copper = 4;
+
+    TrySaveDrill(_playerResources);
+    
+    PlayerResources playerResources;
+
+    TryLoadInResources(_saveID, playerResources);
+
+    std::cout << playerResources.heat << ", " << playerResources.water << ", " << playerResources.food << ", " << playerResources.copper << std::endl;
 }
+
 
 Database::Database(int saveID) {
     _saveID = saveID;
@@ -212,4 +230,124 @@ bool Database::TrySaveItem(const Holdable& holdable, int itemSaveID) {
 	int rc = sqlite3_exec(database, command.c_str(), nullptr, nullptr, nullptr);
 
 	return rc == SQLITE_OK;
+}
+
+bool Database::TryLoadInPlayers(PlayerResources& playerResources) {
+/*
+    // prepared sqlite3 db
+    sqlite3_stmt *stmt;
+
+    // Open the database connection
+    int rc = sqlite3_open("your_database.db", &database);
+
+    if (rc != SQLITE_OK) {
+        std::cerr << "Cannot open database: " << sqlite3_errmsg(database) << std::endl;
+        return rc;
+    }
+
+    // Execute a SELECT query
+    const char *query = "SELECT * FROM your_table";
+    rc = sqlite3_prepare_v2(database, query, -1, &stmt, nullptr);
+
+    if (rc != SQLITE_OK) {
+        std::cerr << "Cannot execute query: " << sqlite3_errmsg(database) << std::endl;
+        sqlite3_close(database);
+        return rc;
+    }
+
+    // Fetch and process the results
+    while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+        // Access data using sqlite3_column_* functions and store it in a variable
+        // Example: int id = sqlite3_column_int(stmt, 0);
+        // Process and store the data as needed
+    }
+
+    // Finalize the statement and close the database connection
+    sqlite3_finalize(stmt);
+    sqlite3_close(database);
+*/
+    return false;
+}
+
+bool Database::TryLoadInResources(int saveID, PlayerResources playerResources) {
+    // try opening the database
+    int rc = sqlite3_open((std::to_string(saveID) + ".db").c_str(), &database);
+
+    if (rc != SQLITE_OK) {
+        // database couldnt be opened
+        return false;
+    }
+
+    // prepared sqlite "statement" (idk)
+    sqlite3_stmt *stmt;
+    
+    // our query
+    // grab everything from Drills
+    const char *query = "SELECT * FROM Drills";
+
+    // try preparing the database
+    rc = sqlite3_prepare_v2(database, query, -1, &stmt, nullptr);
+
+    if (rc != SQLITE_OK) {
+        // database couldn't be prepared
+        return false;
+    }
+
+    float heat  = 69.420f; //playerResources.heat;
+    float water = 69.420f; //playerResources.water;
+    int food    = 69; //playerResources.food;
+    int copper  = 69; //playerResources.copper;
+
+    int row = 0;
+
+    // process query
+    while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+        // Access data using sqlite3_column_* functions and store it in a variable
+        // Example: int id = sqlite3_column_int(stmt, 0);
+        // Process and store the data as needed
+        switch (row) {
+            case 0:
+                break;
+            case 1:
+                heat = sqlite3_column_double(stmt, 0);
+                break;
+            case 2:
+                water = sqlite3_column_double(stmt, 0);
+                break;
+            case 3:
+                food = sqlite3_column_int(stmt, 0);
+                break;
+            case 4:
+                copper = sqlite3_column_int(stmt, 0);
+                break;
+            default:
+                break;
+        }
+        
+        ++row;
+    }
+
+    if (rc != SQLITE_OK) {
+        std::cout << "i have no clue what i\'m doing" << std::endl;
+    }
+
+    // finalize the statement (i still dont know)
+    sqlite3_finalize(stmt);
+
+    // close the database
+    sqlite3_close(database);
+
+    // replace playerResources
+    try {
+        playerResources.heat = heat;
+        playerResources.water = water;
+        playerResources.food = food;
+        playerResources.copper = copper;
+    } catch (...) {
+        Jauntlet::error("loaded from DB but unable to replace playerResources ):");
+        return false;
+    }
+
+    // we did it!!!
+    return true;
 }

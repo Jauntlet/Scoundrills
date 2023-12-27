@@ -18,6 +18,8 @@ public:
 private:
 	sqlite3* database;
 
+	// === saving methods === 
+
 	bool TrySave(DrillManager& drill, PlayerManager& playerManager);
 
 	bool TrySavePlayer(const Player& player, int itemID);
@@ -25,6 +27,13 @@ private:
 	bool TrySaveDrill(const PlayerResources& playerResources);
 
 	bool TrySaveItem(const Holdable& holdable, int itemID);
+
+	// === loading methods ===
+
+	// returns resources
+	bool TryLoadInResources(int saveID, PlayerResources playerResources);
+
+	bool TryLoadInPlayers(PlayerResources& playerResources);
 
 	int _saveID = 1;
 };
