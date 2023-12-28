@@ -40,10 +40,33 @@ void PathRenderer::createPath(glm::vec2 start, glm::vec2 end) {
 		return;
 	}
 
-	glm::ivec2 direction = glm::ivec2(0), lastDir  = glm::sign((_path.size() > 2 ? _path[2] : start) - _path[1]);
- 	for (int i = 1; i < _path.size(); ++i) {
+	glm::ivec2 direction = glm::ivec2(0), lastDir = (_path.size() > 2 ? _path[2] : start) - _path[1];
+
+	// We do some anti-precision math here to prevent some pathrendering weirdness in the scenario where the player is at a stations anchor
+	// which is not fully grid aligned. -xm
+	if (lastDir.x < 32 && lastDir.x > -32) {
+		lastDir.x = 0;
+	}
+	else if (lastDir.y < 32 && lastDir.y > -32) {
+		lastDir.y = 0;
+	}
+	lastDir = glm::sign(lastDir);
+
+ 	for (size_t i = 1; i < _path.size(); ++i) {
 		if (i != 1) {
-			direction = glm::sign(_path[i] - (i+1==_path.size() ? start : _path[i+1]));
+			if (i + 1 == _path.size()) {
+				// We do some anti-precision math here to prevent some pathrendering weirdness in the scenario where the player is at a stations anchor
+				// which is not fully grid aligned. -xm
+				direction = _path[i] - start;
+				if (direction.x < 32 && direction.x > -32) {
+					direction.x = 0;
+				} else if (direction.y < 32 && direction.y > -32) {
+					direction.y = 0;
+				}
+				direction = glm::sign(direction);
+			} else {
+				direction = glm::sign(_path[i] - _path[i + 1]);
+			}
 
 			if (direction != lastDir && lastDir != glm::ivec2(0)) {
 				if (lastDir.x == 1) {
