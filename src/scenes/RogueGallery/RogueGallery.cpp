@@ -8,6 +8,11 @@ RogueGallery::RogueGallery() {
 	_uiManager.addElement(&_titleElement, &Jauntlet::TextRenderer::textShader);
 	_uiManager.addElement(&_subtitleElement, &Jauntlet::TextRenderer::textShader);
 	_uiManager.addElement(&_confirmTextElement, &Jauntlet::TextRenderer::textShader);
+	
+	_selectedCrew.push_back(&_crew[0]);
+	_selectedCrew.push_back(&_crew[1]);
+	_selectedCrew.push_back(&_crew[2]);
+	
 	windowResized();
 
 	_music.playWAV("Sounds/death organs.wav", true);
@@ -19,10 +24,6 @@ void RogueGallery::windowResized() {
 	_uiManager.setScale(GlobalContext::screenSize.y / 1080.0f);
 	_uiManager.optimize();
 	_uiManager.resolvePositions();
-
-	_selectedCrew.push_back(&_crew[0]);
-	_selectedCrew.push_back(&_crew[1]);
-	_selectedCrew.push_back(&_crew[2]);
 
 	for (int i = 0; i < INMATE_COUNT; ++i) {
 		_crew[i].position.x = -(GlobalContext::screenSize.x / 2.0f) + (GlobalContext::screenSize.x / (INMATE_COUNT + 1.0f) * (i + 1.0f)) - 120.0f;
