@@ -3,9 +3,8 @@
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
 #include "../GlobalContext.h"
 
-SelectableCrew::SelectableCrew(uint8_t playerID, const glm::vec2& position) :
-	_playerID(playerID),
-	position(position)
+SelectableCrew::SelectableCrew(uint8_t playerID) :
+	_playerID(playerID)
 {
 	_animation.stop(0);
 	_animation.play(0, 1, 0.5f);

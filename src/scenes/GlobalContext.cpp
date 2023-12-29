@@ -46,6 +46,10 @@ std::string GlobalContext::playerIDtoTexture(uint8_t playerID) {
 		return "Textures/Criminals/Sean Arson Burnes.png";
 	case (3):
 		return "Textures/Criminals/Rob evan truly.png";
+	case (4):
+		return "Textures/Criminals/jay walt kins.png";
+	case (5):
+		return "Textures/Criminals/Robin banks.png";
 	default:
 		Jauntlet::error("Player ID " + std::to_string(playerID) + " is not a valid ID!");
 		return "Textures/Craig.png";

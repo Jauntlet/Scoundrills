@@ -40,16 +40,17 @@ void RogueGallery::gameLoop() {
 	_uiManager.draw();
 
 	_batch.begin();
-	for (int i = 0; i < INMATE_COUNT; ++i) {
-		if (!_crew[i].isSelected() && _crew[i].wasClicked(_camera)) {
-			_crew[i].Select();
-			_selectedCrew.push_back(&_crew[i]);
+	for (auto& inmate : _crew) {
+		if (!inmate.isSelected() && inmate.wasClicked(_camera)) {
+			inmate.Select();
+			_selectedCrew.push_back(&inmate);
 			
-			_selectedCrew[0]->unSelect();
+			_selectedCrew.front()->unSelect();
 			_selectedCrew.pop_front();
+
 		}
 		
-		_crew[i].draw(_batch);
+		inmate.draw(_batch);
 	}
 
 	_batch.endAndRender();

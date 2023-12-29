@@ -13,7 +13,7 @@
 
 class SceneManager;
 
-const uint16_t INMATE_COUNT = 3;
+const uint16_t INMATE_COUNT = 5;
 
 class RogueGallery {
 public:
@@ -32,7 +32,7 @@ private:
 	Jauntlet::AudioSource _music = Jauntlet::AudioSource(glm::vec3(0,0,0));
 
 	Jauntlet::SpriteBatch _batch;
-	SelectableCrew _crew[INMATE_COUNT] = { SelectableCrew(1, glm::vec2(0,0)), SelectableCrew(2, glm::vec2(0,0)), SelectableCrew(3, glm::vec2(0,0)) };
+	SelectableCrew _crew[INMATE_COUNT] = { SelectableCrew(1), SelectableCrew(2), SelectableCrew(3), SelectableCrew(4), SelectableCrew(5) };
 	std::deque<SelectableCrew*> _selectedCrew;
 
 	// Title text

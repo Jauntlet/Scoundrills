@@ -9,7 +9,7 @@
 class SelectableCrew
 {
 public:
-	SelectableCrew(uint8_t playerID, const glm::vec2& position);
+	SelectableCrew(uint8_t playerID);
 
 	void unSelect();
 	void Select();
