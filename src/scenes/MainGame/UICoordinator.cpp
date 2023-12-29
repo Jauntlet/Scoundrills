@@ -27,7 +27,7 @@ UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, DrillManager* drillM
 	_lostBcgElemet.visible = false;
 	_restartButton.visible = false;
 
-	GLuint _buttonTexture = Jauntlet::ResourceManager::getTexture("Textures/button.png").id;
+	GLuint _buttonTexture = Jauntlet::ResourceManager::getTexture("Textures/DrillButton.png").id;
 	glm::vec2* buttonPos = new glm::vec2(10, 10);
 
 	// conversion from `void` to `std::function<void ()>` -jk
