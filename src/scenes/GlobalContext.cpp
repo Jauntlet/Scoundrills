@@ -38,18 +38,18 @@ void GlobalContext::destroyContext() {
 	}
 }
 
-std::string GlobalContext::playerIDtoTexture(uint8_t playerID) {
+std::string GlobalContext::playerIDtoTexture(uint8_t playerID, bool policeOutfit) {
 	switch (playerID) {
 	case (1):
-		return "Textures/Criminals/Will Sabot Togue.png";
+		return policeOutfit ? "Textures/Cops/Will Sabot Togue.png" : "Textures/Criminals/Will Sabot Togue.png";
 	case (2):
-		return "Textures/Criminals/Sean Arson Burnes.png";
+		return policeOutfit ? "Textures/Cops/Sean Arson Burnes.png" : "Textures/Criminals/Sean Arson Burnes.png";
 	case (3):
-		return "Textures/Criminals/Rob evan truly.png";
+		return policeOutfit ? "Textures/Cops/Rob evan truly.png" : "Textures/Criminals/Rob evan truly.png";
 	case (4):
-		return "Textures/Criminals/jay walt kins.png";
+		return policeOutfit ? "Textures/Cops/jay walt kins.png" : "Textures/Criminals/jay walt kins.png";
 	case (5):
-		return "Textures/Criminals/Robin banks.png";
+		return policeOutfit ? "Textures/Cops/Robin banks.png" : "Textures/Criminals/Robin banks.png";
 	default:
 		Jauntlet::error("Player ID " + std::to_string(playerID) + " is not a valid ID!");
 		return "Textures/Craig.png";

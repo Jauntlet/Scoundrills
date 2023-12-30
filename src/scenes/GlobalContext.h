@@ -19,7 +19,7 @@ public:
     static void initContext();
     static void destroyContext();
 
-    static std::string playerIDtoTexture(uint8_t playerID);
+    static std::string playerIDtoTexture(uint8_t playerID, bool policeOutfit = false);
 
     static SceneManager* sceneManager;
     static Jauntlet::GLSLProgram normalShader;
