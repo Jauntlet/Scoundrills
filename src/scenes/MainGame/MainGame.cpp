@@ -56,7 +56,7 @@ void MainGame::processInput() {
 	_cameraManager.processInput();
 
 	//open nav
-	if (GlobalContext::inputManager.isKeyPressed(SDLK_EQUALS)) {
+	if (GlobalContext::inputManager.isKeyPressed(SDLK_TAB)) {
 		_uiCoordinator.navigation->toggleNav();
 	}
 
@@ -68,11 +68,6 @@ void MainGame::processInput() {
 		Jauntlet::Time::setTimeScale(0.0f);
 	} else {
 		Jauntlet::Time::setTimeScale(1.0f);
-	}
-
-	//mouse hover over navigation
-	if (_uiCoordinator.navigation->isNavOpen()) {
-		//real
 	}
 }
 

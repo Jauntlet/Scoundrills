@@ -22,8 +22,6 @@ private:
 	void drawGame();
 	void drawHUD();
 
-	// called whenever the window is resized.
-
 	Jauntlet::Camera2D _camera = Jauntlet::Camera2D(GlobalContext::screenSize.x, GlobalContext::screenSize.y),
 					   _hudCamera = Jauntlet::Camera2D(GlobalContext::screenSize.x, GlobalContext::screenSize.y);
 
