@@ -84,6 +84,9 @@
     <ClCompile Include="src\scenes\MainGame\UICoordinator.cpp">
       <Filter>scenes\MainGame</Filter>
     </ClCompile>
+    <ClCompile Include="src\scenes\Tutorial\Tutorial.cpp">
+      <Filter>scenes\Tutorial</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\players\Player.h">
@@ -171,6 +174,9 @@
     <ClInclude Include="src\scenes\MainGame\UICoordinator.h">
       <Filter>scenes\MainGame</Filter>
     </ClInclude>
+    <ClInclude Include="src\scenes\Tutorial\Tutorial.h">
+      <Filter>scenes\Tutorial</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="players">
@@ -205,6 +211,9 @@
     </Filter>
     <Filter Include="scenes\MainGame">
       <UniqueIdentifier>{73e52784-114f-4f0d-b664-922ca86f1bc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scenes\Tutorial">
+      <UniqueIdentifier>{d3b8cf0e-72bc-425e-a83b-72a7b4dbf22f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

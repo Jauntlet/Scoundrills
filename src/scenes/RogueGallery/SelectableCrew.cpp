@@ -3,13 +3,13 @@
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
 #include "../GlobalContext.h"
 
-SelectableCrew::SelectableCrew(uint8_t playerID) :
+SelectableCrew::SelectableCrew(uint8_t playerID, bool isPolice) :
 	_playerID(playerID)
 {
 	_animation.stop(0);
 	_animation.play(0, 1, 0.5f);
 	
-	_texture = Jauntlet::ResourceManager::getTexture(GlobalContext::playerIDtoTexture(playerID)).id;
+	_texture = Jauntlet::ResourceManager::getTexture(GlobalContext::playerIDtoTexture(playerID, isPolice)).id;
 	// select the first 3 players
 	playerID < 4 ? Select() : unSelect();
 }

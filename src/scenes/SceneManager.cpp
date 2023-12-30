@@ -45,6 +45,9 @@ void SceneManager::gameLoop() {
                 case (GameState::ROGUEGALLERY):
                     _rogueGallery->windowResized();
                     break;
+                case (GameState::TUTORIAL):
+                    _tutorial->windowResized();
+                    break;
             }
 
             GlobalContext::pauseMenu->windowResized();
@@ -59,6 +62,9 @@ void SceneManager::gameLoop() {
             break;
         case (GameState::ROGUEGALLERY):
             _rogueGallery->gameLoop();
+            break;
+        case (GameState::TUTORIAL):
+            _tutorial->gameLoop();
             break;
         }
  
@@ -83,6 +89,14 @@ void SceneManager::loadGame(const std::vector<uint8_t>& playerIDs) {
     _queuedState = GameState::MAINGAME;
     _storedPlayerIDs = playerIDs;
 }
+void SceneManager::loadTutorial(const std::vector<uint8_t>& playerIDs) {
+    _queuedState = GameState::TUTORIAL;
+    _storedPlayerIDs = playerIDs;
+}
+void SceneManager::loadRoguesGallery(bool tutorialMode) {
+    _queuedState = GameState::ROGUEGALLERY;
+    _queuedID = tutorialMode;
+}
 
 void SceneManager::quitGame() {
     _gameState = GameState::QUITTING;
@@ -104,7 +118,7 @@ void SceneManager::queuedSwitchScene() {
                 _mainGame = new MainGame(_storedPlayerIDs);
                 _storedPlayerIDs.clear();
             } else {
-                Jauntlet::fatalError("MainGame was loaded in an invalid way!");
+                Jauntlet::fatalError("MainGame was loaded in an invalid way! Try loadGame()!");
             }
         }
     } else if (_mainGame != nullptr) {
@@ -123,10 +137,24 @@ void SceneManager::queuedSwitchScene() {
 
     if (_gameState == GameState::ROGUEGALLERY) {
         if (_rogueGallery == nullptr) {
-            _rogueGallery = new RogueGallery();
+            _rogueGallery = new RogueGallery(_queuedID);
+            _queuedID = 0;
         }
     } else if (_rogueGallery != nullptr) {
         delete _rogueGallery;
         _rogueGallery = nullptr;
+    }
+
+    if (_gameState == GameState::TUTORIAL) {
+        if (_tutorial == nullptr) {
+            if (!_storedPlayerIDs.empty()) 
+                _tutorial = new Tutorial(_storedPlayerIDs);
+                _storedPlayerIDs.clear();
+        } else {
+            Jauntlet::fatalError("Tutorial was loaded in an invalid way! Try loadTutorial()!");
+        }
+    } else if (_tutorial != nullptr) {
+        delete _tutorial;
+        _tutorial = nullptr;
     }
 }

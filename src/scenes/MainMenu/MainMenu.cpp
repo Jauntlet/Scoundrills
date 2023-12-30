@@ -78,7 +78,7 @@ void MainMenu::startGame() {
 }
 
 void MainMenu::startTutorial() {
-	GlobalContext::sceneManager->switchScene(GameState::ROGUEGALLERY);
+	GlobalContext::sceneManager->loadRoguesGallery(true);
 }
 
 void MainMenu::quitGame() {

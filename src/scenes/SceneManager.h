@@ -5,8 +5,9 @@
 #include "MainGame/MainGame.h"
 #include "MainMenu/MainMenu.h"
 #include "RogueGallery/RogueGallery.h"
+#include "Tutorial/Tutorial.h"
 
-enum class GameState { MAINMENU, MAINGAME, ROGUEGALLERY, QUITTING };
+enum class GameState { MAINMENU, MAINGAME, ROGUEGALLERY, TUTORIAL, QUITTING };
 
 class SceneManager {
 public:
@@ -17,6 +18,8 @@ public:
     void switchScene(GameState newState);
     void loadGame(int ID);
     void loadGame(const std::vector<uint8_t>& playerIDs);
+    void loadTutorial(const std::vector<uint8_t>& playerIDs);
+    void loadRoguesGallery(bool tutorialMode);
 
     void quitGame();
 private:
@@ -28,4 +31,5 @@ private:
     MainGame* _mainGame = nullptr;
     MainMenu* _mainMenu = nullptr;
     RogueGallery* _rogueGallery = nullptr;
+    Tutorial* _tutorial = nullptr;
 };

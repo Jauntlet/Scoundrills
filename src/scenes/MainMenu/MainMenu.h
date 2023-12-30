@@ -73,7 +73,7 @@ private:
 	Jauntlet::UITextElement _noTextElement = Jauntlet::UITextElement(GlobalContext::textRenderer, &_noText, &_textColor, &_noButtonPos, Jauntlet::UIElement::ORIGIN_PIN::TOP, 0.6f);
 	
 	glm::vec2 _yesButtonPos = glm::vec2(-300, 400);
-	Jauntlet::UIButtonElement _yesButton = Jauntlet::UIButtonElement(&GlobalContext::inputManager, std::bind(&MainMenu::promptTutorial, this), _buttonTexture, &_yesButtonPos, glm::vec2(600, 200), Jauntlet::UIElement::ORIGIN_PIN::TOP);
+	Jauntlet::UIButtonElement _yesButton = Jauntlet::UIButtonElement(&GlobalContext::inputManager, std::bind(&MainMenu::startTutorial, this), _buttonTexture, &_yesButtonPos, glm::vec2(600, 200), Jauntlet::UIElement::ORIGIN_PIN::TOP);
 	std::string _yesText = "Yes";
 	Jauntlet::UITextElement _yesTextElement = Jauntlet::UITextElement(GlobalContext::textRenderer, &_yesText, &_textColor, &_yesButtonPos, Jauntlet::UIElement::ORIGIN_PIN::TOP, 0.6f);
 };

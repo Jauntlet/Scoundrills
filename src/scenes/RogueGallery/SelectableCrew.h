@@ -9,7 +9,7 @@
 class SelectableCrew
 {
 public:
-	SelectableCrew(uint8_t playerID);
+	SelectableCrew(uint8_t playerID, bool isPolice = false);
 
 	void unSelect();
 	void Select();

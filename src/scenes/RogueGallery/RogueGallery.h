@@ -17,14 +17,14 @@ const uint16_t INMATE_COUNT = 5;
 
 class RogueGallery {
 public:
-	RogueGallery();
+	RogueGallery(bool tutorialMode = false);
 
 	void windowResized();
 	void gameLoop();
 private:
 	void loadGame();
 
-	bool _goToTutorial = false; // TO BE IMPLEMENTED
+	bool _goToTutorial;
 
 	Jauntlet::Camera2D _camera = Jauntlet::Camera2D(GlobalContext::screenSize.x, GlobalContext::screenSize.y);
 	Jauntlet::UIManager _uiManager = Jauntlet::UIManager(&_camera);
@@ -32,7 +32,7 @@ private:
 	Jauntlet::AudioSource _music = Jauntlet::AudioSource(glm::vec3(0,0,0));
 
 	Jauntlet::SpriteBatch _batch;
-	SelectableCrew _crew[INMATE_COUNT] = { SelectableCrew(1), SelectableCrew(2), SelectableCrew(3), SelectableCrew(4), SelectableCrew(5) };
+	SelectableCrew _crew[INMATE_COUNT];
 	std::deque<SelectableCrew*> _selectedCrew;
 
 	// Title text
