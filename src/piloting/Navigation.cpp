@@ -199,6 +199,9 @@ void Navigation::selectNav(int id, glm::ivec2 xy) {
 			}
 		}
 	}
+
+	//set a few things (necessary)
+	//the order of operations also matters
 	_caretSet = true;
 	_destination = id;
 	_speed = baseSpeed/JMath::Distance(_iconPos, _positions[id]);
@@ -209,14 +212,16 @@ void Navigation::selectNav(int id, glm::ivec2 xy) {
 	_columnOver = xy.x;
 	_drillRow = xy.y;
 
+	//visibility check/update
 	if (!_caretElement->visible) {
 		_caretElement->visible = true;
 	}
 
+	//fix ui manager
 	_uiManager.resolvePositions();
 }
 
-void Navigation::updateTravel() { //TODO: Hide the nav points that get up above the drill icon
+void Navigation::updateTravel() {
 	if (_destination != -1) {
 		_progress += Jauntlet::Time::getDeltaTime() * _speed;
 		refreshPositions(_shiftPos.x * Jauntlet::Time::getDeltaTime() * _speed, _shiftPos.y * Jauntlet::Time::getDeltaTime() * _speed);
@@ -249,7 +254,7 @@ void Navigation::updateTravel() { //TODO: Hide the nav points that get up above 
 			_destination = -1; //set dest
 		}
 	} else {
-		_progress = 0.0f;
+		_progress = 0.0f; //no destination is set -- reset progress (to next dest)
 	}
 }
 

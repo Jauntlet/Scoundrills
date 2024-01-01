@@ -25,8 +25,8 @@ public:
 	void toggleNav(); //toggles visibility (on/off)
 	void selectNav(int id, glm::ivec2 xy); //sets selected destination
 	void updateTravel(); //Updates the "tick" of travel; Moves the points closer to the drill to simulate going to the outcove. When reaching the destination, set destination to null.
-	void spawnCavern(int type);
-	int getDepth();
+	void spawnCavern(int type); //brings up the menu for a cavern
+	int getDepth(); //retrieve gameplay value -- a display of how many "points" the player reached
 
 	Jauntlet::UIManager* getUIManager();
 	Jauntlet::UIManager* getCavernManager();
@@ -85,7 +85,7 @@ private:
 	std::vector<Jauntlet::UIButtonElement> _points;
 
 	//private methods
-	void refreshPositions(float shiftX, float shiftY);
-	void recycleMap(int rows);
-	void updateVisibility();
+	void refreshPositions(float shiftX, float shiftY); //moves every "point" on the nav by shiftX, shiftY units respectively
+	void recycleMap(int rows); //uses the points we see on the map to determine how many rows/columns to remove from the old map, basically making space for new points
+	void updateVisibility(); //makes any points off the edge of the menu invisible, otherwise they are all visible. If visibility is toggled off, no points are made visible.
 };
