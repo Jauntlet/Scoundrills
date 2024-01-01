@@ -10,6 +10,9 @@ Tutorial::Tutorial(const std::vector<uint8_t>& playerIDs) {
 	for (int i = 0; i < playerIDs.size(); ++i) {
 		_players.createPlayer(glm::vec2(64 * (i + 1) + 704, -64 * 10), GlobalContext::playerIDtoTexture(playerIDs[i], true));
 	}
+
+	_camera.setPosition(glm::vec2(24 * 64 * 0.5f, 30 * 64 * 0.5f * -1));
+	_camera.setScale(0.5f);
 }
 
 void Tutorial::windowResized() {

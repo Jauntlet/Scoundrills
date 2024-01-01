@@ -16,6 +16,9 @@ MainGame::MainGame(const std::vector<uint8_t>& playerIDs) :
 	for (int i = 0; i < playerIDs.size(); ++i) {
 		_players.createPlayer(glm::vec2(64 * (i + 1) + 704, -64 * 10), GlobalContext::playerIDtoTexture(playerIDs[i]));
 	}
+
+	_camera.setPosition(glm::vec2(24 * 64 * 0.5f, 30 * 64 * 0.5f * -1));
+	_camera.setScale(0.5f);
 }
 
 MainGame::MainGame(int saveID) {
@@ -101,6 +104,7 @@ void MainGame::drawHUD() {
 
 void MainGame::windowResized() {
 	_camera.updateCameraSize(GlobalContext::screenSize);
+
 	_hudCamera.updateCameraSize(GlobalContext::screenSize);
 	_uiCoordinator.applyNewScreenSize(GlobalContext::screenSize);
 }
