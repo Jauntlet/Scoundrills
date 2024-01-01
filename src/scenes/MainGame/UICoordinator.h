@@ -29,7 +29,7 @@ public:
 
 	Navigation* navigation;
 	std::string waterIconText = "0", foodIconText = "0", partsIconText = "0";
-private:
+protected:
 	void restartGame();
 
 	// Pointers

@@ -50,6 +50,7 @@
     <ClCompile Include="src\scenes\SceneManager.cpp" />
     <ClCompile Include="src\scenes\Tutorial\Dialogue.cpp" />
     <ClCompile Include="src\scenes\Tutorial\Tutorial.cpp" />
+    <ClCompile Include="src\scenes\Tutorial\TutorialUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
@@ -83,6 +84,7 @@
     <ClInclude Include="src\scenes\SceneManager.h" />
     <ClInclude Include="src\scenes\Tutorial\Dialogue.h" />
     <ClInclude Include="src\scenes\Tutorial\Tutorial.h" />
+    <ClInclude Include="src\scenes\Tutorial\TutorialUI.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Scoundrills.rc" />

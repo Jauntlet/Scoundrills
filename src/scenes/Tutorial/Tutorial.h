@@ -2,7 +2,7 @@
 #include <Jauntlet/Rendering/Cameras/Camera2D.h>
 #include "../../drill/DrillManager.h"
 #include "../../drill/PlayerResources.h"
-#include "../MainGame/UICoordinator.h"
+#include "TutorialUI.h"
 #include "../MainGame/CameraManager.h"
 #include "../../pathfinding/SelectedTileRenderer.h"
 #include "../GlobalContext.h"
@@ -28,7 +28,7 @@ private:
 
 	DrillManager _drill = DrillManager(&_cameraManager, _resources, &_hudCamera);
 
-	UICoordinator _uiCoordinator = UICoordinator(&_hudCamera, &_drill);
+	TutorialUI _uiCoordinator = TutorialUI(&_hudCamera, &_drill);
 
 	CameraManager _cameraManager = CameraManager(&_camera, &_players, &_drill);
 
