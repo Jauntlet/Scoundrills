@@ -48,6 +48,7 @@
     <ClCompile Include="src\scenes\RogueGallery\RogueGallery.cpp" />
     <ClCompile Include="src\scenes\RogueGallery\SelectableCrew.cpp" />
     <ClCompile Include="src\scenes\SceneManager.cpp" />
+    <ClCompile Include="src\scenes\Tutorial\Dialogue.cpp" />
     <ClCompile Include="src\scenes\Tutorial\Tutorial.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -80,6 +81,7 @@
     <ClInclude Include="src\scenes\RogueGallery\RogueGallery.h" />
     <ClInclude Include="src\scenes\RogueGallery\SelectableCrew.h" />
     <ClInclude Include="src\scenes\SceneManager.h" />
+    <ClInclude Include="src\scenes\Tutorial\Dialogue.h" />
     <ClInclude Include="src\scenes\Tutorial\Tutorial.h" />
   </ItemGroup>
   <ItemGroup>
