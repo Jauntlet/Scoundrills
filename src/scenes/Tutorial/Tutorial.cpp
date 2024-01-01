@@ -16,8 +16,8 @@ Tutorial::Tutorial(const std::vector<uint8_t>& playerIDs) {
 }
 
 void Tutorial::windowResized() {
-	_camera.updateCameraSize(GlobalContext::screenSize);
-	_hudCamera.updateCameraSize(GlobalContext::screenSize);
+	_camera.updateSize(GlobalContext::screenSize);
+	_hudCamera.updateSize(GlobalContext::screenSize);
 	_uiCoordinator.applyNewScreenSize(GlobalContext::screenSize);
 }
 
@@ -61,7 +61,7 @@ void Tutorial::processInput() {
 
 void Tutorial::drawGame() {
 	GlobalContext::normalShader.use();
-	_camera.setActiveCamera();
+	_camera.setActive();
 
 	_drill.drawLayerOne();
 
@@ -82,7 +82,7 @@ void Tutorial::drawGame() {
 }
 
 void Tutorial::drawHUD() {
-	_hudCamera.setActiveCamera();
+	_hudCamera.setActive();
 
 	_uiCoordinator.draw();
 }

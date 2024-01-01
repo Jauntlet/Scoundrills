@@ -76,7 +76,7 @@ void MainGame::processInput() {
 
 void MainGame::drawGame() {	
 	GlobalContext::normalShader.use();
-	_camera.setActiveCamera();
+	_camera.setActive();
 
 	_drill.drawLayerOne();
 
@@ -97,14 +97,14 @@ void MainGame::drawGame() {
 }
 
 void MainGame::drawHUD() {
-	_hudCamera.setActiveCamera();
+	_hudCamera.setActive();
 
 	_uiCoordinator.draw();
 }
 
 void MainGame::windowResized() {
-	_camera.updateCameraSize(GlobalContext::screenSize);
+	_camera.updateSize(GlobalContext::screenSize);
 
-	_hudCamera.updateCameraSize(GlobalContext::screenSize);
+	_hudCamera.updateSize(GlobalContext::screenSize);
 	_uiCoordinator.applyNewScreenSize(GlobalContext::screenSize);
 }

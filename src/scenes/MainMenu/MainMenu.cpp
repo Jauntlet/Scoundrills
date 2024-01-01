@@ -54,7 +54,7 @@ void MainMenu::gameLoop() {
 }
 
 void MainMenu::windowResized() {
-	_camera.updateCameraSize(GlobalContext::screenSize);
+	_camera.updateSize(GlobalContext::screenSize);
 	
 	_uiManager.setScale(GlobalContext::screenSize.y / 1080.0f);
 	_uiManager.resolvePositions();

@@ -43,7 +43,7 @@ void PauseMenu::update() {
 	_camera.update();
 }
 void PauseMenu::draw() {
-	_camera.setActiveCamera();
+	_camera.setActive();
 	_uiManager.draw();
 }
 
@@ -75,7 +75,7 @@ void PauseMenu::hideAll() {
 }
 
 void PauseMenu::windowResized() {
-	_camera.updateCameraSize(GlobalContext::screenSize);
+	_camera.updateSize(GlobalContext::screenSize);
 	_uiManager.setScale(GlobalContext::screenSize.y / 1080.0f);
 	_uiManager.resolvePositions();
 }

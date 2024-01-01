@@ -22,7 +22,7 @@ RogueGallery::RogueGallery(bool tutorialMode) :
 }
 
 void RogueGallery::windowResized() {
-	_camera.updateCameraSize(GlobalContext::screenSize);
+	_camera.updateSize(GlobalContext::screenSize);
 
 	_uiManager.setScale(GlobalContext::screenSize.y / 1080.0f);
 	_uiManager.optimize();
@@ -37,7 +37,7 @@ void RogueGallery::gameLoop() {
 	_camera.update();
 	_music.update();
 
-	_camera.setActiveCamera();
+	_camera.setActive();
 	GlobalContext::normalShader.use();
 
 	_uiManager.draw();
