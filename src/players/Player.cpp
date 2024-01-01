@@ -7,6 +7,7 @@ Player::Player(const glm::vec2& position, const std::string& texture) :
 	_healthBar("Textures/healthbar.png", glm::vec4(0, 0, 0.5, 1), glm::vec4(0.5,0,0.5,1), glm::vec4(_position.x + 8, _position.y + 68, 48, 8)),	
 	_texture(Jauntlet::ResourceManager::getTexture(texture).id)
 {
+	_animation.stop(0);
 	_animation.play(0,1,0.5f);
 }
 Player::~Player() {
