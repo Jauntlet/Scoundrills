@@ -38,7 +38,9 @@ void Tutorial::processInput() {
 
 	_players.update(_drill);
 
-	_cameraManager.processInput();
+	if (!_cameraLocked) {
+		_cameraManager.processInput();
+	}
 
 	//open nav
 	if (GlobalContext::inputManager.isKeyPressed(SDLK_TAB)) {
