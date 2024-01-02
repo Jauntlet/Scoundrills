@@ -327,8 +327,10 @@ bool Database::TryLoadInResources(int saveID, PlayerResources playerResources) {
         ++row;
     }
 
-    if (rc != SQLITE_OK) {
-        std::cout << "i have no clue what i\'m doing" << std::endl;
+    if (rc == SQLITE_DONE) {
+        std::cout << "we are done reading DB" << std::endl;
+    } else {
+        std::cout << "some sort of error, i guess. please check the DB manually" << std::endl;
     }
 
     // finalize the statement (i still dont know)
