@@ -11,10 +11,12 @@ const float TEXT_SPEED = 0.025f;
 class Dialogue
 {
 public:
-	Dialogue(Jauntlet::UIManager* uiManager);
+	Dialogue(Jauntlet::Camera2D* camera);
 
 	void hide();
 	void show();
+
+	void resize();
 
 	// updates what text should be displayed
 	void pushNewText(std::string newText);
@@ -23,17 +25,21 @@ public:
 
 	void update();
 private:
+	// UI Manager
+	Jauntlet::UIManager _uiManager;
+
 	// Dialogue box
 	glm::vec2 _dialogueBoxPos = glm::vec2(0);
-	Jauntlet::UISpriteElement _dialogueBox = Jauntlet::UISpriteElement(Jauntlet::ResourceManager::getTexture("Textures/UIbutton.png").id, &_dialogueBoxPos, glm::vec2(80, 30), Jauntlet::UIElement::ORIGIN_PIN::BOTTOM);
+	Jauntlet::UISpriteElement _dialogueBox = Jauntlet::UISpriteElement(Jauntlet::ResourceManager::getTexture("Textures/savebcg.png").id, &_dialogueBoxPos, glm::vec2(1000, 375), Jauntlet::UIElement::ORIGIN_PIN::BOTTOM);
 	
 	// Timer
 	float _timer = 0.0f;
 
 	// Text
+	glm::vec2 _textPos = glm::vec2(0, -225);
 	Jauntlet::Color _textColor = Jauntlet::Color();
 	std::string _dialogueText = "";
 	std::deque<char> _storedText;
-	Jauntlet::UITextElement _dialogueTextElement = Jauntlet::UITextElement(GlobalContext::textRenderer, &_dialogueText, &_textColor, &_dialogueBoxPos, Jauntlet::UIElement::ORIGIN_PIN::BOTTOM, 0.5f);
+	Jauntlet::UITextElement _dialogueTextElement = Jauntlet::UITextElement(GlobalContext::textRenderer, &_dialogueText, &_textColor, &_textPos, Jauntlet::UIElement::ORIGIN_PIN::BOTTOM, 0.225f);
 };
 

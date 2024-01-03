@@ -1,8 +1,15 @@
 #include "Dialogue.h"
 
-Dialogue::Dialogue(Jauntlet::UIManager* uiManager) {
-	uiManager->addElement(&_dialogueBox, &GlobalContext::normalShader);
-	uiManager->addElement(&_dialogueTextElement, &Jauntlet::TextRenderer::textShader);
+Dialogue::Dialogue(Jauntlet::Camera2D* camera) :
+	_uiManager(camera)
+{
+	_uiManager.addElement(&_dialogueBox, &GlobalContext::normalShader);
+	_uiManager.addElement(&_dialogueTextElement, &Jauntlet::TextRenderer::textShader);
+
+	_uiManager.setScale(GlobalContext::screenSize.y / 1080.0f);
+
+	_uiManager.optimize();
+	_uiManager.resolvePositions();
 }
 
 void Dialogue::hide() {
@@ -12,6 +19,11 @@ void Dialogue::hide() {
 void Dialogue::show() {
 	_dialogueBox.visible = true;
 	_dialogueTextElement.visible = true;
+}
+
+void Dialogue::resize() {
+	_uiManager.setScale(GlobalContext::screenSize.y / 1080.0f);
+	_uiManager.resolvePositions();
 }
 
 void Dialogue::pushNewText(std::string newText) {
@@ -29,7 +41,10 @@ void Dialogue::pushAllText() {
 }
 
 void Dialogue::update() {
-	if (_storedText.empty()) return;
+	if (_storedText.empty()) {
+		_uiManager.draw();
+		return;
+	}
 
 	_timer += Jauntlet::Time::getDeltaTime();
 
@@ -37,5 +52,8 @@ void Dialogue::update() {
 		_timer -= TEXT_SPEED;
 		_dialogueText += _storedText[0];
 		_storedText.pop_front();
+		_uiManager.resolvePositions();
 	}
+
+	_uiManager.draw();
 }
