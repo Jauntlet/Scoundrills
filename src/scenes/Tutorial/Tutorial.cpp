@@ -88,6 +88,8 @@ void Tutorial::drawGame() {
 		_selectedTile.draw(&_camera);
 	}
 
+	_dialogue.update();
+
 	GlobalContext::normalShader.unuse();
 
 	drawHUD();
