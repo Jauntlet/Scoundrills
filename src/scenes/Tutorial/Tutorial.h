@@ -21,8 +21,8 @@ private:
 	// Tutorial specific controls
 	bool _cameraLocked = true;
 
-	Jauntlet::Camera2D _camera = Jauntlet::Camera2D(GlobalContext::screenSize.x, GlobalContext::screenSize.y),
-		_hudCamera = Jauntlet::Camera2D(GlobalContext::screenSize.x, GlobalContext::screenSize.y);
+	Jauntlet::Camera2D _camera = Jauntlet::Camera2D(GlobalContext::screenSize),
+		_hudCamera = Jauntlet::Camera2D(GlobalContext::screenSize);
 
 	PlayerResources _resources;
 
