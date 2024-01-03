@@ -7,6 +7,7 @@
 #include "../../pathfinding/SelectedTileRenderer.h"
 #include "../GlobalContext.h"
 #include "Dialogue.h"
+#include "Officer.h"
 class Tutorial
 {
 public:
@@ -19,8 +20,6 @@ private:
 	void drawGame();
 	void drawHUD();
 
-	// Tutorial specific controls
-	bool _cameraLocked = true;
 
 	Jauntlet::Camera2D _camera = Jauntlet::Camera2D(GlobalContext::screenSize),
 		_hudCamera = Jauntlet::Camera2D(GlobalContext::screenSize);
@@ -37,11 +36,15 @@ private:
 
 	SelectedTileRenderer _selectedTile = SelectedTileRenderer(&_drill, &_players);
 
-	Dialogue _dialogue = Dialogue(&_hudCamera);
 
 	Jauntlet::SpriteBatch _playerSpriteBatch;
 
 	// defines scale of movement for the camera. if set to 1, the camera will follow the mouse, if set to 0, the mouse has no control over the camera.
 	const float _CAMERA_MOVEMENT_SCALE = 0.5f;
+	
+	// Tutorial Specific data
+	Dialogue _dialogue = Dialogue(&_hudCamera);
+	bool _cameraLocked = true;
+	Officer _officer = Officer(glm::vec2(7 * 64, -19 * 64));
 };
 

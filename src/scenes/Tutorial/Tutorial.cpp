@@ -81,6 +81,7 @@ void Tutorial::drawGame() {
 	_playerSpriteBatch.begin();
 	_players.draw(_playerSpriteBatch);
 	_playerSpriteBatch.endAndRender();
+	_officer.draw();
 
 	_drill.drawLayerTwo();
 

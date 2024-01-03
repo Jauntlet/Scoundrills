@@ -93,6 +93,9 @@
     <ClCompile Include="src\scenes\Tutorial\TutorialUI.cpp">
       <Filter>scenes\Tutorial</Filter>
     </ClCompile>
+    <ClCompile Include="src\scenes\Tutorial\Officer.cpp">
+      <Filter>scenes\Tutorial</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\players\Player.h">
@@ -187,6 +190,9 @@
       <Filter>scenes\Tutorial</Filter>
     </ClInclude>
     <ClInclude Include="src\scenes\Tutorial\TutorialUI.h">
+      <Filter>scenes\Tutorial</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scenes\Tutorial\Officer.h">
       <Filter>scenes\Tutorial</Filter>
     </ClInclude>
   </ItemGroup>
