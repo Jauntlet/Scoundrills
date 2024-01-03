@@ -6,6 +6,7 @@
 #include "../MainGame/CameraManager.h"
 #include "../../pathfinding/SelectedTileRenderer.h"
 #include "../GlobalContext.h"
+#include "Dialogue.h"
 class Tutorial
 {
 public:
