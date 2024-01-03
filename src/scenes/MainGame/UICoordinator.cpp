@@ -84,13 +84,13 @@ void UICoordinator::draw() {
 }
 
 void UICoordinator::applyNewScreenSize(glm::ivec2 screenSize) {
-	_UIManager.setScale(((screenSize.y / 1080.0f)));
+	_UIManager.setScale(screenSize.y / 1080.0f);
 	_UIManager.resolvePositions();
 
-	_NavManager->setScale(((screenSize.y / 1080.0f)));
+	_NavManager->setScale(screenSize.y / 1080.0f);
 	_NavManager->resolvePositions();
 
-	_CavernManager->setScale(((screenSize.y / 1080.0f)));
+	_CavernManager->setScale(screenSize.y / 1080.0f);
 	_CavernManager->resolvePositions();
 }
 
