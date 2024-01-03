@@ -11,6 +11,7 @@ DrillAssetRenderer::DrillAssetRenderer(Jauntlet::Camera2D* _UIcamera) :
 	_boilerAnimation(6),
 	_boilerTexture(Jauntlet::ResourceManager::getTexture("Textures/Boiler.png").id)
 {
+	_boilerAnimation.stop(0);
 	_boilerAnimation.play(0, 2, 0.1f);
 	_drillAnimation.stop(0);
 
