@@ -36,6 +36,8 @@ private:
 
 	SelectedTileRenderer _selectedTile = SelectedTileRenderer(&_drill, &_players);
 
+	Dialogue _dialogue = Dialogue(&_hudCamera);
+
 	Jauntlet::SpriteBatch _playerSpriteBatch;
 
 	// defines scale of movement for the camera. if set to 1, the camera will follow the mouse, if set to 0, the mouse has no control over the camera.

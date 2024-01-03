@@ -11,19 +11,31 @@ Tutorial::Tutorial(const std::vector<uint8_t>& playerIDs) {
 		_players.createPlayer(glm::vec2(64 * (i + 1) + 704, -64 * 10), GlobalContext::playerIDtoTexture(playerIDs[i], true));
 	}
 
-	_camera.setPosition(glm::vec2(24 * 64 * 0.5f, 30 * 64 * 0.5f * -1));
-	_camera.setScale(0.5f);
+	_camera.setScale(2.75f);
+	_camera.setPosition(glm::vec2(1337.25, -3475.54));
+
+	_drill.off();
+	_uiCoordinator.hideAll();
+
+	_dialogue.pushNewText("Test.");
 }
 
 void Tutorial::windowResized() {
+
+	glm::vec2 newCenter = glm::vec2(GlobalContext::screenSize) / 2.0f - _camera.getSize() / 2.0f;
+
+	//_camera.setScale(_camera.getScale() * (_camera.getSize().y / GlobalContext::screenSize.y));
+	//_camera.setPosition(glm::vec2(_camera.getPosition().x - newCenter.x, _camera.getPosition().y - newCenter.y));
+
 	_camera.updateSize(GlobalContext::screenSize);
 	_hudCamera.updateSize(GlobalContext::screenSize);
 	_uiCoordinator.applyNewScreenSize(GlobalContext::screenSize);
+	_dialogue.resize();
 }
 
 void Tutorial::gameLoop() {
 	processInput();
-
+ 
 	_camera.update();
 	_hudCamera.update();
 	_drill.update();
