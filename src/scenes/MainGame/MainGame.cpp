@@ -19,6 +19,9 @@ MainGame::MainGame(const std::vector<uint8_t>& playerIDs) :
 
 	_camera.setPosition(glm::vec2(24 * 64 * 0.5f, 30 * 64 * 0.5f * -1));
 	_camera.setScale(0.5f);
+
+	//there isn't currently an intuitive way to get the playerManager into the cavern class so I just put it here. TODO: make this comment sound smart
+	_uiCoordinator.navigation->setCavernPlayerManager(&_players);
 }
 
 MainGame::MainGame(int saveID) {
@@ -27,6 +30,9 @@ MainGame::MainGame(int saveID) {
 
 	Database database = Database(saveID);
 	// Loading database stuff here
+
+	//set the cavern's player manager
+	_uiCoordinator.navigation->setCavernPlayerManager(&_players);
 }
 
 void MainGame::gameLoop() {

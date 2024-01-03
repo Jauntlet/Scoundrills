@@ -1,4 +1,5 @@
 #include "Cavern.h"
+#include "src/players/PlayerManager.h"
 #include "src/scenes/GlobalContext.h"
 
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
@@ -70,6 +71,7 @@ void Cavern::updateResources() {
 		break;
 	case 3:
 		//new inmate
+		_playerManager->createPlayer({ 384, -128 }, GlobalContext::playerIDtoTexture(_random() % 5));
 		break;
 	case 4:
 		//danger (heat)
@@ -92,4 +94,8 @@ void Cavern::updateResources() {
 
 Jauntlet::UIManager* Cavern::getUIManager() {
 	return &_uiManager;
+}
+
+void Cavern::setPlayerManager(PlayerManager* manager) {
+	_playerManager = manager;
 }

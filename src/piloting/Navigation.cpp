@@ -342,6 +342,10 @@ Jauntlet::UIManager* Navigation::getCavernManager() {
 	return _cavern.getUIManager();
 }
 
+void Navigation::setCavernPlayerManager(PlayerManager* manager) {
+	_cavern.setPlayerManager(manager);
+}
+
 void Navigation::spawnCavern(int type) {
 	std::cout << "type: " << type << std::endl;
 	_cavern.setType(type);

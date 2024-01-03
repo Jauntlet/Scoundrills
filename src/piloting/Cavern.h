@@ -10,6 +10,9 @@
 #include <Jauntlet/UI/UIManager.h>
 #include <Jauntlet/UI/UISpriteElement.h>
 #include <Jauntlet/UI/UITextElement.h>
+#include <random>
+
+class PlayerManager;
 
 class Cavern {
 public:
@@ -21,17 +24,23 @@ public:
 
 	Jauntlet::UIManager* getUIManager();
 
+	void setPlayerManager(PlayerManager* manager);
+
 private:
+	//random
+	std::mt19937 _random;
+
 	//necessary managers
 	Jauntlet::UIManager _uiManager;
 	PlayerResources* _resources;
+	PlayerManager* _playerManager;
 	
 	//textures / text & color
 	GLuint _backgroundTexture = 0;
 	GLuint _confirmTexture = 0;
 	std::string _description = "";
 	Jauntlet::Color _descriptionColor = Jauntlet::Color("FFFFFF");
-
+	
 	//UI elements
 	Jauntlet::UISpriteElement _backgroundElement;
 	Jauntlet::UIButtonElement _confirmButton;

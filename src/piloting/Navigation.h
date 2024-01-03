@@ -31,6 +31,8 @@ public:
 	Jauntlet::UIManager* getUIManager();
 	Jauntlet::UIManager* getCavernManager();
 
+	void setCavernPlayerManager(PlayerManager* manager);
+
 private:
 	//random -- uses one consistent seed (generated based on system time on class construction)
 	std::mt19937 random;
