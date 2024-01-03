@@ -48,7 +48,7 @@ void Dialogue::update() {
 
 	_timer += Jauntlet::Time::getDeltaTime();
 
-	while (_timer > TEXT_SPEED) {
+	while (_timer > TEXT_SPEED && !_storedText.empty()) {
 		_timer -= TEXT_SPEED;
 		_dialogueText += _storedText[0];
 		_storedText.pop_front();
