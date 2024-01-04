@@ -45,8 +45,8 @@ Database::Database() {
     sqlite3_exec(database,
         "CREATE TABLE IF NOT EXISTS Items ("
         "saveID INTEGER,"
-        "positionX REAL,"
-        "positionY REAL,"
+        "positionX DOUBLE,"
+        "positionY DOUBLE,"
         "type TEXT"
         ");",
         nullptr, nullptr, nullptr);
@@ -81,8 +81,8 @@ Database::Database(int saveID) {
     sqlite3_exec(database,
         "CREATE TABLE IF NOT EXISTS Players ("
         "saveID INTEGER,"
-        "positionX REAL,"
-        "positionY REAL,"
+        "positionX DOUBLE,"
+        "positionY DOUBLE,"
         "heldItemId INTEGER,"
         "health INTEGER,"
         "textureId INTEGER"
@@ -92,8 +92,8 @@ Database::Database(int saveID) {
     sqlite3_exec(database,
         "CREATE TABLE IF NOT EXISTS Drills ("
         "saveID INTEGER,"
-        "heat REAL,"
-        "water REAL,"
+        "heat DOUBLE,"
+        "water DOUBLE,"
         "food INTEGER,"
         "copper INTEGER"
         ");",
@@ -103,8 +103,8 @@ Database::Database(int saveID) {
         "CREATE TABLE IF NOT EXISTS Items ("
         "saveID INTEGER,"
         "itemID INTEGER,"
-        "positionX REAL,"
-        "positionY REAL,"
+        "positionX DOUBLE,"
+        "positionY DOUBLE,"
         "type TEXT"
         ");",
         nullptr, nullptr, nullptr);
