@@ -13,7 +13,7 @@ DrillManager::DrillManager(CameraManager* cameraManager, PlayerResources& resour
 	_drillAssets(camera),
 	resources(&resourceManager),
 	navigation(camera, &resourceManager),
-	_boiler(&boilerWater, "Textures/BoilerTank.png", { 64 * 16, -64 * 1 - 10, 32 * 2, 43 * 2 }, 5, { 64 * 15.5, -64 * 2, 64 * 2, 96 * 2 }, { 16,-64 }),
+	boiler(&boilerWater, "Textures/BoilerTank.png", { 64 * 16, -64 * 1 - 10, 32 * 2, 43 * 2 }, 5, { 64 * 15.5, -64 * 2, 64 * 2, 96 * 2 }, { 16,-64 }),
 	_waterTank(*this, { 64, -64 * 12, 128, 224 }, glm::vec2(0,-96)),
 	_forge(*this, {64 * 15, -64 * 13, 64 * 2, 64 * 2}, glm::vec2(0, -32)),
 	_pipeWorkbench(*this, { 64 * 18, -64 * 13, 64, 64 }, { 64 * 18, -64 * 13, 64, 64 }, glm::vec2(0)),
@@ -49,16 +49,16 @@ void DrillManager::update() {
 	}
 
 	if (boilerWater > Boiler::BOILER_MAX_WATER * 0.75) {
-		_boiler.animation.stop(4);
+		boiler.animation.stop(4);
 	} else if (boilerWater > Boiler::BOILER_MAX_WATER * 0.5) {
-		_boiler.animation.stop(3);
+		boiler.animation.stop(3);
 	} else if (boilerWater > Boiler::BOILER_MAX_WATER * 0.25) {
-		_boiler.animation.stop(2);
+		boiler.animation.stop(2);
 	} else if (boilerWater > 0) {
-		_boiler.animation.stop(1);
+		boiler.animation.stop(1);
 	} else {
 		boilerWater = 0;
-		_boiler.animation.stop(0);
+		boiler.animation.stop(0);
 		off();
 	}
 
@@ -74,7 +74,7 @@ void DrillManager::drawLayerOne() {
 	_drillAssets.drawLayerTwo();
 
 	_spriteBatch.begin();
-	_boiler.draw(_spriteBatch);
+	boiler.draw(_spriteBatch);
 	_waterTank.draw(_spriteBatch);
 	_forge.draw(_spriteBatch);
 	_pipeWorkbench.draw(_spriteBatch);
@@ -136,7 +136,9 @@ bool DrillManager::isValidDestination(glm::vec2 worldPos, PlayerManager* playerM
 		return false;
 	} else if (doesTileOverlapStations(pos)) {
 		return false;
-	} else return Pathfinding::isReachable(*this, *playerManager, playerManager->getSelectedPlayer()->getPosition(), worldPos + glm::vec2(0,64));
+	} else if (playerManager->getSelectedPlayer() != nullptr) {
+	return Pathfinding::isReachable(*this, *playerManager, playerManager->getSelectedPlayer()->getPosition(), worldPos + glm::vec2(0,64));
+	} else return true;	
 }
 
 bool DrillManager::isValidPath(glm::vec2 worldPos, PlayerManager* playerManager) const {
@@ -189,8 +191,8 @@ bool DrillManager::isSteeringWheelOccupied() const {
 PlayerStation* DrillManager::checkHoveringStation(glm::vec2 position) {
 	if (_drillAssets.steeringWheel.isColliding(position)) {
 		return &_drillAssets.steeringWheel;
-	} else if (_boiler.isColliding(position)) {
-		return &_boiler;
+	} else if (boiler.isColliding(position)) {
+		return &boiler;
 	} else if (_waterTank.isColliding(position)) {
 		return &_waterTank;
 	} else if (_forge.isColliding(position)) {
@@ -204,7 +206,7 @@ PlayerStation* DrillManager::checkHoveringStation(glm::vec2 position) {
 
 bool DrillManager::doesTileOverlapStations(glm::ivec2 tilePos) const  {
 	return drillWalls.doesTileOverlap(tilePos, _drillAssets.steeringWheel.getBoundingBox()) ||
-		drillWalls.doesTileOverlap(tilePos, _boiler.getBoundingBox()) ||
+		drillWalls.doesTileOverlap(tilePos, boiler.getBoundingBox()) ||
 		drillWalls.doesTileOverlap(tilePos, _waterTank.getBoundingBox()) ||
 		drillWalls.doesTileOverlap(tilePos, _forge.getBoundingBox()) ||
 		drillWalls.doesTileOverlap(tilePos, _pipeWorkbench.getBoundingBox());

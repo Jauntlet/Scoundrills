@@ -75,8 +75,6 @@ void CameraManager::processInput() {
 		//glm::vec2 mouse = _camera->convertScreenToWorldDisregardPosition(_inputManager->getMouseCoords());
 
 		_camera->multiply(zoom);
-
-		GlobalContext::inputManager.deltaScroll = 0;
 	}
 
 	_oldMouse = GlobalContext::inputManager.getMouseCoords(); // the old mouse position is now the current mouse position

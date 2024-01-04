@@ -15,16 +15,17 @@ public:
 
 	void windowResized();
 	void gameLoop();
+
+	void nextDialogue();
 private:
 	void processInput();
 	void drawGame();
 	void drawHUD();
 
-
 	Jauntlet::Camera2D _camera = Jauntlet::Camera2D(GlobalContext::screenSize),
 		_hudCamera = Jauntlet::Camera2D(GlobalContext::screenSize);
 
-	PlayerResources _resources;
+	PlayerResources _resources = PlayerResources(100,0,0,0);
 
 	DrillManager _drill = DrillManager(&_cameraManager, _resources, &_hudCamera);
 
@@ -43,8 +44,11 @@ private:
 	const float _CAMERA_MOVEMENT_SCALE = 0.5f;
 	
 	// Tutorial Specific data
+	uint32_t _sequence = 0;
 	Dialogue _dialogue = Dialogue(&_hudCamera);
 	bool _cameraLocked = true;
 	Officer _officer = Officer(glm::vec2(7 * 64, -19 * 64));
+
+	bool _pressedW = false, _pressedA = false, _pressedS = false, _pressedD = false, _scrolledUp = false, _scrolledDown = false;
 };
 

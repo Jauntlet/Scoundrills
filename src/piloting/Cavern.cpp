@@ -71,7 +71,7 @@ void Cavern::updateResources() {
 		break;
 	case 3:
 		//new inmate
-		_playerManager->createPlayer({ 384, -128 }, GlobalContext::playerIDtoTexture(_random() % 5 + 1));
+		_playerManager->createPlayer({ 384, -128 }, _random() % 5 + 1);
 		break;
 	case 4:
 		//danger (heat)

@@ -27,6 +27,7 @@ void Dialogue::resize() {
 }
 
 void Dialogue::pushNewText(std::string newText) {
+	_storedText.clear();
 	for (auto& c : newText) {
 		_storedText.push_back(c);
 	}
@@ -38,6 +39,11 @@ void Dialogue::pushAllText() {
 		_dialogueText += _storedText[0];
 		_storedText.pop_front();
 	}
+	_uiManager.resolvePositions();
+}
+
+bool Dialogue::doneReadingText() {
+	return _storedText.empty();
 }
 
 void Dialogue::update() {

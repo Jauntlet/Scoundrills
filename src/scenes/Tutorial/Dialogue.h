@@ -23,6 +23,9 @@ public:
 	// stops slowly updating text and forces all stored text to be shown instantly
 	void pushAllText();
 
+	// returns true if read-in text has finished being displayed in the dialogue box.
+	bool doneReadingText();
+
 	void update();
 private:
 	// UI Manager
@@ -36,7 +39,7 @@ private:
 	float _timer = 0.0f;
 
 	// Text
-	glm::vec2 _textPos = glm::vec2(0, -225);
+	glm::vec2 _textPos = glm::vec2(0, -275);
 	Jauntlet::Color _textColor = Jauntlet::Color();
 	std::string _dialogueText = "";
 	std::deque<char> _storedText;
