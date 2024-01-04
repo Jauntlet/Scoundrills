@@ -91,6 +91,9 @@ std::vector<Player*> PlayerManager::getAllPlayers() {
 	}
 	return output;
 }
+PathRenderer* PlayerManager::getPathRenderer() {
+	return &_pathRenderer;
+}
 
 bool PlayerManager::posMatchesPlayerDest(const glm::vec2& worldPos) {
 	for (int i = 0; i < _players.size(); i++) {

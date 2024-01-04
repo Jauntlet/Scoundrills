@@ -36,7 +36,7 @@ private:
 	float _timer = 0.0f;
 
 	// Text
-	glm::vec2 _textPos = glm::vec2(0, -225);
+	glm::vec2 _textPos = glm::vec2(0, -275);
 	Jauntlet::Color _textColor = Jauntlet::Color();
 	std::string _dialogueText = "";
 	std::deque<char> _storedText;
