@@ -8,7 +8,7 @@
 
 Tutorial::Tutorial(const std::vector<uint8_t>& playerIDs) {
 	GlobalContext::window.setBackgroundColor(Jauntlet::Color(97, 60, 47));
-	_uiCoordinator.applyNewScreenSize(glm::ivec2(GlobalContext::screenSize.x, GlobalContext::screenSize.y));
+	_uiCoordinator.applyNewScreenSize(GlobalContext::screenSize);
 
 	for (int i = 0; i < playerIDs.size(); ++i) {
 		_players.createPlayer(glm::vec2(64 * (i + 1) + 5 * 64, -64 * 23), playerIDs[i], true);
@@ -55,18 +55,36 @@ void Tutorial::nextDialogue() {
 	++_sequence;
 
 	switch (_sequence) {
-		case (1):
+		case 1:
 			_dialogue.pushNewText("This gal is a relic\nbut she gets the job done.");
 			break;
-		case (2):
+		case 2:
 			_camera.transitionToPosition(glm::vec2(24 * 64 * 0.5f, 30 * 64 * 0.5f * -1));
 			_camera.transitionToScale(0.25f);
 			_dialogue.pushNewText("Here is the layout of the drill.\nTraversing quickly is key\nto operating it.");
 			break;
-		case (3):
+		case 3:
 			_cameraLocked = false;
-			_dialogue.pushNewText("Try moving around your view\nby clicking and dragging\nyour mouse.");
-			_sequence = 2;
+			_dialogue.pushNewText("Try moving around your view\nby using WASD.");
+			break;
+		case 4:
+			_dialogue.pushNewText("Great! Now use your scroll\nwheel to zoom in and out!");
+			break;
+		case 5:
+			_dialogue.pushNewText("Brillant! Now lets learn\nabout operating the drill!");
+			break;
+		case 6:
+			_uiCoordinator.showWater();
+			_dialogue.pushNewText("in the top left is our water\nsupply.");
+			break;
+		case 7:
+			_cameraLocked = true;
+			_camera.transitionToScale(2.0f);
+			_camera.transitionToPosition(glm::vec2(437, -1425));
+			_dialogue.pushNewText("This is directly tied to\nour water tank.");
+			break;
+		case 8:
+			_dialogue.pushNewText("if you take a crew member to\nthe tank they will pick\nup water");
 			break;
 		default:
 			std::vector<uint8_t> output;
@@ -90,8 +108,35 @@ void Tutorial::processInput() {
 	}
 
 	if (GlobalContext::inputManager.lastButtonPressed() != SDLK_ESCAPE || GlobalContext::inputManager.isKeyPressed(SDL_BUTTON_LEFT)) {
-		_dialogue.doneReadingText() ? nextDialogue() : _dialogue.pushAllText();
-		GlobalContext::inputManager.clearLastButtonPressed();
+		if (_sequence == 3) {
+			if (GlobalContext::inputManager.isKeyPressed(SDLK_w)) {
+				_pressedW = true;
+			}
+			if (GlobalContext::inputManager.isKeyPressed(SDLK_a)) {
+				_pressedA = true;
+			}
+			if (GlobalContext::inputManager.isKeyPressed(SDLK_s)) {
+				_pressedS = true;
+			}
+			if (GlobalContext::inputManager.isKeyPressed(SDLK_d)) {
+				_pressedD = true;
+			}
+			if (_pressedW && _pressedA && _pressedS && _pressedD) {
+				nextDialogue();
+			}
+		} else if (_sequence == 4) {
+			if (GlobalContext::inputManager.deltaScroll > 0) {
+				_scrolledUp = true;
+			} else if (GlobalContext::inputManager.deltaScroll < 0) {
+				_scrolledDown = true;
+			} else if (_scrolledUp && _scrolledDown) {
+				nextDialogue();
+			}
+		} else {
+			_dialogue.doneReadingText() ? nextDialogue() : _dialogue.pushAllText();
+			GlobalContext::inputManager.clearLastButtonPressed();
+		}
+		
 	}
 
 	//open nav
