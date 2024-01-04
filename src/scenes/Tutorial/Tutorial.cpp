@@ -21,6 +21,7 @@ Tutorial::Tutorial(const std::vector<uint8_t>& playerIDs) {
 	_camera.setPosition(glm::vec2(1337.25, -3475.54));
 
 	_drill.off();
+	_drill.boilerWater = 0;
 	_uiCoordinator.hideAll();
 
 	_dialogue.pushNewText("Welcome new recruits!\nToday we will be going over\noperating the drill.");
@@ -71,6 +72,7 @@ void Tutorial::nextDialogue() {
 			_dialogue.pushNewText("Great! Now use your scroll\nwheel to zoom in and out!");
 			break;
 		case 5:
+			_cameraLocked = true;
 			_dialogue.pushNewText("Brillant! Now lets learn\nabout operating the drill!");
 			break;
 		case 6:
@@ -78,13 +80,19 @@ void Tutorial::nextDialogue() {
 			_dialogue.pushNewText("in the top left is our water\nsupply.");
 			break;
 		case 7:
-			_cameraLocked = true;
 			_camera.transitionToScale(2.0f);
 			_camera.transitionToPosition(glm::vec2(437, -1425));
 			_dialogue.pushNewText("This is directly tied to\nour water tank.");
 			break;
 		case 8:
 			_dialogue.pushNewText("if you take a crew member to\nthe tank they will pick\nup water");
+			break;
+		case 9:
+			_camera.transitionToPosition(glm::vec2(2037, -200));
+			_dialogue.pushNewText("This is important to\nkeep our boiler working.");
+			break;
+		case 10:
+			_dialogue.pushNewText("Our boiler runs on water\nand needs a constant\nsupply to keep the\ndrill running.");
 			break;
 		default:
 			std::vector<uint8_t> output;
