@@ -23,6 +23,9 @@ public:
 	// stops slowly updating text and forces all stored text to be shown instantly
 	void pushAllText();
 
+	// returns true if read-in text has finished being displayed in the dialogue box.
+	bool doneReadingText();
+
 	void update();
 private:
 	// UI Manager
