@@ -51,8 +51,6 @@ Database::Database() {
         ");",
         nullptr, nullptr, nullptr);
 
-	sqlite3_close(database);
-
     PlayerResources _playerResources;
 
     _playerResources.heat = 1.0f;
@@ -65,7 +63,9 @@ Database::Database() {
     } else {
         std::cout << "TrySaveDrill FAILED" << std::endl;
     }
-    
+
+    sqlite3_close(database);
+
     PlayerResources playerResources;
 
     TryLoadInResources(_saveID, playerResources);
