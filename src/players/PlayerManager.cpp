@@ -11,8 +11,8 @@ PlayerManager::PlayerManager(DrillManager* drill) :
 	// Empty
 }
 
-void PlayerManager::createPlayer(const glm::vec2& position, const std::string& texture) {
-	_players.emplace_back(position, texture);
+void PlayerManager::createPlayer(const glm::vec2& position, uint8_t playerID, bool isCop) {
+	_players.emplace_back(position, playerID, isCop);
 }
 
 bool PlayerManager::processInput(const Jauntlet::Camera2D& activeCamera) {

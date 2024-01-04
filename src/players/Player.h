@@ -14,7 +14,7 @@
 class Player
 {
 public:
-	Player(const glm::vec2& position, const std::string& texture);
+	Player(const glm::vec2& position, uint8_t playerID, bool isCop = false);
 	~Player();
 
 	void update(DrillManager& drill);
