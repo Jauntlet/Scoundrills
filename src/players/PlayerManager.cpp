@@ -55,7 +55,7 @@ bool PlayerManager::processInput(const Jauntlet::Camera2D& activeCamera) {
 void PlayerManager::damageTick(const int& drillHeat) {
 	if (_players.size() == 0) return;
 
-	_damageTick += Jauntlet::Time::getDeltaTime() * (drillHeat / 200);
+	_damageTick += Jauntlet::Time::getDeltaTime() * (drillHeat / 200.0f);
 
 	if (_damageTick > 2.5) {
 		_damageTick = 0;
@@ -90,6 +90,9 @@ std::vector<Player*> PlayerManager::getAllPlayers() {
 		output.push_back(&_players[i]);
 	}
 	return output;
+}
+PathRenderer* PlayerManager::getPathRenderer() {
+	return &_pathRenderer;
 }
 
 bool PlayerManager::posMatchesPlayerDest(const glm::vec2& worldPos) {

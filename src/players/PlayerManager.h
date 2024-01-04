@@ -27,7 +27,10 @@ public:
 	Player* getSelectedPlayer();
 	// returns a vector to all players
 	std::vector<Player*> getAllPlayers();
+	// returns path renderer
+	PathRenderer* getPathRenderer();
 
+	// returns true if a player is at the exact specified position.
 	bool posMatchesPlayerDest(const glm::vec2& worldPos);
 
 	// updates the state of players

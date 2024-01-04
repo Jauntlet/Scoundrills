@@ -136,7 +136,9 @@ bool DrillManager::isValidDestination(glm::vec2 worldPos, PlayerManager* playerM
 		return false;
 	} else if (doesTileOverlapStations(pos)) {
 		return false;
-	} else return Pathfinding::isReachable(*this, *playerManager, playerManager->getSelectedPlayer()->getPosition(), worldPos + glm::vec2(0,64));
+	} else if (playerManager->getSelectedPlayer() != nullptr) {
+	return Pathfinding::isReachable(*this, *playerManager, playerManager->getSelectedPlayer()->getPosition(), worldPos + glm::vec2(0,64));
+	} else return true;	
 }
 
 bool DrillManager::isValidPath(glm::vec2 worldPos, PlayerManager* playerManager) const {
