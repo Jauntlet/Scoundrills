@@ -65,6 +65,7 @@ public:
 	float boilerWater = Boiler::BOILER_MAX_WATER;
 	Navigation navigation;
 	PlayerResources* resources;
+	Boiler boiler;
 private:
 	// Commits a random disaster
 	void DisasterEvent();
@@ -75,7 +76,6 @@ private:
 
 	// Drill assets / Pieces
 	DrillAssetRenderer _drillAssets;
-	Boiler _boiler;
 	WaterTank _waterTank;
 	Forge _forge;
 	PipeWorkbench _pipeWorkbench;
