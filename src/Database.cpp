@@ -24,8 +24,8 @@ Database::Database() {
     sqlite3_exec(database,
         "CREATE TABLE IF NOT EXISTS Players ("
         "saveID INTEGER,"
-        "positionX REAL,"
-        "positionY REAL,"
+        "positionX DOUBLE,"
+        "positionY DOUBLE,"
         "heldItemId INTEGER,"
         "health INTEGER,"
         "textureId INTEGER"
@@ -35,8 +35,8 @@ Database::Database() {
     sqlite3_exec(database,
         "CREATE TABLE IF NOT EXISTS Drills ("
         "saveID INTEGER,"
-        "heat REAL,"
-        "water REAL,"
+        "heat DOUBLE,"
+        "water DOUBLE,"
         "food INTEGER,"
         "copper INTEGER"
         ");",
