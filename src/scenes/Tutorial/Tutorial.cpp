@@ -11,7 +11,7 @@ Tutorial::Tutorial(const std::vector<uint8_t>& playerIDs) {
 	_uiCoordinator.applyNewScreenSize(glm::ivec2(GlobalContext::screenSize.x, GlobalContext::screenSize.y));
 
 	for (int i = 0; i < playerIDs.size(); ++i) {
-		_players.createPlayer(glm::vec2(64 * (i + 1) + 5 * 64, -64 * 23), GlobalContext::playerIDtoTexture(playerIDs[i], true));
+		_players.createPlayer(glm::vec2(64 * (i + 1) + 5 * 64, -64 * 23), playerIDs[i], true);
 		_players.getPathRenderer()->createPath(glm::vec2(64 * (i + 1) + 5 * 64, -64 * 23), glm::vec2(64 * (i + 1) + 5 * 64, -64 * 20));
 		_players.getAllPlayers().back()->navigateTo(_drill, *_players.getPathRenderer(), glm::vec2(64 * (i + 1) + 5 * 64, -64 * 20));
 	}

@@ -14,7 +14,7 @@ MainGame::MainGame(const std::vector<uint8_t>& playerIDs) :
 	_uiCoordinator.applyNewScreenSize(glm::ivec2(GlobalContext::screenSize.x, GlobalContext::screenSize.y));
 
 	for (int i = 0; i < playerIDs.size(); ++i) {
-		_players.createPlayer(glm::vec2(64 * (i + 1) + 704, -64 * 10), GlobalContext::playerIDtoTexture(playerIDs[i]));
+		_players.createPlayer(glm::vec2(64 * (i + 1) + 704, -64 * 10), playerIDs[i]);
 	}
 
 	_camera.setPosition(glm::vec2(24 * 64 * 0.5f, 30 * 64 * 0.5f * -1));
