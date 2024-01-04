@@ -273,7 +273,7 @@ bool Database::TryLoadInPlayers(PlayerResources& playerResources) {
     return false;
 }
 
-bool Database::TryLoadInResources(int saveID, PlayerResources playerResources) {
+bool Database::TryLoadInResources(int saveID, PlayerResources& playerResources) {
     // try opening the database
     int rc = sqlite3_open((std::to_string(saveID) + ".db").c_str(), &database);
 

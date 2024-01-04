@@ -31,7 +31,7 @@ private:
 	// === loading methods ===
 
 	// returns resources
-	bool TryLoadInResources(int saveID, PlayerResources playerResources);
+	bool TryLoadInResources(int saveID, PlayerResources& playerResources);
 
 	bool TryLoadInPlayers(PlayerResources& playerResources);
 
