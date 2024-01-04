@@ -65,7 +65,7 @@ void MainGame::processInput() {
 	_cameraManager.processInput();
 
 	//open nav
-	if (GlobalContext::inputManager.isKeyPressed(SDLK_TAB)) {
+	if (GlobalContext::inputManager.isKeyPressed(SDLK_TAB) && _drill.isSteeringWheelOccupied()) {
 		_uiCoordinator.navigation->toggleNav();
 	}
 

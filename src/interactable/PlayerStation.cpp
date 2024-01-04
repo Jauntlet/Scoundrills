@@ -6,7 +6,7 @@ PlayerStation::PlayerStation(std::string texture, glm::vec4 destination, glm::ve
 	_destination(destination),
 	_anchorPoint(glm::vec2(boundingBox.x + (boundingBox.z * 0.5f) + anchorPointOffset.x, boundingBox.y + (boundingBox.w * 0.5f) + anchorPointOffset.y)) 
 {
-
+	// Empty
 }
 
 void PlayerStation::draw(Jauntlet::SpriteBatch& spriteBatch) {

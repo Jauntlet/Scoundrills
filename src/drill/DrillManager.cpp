@@ -182,6 +182,9 @@ bool DrillManager::isValidPath(glm::vec2 worldPos) const {
 
 	return !doesTileOverlapStations(pos);
 }
+bool DrillManager::isSteeringWheelOccupied() const {
+	return _drillAssets.steeringWheel.isOccupied();
+}
 
 PlayerStation* DrillManager::checkHoveringStation(glm::vec2 position) {
 	if (_drillAssets.steeringWheel.isColliding(position)) {

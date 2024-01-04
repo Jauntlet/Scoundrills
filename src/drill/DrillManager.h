@@ -41,6 +41,7 @@ public:
 	bool isValidDestination(glm::vec2 worldPos, PlayerManager* playerManager) const;
 	bool isValidPath(glm::vec2 worldPos, PlayerManager* playerManager) const;
 	bool isValidPath(glm::vec2 worldPos) const;
+	bool isSteeringWheelOccupied() const;
 
 	PlayerStation* checkHoveringStation(glm::vec2 position);
 	bool doesTileOverlapStations(glm::ivec2 tilePos) const;
