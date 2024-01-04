@@ -60,7 +60,11 @@ Database::Database() {
     _playerResources.food = 3;
     _playerResources.copper = 4;
 
-    TrySaveDrill(_playerResources);
+    if (TrySaveDrill(_playerResources)) {
+        std::cout << "saved drill, alledgedly" << std::endl;
+    } else {
+        std::cout << "TrySaveDrill FAILED" << std::endl;
+    }
     
     PlayerResources playerResources;
 
