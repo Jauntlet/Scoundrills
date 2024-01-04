@@ -1,6 +1,7 @@
 #include "Navigation.h"
 #include "Jauntlet/UI/UIButtonElement.h"
 #include "src/scenes/GlobalContext.h"
+#include "Cavern.h"
 
 #include <chrono>
 #include <Jauntlet/JMath.h>
@@ -15,7 +16,7 @@ const float baseSpeed = 50; //This over distance determines the speed the drill 
 const std::string bgTextures[] = {"Textures/NavBackgroundPrototype.png"};
 static int seed = std::chrono::system_clock::now().time_since_epoch().count(); //temp
 
-Navigation::Navigation(Jauntlet::Camera2D* camera) : 
+Navigation::Navigation(Jauntlet::Camera2D* camera, PlayerResources* resourceManager) : 
 	_navTexture(Jauntlet::ResourceManager::getTexture(bgTextures[0]).id),
 	_xTure(Jauntlet::ResourceManager::getTexture("Textures/Nav Icon/NavIcon1.png").id), 
 	_waTure(Jauntlet::ResourceManager::getTexture("Textures/Nav Icon/NavIcon2.png").id), 
@@ -25,7 +26,8 @@ Navigation::Navigation(Jauntlet::Camera2D* camera) :
 	_caret(Jauntlet::ResourceManager::getTexture("Textures/caret.png").id),
 	_drillIcon(Jauntlet::ResourceManager::getTexture("Textures/drillNav.png").id),
 	_background(Jauntlet::UISpriteAnimatedElement(_navTexture, &_bgPos, glm::vec2(640, 1024), Jauntlet::UIElement::ORIGIN_PIN::CENTER, &_backgroundAnimation)),
-	_uiManager(camera)
+	_uiManager(camera),
+	_cavern(resourceManager, camera)
 {
 	//generate some randomness
 	random = std::mt19937(seed);
@@ -197,6 +199,9 @@ void Navigation::selectNav(int id, glm::ivec2 xy) {
 			}
 		}
 	}
+
+	//set a few things (necessary)
+	//the order of operations also matters
 	_caretSet = true;
 	_destination = id;
 	_speed = baseSpeed/JMath::Distance(_iconPos, _positions[id]);
@@ -207,14 +212,16 @@ void Navigation::selectNav(int id, glm::ivec2 xy) {
 	_columnOver = xy.x;
 	_drillRow = xy.y;
 
+	//visibility check/update
 	if (!_caretElement->visible) {
 		_caretElement->visible = true;
 	}
 
+	//fix ui manager
 	_uiManager.resolvePositions();
 }
 
-void Navigation::updateTravel() { //TODO: Hide the nav points that get up above the drill icon
+void Navigation::updateTravel() {
 	if (_destination != -1) {
 		_progress += Jauntlet::Time::getDeltaTime() * _speed;
 		refreshPositions(_shiftPos.x * Jauntlet::Time::getDeltaTime() * _speed, _shiftPos.y * Jauntlet::Time::getDeltaTime() * _speed);
@@ -225,26 +232,29 @@ void Navigation::updateTravel() { //TODO: Hide the nav points that get up above 
 			//adjust for rows travelled
 			//std::cout << _rowsTravelled << std::endl;
 			
+			//remap coves linearly
+			_mappedCoves.clear();
+			for (int y = 0; y < layerCount; y++) {
+				for (int x = 0; x < layerWidth; x++) {
+					if (_map[y][x] != 0) _mappedCoves.push_back(_map[y][x]);
+				}
+			}
+			
+			//recycle map (spawn new points and remove old ones
 			recycleMap(_rowsTravelled);
 			_rowsTravelled = 0; //reset rows travelled
 			_columnsTravelled = 0; //reset columns travelled
 			_columnOver = layerWidth/2; //reset to middle
 			_drillRow = -1; //reset drill's row
+			_depth++; //increase depth
 
 			//Call outcove event
-			_mappedCoves.clear();
-			for (int y = 0; y < layerCount; y++) {
-				for (int x = 0; x < layerWidth; x++) {
-					if (_map[y][x] != 2) _mappedCoves.push_back(_map[y][x]);
-				}
-			}
-
-			spawnOutcove(_mappedCoves[_destination]);
+			spawnCavern(_mappedCoves[_destination]);
 			
 			_destination = -1; //set dest
 		}
 	} else {
-		_progress = 0.0f;
+		_progress = 0.0f; //no destination is set -- reset progress (to next dest)
 	}
 }
 
@@ -301,6 +311,10 @@ void Navigation::recycleMap(int r) {
 		}
 	}
 
+	for (int j = 0; j < _points.size(); j++) {
+		_points[j].visible = false;
+	}
+
 	//clear buttons
 	_uiManager.removeAllElements();
 
@@ -324,6 +338,20 @@ Jauntlet::UIManager* Navigation::getUIManager() {
 	return &_uiManager;
 }
 
-void Navigation::spawnOutcove(int type) {
+Jauntlet::UIManager* Navigation::getCavernManager() {
+	return _cavern.getUIManager();
+}
+
+void Navigation::setCavernPlayerManager(PlayerManager* manager) {
+	_cavern.setPlayerManager(manager);
+}
+
+void Navigation::spawnCavern(int type) {
 	std::cout << "type: " << type << std::endl;
+	_cavern.setType(type);
+	_cavern.display();
+}
+
+int Navigation::getDepth() {
+	return _depth;
 }

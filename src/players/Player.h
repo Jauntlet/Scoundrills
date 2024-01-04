@@ -9,6 +9,7 @@
 #include "../pathfinding/PathRenderer.h"
 #include <Jauntlet/Rendering/ProgressBar.h>
 #include <Jauntlet/Rendering/Animation/Animation.h>
+#include <Jauntlet/Audio/AudioSource.h>
 
 class Player
 {
@@ -23,6 +24,12 @@ public:
 	void navigateTo(DrillManager& drill, PathRenderer& pathRenderer, glm::vec2 position);
 
 	void setSpeed(float newSpeed);
+	// Returns true if the player dies
+	bool damage(int damage);
+	// returns health of the player
+	int getHealth() const;
+	// returns if the player is currently moving
+	bool isMoving() const;
 
 	glm::vec2 getPosition() const;
 	glm::vec2 getDestination() const;
@@ -35,7 +42,6 @@ public:
 
 	Jauntlet::BoxCollider2D collider;
 	Holdable* heldItem = nullptr;
-	float health = 30.0f;
 private:
 	// runs when player reaches destination
 	void onDestination(DrillManager& drill);
@@ -43,6 +49,7 @@ private:
 	glm::vec2 _position = glm::vec2(0,0);
 	std::vector<glm::vec2> _path;
 
+	int _health = 30;
 	float _speed = 300.0f, _storedVelocity = 0.0f;
 
 	PlayerStation* _station = nullptr;
@@ -53,8 +60,11 @@ private:
 	Jauntlet::Animation _animation = Jauntlet::Animation(28);
 	Jauntlet::ProgressBar _healthBar;
 	glm::vec2 _moveDir = glm::vec2(0);
-	bool _flipped = false;
+	bool _flipped = false, _moving = false;
+
+	// Sounds
+	Jauntlet::AudioSource _soundSource = Jauntlet::AudioSource(glm::vec3(_position, 0));
 
 	// data stored specifically for saving
-	uint16_t _playerID = 0;	
+	uint8_t _playerID = 0;	
 };

@@ -2,7 +2,7 @@
 #include "DrillManager.h"
 #include "../players/PlayerManager.h"
 #include "src/interactable/Holdable.h"
-#include "../CameraManager.h"
+#include "../scenes/MainGame/CameraManager.h"
 
 const float HEAT_RISE_SCALE = .3f; //1 heat every ~3 seconds.
 const float HEAT_FALL_SCALE = .1f; //1 heat every 10 seconds.
@@ -12,19 +12,18 @@ const float PIPE_BURST_HEAT = 80.0f; // The minimum heat for pipes to be able to
 DrillManager::DrillManager(CameraManager* cameraManager, PlayerResources& resourceManager, Jauntlet::Camera2D* camera) :
 	_drillAssets(camera),
 	resources(&resourceManager),
-	navigation(camera),
+	navigation(camera, &resourceManager),
 	_boiler(&boilerWater, "Textures/BoilerTank.png", { 64 * 16, -64 * 1 - 10, 32 * 2, 43 * 2 }, 5, { 64 * 15.5, -64 * 2, 64 * 2, 96 * 2 }, { 16,-64 }),
-	_waterTank(*this, { 64, -64 * 12, 128, 256 }, glm::vec2(0,-64)),
+	_waterTank(*this, { 64, -64 * 12, 128, 224 }, glm::vec2(0,-96)),
 	_forge(*this, {64 * 15, -64 * 13, 64 * 2, 64 * 2}, glm::vec2(0, -32)),
-	_pipeWorkbench(*this, { 64 * 18, -64 * 13, 64, 64 }, { 64 * 18, -64 * 13, 64, 64 }, glm::vec2(0))
+	_pipeWorkbench(*this, { 64 * 18, -64 * 13, 64, 64 }, { 64 * 18, -64 * 13, 64, 64 }, glm::vec2(0)),
+	_cameraManager(cameraManager)
 {
 	drillFloor.loadTileMap("Levels/DrillFloor.JML");
 	drillWalls.loadTileMap("Levels/DrillWall.JML");
 	pipes.loadTileMap("Levels/Pipes.JML");
 	
 	on();
-
-	_cameraManager = cameraManager;
 
 	navigation.genNav();
 }
@@ -137,7 +136,9 @@ bool DrillManager::isValidDestination(glm::vec2 worldPos, PlayerManager* playerM
 		return false;
 	} else if (doesTileOverlapStations(pos)) {
 		return false;
-	} else return Pathfinding::isReachable(*this, *playerManager, playerManager->getSelectedPlayer()->getPosition(), worldPos + glm::vec2(0,64));
+	} else if (playerManager->getSelectedPlayer() != nullptr) {
+	return Pathfinding::isReachable(*this, *playerManager, playerManager->getSelectedPlayer()->getPosition(), worldPos + glm::vec2(0,64));
+	} else return true;	
 }
 
 bool DrillManager::isValidPath(glm::vec2 worldPos, PlayerManager* playerManager) const {
@@ -299,5 +300,5 @@ void DrillManager::placeScrap() {
 		position = drillFloor.TilePosToWorldPos(drillFloor.selectRandomTile(1));
 	}
 
-	addHoldable("Textures/ResourceIcon.png", position, glm::vec2(32), HoldableType::SCRAP);
+	addHoldable("Textures/Scrap.png", position, glm::vec2(32), HoldableType::SCRAP);
 }

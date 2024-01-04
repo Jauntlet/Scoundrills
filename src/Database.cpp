@@ -165,7 +165,7 @@ bool Database::TrySavePlayer(const Player& player, int itemID) {
     float positionX = player.getPosition().x;
     float positionY = player.getPosition().y;
     int heldItemID  = itemID;
-    int health      = player.health;
+    int health      = player.getHealth();
     int texture     = player.getPlayerID();
     
 	std::string command = "INSERT INTO Players (saveID, positionX, positionY, heldItemId, health, textureId) VALUES("

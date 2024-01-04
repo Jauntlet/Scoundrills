@@ -7,6 +7,7 @@ Player::Player(const glm::vec2& position, const std::string& texture) :
 	_healthBar("Textures/healthbar.png", glm::vec4(0, 0, 0.5, 1), glm::vec4(0.5,0,0.5,1), glm::vec4(_position.x + 8, _position.y + 68, 48, 8)),	
 	_texture(Jauntlet::ResourceManager::getTexture(texture).id)
 {
+	_animation.stop(0);
 	_animation.play(0,1,0.5f);
 }
 Player::~Player() {
@@ -84,9 +85,11 @@ void Player::update(DrillManager& drill) {
 		}
 	}
 	_animation.update();
-	
+	_soundSource.update();
+
 	//update collider
 	collider.position = _position;
+	_healthBar.position = _position + glm::vec2(8, 68);
 }
 
 void Player::draw(Jauntlet::SpriteBatch& spriteBatch) {
@@ -97,9 +100,8 @@ void Player::draw(Jauntlet::SpriteBatch& spriteBatch) {
 		spriteBatch.draw({ _position.x, _position.y, 64, 64 }, _animation.getUV(), _texture, 0);
 	}
 
-	if (health != 30) {
-		_healthBar.progress = health / 30;
-		_healthBar.position += glm::vec2(8, 68);
+	if (_health != 30) {
+		_healthBar.progress = _health / 30.0f;
 		_healthBar.draw(spriteBatch);
 	}
 }
@@ -177,11 +179,26 @@ void Player::navigateTo(DrillManager& drill, PathRenderer& pathRenderer, glm::ve
 			_animation.play(2, 9, 0.05f);
 		}
 
+		_moving = true;
 	}
 }
 
 void Player::setSpeed(float newSpeed) {
 	_speed = newSpeed;
+}
+bool Player::damage(int damage) {
+	_health -= damage;
+
+	_soundSource.setPosition(glm::vec3(_position, 0));
+	_soundSource.playWAV("Sounds/hurt.wav");
+
+	return _health <= 0;
+}
+int Player::getHealth() const {
+	return _health;
+}
+bool Player::isMoving() const {
+	return _moving;
 }
 
 glm::vec2 Player::getPosition() const {
@@ -250,4 +267,6 @@ void Player::onDestination(DrillManager& drill) {
 			drill.removeHoldable(heldItem);
 		}
 	}
+
+	_moving = false;
 }

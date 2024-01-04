@@ -6,6 +6,7 @@ Forge::Forge(DrillManager& drill, glm::vec4 destination, glm::vec2 anchorPointOf
 	AnimatedPlayerStation("Textures/Furnace.png", destination, 6, destination, anchorPointOffset),
 	_drill(&drill)
 {
+	animation.stop(0);
 	animation.play(0, 2, 0.3f);
 }
 

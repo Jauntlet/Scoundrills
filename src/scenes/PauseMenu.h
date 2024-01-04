@@ -15,7 +15,7 @@ private:
 	enum class PauseState { HIDDEN, SETTINGS, PAUSED };
 public:
 	
-	PauseMenu(SceneManager* sceneManager);
+	PauseMenu();
 
 	void update();
 	void draw();
@@ -36,8 +36,6 @@ private:
 	void toMainMenu();
 	// Toggle fullscreen
 	void toggleFullscreen();
-
-	SceneManager* _sceneManager;
 
 	// Default UI parameters
 	PauseState _state = PauseState::HIDDEN;
