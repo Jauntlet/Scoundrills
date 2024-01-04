@@ -74,7 +74,7 @@ void MainMenu::startSavedGame(int ID) {
 	GlobalContext::sceneManager->loadGame(ID);
 }
 void MainMenu::startGame() {
-	GlobalContext::sceneManager->switchScene(GameState::ROGUEGALLERY);
+	GlobalContext::sceneManager->loadRoguesGallery(false);
 }
 
 void MainMenu::startTutorial() {
