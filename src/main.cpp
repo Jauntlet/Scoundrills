@@ -1,7 +1,8 @@
-#include "scenes/GlobalContext.h"
+#include "scenes/SceneManager.h"
 #include "Database.h"
 
 int main(int argc, char** argv) {
-	GlobalContext::initContext();
+	Database db(69);
+	db.Test();
 	return 0;
 }
