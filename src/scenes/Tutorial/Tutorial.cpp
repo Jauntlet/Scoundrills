@@ -127,6 +127,9 @@ void Tutorial::processInput() {
 
 	if (!_cameraLocked) {
 		_cameraManager.processInput();
+	} else {
+		_cameraManager._oldMouse = GlobalContext::inputManager.getMouseCoords();
+		_cameraManager._deltaMouse = glm::vec2(0);
 	}
 
 	if (GlobalContext::inputManager.lastButtonPressed() != SDLK_ESCAPE || GlobalContext::inputManager.isKeyPressed(SDL_BUTTON_LEFT)) {
