@@ -70,8 +70,6 @@ void Database::Test() {
         std::cout << "TrySaveDrill FAILED" << std::endl;
     }
 
-    sqlite3_close(database);
-
     PlayerResources playerResources;
 
     TryLoadInResources(_saveID, playerResources);
