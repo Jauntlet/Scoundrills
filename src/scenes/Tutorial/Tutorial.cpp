@@ -67,7 +67,6 @@ void Tutorial::nextDialogue() {
 			_dialogue.pushNewText("Here is the layout of the drill.\nTraversing quickly is key\nto operating it.");
 			break;
 		case 3:
-			_cameraManager.clearMovement();
 			_cameraLocked = false;
 			_dialogue.pushNewText("Try moving around your view\nby using WASD.");
 			break;

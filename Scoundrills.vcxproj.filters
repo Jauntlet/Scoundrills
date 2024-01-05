@@ -96,6 +96,9 @@
     <ClCompile Include="src\scenes\Tutorial\Officer.cpp">
       <Filter>scenes\Tutorial</Filter>
     </ClCompile>
+    <ClCompile Include="src\interactable\specificStations\Fridge.cpp">
+      <Filter>interactable\specificStations</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\players\Player.h">
@@ -194,6 +197,9 @@
     </ClInclude>
     <ClInclude Include="src\scenes\Tutorial\Officer.h">
       <Filter>scenes\Tutorial</Filter>
+    </ClInclude>
+    <ClInclude Include="src\interactable\specificStations\Fridge.h">
+      <Filter>interactable\specificStations</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
