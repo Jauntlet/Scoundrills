@@ -15,6 +15,7 @@ class Player
 {
 public:
 	Player(const glm::vec2& position, uint8_t playerID, bool isCop = false);
+	Player(const glm::vec2& position, uint8_t playerID, int health, bool isCop = false);
 	~Player();
 
 	void update(DrillManager& drill);
