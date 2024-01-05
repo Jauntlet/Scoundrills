@@ -16,7 +16,7 @@ DrillManager::DrillManager(CameraManager* cameraManager, PlayerResources& resour
 	boiler(&boilerWater, "Textures/BoilerTank.png", { 64 * 16, -64 * 1 - 10, 32 * 2, 43 * 2 }, 5, { 64 * 15.5, -64 * 2, 64 * 2, 96 * 2 }, { 16,-64 }),
 	_waterTank(*this, { 64, -64 * 12, 128, 224 }, glm::vec2(0,-96)),
 	_forge(*this, {64 * 15, -64 * 13, 64 * 2, 64 * 2}, glm::vec2(0, -32)),
-	_pipeWorkbench(*this, { 64 * 18, -64 * 13, 64, 64 }, { 64 * 18, -64 * 13, 64, 64 }, glm::vec2(0)),
+	_pipeWorkbench(*this, { 64 * 17, -64 * 20, 128, 128 }, { 64 * 17, -64 * 20, 128, 128 }, glm::vec2(0,-64)),
 	_cameraManager(cameraManager)
 {
 	drillFloor.loadTileMap("Levels/DrillFloor.JML");

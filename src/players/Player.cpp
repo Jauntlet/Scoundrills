@@ -12,6 +12,17 @@ Player::Player(const glm::vec2& position, uint8_t playerID, bool isCop) :
 	_animation.stop(0);
 	_animation.play(0,1,0.5f);
 }
+Player::Player(const glm::vec2& position, uint8_t playerID, int health, bool isCop) :
+	collider(Jauntlet::BoxCollider2D(glm::vec2(64), position)),
+	_position(position),
+	_healthBar("Textures/healthbar.png", glm::vec4(0, 0, 0.5, 1), glm::vec4(0.5, 0, 0.5, 1), glm::vec4(_position.x + 8, _position.y + 68, 48, 8)),
+	_playerID(playerID),
+	_texture(Jauntlet::ResourceManager::getTexture(GlobalContext::playerIDtoTexture(playerID, isCop)).id),
+	_health(health)
+{
+	_animation.stop(0);
+	_animation.play(0, 1, 0.5f);
+}
 Player::~Player() {
 	if (_station != nullptr) {
 		_station->unoccupy();

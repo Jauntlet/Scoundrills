@@ -33,5 +33,7 @@ void Fridge::update() {
         _currentPlayer->heal(1);
         _resources->food -= 1;
         }
+    } else {
+        animation.stop(0);
     }
 }
