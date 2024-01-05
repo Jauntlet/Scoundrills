@@ -2,6 +2,8 @@
 #include "src/interactable/Holdable.h"
 #include "../scenes/GlobalContext.h"
 
+#define min min
+
 Player::Player(const glm::vec2& position, uint8_t playerID, bool isCop) :
 	collider(Jauntlet::BoxCollider2D(glm::vec2(64), position)),
 	_position(position),
@@ -208,7 +210,7 @@ bool Player::damage(int damage) {
 	return _health <= 0;
 }
 void Player::heal(int heal) {
-	_health = std::min(30, _health + heal);
+	_health = glm::min(30, _health + heal);
 }
 int Player::getHealth() const {
 	return _health;
