@@ -236,6 +236,12 @@ void Player::forceDropItem() {
 	heldItem = nullptr;
 }
 
+void Player::forceData(float positionX, float positionY, int heldItemID, int health, int playerID) {
+	_position = glm::vec2(positionX, positionY);
+	_health = health;
+	_playerID = playerID;
+}
+
 void Player::onDestination(DrillManager& drill) {
 	// remove all stored velocity.
 	_storedVelocity = 0;

@@ -1,9 +1,10 @@
-#include "Tutorial.h"
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
 #include <SDL2/SDL_keycode.h>
 #include <SDL2/SDL_mouse.h>
+
 #include "../MainGame/UICoordinator.h"
 #include "../PauseMenu.h"
+#include "Tutorial.h"
 #include "src/scenes/GlobalContext.h"
 #include "src/scenes/Tutorial/Dialogue.h"
 

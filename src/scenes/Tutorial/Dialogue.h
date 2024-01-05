@@ -1,10 +1,12 @@
 #pragma once
+
+#include <Jauntlet/Rendering/Textures/ResourceManager.h>
 #include <Jauntlet/UI/UIManager.h>
 #include <Jauntlet/UI/UISpriteElement.h>
 #include <Jauntlet/UI/UITextElement.h>
-#include <Jauntlet/Rendering/Textures/ResourceManager.h>
-#include "../GlobalContext.h"
 #include <deque>
+
+#include "../GlobalContext.h"
 
 const float TEXT_SPEED = 0.025f;
 

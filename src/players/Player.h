@@ -43,6 +43,9 @@ public:
 	// forces the player to drop his item; called when the item is destroyed
 	void forceDropItem();
 
+	// forces data onto the player because i'm lazy --- HACK!!!
+	void forceData(float positionX, float positionY, int heldItemID, int health, int playerID);
+
 	Jauntlet::BoxCollider2D collider;
 	Holdable* heldItem = nullptr;
 private:

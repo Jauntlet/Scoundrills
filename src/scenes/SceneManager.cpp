@@ -1,7 +1,8 @@
-#include "SceneManager.h"
 #include <Jauntlet/Time.h>
+
 #include "GlobalContext.h"
 #include "PauseMenu.h"
+#include "SceneManager.h"
 
 SceneManager::SceneManager() {
     Jauntlet::ResourceManager::setMissingTexture("Textures/missing.png");
@@ -54,20 +55,20 @@ void SceneManager::gameLoop() {
         }
 
         switch (_gameState) {
-        case (GameState::MAINGAME):
-            _mainGame->gameLoop();
-            break;
-        case (GameState::MAINMENU):
-            _mainMenu->gameLoop();
-            break;
-        case (GameState::ROGUEGALLERY):
-            _rogueGallery->gameLoop();
-            break;
-        case (GameState::TUTORIAL):
-            _tutorial->gameLoop();
-            break;
+            case (GameState::MAINGAME):
+                _mainGame->gameLoop();
+                break;
+            case (GameState::MAINMENU):
+                _mainMenu->gameLoop();
+                break;
+            case (GameState::ROGUEGALLERY):
+                _rogueGallery->gameLoop();
+                break;
+            case (GameState::TUTORIAL):
+                _tutorial->gameLoop();
+                break;
         }
- 
+
         GlobalContext::pauseMenu->update();
         GlobalContext::pauseMenu->draw();
 

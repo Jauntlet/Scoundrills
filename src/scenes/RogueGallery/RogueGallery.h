@@ -2,13 +2,15 @@
  * Main Contributer(s): Xander Mooney
  */
 #pragma once
+
 #include <Jauntlet/Audio/AudioSource.h>
+#include <Jauntlet/Rendering/Textures/ResourceManager.h>
+#include <Jauntlet/UI/UIButtonElement.h>
 #include <Jauntlet/UI/UIManager.h>
 #include <Jauntlet/UI/UITextElement.h>
-#include <Jauntlet/UI/UIButtonElement.h>
-#include <Jauntlet/Rendering/Textures/ResourceManager.h>
-#include "../GlobalContext.h"
 #include <deque>
+
+#include "../GlobalContext.h"
 #include "SelectableCrew.h"
 
 class SceneManager;

@@ -2,10 +2,12 @@
  * Main Contributer(s): Xander Mooney / Jack Kennedy
  */
 #pragma once
+
 #include <Jauntlet/Rendering/Animation/Animation.h>
 #include <Jauntlet/Rendering/Textures/SpriteBatch.h>
-#include <Jauntlet/UI/UIManager.h>
 #include <Jauntlet/UI/UIButtonElement.h>
+#include <Jauntlet/UI/UIManager.h>
+
 class SelectableCrew
 {
 public:

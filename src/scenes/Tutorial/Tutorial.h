@@ -2,15 +2,18 @@
  * Main Contributer(s): Xander Mooney
  */
 #pragma once
+
 #include <Jauntlet/Rendering/Cameras/Camera2D.h>
+
 #include "../../drill/DrillManager.h"
 #include "../../drill/PlayerResources.h"
-#include "TutorialUI.h"
-#include "../MainGame/CameraManager.h"
 #include "../../pathfinding/SelectedTileRenderer.h"
 #include "../GlobalContext.h"
+#include "../MainGame/CameraManager.h"
 #include "Dialogue.h"
 #include "Officer.h"
+#include "TutorialUI.h"
+
 class Tutorial
 {
 public:

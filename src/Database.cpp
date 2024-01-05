@@ -1,15 +1,14 @@
+#include <Jauntlet/Errors.h>
+#include <Jauntlet/Filesystems/FileManager.h>
 #include <cmath>
 #include <cstddef>
 #include <iostream>
+#include <vector>
 
 #include "Database.h"
 #include "src/drill/PlayerResources.h"
 #include "src/players/Player.h"
 #include "src/players/PlayerManager.h"
-#include <Jauntlet/Errors.h>
-#include <Jauntlet/Filesystems/FileManager.h>
-#include <vector>
-
 
 // values that would never show up realistically that we can use as placeholders
 #define TEST_INT -69
