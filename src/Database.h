@@ -35,7 +35,7 @@ private:
 	// returns resources
 	bool TryLoadInResources(int saveID, PlayerResources& playerResources);
 
-	bool TryLoadInPlayers(PlayerResources& playerResources);
+	bool TryLoadInPlayers(PlayerManager& playerManager);
 
 	int _saveID = 1;
 };

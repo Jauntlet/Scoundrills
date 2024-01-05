@@ -198,7 +198,7 @@ bool Database::TrySaveItem(const Holdable& holdable, int itemSaveID) {
 	return rc == SQLITE_OK;
 }
 
-bool Database::TryLoadInPlayers(PlayerResources& playerResources) {
+bool Database::TryLoadInPlayers(PlayerManager& playerManager) {
     // prepared sqlite "statement" (idk)
     sqlite3_stmt *stmt;
     
