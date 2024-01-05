@@ -58,7 +58,7 @@ void Database::Test() {
     _playerResources.copper = 4;
 
     if (TrySaveDrill(_playerResources)) {
-        std::cout << "saved drill, alledgedly" << std::endl;
+        std::cout << "drill saving confirmed" << std::endl;
     } else {
         std::cout << "TrySaveDrill FAILED" << std::endl;
     }
