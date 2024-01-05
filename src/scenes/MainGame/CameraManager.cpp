@@ -72,8 +72,6 @@ void CameraManager::processInput() {
 
 		float zoom = pow(1.1f, GlobalContext::inputManager.deltaScroll);
 
-		//glm::vec2 mouse = _camera->convertScreenToWorldDisregardPosition(_inputManager->getMouseCoords());
-
 		_camera->multiply(zoom);
 	}
 
