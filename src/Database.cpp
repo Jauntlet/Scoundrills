@@ -75,49 +75,6 @@ void Database::Test() {
 
     TryLoadInResources(_saveID, playerResources);
 
-    std::cout << playerResources.heat << ", " << playerResources.water << ", " << playerResources.food << ", " << playerResources.copper << std::endl;
-}
-
-
-Database::Database(int saveID) {
-    _saveID = saveID;
-    sqlite3_open((std::to_string(_saveID) + ".db").c_str(), &database);
-
-    sqlite3_exec(database, "DROP TABLE Players", nullptr, nullptr, nullptr);
-    sqlite3_exec(database, "DROP TABLE Drills", nullptr, nullptr, nullptr);
-    sqlite3_exec(database, "DROP TABLE Items", nullptr, nullptr, nullptr);
-
-    sqlite3_exec(database,
-        "CREATE TABLE IF NOT EXISTS Players ("
-        "saveID INTEGER,"
-        "positionX DOUBLE,"
-        "positionY DOUBLE,"
-        "heldItemId INTEGER,"
-        "health INTEGER,"
-        "textureId INTEGER"
-        ");",
-        nullptr, nullptr, nullptr);
-
-    sqlite3_exec(database,
-        "CREATE TABLE IF NOT EXISTS Drills ("
-        "saveID INTEGER,"
-        "heat DOUBLE,"
-        "water DOUBLE,"
-        "food INTEGER,"
-        "copper INTEGER"
-        ");",
-        nullptr, nullptr, nullptr);
-
-    sqlite3_exec(database,
-        "CREATE TABLE IF NOT EXISTS Items ("
-        "saveID INTEGER,"
-        "itemID INTEGER,"
-        "positionX DOUBLE,"
-        "positionY DOUBLE,"
-        "type TEXT"
-        ");",
-        nullptr, nullptr, nullptr);
-
     sqlite3_close(database);
 }
 
