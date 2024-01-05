@@ -108,8 +108,13 @@ void Tutorial::nextDialogue() {
 			_camera.transitionToPosition(glm::vec2(200, -675));
 			_hasControl = true;
 			_cameraManager.cameraUnlocked = false;
-			_dialogue.pushNewText("Try selecting a player and\nthen selecting the water tank.");
+			_dialogue.pushNewText("First click on a player!");
 			break;
+		case 13:
+			_dialogue.pushNewText("Now click on the boiler!");
+			break;
+		case 14:
+			_dialogue.pushNewText("");
 		default:
 			std::vector<uint8_t> output;
 			for (Player* player : _players.getAllPlayers()) {
@@ -130,7 +135,10 @@ void Tutorial::processInput() {
 	_cameraManager.processInput();
 
 	if (GlobalContext::inputManager.lastButtonPressed() != SDLK_ESCAPE || GlobalContext::inputManager.isKeyPressed(SDL_BUTTON_LEFT)) {
-		if (_sequence == 3) {
+		// in most cases, this switch statement will run the default case, however there are multiple cases
+		// in which there are special instructions to move onto the next dialogue.
+		switch (_sequence) {
+		case 3:
 			if (GlobalContext::inputManager.isKeyPressed(SDLK_w)) {
 				_pressedW = true;
 			}
@@ -146,19 +154,37 @@ void Tutorial::processInput() {
 			if (_pressedW && _pressedA && _pressedS && _pressedD) {
 				nextDialogue();
 			}
-		} else if (_sequence == 4) {
+			break;
+		case 4:
 			if (GlobalContext::inputManager.deltaScroll > 0) {
 				_scrolledUp = true;
-			} else if (GlobalContext::inputManager.deltaScroll < 0) {
+			}
+			else if (GlobalContext::inputManager.deltaScroll < 0) {
 				_scrolledDown = true;
-			} else if (_scrolledUp && _scrolledDown) {
+			}
+			else if (_scrolledUp && _scrolledDown) {
 				nextDialogue();
 			}
-		} else {
+			break;
+		case 12:
+			if (_players.getSelectedPlayer() != nullptr) {
+				nextDialogue();
+			}
+			break;
+		case 13:
+			if (_drill.boiler.isOccupied()) {
+				nextDialogue();
+			}
+			break;
+		case 14:
+			if (_drill.boilerWater != 0) {
+				nextDialogue();
+			}
+			break;
+		default:
 			_dialogue.doneReadingText() ? nextDialogue() : _dialogue.pushAllText();
 			GlobalContext::inputManager.clearLastButtonPressed();
 		}
-		
 	}
 
 	//open nav
@@ -192,7 +218,7 @@ void Tutorial::drawGame() {
 
 	_drill.drawLayerTwo();
 
-	if (!_hasControl && !GlobalContext::pauseMenu->isPaused()) {
+	if (_hasControl && !GlobalContext::pauseMenu->isPaused()) {
 		_selectedTile.draw(&_camera);
 	}
 

@@ -5,12 +5,12 @@
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
 
 Cavern::Cavern(PlayerResources* resourceManager, Jauntlet::Camera2D* Camera) :
-	_uiManager(Camera), _resources(resourceManager),
+	_uiManager(Camera), _resources(resourceManager), _camera(Camera),
 	_descriptionElement(GlobalContext::textRenderer, &_description, &_descriptionColor, &_descriptionPos, 0.3f)
 {
 	_backgroundTexture = Jauntlet::ResourceManager::getTexture("Textures/Caverns/cavernBackground.png").id;
 	_backgroundElement = Jauntlet::UISpriteElement(_backgroundTexture, &_backgroundPos, glm::vec2(1200, 900), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
-	_confirmTexture = Jauntlet::ResourceManager::getTexture("Textures/CheckBox.png").id; //temporary texture
+	_confirmTexture = Jauntlet::ResourceManager::getTexture("Textures/UIbutton.png").id; //temporary texture
 	_confirmButton = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&]() -> void { updateResources(); }, _confirmTexture, &_confirmPos, glm::vec2(100), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
 	_uiManager.addElement(&_backgroundElement, &GlobalContext::normalShader);
 	_uiManager.addElement(&_confirmButton, &GlobalContext::normalShader);
@@ -57,6 +57,10 @@ void Cavern::display() {
 	_backgroundElement.visible = true;
 	_confirmButton.visible = true;
 	_descriptionElement.visible = true;
+}
+
+void Cavern::onScreenResize() {
+	_descriptionPos = glm::vec2(_camera->getSize().x/5, 150);
 }
 
 void Cavern::updateResources() {

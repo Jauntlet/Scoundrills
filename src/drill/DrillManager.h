@@ -52,7 +52,7 @@ public:
 	bool DestMatchesRandomPipe(const glm::vec2& worldPos) const;
 
 	// adds a holdable item to be managed by the drillManager.
-	Holdable* addHoldable(const std::string& texture, const glm::vec2& position, const glm::vec2& size, const HoldableType& type = HoldableType::NONE);
+	Holdable* addHoldable(const glm::vec2& position, const HoldableType& type = HoldableType::NONE);
 	// removes the holdable from the drillManagers references.
 	void removeHoldable(Holdable* holdable);
 	// gives you a pointer to a holdable if it matches the given position
