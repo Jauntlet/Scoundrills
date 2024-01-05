@@ -2,6 +2,7 @@
 #include "Database.h"
 
 int main(int argc, char** argv) {
-	Database db;
+	Database db(69);
+	db.Test();
 	return 0;
 }
