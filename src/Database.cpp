@@ -49,6 +49,7 @@ Database::Database(int saveID) {
         ");",
         nullptr, nullptr, nullptr);
 
+void Database::Test() {
     PlayerResources _playerResources;
 
     _playerResources.heat = 1.0f;

@@ -15,6 +15,9 @@ public:
 	Database();
 
 	Database(int saveID);
+
+	// test the database
+	void Test();
 private:
 	sqlite3* database;
 
