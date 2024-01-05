@@ -76,6 +76,8 @@ void Database::Test() {
     TryLoadInResources(_saveID, playerResources);
 
     sqlite3_close(database);
+
+    std::cout << playerResources.heat << ", " << playerResources.water << ", " << playerResources.food << ", " << playerResources.copper << std::endl;
 }
 
 bool Database::TrySave(DrillManager& drill, PlayerManager& playerManager) {
