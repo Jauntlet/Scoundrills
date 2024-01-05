@@ -5,9 +5,16 @@
 #include "Database.h"
 #include "src/drill/PlayerResources.h"
 #include "src/players/Player.h"
+#include "src/players/PlayerManager.h"
 #include <Jauntlet/Errors.h>
 #include <Jauntlet/Filesystems/FileManager.h>
 #include <vector>
+
+
+// values that would never show up realistically that we can use as placeholders
+#define TEST_INT -69
+#define TEST_FLOAT -69.420
+#define TEST_STRING "sixty nine four hundred twenty"
 
 Database::Database(int saveID) {
     _saveID = saveID;
@@ -202,8 +209,15 @@ bool Database::TryLoadInPlayers(PlayerManager& playerManager) {
     // prepared sqlite "statement" (idk)
     sqlite3_stmt *stmt;
     
+    // test values, these should NEVER appear in game.
+    float positionX = TEST_FLOAT;
+    float positionY = TEST_FLOAT;
+    int heldItemID  = TEST_INT;
+    int health      = TEST_INT;
+    int texture     = TEST_INT;
+
     // our query
-    // grab everything from Drills
+    // grab everything from Players
     const char *query = "SELECT * FROM Players";
 
     // try preparing the database
@@ -214,12 +228,9 @@ bool Database::TryLoadInPlayers(PlayerManager& playerManager) {
         return false;
     }
 
-    float heat  = -69.420f; //playerResources.heat;
-    float water = -69.420f; //playerResources.water;
-    int food    = -69; //playerResources.food;
-    int copper  = -69; //playerResources.copper;
-
     int row = 0;
+
+    std::vector<Player> players;
 
     // process query
     while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
@@ -229,11 +240,14 @@ bool Database::TryLoadInPlayers(PlayerManager& playerManager) {
             continue;
         }
         
-        heat = sqlite3_column_double(stmt, 1);
-        water = sqlite3_column_double(stmt, 2);
-        food = sqlite3_column_int(stmt, 3);
-        copper = sqlite3_column_int(stmt, 4);
+        // TODO:FIXME
         
+        positionX  = sqlite3_column_double(stmt, 1);
+        positionY  = sqlite3_column_double(stmt, 2);
+        heldItemID = sqlite3_column_int(stmt, 3);
+        health     = sqlite3_column_int(stmt, 4);
+        texture    = sqlite3_column_int(stmt, 5);
+
         ++row;
     }
 
@@ -246,11 +260,10 @@ bool Database::TryLoadInPlayers(PlayerManager& playerManager) {
     // finalize the statement (i still dont know)
     sqlite3_finalize(stmt);
 
-    // replace playerResources
-    playerResources.heat = heat;
-    playerResources.water = water;
-    playerResources.food = food;
-    playerResources.copper = copper;
+    // replace players
+
+    // TODO:FIXME
+    
 
     // we did it!!!
     return true;
@@ -272,10 +285,10 @@ bool Database::TryLoadInResources(int saveID, PlayerResources& playerResources) 
         return false;
     }
 
-    float heat  = -69.420f; //playerResources.heat;
-    float water = -69.420f; //playerResources.water;
-    int food    = -69; //playerResources.food;
-    int copper  = -69; //playerResources.copper;
+    float heat  = TEST_FLOAT; //playerResources.heat;
+    float water = TEST_FLOAT; //playerResources.water;
+    int food    = TEST_INT; //playerResources.food;
+    int copper  = TEST_INT; //playerResources.copper;
 
     int row = 0;
 
@@ -287,16 +300,18 @@ bool Database::TryLoadInResources(int saveID, PlayerResources& playerResources) 
             continue;
         }
         
-        heat = sqlite3_column_double(stmt, 1);
-        water = sqlite3_column_double(stmt, 2);
-        food = sqlite3_column_int(stmt, 3);
+        heat   = sqlite3_column_double(stmt, 1);
+        water  = sqlite3_column_double(stmt, 2);
+        food   = sqlite3_column_int(stmt, 3);
         copper = sqlite3_column_int(stmt, 4);
         
         ++row;
+
+        break;
     }
 
     if (rc == SQLITE_DONE) {
-        std::cout << "we are done reading DB, " << row << " rows" << std::endl;
+        std::cout << "we are done reading DB, searched " << row << " rows" << std::endl;
     } else {
         std::cout << "some sort of error, i guess. please check the DB manually" << std::endl;
     }
