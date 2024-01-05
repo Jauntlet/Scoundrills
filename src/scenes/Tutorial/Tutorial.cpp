@@ -57,10 +57,10 @@ void Tutorial::nextDialogue() {
 
 	switch (_sequence) {
 		case 1:
-			_dialogue.pushNewText("This gal is a relic\nbut she gets the job done.");
+			_dialogue.pushNewText("This gal is an old relic\nbut she gets the job done.");
 			break;
 		case 2:
-			_camera.transitionToPosition(glm::vec2(24 * 64 * 0.5f, 30 * 64 * 0.5f * -1));
+			_camera.transitionToPosition(glm::vec2(275, -480));
 			_camera.transitionToScale(0.25f);
 			_dialogue.pushNewText("Here is the layout of the drill.\nTraversing quickly is key\nto operating it.");
 			break;
