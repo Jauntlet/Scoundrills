@@ -199,50 +199,62 @@ bool Database::TrySaveItem(const Holdable& holdable, int itemSaveID) {
 }
 
 bool Database::TryLoadInPlayers(PlayerResources& playerResources) {
-/*
-    // prepared sqlite3 db
+    // prepared sqlite "statement" (idk)
     sqlite3_stmt *stmt;
+    
+    // our query
+    // grab everything from Drills
+    const char *query = "SELECT * FROM Players";
 
-    // Open the database connection
-    int rc = sqlite3_open("your_database.db", &database);
-
-    if (rc != SQLITE_OK) {
-        std::cerr << "Cannot open database: " << sqlite3_errmsg(database) << std::endl;
-        return rc;
-    }
-
-    // Execute a SELECT query
-    const char *query = "SELECT * FROM your_table";
-    rc = sqlite3_prepare_v2(database, query, -1, &stmt, nullptr);
+    // try preparing the database
+    int rc = sqlite3_prepare_v2(database, query, -1, &stmt, nullptr);
 
     if (rc != SQLITE_OK) {
-        std::cerr << "Cannot execute query: " << sqlite3_errmsg(database) << std::endl;
-        sqlite3_close(database);
-        return rc;
-    }
-
-    // Fetch and process the results
-    while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
-        // Access data using sqlite3_column_* functions and store it in a variable
-        // Example: int id = sqlite3_column_int(stmt, 0);
-        // Process and store the data as needed
-    }
-
-    // Finalize the statement and close the database connection
-    sqlite3_finalize(stmt);
-    sqlite3_close(database);
-*/
-    return false;
-}
-
-bool Database::TryLoadInResources(int saveID, PlayerResources& playerResources) {
-    // try opening the database
-    int rc = sqlite3_open((std::to_string(saveID) + ".db").c_str(), &database);
-
-    if (rc != SQLITE_OK) {
-        // database couldnt be opened
+        // database couldn't be prepared
         return false;
     }
+
+    float heat  = -69.420f; //playerResources.heat;
+    float water = -69.420f; //playerResources.water;
+    int food    = -69; //playerResources.food;
+    int copper  = -69; //playerResources.copper;
+
+    int row = 0;
+
+    // process query
+    while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+        
+        if (sqlite3_column_int(stmt, 0) != _saveID) {
+            ++row;
+            continue;
+        }
+        
+        heat = sqlite3_column_double(stmt, 1);
+        water = sqlite3_column_double(stmt, 2);
+        food = sqlite3_column_int(stmt, 3);
+        copper = sqlite3_column_int(stmt, 4);
+        
+        ++row;
+    }
+
+    if (rc == SQLITE_DONE) {
+        std::cout << "we are done reading DB, " << row << " rows" << std::endl;
+    } else {
+        std::cout << "some sort of error, i guess. please check the DB manually" << std::endl;
+    }
+
+    // finalize the statement (i still dont know)
+    sqlite3_finalize(stmt);
+
+    // replace playerResources
+    playerResources.heat = heat;
+    playerResources.water = water;
+    playerResources.food = food;
+    playerResources.copper = copper;
+
+    // we did it!!!
+    return true;
+}
 
 bool Database::TryLoadInResources(int saveID, PlayerResources& playerResources) {
     // prepared sqlite "statement" (idk)
