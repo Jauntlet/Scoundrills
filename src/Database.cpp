@@ -117,8 +117,6 @@ bool Database::TrySave(DrillManager& drill, PlayerManager& playerManager) {
         }
     }
 
-
-
     return true;
 }
 
