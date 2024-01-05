@@ -18,8 +18,8 @@ public:
 
 	void update();
 
-	glm::vec2 _oldMouse = glm::vec2(0);
-	glm::vec2 _deltaMouse = glm::vec2(0);
+
+	bool cameraUnlocked = true;
 private:
 	Jauntlet::Camera2D* _camera;
 
@@ -30,6 +30,9 @@ private:
 	Jauntlet::InputKey _moveRight;
 	Jauntlet::InputKey _moveUp;
 	Jauntlet::InputKey _moveDown;
+
+	glm::vec2 _oldMouse = glm::vec2(0);
+	glm::vec2 _deltaMouse = glm::vec2(0);
 
 	float _cameraShakeCooldown = 5.0f;
 };
