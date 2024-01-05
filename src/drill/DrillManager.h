@@ -41,6 +41,7 @@ public:
 	bool isValidDestination(glm::vec2 worldPos, PlayerManager* playerManager) const;
 	bool isValidPath(glm::vec2 worldPos, PlayerManager* playerManager) const;
 	bool isValidPath(glm::vec2 worldPos) const;
+	bool isSteeringWheelOccupied() const;
 
 	PlayerStation* checkHoveringStation(glm::vec2 position);
 	bool doesTileOverlapStations(glm::ivec2 tilePos) const;
@@ -65,6 +66,7 @@ public:
 	float boilerWater = Boiler::BOILER_MAX_WATER;
 	Navigation navigation;
 	PlayerResources* resources;
+	Boiler boiler;
 private:
 	// Commits a random disaster
 	void DisasterEvent();
@@ -75,7 +77,6 @@ private:
 
 	// Drill assets / Pieces
 	DrillAssetRenderer _drillAssets;
-	Boiler _boiler;
 	WaterTank _waterTank;
 	Forge _forge;
 	PipeWorkbench _pipeWorkbench;

@@ -27,6 +27,7 @@ void Dialogue::resize() {
 }
 
 void Dialogue::pushNewText(std::string newText) {
+	_storedText.clear();
 	for (auto& c : newText) {
 		_storedText.push_back(c);
 	}
