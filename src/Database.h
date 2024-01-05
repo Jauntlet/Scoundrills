@@ -16,14 +16,15 @@ public:
 
 	Database(int saveID);
 
+	// try to save the game
+	bool TrySave(DrillManager& drill, PlayerManager& playerManager);
+
 	// test the database
 	void Test();
 private:
 	sqlite3* database;
 
 	// === saving methods === 
-
-	bool TrySave(DrillManager& drill, PlayerManager& playerManager);
 
 	bool TrySavePlayer(const Player& player, int itemID);
 
