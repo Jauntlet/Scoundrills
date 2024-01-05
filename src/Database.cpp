@@ -175,6 +175,7 @@ bool Database::TrySaveItem(const Holdable& holdable, int itemSaveID) {
     float positionX  = holdable.position.x;
     float positionY  = holdable.position.y;
     std::string type = "";
+
     switch (holdable.itemType) {
         case (HoldableType::ICE):
             type = "ICE";
@@ -260,7 +261,7 @@ bool Database::TryLoadInPlayers(PlayerManager& playerManager) {
     if (rc == SQLITE_DONE || rc == SQLITE_ROW) {
         std::cout << "we are done reading DB, searched " << row << " rows" << std::endl;
     } else {
-        std::cout << "some sort of error, i guess. please check the DB manually: " << rc << std::endl;
+        std::cout << "error! query ended with code " << rc << std::endl;
     }
 
     // finalize the statement (i still dont know)
@@ -269,7 +270,6 @@ bool Database::TryLoadInPlayers(PlayerManager& playerManager) {
     // replace players
 
     // TODO:FIXME
-    
 
     // we did it!!!
     return true;
@@ -319,7 +319,7 @@ bool Database::TryLoadInResources(int saveID, PlayerResources& playerResources) 
     if (rc == SQLITE_DONE || rc == SQLITE_ROW) {
         std::cout << "we are done reading DB, searched " << row << " rows" << std::endl;
     } else {
-        std::cout << "some sort of error, i guess. please check the DB manually: " << rc << std::endl;
+        std::cout << "error! query ended with code " << rc << std::endl;
     }
 
     // finalize the statement (i still dont know)
