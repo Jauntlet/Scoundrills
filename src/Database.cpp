@@ -49,6 +49,11 @@ Database::Database(int saveID) {
         ");",
         nullptr, nullptr, nullptr);
 
+    sqlite3_close(database);
+
+    std::cout << "database created!" << std::endl;
+}
+
 void Database::Test() {
     sqlite3_open((std::to_string(_saveID) + ".db").c_str(), &database);
 
