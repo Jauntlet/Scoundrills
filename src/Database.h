@@ -12,8 +12,6 @@
 #include "drill/DrillManager.h"
 class Database {
 public:
-	Database();
-
 	Database(int saveID);
 
 	// try to save the game
