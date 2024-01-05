@@ -43,6 +43,7 @@ Database::Database(int saveID) {
     sqlite3_exec(database,
         "CREATE TABLE IF NOT EXISTS Items ("
         "saveID INTEGER,"
+        "itemID INTEGER,"
         "positionX DOUBLE,"
         "positionY DOUBLE,"
         "type TEXT"
