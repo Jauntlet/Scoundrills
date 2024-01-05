@@ -29,6 +29,8 @@ Tutorial::Tutorial(const std::vector<uint8_t>& playerIDs) {
 	_dialogue.pushNewText("Welcome new recruits!\nToday we will be going over\noperating the drill.");
 
 	GlobalContext::inputManager.clearLastButtonPressed();
+
+	_cameraManager.cameraUnlocked = false;
 }
 
 void Tutorial::windowResized() {
@@ -67,14 +69,14 @@ void Tutorial::nextDialogue() {
 			_dialogue.pushNewText("Here is the layout of the drill.\nTraversing quickly is key\nto operating it.");
 			break;
 		case 3:
-			_cameraLocked = false;
+			_cameraManager.cameraUnlocked = true;
 			_dialogue.pushNewText("Try moving around your view\nby using WASD.");
 			break;
 		case 4:
 			_dialogue.pushNewText("Great! Now use your scroll\nwheel to zoom in and out!");
 			break;
 		case 5:
-			_cameraLocked = true;
+			_cameraManager.cameraUnlocked = false;
 			_dialogue.pushNewText("Brilliant! Now lets learn\nabout operating the drill!");
 			break;
 		case 6:
@@ -105,7 +107,7 @@ void Tutorial::nextDialogue() {
 			_camera.transitionToScale(0.6f);
 			_camera.transitionToPosition(glm::vec2(200, -675));
 			_hasControl = true;
-			_cameraLocked = false;
+			_cameraManager.cameraUnlocked = false;
 			_dialogue.pushNewText("Try selecting a player and\nthen selecting the water tank.");
 			break;
 		default:
@@ -125,12 +127,7 @@ void Tutorial::processInput() {
 
 	_players.update(_drill);
 
-	if (!_cameraLocked) {
-		_cameraManager.processInput();
-	} else {
-		_cameraManager._oldMouse = GlobalContext::inputManager.getMouseCoords();
-		_cameraManager._deltaMouse = glm::vec2(0);
-	}
+	_cameraManager.processInput();
 
 	if (GlobalContext::inputManager.lastButtonPressed() != SDLK_ESCAPE || GlobalContext::inputManager.isKeyPressed(SDL_BUTTON_LEFT)) {
 		if (_sequence == 3) {
