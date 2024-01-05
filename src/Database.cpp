@@ -50,6 +50,8 @@ Database::Database(int saveID) {
         nullptr, nullptr, nullptr);
 
 void Database::Test() {
+    sqlite3_open((std::to_string(_saveID) + ".db").c_str(), &database);
+
     PlayerResources _playerResources;
 
     _playerResources.heat = 1.0f;
