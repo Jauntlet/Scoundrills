@@ -26,6 +26,8 @@ public:
 	void setSpeed(float newSpeed);
 	// Returns true if the player dies
 	bool damage(int damage);
+	// heal the player by specified amount of health
+	void heal(int heal);
 	// returns health of the player
 	int getHealth() const;
 	// returns if the player is currently moving
