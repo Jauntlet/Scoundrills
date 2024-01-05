@@ -40,6 +40,7 @@ void DrillManager::update() {
 			}
 			navigation.updateTravel();
 			_forge.update();
+			_fridge.update();
 		}
 	} else {
 		resources->heat -= Jauntlet::Time::getDeltaTime() * (HEAT_FALL_SCALE - _brokenPipeLocations.size() * 0.1);
@@ -78,6 +79,7 @@ void DrillManager::drawLayerOne() {
 	_waterTank.draw(_spriteBatch);
 	_forge.draw(_spriteBatch);
 	_pipeWorkbench.draw(_spriteBatch);
+	_fridge.draw(_spriteBatch);
 	_spriteBatch.endAndRender();
 
 	_drillAssets.drawLayerThree();
@@ -199,7 +201,9 @@ PlayerStation* DrillManager::checkHoveringStation(glm::vec2 position) {
 		return &_forge;
 	} else if (_pipeWorkbench.isColliding(position)) {
 		return &_pipeWorkbench;
-	} else {
+	} else if (_fridge.isColliding(position)) {
+		return &_fridge;
+	}else {
 		return nullptr;
 	}
 }
@@ -209,7 +213,8 @@ bool DrillManager::doesTileOverlapStations(glm::ivec2 tilePos) const  {
 		drillWalls.doesTileOverlap(tilePos, boiler.getBoundingBox()) ||
 		drillWalls.doesTileOverlap(tilePos, _waterTank.getBoundingBox()) ||
 		drillWalls.doesTileOverlap(tilePos, _forge.getBoundingBox()) ||
-		drillWalls.doesTileOverlap(tilePos, _pipeWorkbench.getBoundingBox());
+		drillWalls.doesTileOverlap(tilePos, _pipeWorkbench.getBoundingBox()) ||
+		drillWalls.doesTileOverlap(tilePos, _fridge.getBoundingBox());
 }
 
 void DrillManager::burstRandomPipe() {

@@ -196,6 +196,9 @@ bool Player::damage(int damage) {
 
 	return _health <= 0;
 }
+void Player::heal(int heal) {
+	_health = std::min(30, _health + heal);
+}
 int Player::getHealth() const {
 	return _health;
 }

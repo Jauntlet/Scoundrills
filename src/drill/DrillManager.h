@@ -13,6 +13,7 @@
 #include "../interactable/specificStations/WaterTank.h"
 #include "../interactable/specificStations/Forge.h"
 #include "../interactable/specificStations/PipeWorkbench.h"
+#include "../interactable/specificStations/Fridge.h"
 
 class PlayerManager;
 class CameraManager;
@@ -80,6 +81,7 @@ private:
 	WaterTank _waterTank;
 	Forge _forge;
 	PipeWorkbench _pipeWorkbench;
+	Fridge _fridge = Fridge(glm::vec2(8*64, -64), resources);
 
 	// Texture cache for tilemaps
 	Jauntlet::TextureCache _textureCache;
