@@ -1,3 +1,6 @@
+/* Purpose: Tutorial to teach the player how to play the game, as well as sync with the main game.
+ * Main Contributer(s): Xander Mooney
+ */
 #pragma once
 #include <Jauntlet/Rendering/Cameras/Camera2D.h>
 #include "../../drill/DrillManager.h"
