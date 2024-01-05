@@ -282,6 +282,7 @@ bool Database::TryLoadInResources(int saveID, PlayerResources& playerResources) 
         return false;
     }
 
+bool Database::TryLoadInResources(int saveID, PlayerResources& playerResources) {
     // prepared sqlite "statement" (idk)
     sqlite3_stmt *stmt;
     
@@ -290,49 +291,38 @@ bool Database::TryLoadInResources(int saveID, PlayerResources& playerResources) 
     const char *query = "SELECT * FROM Drills";
 
     // try preparing the database
-    rc = sqlite3_prepare_v2(database, query, -1, &stmt, nullptr);
+    int rc = sqlite3_prepare_v2(database, query, -1, &stmt, nullptr);
 
     if (rc != SQLITE_OK) {
         // database couldn't be prepared
         return false;
     }
 
-    float heat  = 69.420f; //playerResources.heat;
-    float water = 69.420f; //playerResources.water;
-    int food    = 69; //playerResources.food;
-    int copper  = 69; //playerResources.copper;
+    float heat  = -69.420f; //playerResources.heat;
+    float water = -69.420f; //playerResources.water;
+    int food    = -69; //playerResources.food;
+    int copper  = -69; //playerResources.copper;
 
     int row = 0;
 
     // process query
     while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
-        // Access data using sqlite3_column_* functions and store it in a variable
-        // Example: int id = sqlite3_column_int(stmt, 0);
-        // Process and store the data as needed
-        switch (row) {
-            case 0:
-                break;
-            case 1:
-                heat = sqlite3_column_double(stmt, 0);
-                break;
-            case 2:
-                water = sqlite3_column_double(stmt, 0);
-                break;
-            case 3:
-                food = sqlite3_column_int(stmt, 0);
-                break;
-            case 4:
-                copper = sqlite3_column_int(stmt, 0);
-                break;
-            default:
-                break;
+        
+        if (sqlite3_column_int(stmt, 0) != _saveID) {
+            ++row;
+            continue;
         }
+        
+        heat = sqlite3_column_double(stmt, 1);
+        water = sqlite3_column_double(stmt, 2);
+        food = sqlite3_column_int(stmt, 3);
+        copper = sqlite3_column_int(stmt, 4);
         
         ++row;
     }
 
     if (rc == SQLITE_DONE) {
-        std::cout << "we are done reading DB" << std::endl;
+        std::cout << "we are done reading DB, " << row << " rows" << std::endl;
     } else {
         std::cout << "some sort of error, i guess. please check the DB manually" << std::endl;
     }
@@ -340,19 +330,11 @@ bool Database::TryLoadInResources(int saveID, PlayerResources& playerResources) 
     // finalize the statement (i still dont know)
     sqlite3_finalize(stmt);
 
-    // close the database
-    sqlite3_close(database);
-
     // replace playerResources
-    try {
-        playerResources.heat = heat;
-        playerResources.water = water;
-        playerResources.food = food;
-        playerResources.copper = copper;
-    } catch (...) {
-        Jauntlet::error("loaded from DB but unable to replace playerResources ):");
-        return false;
-    }
+    playerResources.heat = heat;
+    playerResources.water = water;
+    playerResources.food = food;
+    playerResources.copper = copper;
 
     // we did it!!!
     return true;
