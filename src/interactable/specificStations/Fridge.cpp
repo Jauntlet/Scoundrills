@@ -26,7 +26,7 @@ void Fridge::update() {
         return;
     }
 
-    if (_currentPlayer->getHealth() != 30) {
+    if (_currentPlayer->getHealth() != 30 && _resources->food > 0) {
         _eatTimer += Jauntlet::Time::getDeltaTime();    
         if (_eatTimer > TIME_TO_EAT) {
         _eatTimer = 0;
