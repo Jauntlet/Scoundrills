@@ -3,6 +3,7 @@
 #include <cmath>
 #include <cstddef>
 #include <iostream>
+#include <string>
 #include <vector>
 
 #include "Database.h"
@@ -17,7 +18,7 @@
 
 Database::Database(int saveID) {
     _saveID = saveID;
-    sqlite3_open((std::to_string(_saveID) + ".db").c_str(), &database);
+    sqlite3_open("saves.db", &database);
 
     std::cout << "creating database with saveID " << _saveID << std::endl;
 
@@ -32,7 +33,7 @@ Database::Database(int saveID) {
         "positionY DOUBLE,"
         "heldItemId INTEGER,"
         "health INTEGER,"
-        "textureId INTEGER"
+        "playerID INTEGER"
         ");",
         nullptr, nullptr, nullptr);
 
@@ -62,7 +63,7 @@ Database::Database(int saveID) {
 }
 
 void Database::Test() {
-    sqlite3_open((std::to_string(_saveID) + ".db").c_str(), &database);
+    sqlite3_open("saves.db", &database);
 
     PlayerResources _playerResources;
 
@@ -134,15 +135,15 @@ bool Database::TrySavePlayer(const Player& player, int itemID) {
     float positionY = player.getPosition().y;
     int heldItemID  = itemID;
     int health      = player.getHealth();
-    int texture     = player.getPlayerID();
+    int playerID    = player.getPlayerID();
     
-	std::string command = "INSERT INTO Players (saveID, positionX, positionY, heldItemId, health, textureId) VALUES("
+	std::string command = "INSERT INTO Players (saveID, positionX, positionY, heldItemId, health, playerID) VALUES("
 		+ std::to_string(saveID)     + ", "
         + std::to_string(positionX)  + ", "
 		+ std::to_string(positionY)  + ", "
         + std::to_string(heldItemID) + ", "
 		+ std::to_string(health)     + ", "
-        + std::to_string(texture)    + ");";
+        + std::to_string(playerID)   + ");";
 
 	int rc = sqlite3_exec(database, command.c_str(), nullptr, nullptr, nullptr);
 
@@ -170,7 +171,7 @@ bool Database::TrySaveDrill(const PlayerResources& playerResources) {
 
 bool Database::TrySaveItem(const Holdable& holdable, int itemSaveID) {
     int saveID       = _saveID;
-    int itemID       = itemSaveID; // not currently implemented into SQL tables; FIXME!!!!
+    int itemID       = itemSaveID;
     float positionX  = holdable.position.x;
     float positionY  = holdable.position.y;
     std::string type = "";
@@ -213,7 +214,7 @@ bool Database::TryLoadInPlayers(PlayerManager& playerManager) {
     float positionY = TEST_FLOAT;
     int heldItemID  = TEST_INT;
     int health      = TEST_INT;
-    int texture     = TEST_INT;
+    int playerID    = TEST_INT;
 
     // our query
     // grab everything from Players
@@ -239,21 +240,27 @@ bool Database::TryLoadInPlayers(PlayerManager& playerManager) {
             continue;
         }
         
-        // TODO:FIXME
-        
         positionX  = sqlite3_column_double(stmt, 1);
         positionY  = sqlite3_column_double(stmt, 2);
         heldItemID = sqlite3_column_int(stmt, 3);
         health     = sqlite3_column_int(stmt, 4);
-        texture    = sqlite3_column_int(stmt, 5);
+        playerID   = sqlite3_column_int(stmt, 5);
+
+        Player player(glm::vec2(positionX,positionY), playerID, health, false);
+
+        if (heldItemID != 0) {
+            // handle held items TODO:FIXME
+        }
+
+        players.push_back(player);
 
         ++row;
     }
 
-    if (rc == SQLITE_DONE) {
-        std::cout << "we are done reading DB, " << row << " rows" << std::endl;
+    if (rc == SQLITE_DONE || rc == SQLITE_ROW) {
+        std::cout << "we are done reading DB, searched " << row << " rows" << std::endl;
     } else {
-        std::cout << "some sort of error, i guess. please check the DB manually" << std::endl;
+        std::cout << "some sort of error, i guess. please check the DB manually: " << rc << std::endl;
     }
 
     // finalize the statement (i still dont know)
@@ -309,10 +316,10 @@ bool Database::TryLoadInResources(int saveID, PlayerResources& playerResources) 
         break;
     }
 
-    if (rc == SQLITE_DONE) {
+    if (rc == SQLITE_DONE || rc == SQLITE_ROW) {
         std::cout << "we are done reading DB, searched " << row << " rows" << std::endl;
     } else {
-        std::cout << "some sort of error, i guess. please check the DB manually" << std::endl;
+        std::cout << "some sort of error, i guess. please check the DB manually: " << rc << std::endl;
     }
 
     // finalize the statement (i still dont know)
