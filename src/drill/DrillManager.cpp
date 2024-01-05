@@ -242,9 +242,24 @@ bool DrillManager::DestMatchesRandomPipe(const glm::vec2& worldPos) const {
 	return false;
 }
 
-Holdable* DrillManager::addHoldable(const std::string& texture, const glm::vec2& position, const glm::vec2& size, const HoldableType& type) {
-	_holdables.emplace_back(new Holdable(texture, position, size, type));
-	return _holdables[_holdables.size() - 1];
+Holdable* DrillManager::addHoldable(const glm::vec2& position, const HoldableType& type) {
+	switch (type) {
+	case HoldableType::ICE:
+		_holdables.emplace_back(new Holdable("Textures/ice chunks1.png", position, glm::vec2(64), type));
+		break;
+	case HoldableType::PIPE:
+		_holdables.emplace_back(new Holdable("Textures/pipeCarry.png", position, glm::vec2(32), type));
+		break;
+	case HoldableType::SCRAP:
+		_holdables.emplace_back(new Holdable("Textures/Scrap.png", position, glm::vec2(32), type));
+		break;
+	case HoldableType::WATER:
+		_holdables.emplace_back(new Holdable("Textures/Bucket.png", position, glm::vec2(32), type));
+		break;
+	case HoldableType::NONE:
+		Jauntlet::fatalError("INVALID ITEM PARSE");
+	}
+	return _holdables.back();
 }
 void DrillManager::removeHoldable(Holdable* holdable) {
 	for (int i = 0; i < _holdables.size(); ++i) {
@@ -298,7 +313,7 @@ void DrillManager::placeIce() {
 		position = drillFloor.TilePosToWorldPos(drillFloor.selectRandomTile(1));
 	}
 
-	addHoldable("Textures/ice chunks1.png", position, glm::vec2(64), HoldableType::ICE);
+	addHoldable(position, HoldableType::ICE);
 }
 
 void DrillManager::placeScrap() {
@@ -308,5 +323,5 @@ void DrillManager::placeScrap() {
 		position = drillFloor.TilePosToWorldPos(drillFloor.selectRandomTile(1));
 	}
 
-	addHoldable("Textures/Scrap.png", position, glm::vec2(32), HoldableType::SCRAP);
+	addHoldable(position, HoldableType::SCRAP);
 }

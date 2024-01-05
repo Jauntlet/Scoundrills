@@ -11,7 +11,7 @@ WaterTank::WaterTank(DrillManager& drill, glm::vec4 destination, glm::vec2 ancho
 
 void WaterTank::onPlayerArrival(Player& player) {
 	if (player.heldItem == nullptr && _drill->resources->water > 0) {
-		Holdable* water = _drill->addHoldable("Textures/Bucket.png", glm::vec2(64 * 7, -64 * 6), glm::vec2(32), HoldableType::WATER);
+		Holdable* water = _drill->addHoldable(glm::vec2(64 * 7, -64 * 6), HoldableType::WATER);
 		
 		if (_drill->resources->water < Boiler::BOILER_MAX_WATER) {
 			water->requestWater(Boiler::BOILER_MAX_WATER - _drill->resources->water);
