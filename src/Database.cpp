@@ -9,13 +9,11 @@
 #include <Jauntlet/Filesystems/FileManager.h>
 #include <vector>
 
-Database::Database() {
-    _saveID = 1;
-    while (Jauntlet::FileManager::findFile(std::to_string(_saveID) + ".db")) {
-        ++_saveID;
-    }
+Database::Database(int saveID) {
+    _saveID = saveID;
+    sqlite3_open((std::to_string(_saveID) + ".db").c_str(), &database);
 
-	sqlite3_open((std::to_string(_saveID) + ".db").c_str(), &database);
+    std::cout << "creating database with saveID " << _saveID << std::endl;
 
     sqlite3_exec(database, "DROP TABLE Players", nullptr, nullptr, nullptr);
     sqlite3_exec(database, "DROP TABLE Drills" , nullptr, nullptr, nullptr);
