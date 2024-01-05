@@ -42,3 +42,6 @@ dependencies/lib/libjauntlet.a
 
 # Profiler Output Files
 callgrind.out.*
+
+# Database Files (Saves)
+*.db

@@ -14,6 +14,9 @@ PlayerManager::PlayerManager(DrillManager* drill) :
 void PlayerManager::createPlayer(const glm::vec2& position, uint8_t playerID, bool isCop) {
 	_players.emplace_back(position, playerID, isCop);
 }
+void PlayerManager::createPlayer(const glm::vec2& position, uint8_t playerID, int health, bool isCop) {
+	_players.emplace_back(position, playerID, health, isCop);
+}
 
 bool PlayerManager::processInput(const Jauntlet::Camera2D& activeCamera) {
 	glm::vec2 mousePos = activeCamera.convertScreenToWorld(GlobalContext::inputManager.getMouseCoords());

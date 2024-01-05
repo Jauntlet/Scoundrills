@@ -15,6 +15,7 @@ class Player
 {
 public:
 	Player(const glm::vec2& position, uint8_t playerID, bool isCop = false);
+	Player(const glm::vec2& position, uint8_t playerID, int health, bool isCop = false);
 	~Player();
 
 	void update(DrillManager& drill);
@@ -41,6 +42,9 @@ public:
 
 	// forces the player to drop his item; called when the item is destroyed
 	void forceDropItem();
+
+	// forces data onto the player because i'm lazy --- HACK!!!
+	void forceData(float positionX, float positionY, int heldItemID, int health, int playerID);
 
 	Jauntlet::BoxCollider2D collider;
 	Holdable* heldItem = nullptr;

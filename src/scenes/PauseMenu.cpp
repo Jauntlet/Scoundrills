@@ -1,10 +1,12 @@
-#include "PauseMenu.h"
+#include <SDL2/SDL_keycode.h>
+
 #include "Jauntlet/Rendering/Textures/ResourceManager.h"
 #include "Jauntlet/Time.h"
 #include "Jauntlet/UI/UIElement.h"
+#include "PauseMenu.h"
 #include "src/scenes/GlobalContext.h"
 #include "src/scenes/SceneManager.h"
-#include <SDL2/SDL_keycode.h>
+
 PauseMenu::PauseMenu() :
 	_resumeButton(&GlobalContext::inputManager, std::bind(&PauseMenu::switchState, this, PauseState::HIDDEN), Jauntlet::ResourceManager::getTexture("Textures/UIbutton.png").id, &_resumeButtonPos, glm::vec2(600, 200), Jauntlet::UIElement::ORIGIN_PIN::CENTER),
 	_settingsButton(&GlobalContext::inputManager, std::bind(&PauseMenu::switchState, this, PauseState::SETTINGS), Jauntlet::ResourceManager::getTexture("Textures/UIbutton.png").id, &_settingsButtonPos, glm::vec2(600, 200), Jauntlet::UIElement::ORIGIN_PIN::CENTER),
@@ -96,8 +98,7 @@ void PauseMenu::switchState(PauseState state) {
 		_settingsTextElement.visible = true;
 		_quitButton.visible = true;
 		_quitTextElement.visible = true;
-	}
-	else if (_state == PauseState::SETTINGS) {
+	} else if (_state == PauseState::SETTINGS) {
 		_fullscreenButton.visible = true;
 		_fullscreenTextElement.visible = true;
 		_settingsTitle.visible = true;

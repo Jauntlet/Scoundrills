@@ -1,19 +1,21 @@
-#include "Tutorial.h"
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
 #include <SDL2/SDL_keycode.h>
 #include <SDL2/SDL_mouse.h>
+
 #include "../MainGame/UICoordinator.h"
 #include "../PauseMenu.h"
+#include "Tutorial.h"
 #include "src/scenes/GlobalContext.h"
+#include "src/scenes/Tutorial/Dialogue.h"
 
 Tutorial::Tutorial(const std::vector<uint8_t>& playerIDs) {
 	GlobalContext::window.setBackgroundColor(Jauntlet::Color(97, 60, 47));
 	_uiCoordinator.applyNewScreenSize(GlobalContext::screenSize);
 
 	for (int i = 0; i < playerIDs.size(); ++i) {
-		_players.createPlayer(glm::vec2(64 * (i + 1) + 5 * 64, -64 * 23), playerIDs[i], true);
-		_players.getPathRenderer()->createPath(glm::vec2(64 * (i + 1) + 5 * 64, -64 * 23), glm::vec2(64 * (i + 1) + 5 * 64, -64 * 20));
-		_players.getAllPlayers().back()->navigateTo(_drill, *_players.getPathRenderer(), glm::vec2(64 * (i + 1) + 5 * 64, -64 * 20));
+		_players.createPlayer(glm::vec2(64 * (i + 1) + 5 * 64, -64 * 24), playerIDs[i], true);
+		_players.getPathRenderer()->createPath(glm::vec2(64 * (i + 1) + 5 * 64, -64 * 24), glm::vec2(64 * (i + 1) + 5 * 64, -64 * 19));
+		_players.getAllPlayers().back()->navigateTo(_drill, *_players.getPathRenderer(), glm::vec2(64 * (i + 1) + 5 * 64, -64 * 19));
 	}
 	_players.getPathRenderer()->clearPath();
 
@@ -73,7 +75,7 @@ void Tutorial::nextDialogue() {
 			break;
 		case 5:
 			_cameraLocked = true;
-			_dialogue.pushNewText("Brillant! Now lets learn\nabout operating the drill!");
+			_dialogue.pushNewText("Brilliant! Now lets learn\nabout operating the drill!");
 			break;
 		case 6:
 			_uiCoordinator.showWater();
@@ -94,6 +96,18 @@ void Tutorial::nextDialogue() {
 		case 10:
 			_dialogue.pushNewText("Our boiler runs on water\nand needs a constant\nsupply to keep the\ndrill running.");
 			break;
+		case 11:
+			_camera.transitionToScale(2.75f);
+			_camera.transitionToPosition(glm::vec2(1337.25, -3475.54));
+			_dialogue.pushNewText("Lets practice operating the drill.");
+			break;
+		case 12:
+			_camera.transitionToScale(0.6f);
+			_camera.transitionToPosition(glm::vec2(200, -675));
+			_hasControl = true;
+			_cameraLocked = false;
+			_dialogue.pushNewText("Try selecting a player and\nthen selecting the water tank.");
+			break;
 		default:
 			std::vector<uint8_t> output;
 			for (Player* player : _players.getAllPlayers()) {
@@ -113,6 +127,9 @@ void Tutorial::processInput() {
 
 	if (!_cameraLocked) {
 		_cameraManager.processInput();
+	} else {
+		_cameraManager._oldMouse = GlobalContext::inputManager.getMouseCoords();
+		_cameraManager._deltaMouse = glm::vec2(0);
 	}
 
 	if (GlobalContext::inputManager.lastButtonPressed() != SDLK_ESCAPE || GlobalContext::inputManager.isKeyPressed(SDL_BUTTON_LEFT)) {
@@ -178,7 +195,7 @@ void Tutorial::drawGame() {
 
 	_drill.drawLayerTwo();
 
-	if (!_cameraLocked && !GlobalContext::pauseMenu->isPaused()) {
+	if (!_hasControl && !GlobalContext::pauseMenu->isPaused()) {
 		_selectedTile.draw(&_camera);
 	}
 

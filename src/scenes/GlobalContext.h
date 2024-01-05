@@ -2,12 +2,13 @@
  * Main Contributer(s): Xander Mooney
  */
 #pragma once
+
+#include <Jauntlet/Audio/AudioListener.h>
 #include <Jauntlet/Inputs/InputManager.h>
 #include <Jauntlet/Rendering/GLSLProgram.h>
-#include <Jauntlet/Rendering/Window.h>
-#include <Jauntlet/Rendering/Textures/TextureCache.h>
 #include <Jauntlet/Rendering/TextRenderer.h>
-#include <Jauntlet/Audio/AudioListener.h>
+#include <Jauntlet/Rendering/Textures/TextureCache.h>
+#include <Jauntlet/Rendering/Window.h>
 
 class PauseMenu;
 class SceneManager;

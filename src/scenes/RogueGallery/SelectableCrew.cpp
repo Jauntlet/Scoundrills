@@ -1,7 +1,8 @@
-#include "SelectableCrew.h"
 #include <Jauntlet/Errors.h>
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
+
 #include "../GlobalContext.h"
+#include "SelectableCrew.h"
 
 SelectableCrew::SelectableCrew(uint8_t playerID, bool isPolice) :
 	_playerID(playerID)

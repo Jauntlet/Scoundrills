@@ -2,9 +2,11 @@
  * Main Contributer(s): Xander Mooney
  */
 #pragma once
-#include <Jauntlet/Rendering/Textures/SpriteBatch.h>
-#include <Jauntlet/Rendering/Textures/ResourceManager.h>
+
 #include <Jauntlet/Rendering/Animation/Animation.h>
+#include <Jauntlet/Rendering/Textures/ResourceManager.h>
+#include <Jauntlet/Rendering/Textures/SpriteBatch.h>
+
 class Officer {
 public:
 	Officer(const glm::vec2& position);

@@ -1,19 +1,25 @@
+#include <Jauntlet/Errors.h>
+#include <Jauntlet/Filesystems/FileManager.h>
+#include <cmath>
 #include <cstddef>
 #include <iostream>
+#include <vector>
 
 #include "Database.h"
 #include "src/drill/PlayerResources.h"
 #include "src/players/Player.h"
-#include <Jauntlet/Errors.h>
-#include <Jauntlet/Filesystems/FileManager.h>
+#include "src/players/PlayerManager.h"
 
-Database::Database() {
-    _saveID = 1;
-    while (Jauntlet::FileManager::findFile(std::to_string(_saveID) + ".db")) {
-        ++_saveID;
-    }
+// values that would never show up realistically that we can use as placeholders
+#define TEST_INT -69
+#define TEST_FLOAT -69.420
+#define TEST_STRING "sixty nine four hundred twenty"
 
-	sqlite3_open((std::to_string(_saveID) + ".db").c_str(), &database);
+Database::Database(int saveID) {
+    _saveID = saveID;
+    sqlite3_open((std::to_string(_saveID) + ".db").c_str(), &database);
+
+    std::cout << "creating database with saveID " << _saveID << std::endl;
 
     sqlite3_exec(database, "DROP TABLE Players", nullptr, nullptr, nullptr);
     sqlite3_exec(database, "DROP TABLE Drills" , nullptr, nullptr, nullptr);
@@ -22,8 +28,8 @@ Database::Database() {
     sqlite3_exec(database,
         "CREATE TABLE IF NOT EXISTS Players ("
         "saveID INTEGER,"
-        "positionX REAL,"
-        "positionY REAL,"
+        "positionX DOUBLE,"
+        "positionY DOUBLE,"
         "heldItemId INTEGER,"
         "health INTEGER,"
         "textureId INTEGER"
@@ -33,49 +39,8 @@ Database::Database() {
     sqlite3_exec(database,
         "CREATE TABLE IF NOT EXISTS Drills ("
         "saveID INTEGER,"
-        "heat REAL,"
-        "water REAL,"
-        "food INTEGER,"
-        "copper INTEGER"
-        ");",
-        nullptr, nullptr, nullptr);
-
-    sqlite3_exec(database,
-        "CREATE TABLE IF NOT EXISTS Items ("
-        "saveID INTEGER,"
-        "positionX REAL,"
-        "positionY REAL,"
-        "type TEXT"
-        ");",
-        nullptr, nullptr, nullptr);
-
-	sqlite3_close(database);
-}
-
-Database::Database(int saveID) {
-    _saveID = saveID;
-    sqlite3_open((std::to_string(_saveID) + ".db").c_str(), &database);
-
-    sqlite3_exec(database, "DROP TABLE Players", nullptr, nullptr, nullptr);
-    sqlite3_exec(database, "DROP TABLE Drills", nullptr, nullptr, nullptr);
-    sqlite3_exec(database, "DROP TABLE Items", nullptr, nullptr, nullptr);
-
-    sqlite3_exec(database,
-        "CREATE TABLE IF NOT EXISTS Players ("
-        "saveID INTEGER,"
-        "positionX REAL,"
-        "positionY REAL,"
-        "heldItemId INTEGER,"
-        "health INTEGER,"
-        "textureId INTEGER"
-        ");",
-        nullptr, nullptr, nullptr);
-
-    sqlite3_exec(database,
-        "CREATE TABLE IF NOT EXISTS Drills ("
-        "saveID INTEGER,"
-        "heat REAL,"
-        "water REAL,"
+        "heat DOUBLE,"
+        "water DOUBLE,"
         "food INTEGER,"
         "copper INTEGER"
         ");",
@@ -85,13 +50,40 @@ Database::Database(int saveID) {
         "CREATE TABLE IF NOT EXISTS Items ("
         "saveID INTEGER,"
         "itemID INTEGER,"
-        "positionX REAL,"
-        "positionY REAL,"
+        "positionX DOUBLE,"
+        "positionY DOUBLE,"
         "type TEXT"
         ");",
         nullptr, nullptr, nullptr);
 
     sqlite3_close(database);
+
+    std::cout << "database created!" << std::endl;
+}
+
+void Database::Test() {
+    sqlite3_open((std::to_string(_saveID) + ".db").c_str(), &database);
+
+    PlayerResources _playerResources;
+
+    _playerResources.heat = 1.0f;
+    _playerResources.water =  2.0f;
+    _playerResources.food = 3;
+    _playerResources.copper = 4;
+
+    if (TrySaveDrill(_playerResources)) {
+        std::cout << "drill saving confirmed" << std::endl;
+    } else {
+        std::cout << "TrySaveDrill FAILED" << std::endl;
+    }
+
+    PlayerResources playerResources;
+
+    TryLoadInResources(_saveID, playerResources);
+
+    sqlite3_close(database);
+
+    std::cout << playerResources.heat << ", " << playerResources.water << ", " << playerResources.food << ", " << playerResources.copper << std::endl;
 }
 
 bool Database::TrySave(DrillManager& drill, PlayerManager& playerManager) {
@@ -132,8 +124,6 @@ bool Database::TrySave(DrillManager& drill, PlayerManager& playerManager) {
             }
         }
     }
-
-
 
     return true;
 }
@@ -212,4 +202,128 @@ bool Database::TrySaveItem(const Holdable& holdable, int itemSaveID) {
 	int rc = sqlite3_exec(database, command.c_str(), nullptr, nullptr, nullptr);
 
 	return rc == SQLITE_OK;
+}
+
+bool Database::TryLoadInPlayers(PlayerManager& playerManager) {
+    // prepared sqlite "statement" (idk)
+    sqlite3_stmt *stmt;
+    
+    // test values, these should NEVER appear in game.
+    float positionX = TEST_FLOAT;
+    float positionY = TEST_FLOAT;
+    int heldItemID  = TEST_INT;
+    int health      = TEST_INT;
+    int texture     = TEST_INT;
+
+    // our query
+    // grab everything from Players
+    const char *query = "SELECT * FROM Players";
+
+    // try preparing the database
+    int rc = sqlite3_prepare_v2(database, query, -1, &stmt, nullptr);
+
+    if (rc != SQLITE_OK) {
+        // database couldn't be prepared
+        return false;
+    }
+
+    int row = 0;
+
+    std::vector<Player> players;
+
+    // process query
+    while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+        
+        if (sqlite3_column_int(stmt, 0) != _saveID) {
+            ++row;
+            continue;
+        }
+        
+        // TODO:FIXME
+        
+        positionX  = sqlite3_column_double(stmt, 1);
+        positionY  = sqlite3_column_double(stmt, 2);
+        heldItemID = sqlite3_column_int(stmt, 3);
+        health     = sqlite3_column_int(stmt, 4);
+        texture    = sqlite3_column_int(stmt, 5);
+
+        ++row;
+    }
+
+    if (rc == SQLITE_DONE) {
+        std::cout << "we are done reading DB, " << row << " rows" << std::endl;
+    } else {
+        std::cout << "some sort of error, i guess. please check the DB manually" << std::endl;
+    }
+
+    // finalize the statement (i still dont know)
+    sqlite3_finalize(stmt);
+
+    // replace players
+
+    // TODO:FIXME
+    
+
+    // we did it!!!
+    return true;
+}
+
+bool Database::TryLoadInResources(int saveID, PlayerResources& playerResources) {
+    // prepared sqlite "statement" (idk)
+    sqlite3_stmt *stmt;
+    
+    // our query
+    // grab everything from Drills
+    const char *query = "SELECT * FROM Drills";
+
+    // try preparing the database
+    int rc = sqlite3_prepare_v2(database, query, -1, &stmt, nullptr);
+
+    if (rc != SQLITE_OK) {
+        // database couldn't be prepared
+        return false;
+    }
+
+    float heat  = TEST_FLOAT; //playerResources.heat;
+    float water = TEST_FLOAT; //playerResources.water;
+    int food    = TEST_INT; //playerResources.food;
+    int copper  = TEST_INT; //playerResources.copper;
+
+    int row = 0;
+
+    // process query
+    while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+        
+        if (sqlite3_column_int(stmt, 0) != _saveID) {
+            ++row;
+            continue;
+        }
+        
+        heat   = sqlite3_column_double(stmt, 1);
+        water  = sqlite3_column_double(stmt, 2);
+        food   = sqlite3_column_int(stmt, 3);
+        copper = sqlite3_column_int(stmt, 4);
+        
+        ++row;
+
+        break;
+    }
+
+    if (rc == SQLITE_DONE) {
+        std::cout << "we are done reading DB, searched " << row << " rows" << std::endl;
+    } else {
+        std::cout << "some sort of error, i guess. please check the DB manually" << std::endl;
+    }
+
+    // finalize the statement (i still dont know)
+    sqlite3_finalize(stmt);
+
+    // replace playerResources
+    playerResources.heat = heat;
+    playerResources.water = water;
+    playerResources.food = food;
+    playerResources.copper = copper;
+
+    // we did it!!!
+    return true;
 }

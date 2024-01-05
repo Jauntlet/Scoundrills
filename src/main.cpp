@@ -1,8 +1,7 @@
 #include "scenes/GlobalContext.h"
-#include <Jauntlet/Jauntlet.h>
+#include "Database.h"
 
 int main(int argc, char** argv) {
-	Jauntlet::init();
 	GlobalContext::initContext();
 	return 0;
 }
