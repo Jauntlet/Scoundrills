@@ -10,7 +10,7 @@ const float HEAT_FALL_SCALE = .1f; //1 heat every 10 seconds.
 const float PIPE_BURST_HEAT = 80.0f; // The minimum heat for pipes to be able to burst.
 
 DrillManager::DrillManager(CameraManager* cameraManager, PlayerResources& resourceManager, Jauntlet::Camera2D* camera) :
-	_drillAssets(camera),
+	drillAssets(camera),
 	resources(&resourceManager),
 	navigation(camera, &resourceManager),
 	boiler(&boilerWater, "Textures/BoilerTank.png", { 64 * 16, -64 * 1 - 10, 32 * 2, 43 * 2 }, 5, { 64 * 15.5, -64 * 2, 64 * 2, 96 * 2 }, { 16,-64 }),
@@ -67,12 +67,12 @@ void DrillManager::update() {
 }
 
 void DrillManager::drawLayerOne() {
-	_drillAssets.drawLayerOne();
+	drillAssets.drawLayerOne();
 	drillFloor.draw();
 	drillWalls.draw();
 	pipes.draw();
 
-	_drillAssets.drawLayerTwo();
+	drillAssets.drawLayerTwo();
 
 	_spriteBatch.begin();
 	boiler.draw(_spriteBatch);
@@ -82,7 +82,7 @@ void DrillManager::drawLayerOne() {
 	_fridge.draw(_spriteBatch);
 	_spriteBatch.endAndRender();
 
-	_drillAssets.drawLayerThree();
+	drillAssets.drawLayerThree();
 }
 
 void DrillManager::drawLayerTwo() {
@@ -101,13 +101,13 @@ void DrillManager::drawLayerTwo() {
 
 void DrillManager::on() {
 	_drillOn = true;
-	_drillAssets.startAnimation();
+	drillAssets.startAnimation();
 	_forge.animation.play(0, 2, 0.3f);
 }
 
 void DrillManager::off() {
 	_drillOn = false;
-	_drillAssets.stopAnimation();
+	drillAssets.stopAnimation();
 	_forge.animation.play(3, 5, 0.3f, false);
 }
 
@@ -187,12 +187,12 @@ bool DrillManager::isValidPath(glm::vec2 worldPos) const {
 	return !doesTileOverlapStations(pos);
 }
 bool DrillManager::isSteeringWheelOccupied() const {
-	return _drillAssets.steeringWheel.isOccupied();
+	return drillAssets.steeringWheel.isOccupied();
 }
 
 PlayerStation* DrillManager::checkHoveringStation(glm::vec2 position) {
-	if (_drillAssets.steeringWheel.isColliding(position)) {
-		return &_drillAssets.steeringWheel;
+	if (drillAssets.steeringWheel.isColliding(position)) {
+		return &drillAssets.steeringWheel;
 	} else if (boiler.isColliding(position)) {
 		return &boiler;
 	} else if (_waterTank.isColliding(position)) {
@@ -209,7 +209,7 @@ PlayerStation* DrillManager::checkHoveringStation(glm::vec2 position) {
 }
 
 bool DrillManager::doesTileOverlapStations(glm::ivec2 tilePos) const  {
-	return drillWalls.doesTileOverlap(tilePos, _drillAssets.steeringWheel.getBoundingBox()) ||
+	return drillWalls.doesTileOverlap(tilePos, drillAssets.steeringWheel.getBoundingBox()) ||
 		drillWalls.doesTileOverlap(tilePos, boiler.getBoundingBox()) ||
 		drillWalls.doesTileOverlap(tilePos, _waterTank.getBoundingBox()) ||
 		drillWalls.doesTileOverlap(tilePos, _forge.getBoundingBox()) ||

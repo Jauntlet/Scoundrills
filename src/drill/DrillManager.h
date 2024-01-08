@@ -68,6 +68,7 @@ public:
 	Navigation navigation;
 	PlayerResources* resources;
 	Boiler boiler;
+	DrillAssetRenderer drillAssets;
 private:
 	// Commits a random disaster
 	void DisasterEvent();
@@ -77,7 +78,6 @@ private:
 	void placeScrap();
 
 	// Drill assets / Pieces
-	DrillAssetRenderer _drillAssets;
 	WaterTank _waterTank;
 	Forge _forge;
 	PipeWorkbench _pipeWorkbench;
