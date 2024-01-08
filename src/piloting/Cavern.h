@@ -25,6 +25,8 @@ public:
 
 	Jauntlet::UIManager* getUIManager();
 
+	bool isOpen();
+
 	void setPlayerManager(PlayerManager* manager);
 
 private:
@@ -57,4 +59,5 @@ private:
 	
 	//cavern-specific
 	int _type = 0; //determines what you find -- set by navigation
+	bool _open = false;
 };
