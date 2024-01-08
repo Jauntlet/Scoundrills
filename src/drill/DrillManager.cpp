@@ -118,6 +118,9 @@ void DrillManager::toggle() {
 		on();
 	}
 }
+bool DrillManager::isOn() {
+	return _drillOn;
+}
 
 bool DrillManager::isValidDestination(glm::vec2 worldPos, PlayerManager* playerManager) const {
 	glm::ivec2 pos = drillWalls.WorldPosToTilePos(worldPos);

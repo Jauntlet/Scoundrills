@@ -38,6 +38,8 @@ public:
 	void off();
 	// toggle the drill
 	void toggle();
+	// returns true if the drill is on
+	bool isOn();
 
 	bool isValidDestination(glm::vec2 worldPos, PlayerManager* playerManager) const;
 	bool isValidPath(glm::vec2 worldPos, PlayerManager* playerManager) const;
