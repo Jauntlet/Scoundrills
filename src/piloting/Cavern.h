@@ -20,7 +20,6 @@ public:
 
 	void setType(int type);
 	void display();
-	void onScreenResize();
 	void updateResources();
 
 	Jauntlet::UIManager* getUIManager();
@@ -55,9 +54,12 @@ private:
 	//UI positions
 	glm::vec2 _backgroundPos = glm::vec2(0);
 	glm::vec2 _confirmPos = glm::vec2(0, 380);
-	glm::vec2 _descriptionPos = glm::vec2(150, 150);
+	glm::vec2 _descriptionPos = glm::vec2(0, 150);
 	
 	//cavern-specific
 	int _type = 0; //determines what you find -- set by navigation
 	bool _open = false;
+
+	//resources added upon "accepting" the pop-up
+	int _addHeat, _addFood, _addWater, _addCopper = 0;
 };

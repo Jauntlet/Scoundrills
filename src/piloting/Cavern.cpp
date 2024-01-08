@@ -6,7 +6,7 @@
 
 Cavern::Cavern(PlayerResources* resourceManager, Jauntlet::Camera2D* Camera) :
 	_uiManager(Camera), _resources(resourceManager), _camera(Camera),
-	_descriptionElement(GlobalContext::textRenderer, &_description, &_descriptionColor, &_descriptionPos, 0.3f)
+	_descriptionElement(GlobalContext::textRenderer, &_description, &_descriptionColor, &_descriptionPos, Jauntlet::UIElement::ORIGIN_PIN::TOP, 0.3f)
 {
 	_backgroundTexture = Jauntlet::ResourceManager::getTexture("Textures/Caverns/cavernBackground.png").id;
 	_backgroundElement = Jauntlet::UISpriteElement(_backgroundTexture, &_backgroundPos, glm::vec2(1200, 900), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
@@ -27,29 +27,118 @@ void Cavern::setType(int type) {
 	switch (type) {
 	case 1:
 		//random
-		_description = "Fate unknown...";
+		_description = "Your crew stumbles upon\nuncharted terrain...\n"; //base text
+
+		//determine resources to add/remove
+		_addHeat = -10 * (_random() % 3);
+		_addWater = 10 * (_random() % 3);
+		_addFood = 5 * (_random() % 5);
+		_addCopper = 10 * (_random() % 2);
+
+		//display resources in description
+		if (_addHeat != 0) {
+			_description += "\nHeat: " + std::to_string(_addHeat);
+		}
+
+		if (_addWater != 0) {
+			_description += "\nAdditional Water: " + std::to_string(_addWater);
+		}
+
+		if (_addFood != 0) {
+			_description += "\nAdditional Food: " + std::to_string(_addFood);
+		}
+
+		if (_addCopper != 0) {
+			_description += "\nAdditional Copper: " + std::to_string(_addCopper);
+		}
+
+		_descriptionPos = glm::vec2(0, 150);
 		break;
 	case 2:
 		//water
-		_description = "An underground lake! yippee!";
+		_description = "An underground lake...\nIt almost glows with\na mysterious energy!\n";
+
+		//determine resources to add/remove
+		_addHeat = -10 * (_random() % 3);
+		_addWater = 15 * (_random() % 4);
+
+		//display resources in description
+		if (_addHeat != 0) {
+			_description += "\nHeat: " + std::to_string(_addHeat);
+		}
+
+		if (_addWater != 0) {
+			_description += "\nWater: " + std::to_string(_addWater);
+		}
+
+		_descriptionPos = glm::vec2(0, 150);
 		break;
 	case 3:
 		//new inmate
-		_description = "You should theoretically have new company...";
+		_description = "Another drill has broken down nearby.\nA new inmate decides to join your crew!\n\nAdditional Crew: 1";
+		_descriptionPos = glm::vec2(0, 150);
 		break;
 	case 4:
 		//danger (heat)
-		_description = "oh no! heat rises";
+		_description = "Everything is NOT okay as you discover\nlava exists underground.";
+
+		//determine resources to add/remove
+		_addHeat = 20 * (_random() % 3);
+		_addWater = -10 * (_random() % 2);
+		_addCopper = 5 * (_random() % 3);
+
+		//display resources in description
+		if (_addHeat != 0) {
+			_description += "\nAdditional Heat: " + std::to_string(_addHeat) + " Jelvin";
+		}
+
+		if (_addWater != 0) {
+			_description += "\nWater: " + std::to_string(_addWater);
+		}
+
+		if (_addCopper != 0) {
+			_description += "\nAdditional Copper: " + std::to_string(_addCopper);
+		}
+
+		_descriptionPos = glm::vec2(0, 150);
 		break;
 	case 5:
 		//copper
-		_description = "You got copper woo";
+		_description = "It's time to pilfer the depths\nof ALL its glorious ores!";
+
+		//determine resources to add/remove
+		_addHeat = -10 * (_random() % 3);
+		_addWater = 5 * (_random() % 3);
+		_addFood = 5 * (_random() % 3);
+		_addCopper = 10 * (_random() % 4+1);
+
+		//display resources in description
+		if (_addHeat != 0) {
+			_description += "\nHeat: " + std::to_string(_addHeat);
+		}
+
+		if (_addWater != 0) {
+			_description += "\nAdditional Water: " + std::to_string(_addWater);
+		}
+
+		if (_addFood != 0) {
+			_description += "\nAdditional Food: " + std::to_string(_addFood);
+		}
+
+		if (_addCopper != 0) {
+			_description += "\nAdditional Copper: " + std::to_string(_addCopper);
+		}
+
+		_descriptionPos = glm::vec2(0, 150);
 		break;
 	default:
 		//invalid location
-		_description = "Bro how (game broke)";
+		_description = "";
 		break;
 	}
+
+	_uiManager.optimize();
+	_uiManager.resolvePositions();
 }
 
 void Cavern::display() {
@@ -57,38 +146,20 @@ void Cavern::display() {
 	_backgroundElement.visible = true;
 	_confirmButton.visible = true;
 	_descriptionElement.visible = true;
-}
 
-void Cavern::onScreenResize() {
-	_descriptionPos = glm::vec2(_camera->getSize().x/5, 150);
 	_open = true;
 }
 
 void Cavern::updateResources() {
-	switch (_type) {
-	case 1:
-		//random
-		break;
-	case 2:
-		//water
-		_resources->water += 15;
-		_resources->heat -= 50;
-		break;
-	case 3:
-		//new inmate
+	//Add resources to inventory
+	_resources->heat += _addHeat;
+	_resources->water += _addWater;
+	_resources->food += _addFood;
+	_resources->copper += _addCopper;
+
+	//in case of inmate
+	if (_type == 3) {
 		_playerManager->createPlayer({ 384, -128 }, _random() % 5 + 1);
-		break;
-	case 4:
-		//danger (heat)
-		_resources->heat += 30;
-		break;
-	case 5:
-		//copper
-		_resources->copper += 5;
-		break;
-	default:
-		//invalid location
-		break;
 	}
 
 	//update visibility
