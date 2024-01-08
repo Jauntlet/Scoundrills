@@ -1,5 +1,6 @@
 #include "../GlobalContext.h"
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
+#include <iostream>
 #include "MainGame.h"
 #include "UICoordinator.h"
 #include "../PauseMenu.h"
@@ -22,6 +23,13 @@ MainGame::MainGame(const std::vector<uint8_t>& playerIDs) :
 
 	//there isn't currently an intuitive way to get the playerManager into the cavern class so I just put it here. TODO: make this comment sound smart
 	_uiCoordinator.navigation->setCavernPlayerManager(&_players);
+
+	Database database = Database(1);
+	// Loading database stuff here
+
+	std::cout << database.TrySave(_drill, _players) << std::endl;
+
+	database.Load(_drill, _players);
 }
 
 MainGame::MainGame(int saveID) {
@@ -30,6 +38,10 @@ MainGame::MainGame(int saveID) {
 
 	Database database = Database(saveID);
 	// Loading database stuff here
+
+	database.TrySave(_drill, _players);
+
+	database.Load(_drill, _players);
 
 	//set the cavern's player manager
 	_uiCoordinator.navigation->setCavernPlayerManager(&_players);

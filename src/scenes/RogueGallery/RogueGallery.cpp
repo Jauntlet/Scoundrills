@@ -43,7 +43,7 @@ void RogueGallery::gameLoop() {
 	_uiManager.draw();
 
 	_batch.begin();
-	for (auto& inmate : _crew) {
+	for (SelectableCrew& inmate : _crew) {
 		if (!inmate.isSelected() && inmate.wasClicked(_camera)) {
 			inmate.Select();
 			_selectedCrew.push_back(&inmate);

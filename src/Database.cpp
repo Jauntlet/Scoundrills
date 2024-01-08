@@ -90,6 +90,8 @@ void Database::Test() {
 }
 
 bool Database::TrySave(DrillManager& drill, PlayerManager& playerManager) {
+    sqlite3_open("saves.db", &database);
+    
     if (!TrySaveDrill(*drill.resources)) {
         Jauntlet::error("Failed to save drill!");
         return false;
@@ -127,6 +129,8 @@ bool Database::TrySave(DrillManager& drill, PlayerManager& playerManager) {
             }
         }
     }
+
+    sqlite3_close(database);
 
     return true;
 }
@@ -379,6 +383,8 @@ std::vector<Holdable*> Database::LoadInItems(DrillManager& drill) {
 
 void Database::Load(DrillManager& drill, PlayerManager& playerManager) {
     
+    sqlite3_open("saves.db", &database);
+
     bool result;
     
     result = TryLoadInResources(drill.resources);
@@ -392,4 +398,6 @@ void Database::Load(DrillManager& drill, PlayerManager& playerManager) {
     if (!result) {
         std::cout << "tryloadinplayers FAILED" << std::endl;
     }
+
+    sqlite3_close(database);
 }
