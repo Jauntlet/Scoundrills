@@ -355,3 +355,7 @@ void Navigation::spawnCavern(int type) {
 int Navigation::getDepth() {
 	return _depth;
 }
+
+bool Navigation::getMoving() {
+	return _destination != -1;
+}
