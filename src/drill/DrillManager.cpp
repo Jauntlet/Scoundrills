@@ -247,20 +247,20 @@ bool DrillManager::DestMatchesRandomPipe(const glm::vec2& worldPos) const {
 
 Holdable* DrillManager::addHoldable(const glm::vec2& position, const HoldableType& type) {
 	switch (type) {
-	case HoldableType::ICE:
-		_holdables.emplace_back(new Holdable("Textures/ice chunks1.png", position, glm::vec2(64), type));
-		break;
-	case HoldableType::PIPE:
-		_holdables.emplace_back(new Holdable("Textures/pipeCarry.png", position, glm::vec2(32), type));
-		break;
-	case HoldableType::SCRAP:
-		_holdables.emplace_back(new Holdable("Textures/Scrap.png", position, glm::vec2(32), type));
-		break;
-	case HoldableType::WATER:
-		_holdables.emplace_back(new Holdable("Textures/Bucket.png", position, glm::vec2(32), type));
-		break;
-	case HoldableType::NONE:
-		Jauntlet::fatalError("INVALID ITEM PARSE");
+		case HoldableType::ICE:
+			_holdables.emplace_back(new Holdable("Textures/ice chunks1.png", position, glm::vec2(64), type));
+			break;
+		case HoldableType::PIPE:
+			_holdables.emplace_back(new Holdable("Textures/pipeCarry.png", position, glm::vec2(32), type));
+			break;
+		case HoldableType::SCRAP:
+			_holdables.emplace_back(new Holdable("Textures/Scrap.png", position, glm::vec2(32), type));
+			break;
+		case HoldableType::WATER:
+			_holdables.emplace_back(new Holdable("Textures/Bucket.png", position, glm::vec2(32), type));
+			break;
+		default:
+			Jauntlet::fatalError("INVALID ITEM PARSE");
 	}
 	return _holdables.back();
 }
