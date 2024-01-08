@@ -8,13 +8,14 @@
 
 #include "Database.h"
 #include "src/drill/PlayerResources.h"
+#include "src/interactable/Holdable.h"
 #include "src/players/Player.h"
 #include "src/players/PlayerManager.h"
 
 // values that would never show up realistically that we can use as placeholders
 #define TEST_INT -69
 #define TEST_FLOAT -69.420
-#define TEST_STRING "sixty nine four hundred twenty"
+#define TEST_STRING "sixty nine point four hundred and twenty"
 
 Database::Database(int saveID) {
     _saveID = saveID;
@@ -53,7 +54,7 @@ Database::Database(int saveID) {
         "itemID INTEGER,"
         "positionX DOUBLE,"
         "positionY DOUBLE,"
-        "type TEXT"
+        "type INTEGER"
         ");",
         nullptr, nullptr, nullptr);
 
@@ -170,36 +171,18 @@ bool Database::TrySaveDrill(const PlayerResources& playerResources) {
 }
 
 bool Database::TrySaveItem(const Holdable& holdable, int itemSaveID) {
-    int saveID       = _saveID;
-    int itemID       = itemSaveID;
-    float positionX  = holdable.position.x;
-    float positionY  = holdable.position.y;
-    std::string type = "";
-
-    switch (holdable.itemType) {
-        case (HoldableType::ICE):
-            type = "ICE";
-            break;
-        case (HoldableType::PIPE):
-            type = "PIPE";
-            break;
-        case (HoldableType::SCRAP):
-            type = "SCRAP";
-            break;
-        case (HoldableType::WATER):
-            type = "WATER";
-            break;
-        default:
-            Jauntlet::error("INVALID ITEM TYPE ATTEMPTED SAVED");
-            return false;
-    }
+    int saveID      = _saveID;
+    int itemID      = itemSaveID;
+    float positionX = holdable.position.x;
+    float positionY = holdable.position.y;
+    char type       = (char)holdable.itemType;
     
     std::string command = "INSERT INTO Items (saveID, itemID, positionX, positionY, type) VALUES("
 		+ std::to_string(saveID)    + ", "
         + std::to_string(itemID)    + ", "
         + std::to_string(positionX) + ", "
 		+ std::to_string(positionY) + ", "
-        +                type       + ");";
+        + std::to_string(type)      + ");";
 
 	int rc = sqlite3_exec(database, command.c_str(), nullptr, nullptr, nullptr);
 
@@ -219,7 +202,7 @@ bool Database::TryLoadInPlayers(PlayerManager& playerManager) {
 
     // our query
     // grab everything from Players
-    const char *query = "SELECT * FROM Players";
+    const char* query = "SELECT * FROM Players";
 
     // try preparing the database
     int rc = sqlite3_prepare_v2(database, query, -1, &stmt, nullptr);
@@ -236,6 +219,7 @@ bool Database::TryLoadInPlayers(PlayerManager& playerManager) {
     // process query
     while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
         
+        // skip over data if its not on the save we grab
         if (sqlite3_column_int(stmt, 0) != _saveID) {
             ++row;
             continue;
@@ -275,13 +259,13 @@ bool Database::TryLoadInPlayers(PlayerManager& playerManager) {
     return true;
 }
 
-bool Database::TryLoadInResources(int saveID, PlayerResources& playerResources) {
+bool Database::TryLoadInResources(PlayerResources& playerResources) {
     // prepared sqlite "statement" (idk)
     sqlite3_stmt *stmt;
     
     // our query
     // grab everything from Drills
-    const char *query = "SELECT * FROM Drills";
+    const char* query = "SELECT * FROM Drills";
 
     // try preparing the database
     int rc = sqlite3_prepare_v2(database, query, -1, &stmt, nullptr);
@@ -291,16 +275,17 @@ bool Database::TryLoadInResources(int saveID, PlayerResources& playerResources) 
         return false;
     }
 
-    float heat  = TEST_FLOAT; //playerResources.heat;
-    float water = TEST_FLOAT; //playerResources.water;
-    int food    = TEST_INT; //playerResources.food;
-    int copper  = TEST_INT; //playerResources.copper;
+    float heat  = TEST_FLOAT;
+    float water = TEST_FLOAT;
+    int food    = TEST_INT;
+    int copper  = TEST_INT;
 
     int row = 0;
 
     // process query
     while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
-        
+
+        // skip over data if its not on the save we grab
         if (sqlite3_column_int(stmt, 0) != _saveID) {
             ++row;
             continue;
@@ -333,4 +318,58 @@ bool Database::TryLoadInResources(int saveID, PlayerResources& playerResources) 
 
     // we did it!!!
     return true;
+}
+
+std::vector<Holdable*> Database::LoadInItems(DrillManager& drill) {
+    // prepared sqlite "statement" (idk)
+    sqlite3_stmt *stmt;
+
+    // test values, these should NEVER appear in game.
+    int itemID;
+    float positionX;
+    float positionY;
+    char type;
+
+    // our query
+    // grab everything from Players
+    const char* query = "SELECT * FROM Players";
+
+    // try preparing the database
+    int rc = sqlite3_prepare_v2(database, query, -1, &stmt, nullptr);
+
+    int row = 0;
+
+    std::vector<Holdable*> holdables;
+
+    // process query
+    while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+        
+        // skip over data if its not on the save we grab
+        if (sqlite3_column_int(stmt, 0) != _saveID) {
+            ++row;
+            continue;
+        }
+        
+        //itemID    = sqlite3_column_int(stmt, 1);
+        positionX = sqlite3_column_double(stmt, 2);
+        positionY = sqlite3_column_double(stmt, 3);
+        type      = sqlite3_column_int(stmt, 4);
+
+        // we have NO saftey if this bugs out during reading we are GONE
+        holdables.push_back(drill.addHoldable(glm::vec2(positionX,positionY),(HoldableType)type));
+
+        ++row;
+    }
+
+    if (rc == SQLITE_DONE || rc == SQLITE_ROW) {
+        std::cout << "we are done reading DB, searched " << row << " rows" << std::endl;
+    } else {
+        std::cout << "error! query ended with code " << rc << std::endl;
+    }
+
+    // finalize the statement (i still dont know)
+    sqlite3_finalize(stmt);
+
+    // we did it!!!
+    return holdables;
 }

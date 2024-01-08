@@ -33,10 +33,15 @@ private:
 
 	// === loading methods ===
 
+	bool Load(DrillManager& drill, PlayerManager& playerManager);
+
 	// returns resources
-	bool TryLoadInResources(int saveID, PlayerResources& playerResources);
+	bool TryLoadInResources(PlayerResources& playerResources);
+	
+	std::vector<Holdable*> LoadInItems(DrillManager& drill);
 
 	bool TryLoadInPlayers(PlayerManager& playerManager);
+
 
 	int _saveID = 1;
 };
