@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "Database.h"
+#include "src/drill/DrillManager.h"
 #include "src/drill/PlayerResources.h"
 #include "src/interactable/Holdable.h"
 #include "src/players/Player.h"
@@ -81,7 +82,7 @@ void Database::Test() {
 
     PlayerResources playerResources;
 
-    TryLoadInResources(_saveID, playerResources);
+    //TryLoadInResources(playerResources, drill);
 
     sqlite3_close(database);
 
@@ -189,7 +190,7 @@ bool Database::TrySaveItem(const Holdable& holdable, int itemSaveID) {
 	return rc == SQLITE_OK;
 }
 
-bool Database::TryLoadInPlayers(PlayerManager& playerManager) {
+bool Database::TryLoadInPlayers(PlayerManager& playerManager, DrillManager& drill) {
     // prepared sqlite "statement" (idk)
     sqlite3_stmt *stmt;
     
@@ -216,6 +217,8 @@ bool Database::TryLoadInPlayers(PlayerManager& playerManager) {
 
     std::vector<Player> players;
 
+    std::vector<Holdable*> items = Database::LoadInItems(drill);
+
     // process query
     while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
         
@@ -234,7 +237,7 @@ bool Database::TryLoadInPlayers(PlayerManager& playerManager) {
         Player player(glm::vec2(positionX,positionY), playerID, health, false);
 
         if (heldItemID != 0) {
-            // handle held items TODO:FIXME
+            player.heldItem = items[heldItemID];
         }
 
         players.push_back(player);
@@ -259,7 +262,7 @@ bool Database::TryLoadInPlayers(PlayerManager& playerManager) {
     return true;
 }
 
-bool Database::TryLoadInResources(PlayerResources& playerResources) {
+bool Database::TryLoadInResources(PlayerResources* playerResources) {
     // prepared sqlite "statement" (idk)
     sqlite3_stmt *stmt;
     
@@ -311,10 +314,10 @@ bool Database::TryLoadInResources(PlayerResources& playerResources) {
     sqlite3_finalize(stmt);
 
     // replace playerResources
-    playerResources.heat = heat;
-    playerResources.water = water;
-    playerResources.food = food;
-    playerResources.copper = copper;
+    playerResources->heat = heat;
+    playerResources->water = water;
+    playerResources->food = food;
+    playerResources->copper = copper;
 
     // we did it!!!
     return true;
@@ -372,4 +375,21 @@ std::vector<Holdable*> Database::LoadInItems(DrillManager& drill) {
 
     // we did it!!!
     return holdables;
+}
+
+void Database::Load(DrillManager& drill, PlayerManager& playerManager) {
+    
+    bool result;
+    
+    result = TryLoadInResources(drill.resources);
+    
+    if (!result) {
+        std::cout << "tryloadinresources FAILED" << std::endl;
+    }
+
+    result = TryLoadInPlayers(playerManager, drill);
+
+    if (!result) {
+        std::cout << "tryloadinplayers FAILED" << std::endl;
+    }
 }
