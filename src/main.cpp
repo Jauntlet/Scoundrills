@@ -1,6 +1,6 @@
 #include "scenes/SceneManager.h"
 
 int main(int argc, char** argv) {
-	SceneManager sceneManager;
+	GlobalContext::initContext();
 	return 0;
 }
