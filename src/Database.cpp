@@ -339,7 +339,7 @@ std::vector<Holdable*> Database::LoadInItems(DrillManager& drill) {
 
     // our query
     // grab everything from Players
-    const char* query = "SELECT * FROM Players";
+    const char* query = "SELECT * FROM Items";
 
     // try preparing the database
     int rc = sqlite3_prepare_v2(database, query, -1, &stmt, nullptr);
