@@ -38,6 +38,8 @@ public:
 	void off();
 	// toggle the drill
 	void toggle();
+	// returns true if the drill is on
+	bool isOn();
 
 	bool isValidDestination(glm::vec2 worldPos, PlayerManager* playerManager) const;
 	bool isValidPath(glm::vec2 worldPos, PlayerManager* playerManager) const;
@@ -68,6 +70,7 @@ public:
 	Navigation navigation;
 	PlayerResources* resources;
 	Boiler boiler;
+	DrillAssetRenderer drillAssets;
 private:
 	// Commits a random disaster
 	void DisasterEvent();
@@ -77,7 +80,6 @@ private:
 	void placeScrap();
 
 	// Drill assets / Pieces
-	DrillAssetRenderer _drillAssets;
 	WaterTank _waterTank;
 	Forge _forge;
 	PipeWorkbench _pipeWorkbench;

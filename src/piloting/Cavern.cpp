@@ -61,6 +61,7 @@ void Cavern::display() {
 
 void Cavern::onScreenResize() {
 	_descriptionPos = glm::vec2(_camera->getSize().x/5, 150);
+	_open = true;
 }
 
 void Cavern::updateResources() {
@@ -94,10 +95,16 @@ void Cavern::updateResources() {
 	_backgroundElement.visible = false;
 	_confirmButton.visible = false;
 	_descriptionElement.visible = false;
+
+	_open = false;
 }
 
 Jauntlet::UIManager* Cavern::getUIManager() {
 	return &_uiManager;
+}
+
+bool Cavern::isOpen() {
+	return _open;
 }
 
 void Cavern::setPlayerManager(PlayerManager* manager) {

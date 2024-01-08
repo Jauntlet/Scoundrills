@@ -21,7 +21,7 @@ public:
 
 	void update();
 
-	bool isNavOpen(); //returns if the thing is thinging
+	bool isNavOpen(); //returns if the nav is open
 	void toggleNav(); //toggles visibility (on/off)
 	void selectNav(int id, glm::ivec2 xy); //sets selected destination
 	void updateTravel(); //Updates the "tick" of travel; Moves the points closer to the drill to simulate going to the outcove. When reaching the destination, set destination to null.
