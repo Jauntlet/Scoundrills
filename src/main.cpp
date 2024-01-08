@@ -1,7 +1,6 @@
-#include "scenes/GlobalContext.h"
-#include "Database.h"
+#include "scenes/SceneManager.h"
 
 int main(int argc, char** argv) {
-	GlobalContext::initContext();
+	SceneManager sceneManager;
 	return 0;
 }

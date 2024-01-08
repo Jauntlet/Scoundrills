@@ -18,6 +18,8 @@ public:
 	// try to save the game
 	bool TrySave(DrillManager& drill, PlayerManager& playerManager);
 
+	void Load(DrillManager& drill, PlayerManager& playerManager);
+
 	// test the database
 	void Test();
 private:
@@ -33,10 +35,13 @@ private:
 
 	// === loading methods ===
 
-	// returns resources
-	bool TryLoadInResources(int saveID, PlayerResources& playerResources);
+	bool TryLoadInResources(PlayerResources* playerResources);
+	
+	// returns holdable pointer list
+	std::vector<Holdable*> LoadInItems(DrillManager& drill);
 
-	bool TryLoadInPlayers(PlayerManager& playerManager);
+	bool TryLoadInPlayers(PlayerManager& playerManager, DrillManager& drill);
+
 
 	int _saveID = 1;
 };
