@@ -135,8 +135,8 @@ void Tutorial::nextDialogue() {
 		case 18:
 			_uiCoordinator.hideAll();
 			_uiCoordinator.showWater();
-			_camera.transitionToPosition(glm::vec2(275, -480));
 			_camera.transitionToScale(0.25f);
+			_camera.transitionToPosition(glm::vec2(275, -480));
 			_dialogue.pushNewText("The drill is now running!");
 			break;
 		case 19:
@@ -146,10 +146,36 @@ void Tutorial::nextDialogue() {
 			_dialogue.pushNewText("We will practice moving\nthe drill but we wont\nactually go anywhere.");
 			break;
 		case 21:
+			_camera.transitionToScale(1.5f);
+			_camera.transitionToPosition(glm::vec2(1100, -2500));
 			_dialogue.pushNewText("Here is the steering wheel.\nThis is how we get the drill\nto move.");
 			break;
 		case 22:
+			_camera.transitionToScale(0.75f);
+			_camera.transitionToPosition(glm::vec2(450, -1250));
 			_dialogue.pushNewText("Move another member to the\nsteering wheel!");
+			break;
+		case 23:
+			_dialogue.pushNewText("Now that someone is piloting\nthe drill you can view\nNavigation!");
+			break;
+		case 24:
+			_dialogue.pushNewText("Press TAB to open\nNavigation!");
+			break;
+		case 25:
+			_dialogue.pushNewText("Navigation is how we\ndetermine where the drill\ngoes");
+			break;
+		case 26:
+			_dialogue.pushNewText("Each icon is a location\nthe drill can go to.");
+			break;
+		case 27:
+			_dialogue.pushNewText("You can get different resources\nfrom each one.");
+			break;
+		case 28:
+			_dialogue.pushNewText("You can only travel to\nunobstructed caverns.");
+			break;
+		case 29:
+			_dialogue.pushNewText("Try clicking on a point\nto travel to it!");
+			break;
 		default:
 			std::vector<uint8_t> output;
 			for (Player* player : _players.getAllPlayers()) {
@@ -225,6 +251,16 @@ void Tutorial::processInput() {
 		break;
 	case 22:
 		if (_drill.drillAssets.steeringWheel.isOccupied()) {
+			nextDialogue();
+		}
+		break;
+	case 24:
+		if (_drill.navigation.isNavOpen()) {
+			nextDialogue();
+		}
+		break;
+	case 29:
+		if (_drill.navigation.getMoving()) {
 			nextDialogue();
 		}
 		break;
