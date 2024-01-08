@@ -27,6 +27,7 @@ public:
 	void updateTravel(); //Updates the "tick" of travel; Moves the points closer to the drill to simulate going to the outcove. When reaching the destination, set destination to null.
 	void spawnCavern(int type); //brings up the menu for a cavern
 	int getDepth(); //retrieve gameplay value -- a display of how many "points" the player reached
+	bool getMoving(); //is the drill moving?
 
 	Jauntlet::UIManager* getUIManager();
 	Jauntlet::UIManager* getCavernManager();
