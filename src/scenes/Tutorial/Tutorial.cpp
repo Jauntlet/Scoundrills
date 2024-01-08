@@ -22,8 +22,8 @@ Tutorial::Tutorial(const std::vector<uint8_t>& playerIDs) {
 	_camera.setScale(2.75f);
 	_camera.setPosition(glm::vec2(1337.25, -3475.54));
 
-	_drill.off();
 	_drill.boilerWater = 0;
+	_drill.off();
 	_uiCoordinator.hideAll();
 
 	_dialogue.pushNewText("Welcome new recruits!\nToday we will be going over\noperating the drill.");
@@ -111,10 +111,45 @@ void Tutorial::nextDialogue() {
 			_dialogue.pushNewText("First click on a player!");
 			break;
 		case 13:
-			_dialogue.pushNewText("Now click on the boiler!");
+			_dialogue.pushNewText("Now click on the water tank!");
 			break;
 		case 14:
-			_dialogue.pushNewText("");
+			_camera.transitionToScale(2.0f);
+			_camera.transitionToPosition(glm::vec2(437, -1425));
+			_dialogue.pushNewText("Great! You have collected water!");
+			break;
+		case 15:
+			_camera.transitionToScale(0.45f);
+			_camera.transitionToPosition(glm::vec2(450, -350));
+			_dialogue.pushNewText("Now lets fill the boiler\nwith that water!");
+			break;
+		case 16:
+			_camera.transitionToScale(2.0f);
+			_camera.transitionToPosition(glm::vec2(2037, -200));
+			_dialogue.pushNewText("The drill can now run with\nthe supply of water!");
+			break;
+		case 17:
+			_uiCoordinator.showDrillButton();
+			_dialogue.pushNewText("Click this button to start\nthe drill!");
+			break;
+		case 18:
+			_uiCoordinator.hideAll();
+			_uiCoordinator.showWater();
+			_camera.transitionToPosition(glm::vec2(275, -480));
+			_camera.transitionToScale(0.25f);
+			_dialogue.pushNewText("The drill is now running!");
+			break;
+		case 19:
+			_dialogue.pushNewText("But now we need to figure out\nwhere to take the drill.");
+			break;
+		case 20:
+			_dialogue.pushNewText("We will practice moving\nthe drill but we wont\nactually go anywhere.");
+			break;
+		case 21:
+			_dialogue.pushNewText("Here is the steering wheel.\nThis is how we get the drill\nto move.");
+			break;
+		case 22:
+			_dialogue.pushNewText("Move another member to the\nsteering wheel!");
 		default:
 			std::vector<uint8_t> output;
 			for (Player* player : _players.getAllPlayers()) {
@@ -134,54 +169,67 @@ void Tutorial::processInput() {
 
 	_cameraManager.processInput();
 
-	if (GlobalContext::inputManager.lastButtonPressed() != SDLK_ESCAPE || GlobalContext::inputManager.isKeyPressed(SDL_BUTTON_LEFT)) {
-		// in most cases, this switch statement will run the default case, however there are multiple cases
-		// in which there are special instructions to move onto the next dialogue.
-		switch (_sequence) {
-		case 3:
-			if (GlobalContext::inputManager.isKeyPressed(SDLK_w)) {
-				_pressedW = true;
-			}
-			if (GlobalContext::inputManager.isKeyPressed(SDLK_a)) {
-				_pressedA = true;
-			}
-			if (GlobalContext::inputManager.isKeyPressed(SDLK_s)) {
-				_pressedS = true;
-			}
-			if (GlobalContext::inputManager.isKeyPressed(SDLK_d)) {
-				_pressedD = true;
-			}
-			if (_pressedW && _pressedA && _pressedS && _pressedD) {
+	// in most cases, this switch statement will run the default case, however there are multiple cases
+	// in which there are special instructions to move onto the next dialogue.
+	switch (_sequence) {
+	case 3:
+		if (GlobalContext::inputManager.isKeyPressed(SDLK_w)) {
+			_pressedW = true;
+		}
+		if (GlobalContext::inputManager.isKeyPressed(SDLK_a)) {
+			_pressedA = true;
+		}
+		if (GlobalContext::inputManager.isKeyPressed(SDLK_s)) {
+			_pressedS = true;
+		}
+		if (GlobalContext::inputManager.isKeyPressed(SDLK_d)) {
+			_pressedD = true;
+		}
+		if (_pressedW && _pressedA && _pressedS && _pressedD) {
+			nextDialogue();
+		}
+		break;
+	case 4:
+		if (GlobalContext::inputManager.deltaScroll > 0) {
+			_scrolledUp = true;
+		}
+		else if (GlobalContext::inputManager.deltaScroll < 0) {
+			_scrolledDown = true;
+		}
+		else if (_scrolledUp && _scrolledDown) {
+			nextDialogue();
+		}
+		break;
+	case 12:
+		if (_players.getSelectedPlayer() != nullptr) {
+			nextDialogue();
+		}
+		break;
+	case 13:
+		for (Player* player : _players.getAllPlayers()) {
+			if (player->heldItem != nullptr) {
 				nextDialogue();
+				break;
 			}
-			break;
-		case 4:
-			if (GlobalContext::inputManager.deltaScroll > 0) {
-				_scrolledUp = true;
-			}
-			else if (GlobalContext::inputManager.deltaScroll < 0) {
-				_scrolledDown = true;
-			}
-			else if (_scrolledUp && _scrolledDown) {
-				nextDialogue();
-			}
-			break;
-		case 12:
-			if (_players.getSelectedPlayer() != nullptr) {
-				nextDialogue();
-			}
-			break;
-		case 13:
-			if (_drill.boiler.isOccupied()) {
-				nextDialogue();
-			}
-			break;
-		case 14:
-			if (_drill.boilerWater != 0) {
-				nextDialogue();
-			}
-			break;
-		default:
+		}
+		break;
+	case 15:
+		if (_drill.boilerWater != 0) {
+			nextDialogue();
+		}
+		break;
+	case 17:
+		if (_drill.isOn()) {
+			nextDialogue();
+		}
+		break;
+	case 22:
+		if (_drill.drillAssets.steeringWheel.isOccupied()) {
+			nextDialogue();
+		}
+		break;
+	default:
+		if (GlobalContext::inputManager.lastButtonPressed() != SDLK_ESCAPE || GlobalContext::inputManager.isKeyPressed(SDL_BUTTON_LEFT)) {
 			_dialogue.doneReadingText() ? nextDialogue() : _dialogue.pushAllText();
 			GlobalContext::inputManager.clearLastButtonPressed();
 		}
