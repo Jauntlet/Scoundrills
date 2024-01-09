@@ -37,7 +37,7 @@ public:
 	Cavern cavern; //event handler
 private:
 	//random -- uses one consistent seed (generated based on system time on class construction)
-	std::mt19937 random;
+	std::mt19937 _random;
 
 	//textures
 	GLuint _navTexture = 0;
