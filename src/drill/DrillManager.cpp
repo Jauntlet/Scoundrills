@@ -1,8 +1,10 @@
 #include <Jauntlet/Time.h>
 #include "DrillManager.h"
 #include "../players/PlayerManager.h"
+#include "Jauntlet/Errors.h"
 #include "src/interactable/Holdable.h"
 #include "../scenes/MainGame/CameraManager.h"
+#include <Jauntlet/JMath.h>
 
 const float HEAT_RISE_SCALE = .3f; //1 heat every ~3 seconds.
 const float HEAT_FALL_SCALE = .1f; //1 heat every 10 seconds.
@@ -225,6 +227,16 @@ void DrillManager::burstRandomPipe() {
 	// changes a random pipe of ID 1 (normal pipe) to a pipe of ID 2 (broken pipe)
 	_brokenPipeLocations.push_back(pipes.selectRandomTile(1));
 	pipes.UpdateTile(_brokenPipeLocations.back(), 2);
+}
+void DrillManager::burstSpecificPipe(const glm::ivec2& tilePos) {
+	_cameraManager->doExplosionShake();
+
+	if (pipes.getTileID(tilePos) == 1) {
+		_brokenPipeLocations.push_back(tilePos);
+		pipes.UpdateTile(tilePos, 2);
+	} else {
+		Jauntlet::error("Tried to burst pipe location that isn't a pipe!");
+	}
 }
 
 void DrillManager::repairPipe(const glm::vec2& worldPos) {
