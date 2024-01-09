@@ -60,33 +60,6 @@ Database::Database(int saveID) {
         nullptr, nullptr, nullptr);
 
     sqlite3_close(database);
-
-    std::cout << "database created!" << std::endl;
-}
-
-void Database::Test() {
-    sqlite3_open("saves.db", &database);
-
-    PlayerResources _playerResources;
-
-    _playerResources.heat = 1.0f;
-    _playerResources.water =  2.0f;
-    _playerResources.food = 3;
-    _playerResources.copper = 4;
-
-    if (TrySaveDrill(_playerResources)) {
-        std::cout << "drill saving confirmed" << std::endl;
-    } else {
-        std::cout << "TrySaveDrill FAILED" << std::endl;
-    }
-
-    PlayerResources playerResources;
-
-    //TryLoadInResources(playerResources, drill);
-
-    sqlite3_close(database);
-
-    std::cout << playerResources.heat << ", " << playerResources.water << ", " << playerResources.food << ", " << playerResources.copper << std::endl;
 }
 
 bool Database::TrySave(DrillManager& drill, PlayerManager& playerManager) {

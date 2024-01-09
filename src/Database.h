@@ -20,8 +20,6 @@ public:
 
 	void Load(DrillManager& drill, PlayerManager& playerManager);
 
-	// test the database
-	void Test();
 private:
 	sqlite3* database;
 
