@@ -1,6 +1,8 @@
-#include "SaveInfoElement.h"
 #include <Jauntlet/Filesystems/FileManager.h>
+
+#include "../../Database.h"
 #include "MainMenu.h"
+#include "SaveInfoElement.h"
 
 SaveInfoElement::SaveInfoElement(float yPos, int saveID, MainMenu* mainMenu) :
 	_position(0, yPos),
