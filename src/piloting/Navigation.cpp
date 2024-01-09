@@ -3,18 +3,15 @@
 #include "src/scenes/GlobalContext.h"
 #include "Cavern.h"
 
-#include <chrono>
 #include <Jauntlet/JMath.h>
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
 
-#include <iostream>
-
 const int layerCount = 5; //amt of layers (Y axis)
 const int layerWidth = 5; //amt of destinations on each layer (X axis)
-const float baseSpeed = 50; //This over distance determines the speed the drill moves to any destination; more is faster, less is slower
+const float baseSpeed = 1.5; //This over distance determines the speed the drill moves to any destination; more is faster, less is slower
 
 const std::string bgTextures[] = {"Textures/NavBackgroundPrototype.png"};
-static int seed = std::chrono::system_clock::now().time_since_epoch().count(); //temp
+static int seed = Jauntlet::Time::getTime(); //temp
 
 Navigation::Navigation(Jauntlet::Camera2D* camera, PlayerResources* resourceManager) : 
 	_navTexture(Jauntlet::ResourceManager::getTexture(bgTextures[0]).id),
@@ -30,12 +27,12 @@ Navigation::Navigation(Jauntlet::Camera2D* camera, PlayerResources* resourceMana
 	cavern(resourceManager, camera)
 {
 	//generate some randomness
-	random = std::mt19937(seed);
+	_random = std::mt19937(seed);
 
 	//create navPoints
 	for (int y = 0; y < layerCount; y++) {
 		for (int x = 0; x < layerWidth; x++) {
-			_map[y][x] = (random() % 6); //0, 1, 2, 3, 4, 5
+			_map[y][x] = (_random() % 6); //0, 1, 2, 3, 4, 5
 		}
 	}
 
@@ -272,7 +269,7 @@ void Navigation::recycleMap(int r) {
 	for (int y = r; y < layerCount+r; y++) {
 		for (int x = 0; x < layerWidth; x++) {
 			if (layerCount <= y) {
-				_map[y - r][x] = (random() % 6);
+				_map[y - r][x] = (_random() % 6);
 				continue;
 			}
 
@@ -291,7 +288,7 @@ void Navigation::recycleMap(int r) {
 						_map[y][x] = _map[y][x + _columnsTravelled];
 					}
 					else if (x < layerWidth) { //gen new
-						_map[y][x] = (random() % 6);
+						_map[y][x] = (_random() % 6);
 					}
 				}
 				else { //drill goes from right to left
@@ -300,7 +297,7 @@ void Navigation::recycleMap(int r) {
 					}
 					if (x < glm::abs(_columnsTravelled)) { //first few -- store and generate
 						temp[x] = _map[y][x];
-						_map[y][x] = (random() % 6);
+						_map[y][x] = (_random() % 6);
 					}
 					else { //get from storage to add back
 						temp[x] = _map[y][x];
@@ -347,7 +344,6 @@ void Navigation::setCavernPlayerManager(PlayerManager* manager) {
 }
 
 void Navigation::spawnCavern(int type) {
-	std::cout << "type: " << type << std::endl;
 	cavern.setType(type);
 	cavern.display();
 }
