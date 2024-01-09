@@ -39,7 +39,6 @@ private:
 	Jauntlet::UIButtonElement _loadButton = Jauntlet::UIButtonElement(&GlobalContext::inputManager, std::bind(&SaveInfoElement::loadSave, this), Jauntlet::ResourceManager::getTexture("Textures/UIbutton.png").id, &_loadPos, glm::vec2(300, 100), Jauntlet::UIElement::ORIGIN_PIN::TOP);
 	std::string _loadText = "Load!";
 	Jauntlet::UITextElement _loadTextElement = Jauntlet::UITextElement(GlobalContext::textRenderer, &_loadText, &_textColor, &_loadPos, Jauntlet::UIElement::ORIGIN_PIN::TOP, 0.3f);
-	
 
 	Jauntlet::UIButtonElement _deleteButton = Jauntlet::UIButtonElement(&GlobalContext::inputManager, std::bind(&SaveInfoElement::deleteSave, this), Jauntlet::ResourceManager::getTexture("Textures/UIbutton.png").id, &_deletePos, glm::vec2(300, 100), Jauntlet::UIElement::ORIGIN_PIN::TOP);
 	std::string _deleteText = "Delete";
