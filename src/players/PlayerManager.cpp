@@ -8,13 +8,21 @@ PlayerManager::PlayerManager(DrillManager* drill) :
 	_pathRenderer(drill, this),
 	_drill(drill)
 {
-	// Empty
+	_players.reserve(sizeof(Player) * 5);
 }
 
 void PlayerManager::createPlayer(const glm::vec2& position, uint8_t playerID, bool isCop) {
+	if (_players.size() == 5) {
+		Jauntlet::error("Player size is already maxed out!");
+		return;
+	}
 	_players.emplace_back(position, playerID, isCop);
 }
 void PlayerManager::createPlayer(const glm::vec2& position, uint8_t playerID, int health, bool isCop) {
+	if (_players.size() == 5) {
+		Jauntlet::error("Player size is already maxed out!");
+		return;
+	}
 	_players.emplace_back(position, playerID, health, isCop);
 }
 

@@ -178,9 +178,6 @@ void Tutorial::nextDialogue() {
 			_dialogue.pushNewText("Try clicking on a point\nto travel to it!");
 			break;
 		case 30:
-			// turn off drill early to prevent reaching destination.
-			_drill.off();
-
 			_dialogue.pushNewText("Great work!");
 			break;
 		case 31:
@@ -214,7 +211,16 @@ void Tutorial::nextDialogue() {
 		case 37:
 			_dialogue.pushNewText("Scrap can be melted into\nmaterials in the forge!");
 			_camera.transitionToPosition(glm::vec2(1600, -1300));
-
+			break;
+		case 38:
+			_dialogue.pushNewText("Materials can then be used in\nthe pipe workbench to\ncraft a new pipe!");
+			_camera.transitionToPosition(glm::vec2(1700, -2000));
+			_uiCoordinator.showParts();
+			break;
+		case 39:
+			_dialogue.pushNewText("First, lets pick up that scrap!");
+			_camera.transitionToPosition(glm::vec2(1200, -400));
+			_camera.transitionToScale(0.65f);
 			break;
 		default:
 			std::vector<uint8_t> output;
@@ -228,7 +234,7 @@ void Tutorial::nextDialogue() {
 
 void Tutorial::processInput() {
 	_drill.navigation.cavern.hide();
-	
+
 	if (_players.getAllPlayers().size() == 0) {
 		return;
 	}
@@ -275,7 +281,7 @@ void Tutorial::processInput() {
 		break;
 	case 13:
 		for (Player* player : _players.getAllPlayers()) {
-			if (player->heldItem != nullptr) {
+			if (player->heldItem != nullptr && player->heldItem->itemType == HoldableType::WATER) {
 				nextDialogue();
 				break;
 			}
@@ -304,6 +310,14 @@ void Tutorial::processInput() {
 	case 29:
 		if (_drill.navigation.getMoving()) {
 			nextDialogue();
+		}
+		break;
+	case 39:
+		for (Player* player : _players.getAllPlayers()) {
+			if (player->heldItem != nullptr && player->heldItem->itemType == HoldableType::SCRAP) {
+				nextDialogue();
+				break;
+			}
 		}
 		break;
 	default:
