@@ -361,6 +361,7 @@ void Database::Delete() {
 	sqlite3_exec(database, ("DELETE FROM Items WHERE saveID = " + std::to_string(_saveID) + ";").c_str(), nullptr, nullptr, nullptr);
 
     sqlite3_close(database);
+}
 
 void Database::Delete(int saveID) {
     sqlite3* database;
