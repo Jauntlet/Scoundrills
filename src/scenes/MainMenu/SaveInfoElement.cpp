@@ -8,6 +8,7 @@ SaveInfoElement::SaveInfoElement(float yPos, int saveID, MainMenu* mainMenu) :
 	_mainMenu(mainMenu),
 	_saveID(saveID),
 	_playPos(250, yPos + 200),
+	_loadPos(250, yPos + 200),
 	_deletePos(-50, yPos + 200)
 {
 	// Empty
