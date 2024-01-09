@@ -72,6 +72,7 @@ public:
 	PlayerResources* resources;
 	Boiler boiler;
 	DrillAssetRenderer drillAssets;
+	Forge forge;
 private:
 	// Commits a random disaster
 	void DisasterEvent();
@@ -82,7 +83,6 @@ private:
 
 	// Drill assets / Pieces
 	WaterTank _waterTank;
-	Forge _forge;
 	PipeWorkbench _pipeWorkbench;
 	Fridge _fridge = Fridge(glm::vec2(8*64, -64), resources);
 
