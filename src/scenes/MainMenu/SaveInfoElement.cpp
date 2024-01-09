@@ -36,7 +36,7 @@ void SaveInfoElement::setVisibility(bool visible) {
 void SaveInfoElement::deleteSave() {
 	_hasSaveInfo = false;
 	setVisibility(_playTextElement.visible);
-	
+	Database::Delete(_saveID);
 }
 
 void SaveInfoElement::loadSave() {
