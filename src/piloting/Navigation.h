@@ -34,6 +34,7 @@ public:
 
 	void setCavernPlayerManager(PlayerManager* manager);
 
+	Cavern cavern; //event handler
 private:
 	//random -- uses one consistent seed (generated based on system time on class construction)
 	std::mt19937 random;
@@ -75,7 +76,6 @@ private:
 	glm::vec2 _iconPos = glm::vec2(0, -365);
 	glm::vec2 _shiftPos = glm::vec2(0); //position determining how to move nav points when a destination is selected
 
-	Cavern _cavern; //event handler
 	Jauntlet::UIManager _uiManager;
 
 	//UI Elements -- individual
