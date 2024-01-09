@@ -12,11 +12,6 @@
 #include "src/players/Player.h"
 #include "src/players/PlayerManager.h"
 
-// values that would never show up realistically that we can use as placeholders
-#define TEST_INT -69
-#define TEST_FLOAT -69.420
-#define TEST_STRING "sixty nine point four hundred and twenty"
-
 Database::Database(int saveID) {
     _saveID = saveID;
     sqlite3_open("saves.db", &database);
@@ -165,11 +160,11 @@ bool Database::TryLoadInPlayers(PlayerManager& playerManager, DrillManager& dril
     sqlite3_stmt *stmt;
     
     // test values, these should NEVER appear in game.
-    float positionX = TEST_FLOAT;
-    float positionY = TEST_FLOAT;
-    int heldItemID  = TEST_INT;
-    int health      = TEST_INT;
-    int playerID    = TEST_INT;
+    float positionX;
+    float positionY;
+    int heldItemID;
+    int health;
+    int playerID;
 
     // our query
     // grab everything from Players
@@ -242,10 +237,10 @@ bool Database::TryLoadInResources(PlayerResources* playerResources) {
         return false;
     }
 
-    float heat  = TEST_FLOAT;
-    float water = TEST_FLOAT;
-    int food    = TEST_INT;
-    int copper  = TEST_INT;
+    float heat;
+    float water;
+    int food;
+    int copper;
 
     int row = 0;
 
