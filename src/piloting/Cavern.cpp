@@ -4,6 +4,8 @@
 
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
 
+const int maxInmates = 5;
+
 Cavern::Cavern(PlayerResources* resourceManager, Jauntlet::Camera2D* Camera) :
 	_uiManager(Camera), _resources(resourceManager), _camera(Camera),
 	_descriptionElement(GlobalContext::textRenderer, &_description, &_descriptionColor, &_descriptionPos, Jauntlet::UIElement::ORIGIN_PIN::TOP, 0.3f)
@@ -37,7 +39,7 @@ void Cavern::setType(int type) {
 
 		//display resources in description
 		if (_addHeat != 0) {
-			_description += "\nHeat: " + std::to_string(_addHeat);
+			_description += "\nHeat down!";
 		}
 
 		if (_addWater != 0) {
@@ -64,7 +66,7 @@ void Cavern::setType(int type) {
 
 		//display resources in description
 		if (_addHeat != 0) {
-			_description += "\nHeat: " + std::to_string(_addHeat);
+			_description += "\nHeat down!";
 		}
 
 		if (_addWater != 0) {
@@ -75,12 +77,18 @@ void Cavern::setType(int type) {
 		break;
 	case 3:
 		//new inmate
-		_description = "Another drill has broken down nearby.\nA new inmate decides to join your crew!\n\nAdditional Crew: 1";
+		_description = "Another drill has\nbroken down nearby.\nA new inmate decides\nto join your crew!\n";
+		if (_playerManager->getAllPlayers().size() < maxInmates) {
+			_description += "\nAdditional Crew: 1";
+		}
+		else {
+			_description += "\nUnfortunately, your\ncrew is too full.";
+		}
 		_descriptionPos = glm::vec2(0, 150);
 		break;
 	case 4:
 		//danger (heat)
-		_description = "Everything is NOT okay as you discover\nlava exists underground.";
+		_description = "Everything is NOT okay\nas you discover lava\nexists underground.";
 
 		//determine resources to add/remove
 		_addHeat = 20 * (_random() % 3);
@@ -89,11 +97,11 @@ void Cavern::setType(int type) {
 
 		//display resources in description
 		if (_addHeat != 0) {
-			_description += "\nAdditional Heat: " + std::to_string(_addHeat) + " Jelvin";
+			_description += "\nHeat up!";
 		}
 
 		if (_addWater != 0) {
-			_description += "\nWater: " + std::to_string(_addWater);
+			_description += "\nWater: minus " + std::to_string(glm::abs(_addWater));
 		}
 
 		if (_addCopper != 0) {
@@ -114,7 +122,7 @@ void Cavern::setType(int type) {
 
 		//display resources in description
 		if (_addHeat != 0) {
-			_description += "\nHeat: " + std::to_string(_addHeat);
+			_description += "\nHeat down!";
 		}
 
 		if (_addWater != 0) {
@@ -158,8 +166,8 @@ void Cavern::updateResources() {
 	_resources->copper += _addCopper;
 
 	//in case of inmate
-	if (_type == 3) {
-		_playerManager->createPlayer({ 384, -128 }, _random() % 5 + 1);
+	if (_type == 3 && _playerManager->getAllPlayers().size() < maxInmates) {
+		_playerManager->createPlayer({ 384 + 64 * (_playerManager->getAllPlayers().size() - 3), -128 }, _random() % 5 + 1);
 	}
 
 	//update visibility
