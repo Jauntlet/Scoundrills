@@ -218,9 +218,26 @@ void Tutorial::nextDialogue() {
 			_uiCoordinator.showParts();
 			break;
 		case 39:
-			_dialogue.pushNewText("First, lets pick up that scrap!");
-			_camera.transitionToPosition(glm::vec2(1200, -400));
-			_camera.transitionToScale(0.65f);
+			_dialogue.pushNewText("First lets pick up that scrap!");
+			_camera.transitionToPosition(glm::vec2(1200, -500));
+			_camera.transitionToScale(0.5f);
+			break;
+		case 40:
+			_dialogue.pushNewText("Now we take it to the forge!");
+			_camera.transitionToScale(1.0f);
+			_camera.transitionToPosition(glm::vec2(1000, -800));
+			break;
+		case 41:
+			_uiCoordinator.showParts();
+			_dialogue.pushNewText("Now we wait a moment\nfor the scrap to melt!");
+			break;
+		case 42:
+			_dialogue.pushNewText("And finally we can\nmake a pipe at the\nworkbench!");
+			_camera.transitionToScale(0.6f);
+			_camera.transitionToPosition(glm::vec2(700, -700));
+			break;
+		case 43:
+			_sequence--;
 			break;
 		default:
 			std::vector<uint8_t> output;
@@ -318,6 +335,18 @@ void Tutorial::processInput() {
 				nextDialogue();
 				break;
 			}
+		}
+		break;
+	case 40:
+		if (_drill.forge.playerAtStation()) {
+			nextDialogue();
+		}
+		break;
+	case 41:
+		if (_drill.resources->copper > 0) {
+			nextDialogue();
+		} else {
+			_drill.forge.meltingScrap += Jauntlet::Time::getDeltaTime() / 5;
 		}
 		break;
 	default:
