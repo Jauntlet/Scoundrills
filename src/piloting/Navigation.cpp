@@ -6,11 +6,9 @@
 #include <Jauntlet/JMath.h>
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
 
-#include <iostream>
-
 const int layerCount = 5; //amt of layers (Y axis)
 const int layerWidth = 5; //amt of destinations on each layer (X axis)
-const float baseSpeed = 50; //This over distance determines the speed the drill moves to any destination; more is faster, less is slower
+const float baseSpeed = 1.5; //This over distance determines the speed the drill moves to any destination; more is faster, less is slower
 
 const std::string bgTextures[] = {"Textures/NavBackgroundPrototype.png"};
 static int seed = Jauntlet::Time::getTime(); //temp
@@ -346,7 +344,6 @@ void Navigation::setCavernPlayerManager(PlayerManager* manager) {
 }
 
 void Navigation::spawnCavern(int type) {
-	std::cout << "type: " << type << std::endl;
 	cavern.setType(type);
 	cavern.display();
 }
