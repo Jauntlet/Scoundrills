@@ -12,6 +12,7 @@ SaveInfoElement::SaveInfoElement(float yPos, int saveID, MainMenu* mainMenu) :
 {
 	// Empty
 }
+
 void SaveInfoElement::addToManager(Jauntlet::UIManager& uiManager) {
 	uiManager.addElement(&_background, &GlobalContext::normalShader);
 	uiManager.addElement(&_playButton, &GlobalContext::normalShader);
@@ -23,6 +24,7 @@ void SaveInfoElement::addToManager(Jauntlet::UIManager& uiManager) {
 		uiManager.addElement(&_deleteTextElement, &Jauntlet::TextRenderer::textShader);
 	}
 }
+
 void SaveInfoElement::setVisibility(bool visible) {
 	_background.visible = visible;
 	_playButton.visible = visible;
@@ -30,11 +32,13 @@ void SaveInfoElement::setVisibility(bool visible) {
 	_deleteButton.visible = _hasSaveInfo ? visible : false;
 	_deleteTextElement.visible = _hasSaveInfo ? visible : false;
 }
+
 void SaveInfoElement::deleteSave() {
 	_hasSaveInfo = false;
 	setVisibility(_playTextElement.visible);
 	
 }
+
 void SaveInfoElement::loadSave() {
 	if (_hasSaveInfo) {
 		_mainMenu->startSavedGame(_saveID);
