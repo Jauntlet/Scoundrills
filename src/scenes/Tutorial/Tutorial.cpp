@@ -5,6 +5,7 @@
 #include "../MainGame/UICoordinator.h"
 #include "../PauseMenu.h"
 #include "Tutorial.h"
+#include "src/interactable/Holdable.h"
 #include "src/scenes/GlobalContext.h"
 #include "src/scenes/Tutorial/Dialogue.h"
 
@@ -165,7 +166,7 @@ void Tutorial::nextDialogue() {
 			_dialogue.pushNewText("Navigation is how we\ndetermine where the drill\ngoes");
 			break;
 		case 26:
-			_dialogue.pushNewText("Each icon is a location\nthe drill can go to.");
+			_dialogue.pushNewText("Each icon is a cavern\nthe drill can go to.");
 			break;
 		case 27:
 			_dialogue.pushNewText("You can get different resources\nfrom each one.");
@@ -175,6 +176,45 @@ void Tutorial::nextDialogue() {
 			break;
 		case 29:
 			_dialogue.pushNewText("Try clicking on a point\nto travel to it!");
+			break;
+		case 30:
+			// turn off drill early to prevent reaching destination.
+			_drill.off();
+
+			_dialogue.pushNewText("Great work!");
+			break;
+		case 31:
+			_dialogue.pushNewText("Once you reach a location\nyour crew will collect\nresources from the cavern.");
+			break;
+		case 32:
+			_dialogue.pushNewText("Some caverns will have better\nresources than others.");
+			break;
+		case 33:
+			_dialogue.pushNewText("So choose wisely!");
+			break;
+		case 34:
+			if (_drill.navigation.isNavOpen()) {
+				_drill.navigation.toggleNav();
+			}
+
+			_camera.transitionToPosition(glm::vec2(1400, -700));
+			_camera.transitionToScale(1.5f);
+			_drill.burstSpecificPipe(glm::ivec2(23,10));
+			_dialogue.pushNewText("Oh no! A pipe in the drill\nhas burst!");
+			break;
+		case 35:
+			_uiCoordinator.showTemperature();
+			_dialogue.pushNewText("its very important to fix\nburst pipes as to keep the\ndrill temperature down!");
+			break;
+		case 36:
+			_drill.addHoldable(glm::vec2(15*64,-640), HoldableType::SCRAP);
+			_camera.transitionToPosition(glm::vec2(1425, -875));
+			_dialogue.pushNewText("Here is a piece of scrap!");
+			break;
+		case 37:
+			_dialogue.pushNewText("Scrap can be melted into\nmaterials in the forge!");
+			_camera.transitionToPosition(glm::vec2(1600, -1300));
+
 			break;
 		default:
 			std::vector<uint8_t> output;
@@ -187,6 +227,8 @@ void Tutorial::nextDialogue() {
 }
 
 void Tutorial::processInput() {
+	_drill.navigation.cavern.hide();
+	
 	if (_players.getAllPlayers().size() == 0) {
 		return;
 	}
@@ -306,7 +348,6 @@ void Tutorial::drawGame() {
 		_selectedTile.draw(&_camera);
 	}
 
-	_dialogue.update();
 
 	GlobalContext::normalShader.unuse();
 
@@ -317,4 +358,5 @@ void Tutorial::drawHUD() {
 	_hudCamera.setActive();
 
 	_uiCoordinator.draw();
+	_dialogue.update();
 }
