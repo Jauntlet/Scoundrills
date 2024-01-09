@@ -375,3 +375,15 @@ void Database::Delete(int saveID) {
     sqlite3_close(database);
 }
 
+// unused, but could have been for removing all data.
+/*void Database::Purge() {
+    sqlite3* database;
+    
+    sqlite3_open("saves.db", &database);
+    
+    sqlite3_exec(database, "DROP TABLE Players", nullptr, nullptr, nullptr);
+    sqlite3_exec(database, "DROP TABLE Drills" , nullptr, nullptr, nullptr);
+    sqlite3_exec(database, "DROP TABLE Items"  , nullptr, nullptr, nullptr);
+
+    sqlite3_close(database);
+}*/
