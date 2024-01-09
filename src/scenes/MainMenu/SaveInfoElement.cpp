@@ -33,7 +33,7 @@ void SaveInfoElement::setVisibility(bool visible) {
 void SaveInfoElement::deleteSave() {
 	_hasSaveInfo = false;
 	setVisibility(_playTextElement.visible);
-	Jauntlet::FileManager::deleteFile((std::to_string(_saveID) + ".db").c_str());
+	
 }
 void SaveInfoElement::loadSave() {
 	if (_hasSaveInfo) {
