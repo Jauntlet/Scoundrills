@@ -1,6 +1,6 @@
 #include <Jauntlet/UI/UIButtonToggleableElement.h>
 
-#include "Jauntlet/Rendering/Textures/SpriteBatch.h"
+//#include "Jauntlet/Rendering/Textures/SpriteBatch.h"
 #include "UICoordinator.h"
 #include <Jauntlet/Rendering/TextRenderer.h>
 #include <Jauntlet/JMath.h>
