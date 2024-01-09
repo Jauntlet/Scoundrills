@@ -28,6 +28,7 @@ public:
 
 	void setPlayerManager(PlayerManager* manager);
 
+	void hide();
 private:
 	//random
 	std::mt19937 _random;

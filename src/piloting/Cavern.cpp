@@ -181,3 +181,9 @@ bool Cavern::isOpen() {
 void Cavern::setPlayerManager(PlayerManager* manager) {
 	_playerManager = manager;
 }
+
+void Cavern::hide() {
+	_backgroundElement.visible = false;
+	_confirmButton.visible = false;
+	_descriptionElement.visible = false;
+}
