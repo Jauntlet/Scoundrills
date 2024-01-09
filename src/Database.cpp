@@ -2,7 +2,6 @@
 #include <Jauntlet/Filesystems/FileManager.h>
 #include <cmath>
 #include <cstddef>
-#include <iostream>
 #include <string>
 #include <vector>
 
@@ -22,7 +21,6 @@ Database::Database(int saveID) {
     _saveID = saveID;
     sqlite3_open("saves.db", &database);
 
-    std::cout << "creating database with saveID " << _saveID << std::endl;
 
     sqlite3_exec(database, "DROP TABLE Players", nullptr, nullptr, nullptr);
     sqlite3_exec(database, "DROP TABLE Drills" , nullptr, nullptr, nullptr);
