@@ -18,6 +18,7 @@ public:
 	// try to save the game
 	bool TrySave(DrillManager& drill, PlayerManager& playerManager);
 
+	// this cant *really* be stopped or accounted for. this 100% just overwrites data.
 	void Load(DrillManager& drill, PlayerManager& playerManager);
 
 	void Delete();
@@ -36,11 +37,13 @@ private:
 	// === loading methods ===
 
 	bool TryLoadInResources(PlayerResources* playerResources);
+	bool TryLoadInResources(PlayerResources* playerResources); // Trying is used for debugging
 	
 	// returns holdable pointer list
 	std::vector<Holdable*> LoadInItems(DrillManager& drill);
 
 	bool TryLoadInPlayers(PlayerManager& playerManager, DrillManager& drill);
+	bool TryLoadInPlayers(PlayerManager& playerManager, DrillManager& drill); // Trying is used for debugging
 
 
 	int _saveID = 1;
