@@ -3,7 +3,6 @@
 #include "src/scenes/GlobalContext.h"
 #include "Cavern.h"
 
-#include <chrono>
 #include <Jauntlet/JMath.h>
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
 
@@ -14,7 +13,7 @@ const int layerWidth = 5; //amt of destinations on each layer (X axis)
 const float baseSpeed = 50; //This over distance determines the speed the drill moves to any destination; more is faster, less is slower
 
 const std::string bgTextures[] = {"Textures/NavBackgroundPrototype.png"};
-static int seed = std::chrono::system_clock::now().time_since_epoch().count(); //temp
+static int seed = Jauntlet::Time::getTime(); //temp
 
 Navigation::Navigation(Jauntlet::Camera2D* camera, PlayerResources* resourceManager) : 
 	_navTexture(Jauntlet::ResourceManager::getTexture(bgTextures[0]).id),
