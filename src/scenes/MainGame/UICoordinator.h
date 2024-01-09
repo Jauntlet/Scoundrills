@@ -32,15 +32,14 @@ public:
 protected:
 	void restartGame();
 
-	// Pointers
-	Jauntlet::Camera2D* _hudCamera;
-	DrillManager* _drill;
-
-	// UI Manager(s)
-	Jauntlet::UIManager _UIManager;
-	Jauntlet::UIManager* _NavManager;
-	Jauntlet::UIManager* _CavernManager;
-
+	// Icons
+	glm::vec2 _waterIconPosition = glm::vec2(30, 15);
+	Jauntlet::UISpriteElement _waterIcon = Jauntlet::UISpriteElement(Jauntlet::ResourceManager::getTexture("Textures/WaterResourceIcon.png").id, &_waterIconPosition, glm::vec2(120), Jauntlet::UIElement::ORIGIN_PIN::TOP_LEFT);
+	glm::vec2 _foodIconPosition = glm::vec2(230, 15);
+	Jauntlet::UISpriteElement _foodIcon = Jauntlet::UISpriteElement(Jauntlet::ResourceManager::getTexture("Textures/foodIcon.png").id, &_foodIconPosition, glm::vec2(120), Jauntlet::UIElement::ORIGIN_PIN::TOP_LEFT);
+	glm::vec2 _partsIconPosition = glm::vec2(430, 15);
+	Jauntlet::UISpriteElement _partsIcon = Jauntlet::UISpriteElement(Jauntlet::ResourceManager::getTexture("Textures/ResourceIcon.png").id, &_partsIconPosition, glm::vec2(120), Jauntlet::UIElement::ORIGIN_PIN::TOP_LEFT);
+	
 	// Text handling
 	Jauntlet::Color _textColor = Jauntlet::Color(); // default to 255, 255, 255, 255
 	glm::vec2 _waterIconTextPosition = glm::vec2(30, _waterIconPosition.y + (120 - GlobalContext::textRenderer->calculateTextSize(waterIconText, glm::vec2(0.4f)).y) * 0.5);
@@ -50,14 +49,6 @@ protected:
 	glm::vec2 _partsIconTextPosition = glm::vec2(485, _partsIconPosition.y + (120 - GlobalContext::textRenderer->calculateTextSize(partsIconText, glm::vec2(0.4f)).y) * 0.5);
 	Jauntlet::UITextElement _partsIconTextElement = Jauntlet::UITextElement(GlobalContext::textRenderer, &partsIconText, &_textColor, &_partsIconTextPosition, 0.4f);
 	Jauntlet::UIProgressBarElement _tempProgressBar = Jauntlet::UIProgressBarElement("Textures/TempBar.png", glm::vec4(0.5,0,0.5,1), glm::vec4(0,0,0.5,1), glm::vec4(615, 15, 3.125 * 120, 120));
-
-	// Icons
-	glm::vec2 _waterIconPosition = glm::vec2(30, 15);
-	Jauntlet::UISpriteElement _waterIcon = Jauntlet::UISpriteElement(Jauntlet::ResourceManager::getTexture("Textures/WaterResourceIcon.png").id, &_waterIconPosition, glm::vec2(120), Jauntlet::UIElement::ORIGIN_PIN::TOP_LEFT);
-	glm::vec2 _foodIconPosition = glm::vec2(230, 15);
-	Jauntlet::UISpriteElement _foodIcon = Jauntlet::UISpriteElement(Jauntlet::ResourceManager::getTexture("Textures/foodIcon.png").id, &_foodIconPosition, glm::vec2(120), Jauntlet::UIElement::ORIGIN_PIN::TOP_LEFT);
-	glm::vec2 _partsIconPosition = glm::vec2(430, 15);
-	Jauntlet::UISpriteElement _partsIcon = Jauntlet::UISpriteElement(Jauntlet::ResourceManager::getTexture("Textures/ResourceIcon.png").id, &_partsIconPosition, glm::vec2(120), Jauntlet::UIElement::ORIGIN_PIN::TOP_LEFT);
 
 	// Game over screen
 	glm::vec2 _loseBcgPos = glm::vec2(0);
@@ -69,6 +60,16 @@ protected:
 	std::string _restartText = "Restart";
 	Jauntlet::UIButtonElement _restartButton = Jauntlet::UIButtonElement(&GlobalContext::inputManager, std::bind(&UICoordinator::restartGame, this), Jauntlet::ResourceManager::getTexture("Textures/UIbutton.png").id, &_restartButtonPos, glm::vec2(600, 200), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
 	Jauntlet::UITextElement _restartTextElement = Jauntlet::UITextElement(GlobalContext::textRenderer, &_restartText, &_textColor, &_restartButtonPos, Jauntlet::UIElement::ORIGIN_PIN::CENTER, 0.5f);
+
+	// Pointers
+	Jauntlet::Camera2D* _hudCamera;
+	DrillManager* _drill;
+
+	// UI Manager(s)
+	Jauntlet::UIManager _UIManager;
+	Jauntlet::UIManager* _NavManager;
+	Jauntlet::UIManager* _CavernManager;
+
 
 
 	// Drill state Button
