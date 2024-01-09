@@ -222,18 +222,12 @@ bool Database::TryLoadInPlayers(PlayerManager& playerManager, DrillManager& dril
         ++row;
     }
 
-    if (rc == SQLITE_DONE || rc == SQLITE_ROW) {
-        std::cout << "we are done reading DB, searched " << row << " rows" << std::endl;
-    } else {
-        std::cout << "error! query ended with code " << rc << std::endl;
+    if (rc != SQLITE_DONE && rc != SQLITE_ROW) {
+        Jauntlet::error("error! query ended with code " + std::to_string(rc));
     }
 
     // finalize the statement (i still dont know)
     sqlite3_finalize(stmt);
-
-    // replace players
-
-    // TODO:FIXME
 
     // we did it!!!
     return true;
@@ -281,10 +275,8 @@ bool Database::TryLoadInResources(PlayerResources* playerResources) {
         break;
     }
 
-    if (rc == SQLITE_DONE || rc == SQLITE_ROW) {
-        std::cout << "we are done reading DB, searched " << row << " rows" << std::endl;
-    } else {
-        std::cout << "error! query ended with code " << rc << std::endl;
+    if (rc != SQLITE_DONE && rc != SQLITE_ROW) {
+        Jauntlet::error("error! query ended with code " + std::to_string(rc));
     }
 
     // finalize the statement (i still dont know)
@@ -341,10 +333,8 @@ std::vector<Holdable*> Database::LoadInItems(DrillManager& drill) {
         ++row;
     }
 
-    if (rc == SQLITE_DONE || rc == SQLITE_ROW) {
-        std::cout << "we are done reading DB, searched " << row << " rows" << std::endl;
-    } else {
-        std::cout << "error! query ended with code " << rc << std::endl;
+    if (rc != SQLITE_DONE && rc != SQLITE_ROW) {
+        Jauntlet::error("error! query ended with code " + std::to_string(rc));
     }
 
     // finalize the statement (i still dont know)
@@ -363,14 +353,24 @@ void Database::Load(DrillManager& drill, PlayerManager& playerManager) {
     result = TryLoadInResources(drill.resources);
     
     if (!result) {
-        std::cout << "tryloadinresources FAILED" << std::endl;
+        Jauntlet::error("tryloadinresources FAILED");
     }
 
     result = TryLoadInPlayers(playerManager, drill);
 
     if (!result) {
-        std::cout << "tryloadinplayers FAILED" << std::endl;
+        Jauntlet::error("tryloadinplayers FAILED");
     }
+
+    sqlite3_close(database);
+}
+
+void Database::Delete() {
+    sqlite3_open("saves.db", &database);
+
+	sqlite3_exec(database, ("DELETE FROM Players WHERE saveID = " + std::to_string(_saveID) + ";").c_str(), nullptr, nullptr, nullptr);
+	sqlite3_exec(database, ("DELETE FROM Drills WHERE saveID = " + std::to_string(_saveID) + ";").c_str(), nullptr, nullptr, nullptr);
+	sqlite3_exec(database, ("DELETE FROM Items WHERE saveID = " + std::to_string(_saveID) + ";").c_str(), nullptr, nullptr, nullptr);
 
     sqlite3_close(database);
 }

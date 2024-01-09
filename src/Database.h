@@ -1,4 +1,4 @@
-/* Purpose: methods for saving/loading data
+/* Purpose: methods for saving/loading/deleting data
  * Main Contributer(s): Jack Kennedy / Xander Mooney
  */
 
@@ -19,6 +19,8 @@ public:
 	bool TrySave(DrillManager& drill, PlayerManager& playerManager);
 
 	void Load(DrillManager& drill, PlayerManager& playerManager);
+
+	void Delete();
 
 private:
 	sqlite3* database;
