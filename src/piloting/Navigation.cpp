@@ -11,7 +11,6 @@ const int layerWidth = 5; //amt of destinations on each layer (X axis)
 const float baseSpeed = 1.5; //This over distance determines the speed the drill moves to any destination; more is faster, less is slower
 
 const std::string bgTextures[] = {"Textures/NavBackgroundPrototype.png"};
-static int seed = Jauntlet::Time::getTime(); //temp
 
 Navigation::Navigation(Jauntlet::Camera2D* camera, PlayerResources* resourceManager) : 
 	_navTexture(Jauntlet::ResourceManager::getTexture(bgTextures[0]).id),
@@ -27,12 +26,12 @@ Navigation::Navigation(Jauntlet::Camera2D* camera, PlayerResources* resourceMana
 	cavern(resourceManager, camera)
 {
 	//generate some randomness
-	_random = std::mt19937(seed);
+	_random = std::mt19937(Jauntlet::Time::getTime());
 
 	//create navPoints
 	for (int y = 0; y < layerCount; y++) {
 		for (int x = 0; x < layerWidth; x++) {
-			_map[y][x] = (_random() % 6); //0, 1, 2, 3, 4, 5
+			_map[y][x] = (_random() % 20); //0-19, 20 total
 		}
 	}
 
@@ -77,8 +76,8 @@ Jauntlet::UIManager* Navigation::genNav() {
 		for (int x = 0; x < layerWidth; x++) {
 			int point = _map[y][x]; //The point type according to the generated "map," will determine the chance of encountering water, ores, etc. when arriving there.
 			
-			if (point == 0) {
-				continue; // no X
+			if (point <= 3) { //1 in 5
+				continue; // no icon
 			}
 			
 			_positions.emplace_back(125 * (x+1) - 62.5 * (layerWidth + 1), 187.5 * (y-1)); //0 is the center of the screen.
@@ -88,7 +87,7 @@ Jauntlet::UIManager* Navigation::genNav() {
 				visible = false;
 			}
 
-			if (point == 1) { // white X
+			if (point <= 8) { // question mark (1 in 4)
 				int destID = _positions.size() - 1;
 				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID, x, y]() -> void { selectNav(destID, glm::ivec2(x, y)); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
 				button.visible = visible;
@@ -96,7 +95,7 @@ Jauntlet::UIManager* Navigation::genNav() {
 				continue;
 			}
 
-			if (point == 2) { // water icon
+			if (point <= 10) { // water icon (1 in 10)
 				int destID = _positions.size() - 1;
 				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID, x, y]() -> void { selectNav(destID, glm::ivec2(x, y)); }, _waTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
 				button.visible = false;
@@ -104,7 +103,7 @@ Jauntlet::UIManager* Navigation::genNav() {
 				continue;
 			}
 
-			if (point == 3) { // approacher icon
+			if (point <= 13) { // approacher icon (1 in 20)
 				int destID = _positions.size() - 1;
 				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID, x, y]() -> void { selectNav(destID, glm::ivec2(x, y)); }, _approaTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
 				button.visible = false;
@@ -112,7 +111,7 @@ Jauntlet::UIManager* Navigation::genNav() {
 				continue;
 			}
 
-			if (point == 4) { // danger icon
+			if (point <= 16) { // danger icon (3 in 20)
 				int destID = _positions.size() - 1;
 				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID, x, y]() -> void { selectNav(destID, glm::ivec2(x, y)); }, _dangTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
 				button.visible = false;
@@ -120,7 +119,7 @@ Jauntlet::UIManager* Navigation::genNav() {
 				continue;
 			}
 
-			if (point == 5) { // copper icon
+			if (point <= 19) { // copper icon (3 in 20)
 				int destID = _positions.size() - 1;
 				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID, x, y]() -> void { selectNav(destID, glm::ivec2(x, y)); }, _coppTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
 				button.visible = false;
@@ -229,11 +228,11 @@ void Navigation::updateTravel() {
 			//adjust for rows travelled
 			//std::cout << _rowsTravelled << std::endl;
 			
-			//remap coves linearly
-			_mappedCoves.clear();
+			//remap caverns linearly
+			_mappedCaverns.clear();
 			for (int y = 0; y < layerCount; y++) {
 				for (int x = 0; x < layerWidth; x++) {
-					if (_map[y][x] != 0) _mappedCoves.push_back(_map[y][x]);
+					if (_map[y][x] != 0) _mappedCaverns.push_back(_map[y][x]);
 				}
 			}
 			
@@ -245,8 +244,27 @@ void Navigation::updateTravel() {
 			_drillRow = -1; //reset drill's row
 			_depth++; //increase depth
 
-			//Call outcove event
-			spawnCavern(_mappedCoves[_destination]);
+			//determine cavern type
+			int cavType;
+			
+			if (_mappedCaverns[_destination] <= 8) {
+				cavType = 1;
+			}
+			else if (_mappedCaverns[_destination] <= 10) {
+				cavType = 2;
+			}
+			else if (_mappedCaverns[_destination] <= 13) {
+				cavType = 3;
+			}
+			else if (_mappedCaverns[_destination] <= 16) {
+				cavType = 4;
+			}
+			else if (_mappedCaverns[_destination] <= 19) {
+				cavType = 5;
+			}
+
+			//Call cavern event
+			spawnCavern(cavType);
 			
 			_destination = -1; //set dest
 		}
@@ -269,7 +287,7 @@ void Navigation::recycleMap(int r) {
 	for (int y = r; y < layerCount+r; y++) {
 		for (int x = 0; x < layerWidth; x++) {
 			if (layerCount <= y) {
-				_map[y - r][x] = (_random() % 6);
+				_map[y - r][x] = (_random() % 20);
 				continue;
 			}
 
@@ -288,7 +306,7 @@ void Navigation::recycleMap(int r) {
 						_map[y][x] = _map[y][x + _columnsTravelled];
 					}
 					else if (x < layerWidth) { //gen new
-						_map[y][x] = (_random() % 6);
+						_map[y][x] = (_random() % 20);
 					}
 				}
 				else { //drill goes from right to left
@@ -297,7 +315,7 @@ void Navigation::recycleMap(int r) {
 					}
 					if (x < glm::abs(_columnsTravelled)) { //first few -- store and generate
 						temp[x] = _map[y][x];
-						_map[y][x] = (_random() % 6);
+						_map[y][x] = (_random() % 20);
 					}
 					else { //get from storage to add back
 						temp[x] = _map[y][x];
