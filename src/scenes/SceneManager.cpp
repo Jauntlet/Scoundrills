@@ -147,7 +147,7 @@ void SceneManager::queuedSwitchScene() {
 
     if (_gameState == GameState::ROGUEGALLERY) {
         if (_rogueGallery == nullptr) {
-            _rogueGallery = new RogueGallery(_queuedID);
+            _rogueGallery = new RogueGallery(_saveID, _queuedID);
             _queuedID = 0;
         }
     } else if (_rogueGallery != nullptr) {
