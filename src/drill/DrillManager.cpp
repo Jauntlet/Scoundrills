@@ -32,7 +32,7 @@ DrillManager::DrillManager(CameraManager* cameraManager, PlayerResources& resour
 
 void DrillManager::update() {
 	// calculate the change in water/heat
-	if (_drillOn) {
+	if (_drillOn && navigation.getMoving()) {
 		if (boilerWater > 0) {
 			boilerWater -= Jauntlet::Time::getDeltaTime() / 6;
 			resources->heat += Jauntlet::Time::getDeltaTime() * (HEAT_RISE_SCALE + _brokenPipeLocations.size() * 0.1);
