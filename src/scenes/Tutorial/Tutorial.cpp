@@ -243,6 +243,18 @@ void Tutorial::nextDialogue() {
 			_camera.transitionToPosition(glm::vec2(1200, -1200));
 			_camera.transitionToScale(0.35f);
 			break;
+		case 44:
+			_camera.transitionToScale(2.75f);
+			_camera.transitionToPosition(glm::vec2(1337.25, -3475.54));
+			_dialogue.pushNewText("Thank you for your time.");
+			break;
+		case 45:
+			_dialogue.pushNewText("This covers all basic operations\nof the drill.");
+			break;
+		case 46:
+			_dialogue.hide();
+			_officer.walkOffscreen();
+			break;
 		default:
 			std::vector<uint8_t> output;
 			for (Player* player : _players.getAllPlayers()) {
@@ -367,6 +379,11 @@ void Tutorial::processInput() {
 			nextDialogue();
 		}
 		break;
+	case 46:
+		if (!_officer.isWalking()) {
+			nextDialogue();
+		}
+		break;
 	default:
 		if (GlobalContext::inputManager.lastButtonPressed() != SDLK_ESCAPE || GlobalContext::inputManager.isKeyPressed(SDL_BUTTON_LEFT)) {
 			_dialogue.doneReadingText() ? nextDialogue() : _dialogue.pushAllText();
@@ -401,7 +418,9 @@ void Tutorial::drawGame() {
 	_playerSpriteBatch.begin();
 	_players.draw(_playerSpriteBatch);
 	_playerSpriteBatch.endAndRender();
-	_officer.draw();
+	if (_sequence < 47) {
+		_officer.draw(_camera);
+	}
 
 	_drill.drawLayerTwo();
 
