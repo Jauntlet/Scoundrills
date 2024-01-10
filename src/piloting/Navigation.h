@@ -33,6 +33,8 @@ public:
 	void spawnCavern(int type);
 	// retrieve gameplay value -- a display of how many "points" the player reached
 	int getDepth();
+	// set new depth value
+	void setDepth(int depth);
 	//is the drill moving?
 	bool getMoving();
 

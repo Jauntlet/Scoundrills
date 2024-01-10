@@ -370,6 +370,10 @@ int Navigation::getDepth() {
 	return _depth;
 }
 
+void Navigation::setDepth(int depth) {
+	_depth = depth;
+}
+
 bool Navigation::getMoving() {
 	return _destination != -1;
 }
