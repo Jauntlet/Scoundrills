@@ -387,7 +387,7 @@ bool Database::IsSlotFull(int saveID) {
     query = "SELECT * FROM Items";
     rc = sqlite3_prepare_v2(database, query, -1, &stmt, nullptr);
     while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
-        if (sqlite3_column_int(stmt, 0) != saveID) {
+        if (sqlite3_column_int(stmt, 0) == saveID) {
             contains++;
             break;
         }
@@ -400,7 +400,7 @@ bool Database::IsSlotFull(int saveID) {
     query = "SELECT * FROM Players";
     rc = sqlite3_prepare_v2(database, query, -1, &stmt, nullptr);
     while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
-        if (sqlite3_column_int(stmt, 0) != saveID) {
+        if (sqlite3_column_int(stmt, 0) == saveID) {
             contains++;
             break;
         }
@@ -413,7 +413,7 @@ bool Database::IsSlotFull(int saveID) {
     query = "SELECT * FROM Drills";
     rc = sqlite3_prepare_v2(database, query, -1, &stmt, nullptr);
     while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
-        if (sqlite3_column_int(stmt, 0) != saveID) {
+        if (sqlite3_column_int(stmt, 0) == saveID) {
             contains++;
             break;
         }
