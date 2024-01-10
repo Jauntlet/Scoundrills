@@ -26,12 +26,15 @@ MainGame::MainGame(int saveID, const std::vector<uint8_t>& playerIDs) :
 	//there isn't currently an intuitive way to get the playerManager into the cavern class so I just put it here. TODO: make this comment sound smart
 	_uiCoordinator.navigation->setCavernPlayerManager(&_players);
 
-	Database database = Database(1);
-	// Loading database stuff here
+	// if theres somehow a save already in this slot, remove it.
+	Database::Delete(_saveID);
+	
+	// create a save here
+	Database database = Database(_saveID);
 
-	std::cout << database.TrySave(_drill, _players) << std::endl;
+	// save
+	database.TrySave(_drill, _players);
 
-	database.Load(_drill, _players);
 }
 
 MainGame::MainGame(int saveID) {
@@ -40,11 +43,10 @@ MainGame::MainGame(int saveID) {
 	GlobalContext::window.setBackgroundColor(Jauntlet::Color(97, 60, 47));
 	_uiCoordinator.applyNewScreenSize(glm::ivec2(GlobalContext::screenSize.x, GlobalContext::screenSize.y));
 
+	// create a save here
 	Database database = Database(saveID);
-	// Loading database stuff here
 
-	database.TrySave(_drill, _players);
-
+	// load existing data here.
 	database.Load(_drill, _players);
 
 	//set the cavern's player manager

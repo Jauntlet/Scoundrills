@@ -375,6 +375,28 @@ void Database::Delete(int saveID) {
     sqlite3_close(database);
 }
 
+bool Database::IsSlotFull(int saveID) {
+    // total hack, worst code ever but theres two days left :P
+
+    PlayerResources playerResources;
+    DrillManager drill(nullptr, playerResources, nullptr);
+    PlayerManager playerManager(&drill);
+
+    PlayerResources playerResources_copy;
+    DrillManager drill_copy(nullptr, playerResources_copy, nullptr);
+    PlayerManager playerManager_copy(&drill_copy);
+
+    Database database(saveID);
+
+    database.Load(drill, playerManager);
+
+    if (drill.resources == drill_copy.resources && playerManager.getAllPlayers() == playerManager_copy.getAllPlayers()) {
+        return true;
+    }
+
+    return false;
+}
+
 // unused, but could have been for removing all data.
 /*void Database::Purge() {
     sqlite3* database;

@@ -27,6 +27,8 @@ public:
 	// deleting any instance
 	static void Delete(int saveID);
 
+	static bool IsSlotFull(int saveID);
+
 private:
 	// pointer to our database. needed for any commands.
 	sqlite3* database;
