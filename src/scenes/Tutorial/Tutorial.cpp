@@ -9,7 +9,9 @@
 #include "src/scenes/GlobalContext.h"
 #include "src/scenes/Tutorial/Dialogue.h"
 
-Tutorial::Tutorial(const std::vector<uint8_t>& playerIDs) {
+Tutorial::Tutorial(int saveID, const std::vector<uint8_t>& playerIDs) {
+	_saveID = saveID;
+	
 	GlobalContext::window.setBackgroundColor(Jauntlet::Color(97, 60, 47));
 	_uiCoordinator.applyNewScreenSize(GlobalContext::screenSize);
 
@@ -244,7 +246,7 @@ void Tutorial::nextDialogue() {
 			for (Player* player : _players.getAllPlayers()) {
 				output.push_back(player->getPlayerID());
 			}
-			GlobalContext::sceneManager->loadGame(output);
+			GlobalContext::sceneManager->loadGame(_saveID, output);
 			break;
 	}
 }

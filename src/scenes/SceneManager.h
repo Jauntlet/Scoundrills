@@ -18,8 +18,8 @@ public:
 
     void switchScene(GameState newState);
     void loadGame(int ID);
-    void loadGame(const std::vector<uint8_t>& playerIDs);
-    void loadTutorial(const std::vector<uint8_t>& playerIDs);
+    void loadGame(int saveID, const std::vector<uint8_t>& playerIDs);
+    void loadTutorial(int saveID, const std::vector<uint8_t>& playerIDs);
     void loadRoguesGallery(bool tutorialMode);
 
     void quitGame();
@@ -33,4 +33,6 @@ private:
     MainMenu* _mainMenu = nullptr;
     RogueGallery* _rogueGallery = nullptr;
     Tutorial* _tutorial = nullptr;
+
+    int _saveID;
 };

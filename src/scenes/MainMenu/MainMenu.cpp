@@ -60,7 +60,9 @@ void MainMenu::windowResized() {
 	_uiManager.resolvePositions();
 }
 
-void MainMenu::promptTutorial() {
+void MainMenu::promptTutorial(int saveID) {
+	_saveID = saveID;
+
 	_uiManager.hideAllElements();
 
 	_tutTextElement.visible = true;

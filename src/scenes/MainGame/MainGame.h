@@ -12,7 +12,7 @@
 
 class MainGame {
 public:
-	MainGame(const std::vector<uint8_t>& playerIDs);
+	MainGame(int saveID, const std::vector<uint8_t>& playerIDs);
 	MainGame(int saveID);
 
 	void windowResized();
@@ -41,4 +41,6 @@ private:
 
 	// defines scale of movement for the camera. if set to 1, the camera will follow the mouse, if set to 0, the mouse has no control over the camera.
 	const float _CAMERA_MOVEMENT_SCALE = 0.5f;
+
+	int _saveID;
 };

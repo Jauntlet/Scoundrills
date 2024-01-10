@@ -2,14 +2,15 @@
  * Main Contributer(s): Xander Mooney / Jack Kennedy
  */
 #pragma once
-#include "Jauntlet/UI/UIElement.h"
-#include "Jauntlet/UI/UISpriteElement.h"
-#include "Jauntlet/UI/UITextElement.h"
-#include <Jauntlet/UI/UIManager.h>
-#include <Jauntlet/UI/UIButtonElement.h>
-#include "../GlobalContext.h"
+
 #include <Jauntlet/Rendering/TextRenderer.h>
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
+#include <Jauntlet/UI/UIButtonElement.h>
+#include <Jauntlet/UI/UIManager.h>
+
+#include "../GlobalContext.h"
+#include "Jauntlet/UI/UIElement.h"
+#include "Jauntlet/UI/UITextElement.h"
 #include "SaveInfoElement.h"
 
 class SceneManager;
@@ -22,7 +23,7 @@ public:
 
 	void windowResized();
 	
-	void promptTutorial();
+	void promptTutorial(int saveID);
 
 	void startSavedGame(int ID);
 private:
@@ -76,4 +77,6 @@ private:
 	Jauntlet::UIButtonElement _yesButton = Jauntlet::UIButtonElement(&GlobalContext::inputManager, std::bind(&MainMenu::startTutorial, this), _buttonTexture, &_yesButtonPos, glm::vec2(600, 200), Jauntlet::UIElement::ORIGIN_PIN::TOP);
 	std::string _yesText = "Yes";
 	Jauntlet::UITextElement _yesTextElement = Jauntlet::UITextElement(GlobalContext::textRenderer, &_yesText, &_textColor, &_yesButtonPos, Jauntlet::UIElement::ORIGIN_PIN::TOP, 0.6f);
+
+	int _saveID;
 };

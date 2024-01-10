@@ -17,7 +17,7 @@
 class Tutorial
 {
 public:
-	Tutorial(const std::vector<uint8_t>& playerIDs);
+	Tutorial(int saveID, const std::vector<uint8_t>& playerIDs);
 
 	void windowResized();
 	void gameLoop();
@@ -55,4 +55,6 @@ private:
 	Officer _officer = Officer(glm::vec2(7 * 64, -19 * 64));
 
 	bool _pressedW = false, _pressedA = false, _pressedS = false, _pressedD = false, _scrolledUp = false, _scrolledDown = false;
+
+	int _saveID;
 };

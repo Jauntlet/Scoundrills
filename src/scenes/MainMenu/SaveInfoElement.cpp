@@ -47,6 +47,6 @@ void SaveInfoElement::loadSave() {
 		_mainMenu->startSavedGame(_saveID);
 	}
 	else {
-		_mainMenu->promptTutorial();
+		_mainMenu->promptTutorial(_saveID);
 	}
 }

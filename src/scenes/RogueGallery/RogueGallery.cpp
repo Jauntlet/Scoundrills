@@ -1,10 +1,11 @@
 #include "RogueGallery.h"
 #include "../SceneManager.h"
 
-RogueGallery::RogueGallery(bool tutorialMode) :
+RogueGallery::RogueGallery(int saveID, bool tutorialMode) :
 	_crew{SelectableCrew(1, tutorialMode), SelectableCrew(2, tutorialMode), SelectableCrew(3, tutorialMode), SelectableCrew(4, tutorialMode), SelectableCrew(5, tutorialMode)},
 	_goToTutorial(tutorialMode)
 {
+	_saveID = saveID;
 	GlobalContext::window.setBackgroundColor(Jauntlet::Color(200,200,200));
 
 	_uiManager.addElement(&_confirmButton, &GlobalContext::normalShader);
@@ -65,5 +66,9 @@ void RogueGallery::loadGame() {
 		IDS.push_back(_selectedCrew[i]->getPlayerID());
 	}
 
-	_goToTutorial ? GlobalContext::sceneManager->loadTutorial(IDS) : GlobalContext::sceneManager->loadGame(IDS);
+	if (_goToTutorial) {
+		GlobalContext::sceneManager->loadTutorial(_saveID, IDS);
+	} else {
+		GlobalContext::sceneManager->loadGame(_saveID, IDS);
+	}
 }

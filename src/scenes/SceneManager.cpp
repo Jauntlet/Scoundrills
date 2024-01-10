@@ -1,6 +1,7 @@
 #include <Jauntlet/Time.h>
 
 #include "GlobalContext.h"
+#include "Jauntlet/Errors.h"
 #include "PauseMenu.h"
 #include "SceneManager.h"
 
@@ -86,11 +87,13 @@ void SceneManager::loadGame(int ID) {
     _queuedState = GameState::MAINGAME;
     _queuedID = ID;
 }
-void SceneManager::loadGame(const std::vector<uint8_t>& playerIDs) {
+void SceneManager::loadGame(int saveID, const std::vector<uint8_t>& playerIDs) {
+    _queuedID = saveID;
     _queuedState = GameState::MAINGAME;
     _storedPlayerIDs = playerIDs;
 }
-void SceneManager::loadTutorial(const std::vector<uint8_t>& playerIDs) {
+void SceneManager::loadTutorial(int saveID, const std::vector<uint8_t>& playerIDs) {
+    _queuedID = saveID;
     _queuedState = GameState::TUTORIAL;
     _storedPlayerIDs = playerIDs;
 }
@@ -116,7 +119,7 @@ void SceneManager::queuedSwitchScene() {
                 _queuedID = 0;
             }
             else if (!_storedPlayerIDs.empty()) {
-                _mainGame = new MainGame(_storedPlayerIDs);
+                _mainGame = new MainGame(_queuedID, _storedPlayerIDs);
                 _storedPlayerIDs.clear();
             } else {
                 Jauntlet::fatalError("MainGame was loaded in an invalid way! Try loadGame()!");
@@ -149,7 +152,7 @@ void SceneManager::queuedSwitchScene() {
     if (_gameState == GameState::TUTORIAL) {
         if (_tutorial == nullptr) {
             if (!_storedPlayerIDs.empty()) {
-                _tutorial = new Tutorial(_storedPlayerIDs);
+                _tutorial = new Tutorial(_queuedID, _storedPlayerIDs);
                 _storedPlayerIDs.clear();
             }
         } else {

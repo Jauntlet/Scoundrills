@@ -19,7 +19,7 @@ const uint16_t INMATE_COUNT = 5;
 
 class RogueGallery {
 public:
-	RogueGallery(bool tutorialMode = false);
+	RogueGallery(int saveID, bool tutorialMode = false);
 
 	void windowResized();
 	void gameLoop();
@@ -51,5 +51,7 @@ private:
 	std::string _confirmText = "Confirm";
 	glm::vec2 _confirmTextPos = glm::vec2(0, -50);
 	Jauntlet::UITextElement _confirmTextElement = Jauntlet::UITextElement(GlobalContext::textRenderer, &_confirmText, &_textColor, &_confirmTextPos, Jauntlet::UIElement::ORIGIN_PIN::BOTTOM, 0.4f);
+
+	int _saveID;
 };
 
