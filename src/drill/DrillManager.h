@@ -1,7 +1,6 @@
 /* Purpose: Handles the drill and the happenings within it.
  * Main Contributer(s): Xander Mooney / Jack Kennedy
  */
-
 #pragma once
 #include <Jauntlet/Tiles/TileMap.h>
 #include <Jauntlet/Inputs/InputManager.h>
@@ -53,6 +52,7 @@ public:
 	void burstSpecificPipe(const glm::ivec2& tilePos);
 	void repairPipe(const glm::vec2& worldPos);
 	bool DestMatchesRandomPipe(const glm::vec2& worldPos) const;
+	unsigned int BurstPipeCount() const;
 
 	// adds a holdable item to be managed by the drillManager.
 	Holdable* addHoldable(const glm::vec2& position, const HoldableType& type = HoldableType::NONE);

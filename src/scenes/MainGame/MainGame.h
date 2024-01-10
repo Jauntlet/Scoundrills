@@ -9,6 +9,7 @@
 #include <Jauntlet/Time.h>
 #include "src/pathfinding/SelectedTileRenderer.h"
 #include "UICoordinator.h"
+#include "../../Database.h"
 
 class MainGame {
 public:
@@ -42,5 +43,8 @@ private:
 	// defines scale of movement for the camera. if set to 1, the camera will follow the mouse, if set to 0, the mouse has no control over the camera.
 	const float _CAMERA_MOVEMENT_SCALE = 0.5f;
 
+	// Database stuff
+	Database _database;
+	bool _wasDrillMoving = false;
 	int _saveID;
 };

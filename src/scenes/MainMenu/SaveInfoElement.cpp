@@ -6,14 +6,13 @@
 
 SaveInfoElement::SaveInfoElement(float yPos, int saveID, MainMenu* mainMenu) :
 	_position(0, yPos),
-	_hasSaveInfo(false),
 	_mainMenu(mainMenu),
 	_saveID(saveID),
 	_playPos(250, yPos + 200),
 	_loadPos(250, yPos + 200),
 	_deletePos(-50, yPos + 200)
 {
-	// Empty
+	_hasSaveInfo = Database::IsSlotFull(saveID);
 }
 
 void SaveInfoElement::addToManager(Jauntlet::UIManager& uiManager) {
@@ -21,11 +20,9 @@ void SaveInfoElement::addToManager(Jauntlet::UIManager& uiManager) {
 	uiManager.addElement(&_playButton, &GlobalContext::normalShader);
 	if (_hasSaveInfo) {
 		uiManager.addElement(&_deleteButton, &GlobalContext::normalShader);
-	}
-	uiManager.addElement(&_playTextElement, &Jauntlet::TextRenderer::textShader);
-	if (_hasSaveInfo) {
 		uiManager.addElement(&_deleteTextElement, &Jauntlet::TextRenderer::textShader);
 	}
+	uiManager.addElement(&_playTextElement, &Jauntlet::TextRenderer::textShader);
 }
 
 void SaveInfoElement::setVisibility(bool visible) {

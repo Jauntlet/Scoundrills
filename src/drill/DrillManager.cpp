@@ -9,7 +9,7 @@
 const float HEAT_RISE_SCALE = .3f; //1 heat every ~3 seconds.
 const float HEAT_FALL_SCALE = .1f; //1 heat every 10 seconds.
 
-const float PIPE_BURST_HEAT = 80.0f; // The minimum heat for pipes to be able to burst.
+const float PIPE_BURST_HEAT = 30.0f; // The minimum heat for pipes to be able to burst.
 
 DrillManager::DrillManager(CameraManager* cameraManager, PlayerResources& resourceManager, Jauntlet::Camera2D* camera) :
 	drillAssets(camera),
@@ -32,7 +32,7 @@ DrillManager::DrillManager(CameraManager* cameraManager, PlayerResources& resour
 
 void DrillManager::update() {
 	// calculate the change in water/heat
-	if (_drillOn) {
+	if (_drillOn && navigation.getMoving()) {
 		if (boilerWater > 0) {
 			boilerWater -= Jauntlet::Time::getDeltaTime() / 6;
 			resources->heat += Jauntlet::Time::getDeltaTime() * (HEAT_RISE_SCALE + _brokenPipeLocations.size() * 0.1);
@@ -255,6 +255,9 @@ bool DrillManager::DestMatchesRandomPipe(const glm::vec2& worldPos) const {
 			}
 	}
 	return false;
+}
+unsigned int DrillManager::BurstPipeCount() const {
+	return _brokenPipeLocations.size();
 }
 
 Holdable* DrillManager::addHoldable(const glm::vec2& position, const HoldableType& type) {

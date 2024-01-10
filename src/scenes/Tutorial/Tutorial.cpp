@@ -239,7 +239,21 @@ void Tutorial::nextDialogue() {
 			_camera.transitionToPosition(glm::vec2(700, -700));
 			break;
 		case 43:
-			_sequence--;
+			_dialogue.pushNewText("Last step now!\ntake the pipe to the burst pipe\n to repair it!");
+			_camera.transitionToPosition(glm::vec2(1200, -1200));
+			_camera.transitionToScale(0.35f);
+			break;
+		case 44:
+			_camera.transitionToScale(2.75f);
+			_camera.transitionToPosition(glm::vec2(1337.25, -3475.54));
+			_dialogue.pushNewText("Thank you for your time.");
+			break;
+		case 45:
+			_dialogue.pushNewText("This covers all basic operations\nof the drill.");
+			break;
+		case 46:
+			_dialogue.hide();
+			_officer.walkOffscreen();
 			break;
 		default:
 			std::vector<uint8_t> output;
@@ -253,13 +267,17 @@ void Tutorial::nextDialogue() {
 
 void Tutorial::processInput() {
 	_drill.navigation.cavern.hide();
+	_resources.heat = 0;
+	if (_sequence > 16) {
+		_drill.boilerWater = 60;
+	}
 
 	if (_players.getAllPlayers().size() == 0) {
 		return;
 	}
 
 	_players.update(_drill);
-
+	
 	_cameraManager.processInput();
 
 	// in most cases, this switch statement will run the default case, however there are multiple cases
@@ -351,6 +369,21 @@ void Tutorial::processInput() {
 			_drill.forge.meltingScrap += Jauntlet::Time::getDeltaTime() / 5;
 		}
 		break;
+	case 42:
+		if (_drill.resources->copper == 0) {
+			nextDialogue();
+		}
+		break;
+	case 43:
+		if (_drill.BurstPipeCount() == 0) {
+			nextDialogue();
+		}
+		break;
+	case 46:
+		if (!_officer.isWalking()) {
+			nextDialogue();
+		}
+		break;
 	default:
 		if (GlobalContext::inputManager.lastButtonPressed() != SDLK_ESCAPE || GlobalContext::inputManager.isKeyPressed(SDL_BUTTON_LEFT)) {
 			_dialogue.doneReadingText() ? nextDialogue() : _dialogue.pushAllText();
@@ -385,7 +418,9 @@ void Tutorial::drawGame() {
 	_playerSpriteBatch.begin();
 	_players.draw(_playerSpriteBatch);
 	_playerSpriteBatch.endAndRender();
-	_officer.draw();
+	if (_sequence < 47) {
+		_officer.draw(_camera);
+	}
 
 	_drill.drawLayerTwo();
 
@@ -402,6 +437,11 @@ void Tutorial::drawGame() {
 void Tutorial::drawHUD() {
 	_hudCamera.setActive();
 
-	_uiCoordinator.draw();
-	_dialogue.update();
+	if (_sequence == 17) {
+		_dialogue.update();
+		_uiCoordinator.draw();
+	} else {
+		_uiCoordinator.draw();
+		_dialogue.update();
+	}
 }
