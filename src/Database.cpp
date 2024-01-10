@@ -376,25 +376,56 @@ void Database::Delete(int saveID) {
 }
 
 bool Database::IsSlotFull(int saveID) {
-    // total hack, worst code ever but theres two days left :P
+    uint8_t contains = 0;
+    sqlite3* database;
+    sqlite3_stmt *stmt;
+    const char* query;
+    int rc;
 
-    PlayerResources playerResources;
-    DrillManager drill(nullptr, playerResources, nullptr);
-    PlayerManager playerManager(&drill);
+    sqlite3_open("saves.db", &database);
 
-    PlayerResources playerResources_copy;
-    DrillManager drill_copy(nullptr, playerResources_copy, nullptr);
-    PlayerManager playerManager_copy(&drill_copy);
-
-    Database database(saveID);
-
-    database.Load(drill, playerManager);
-
-    if (drill.resources == drill_copy.resources && playerManager.getAllPlayers() == playerManager_copy.getAllPlayers()) {
-        return true;
+    query = "SELECT * FROM Items";
+    rc = sqlite3_prepare_v2(database, query, -1, &stmt, nullptr);
+    while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+        if (sqlite3_column_int(stmt, 0) != saveID) {
+            contains++;
+            break;
+        }
     }
+    if (rc != SQLITE_DONE && rc != SQLITE_ROW) {
+        Jauntlet::error("error! query ended with code " + std::to_string(rc));
+    }
+    sqlite3_finalize(stmt);
 
-    return false;
+    query = "SELECT * FROM Players";
+    rc = sqlite3_prepare_v2(database, query, -1, &stmt, nullptr);
+    while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+        if (sqlite3_column_int(stmt, 0) != saveID) {
+            contains++;
+            break;
+        }
+    }
+    if (rc != SQLITE_DONE && rc != SQLITE_ROW) {
+        Jauntlet::error("error! query ended with code " + std::to_string(rc));
+    }
+    sqlite3_finalize(stmt);
+
+    query = "SELECT * FROM Drills";
+    rc = sqlite3_prepare_v2(database, query, -1, &stmt, nullptr);
+    while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+        if (sqlite3_column_int(stmt, 0) != saveID) {
+            contains++;
+            break;
+        }
+    }
+    if (rc != SQLITE_DONE && rc != SQLITE_ROW) {
+        Jauntlet::error("error! query ended with code " + std::to_string(rc));
+    }
+    sqlite3_finalize(stmt);
+    
+    sqlite3_close(database);
+
+    return contains != 0;
 }
 
 // unused, but could have been for removing all data.
