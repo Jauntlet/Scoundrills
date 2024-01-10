@@ -35,7 +35,7 @@ void Cavern::setType(int type) {
 		_addHeat = -10 * (_random() % 3);
 		_addWater = 10 * (_random() % 3);
 		_addFood = 5 * (_random() % 5);
-		_addCopper = 10 * (_random() % 2);
+		_addCopper = 3 * (_random() % 2);
 
 		//display resources in description
 		if (_addHeat != 0) {
@@ -93,7 +93,7 @@ void Cavern::setType(int type) {
 		//determine resources to add/remove
 		_addHeat = 20 * (_random() % 3);
 		_addWater = -10 * (_random() % 2);
-		_addCopper = 5 * (_random() % 3);
+		_addCopper = 2 * (_random() % 3);
 
 		//display resources in description
 		if (_addHeat != 0) {
@@ -118,7 +118,7 @@ void Cavern::setType(int type) {
 		_addHeat = -10 * (_random() % 3);
 		_addWater = 5 * (_random() % 3);
 		_addFood = 5 * (_random() % 3);
-		_addCopper = 10 * (_random() % 4+1);
+		_addCopper = 3 * (_random() % 3+1);
 
 		//display resources in description
 		if (_addHeat != 0) {
