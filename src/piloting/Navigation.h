@@ -55,7 +55,7 @@ private:
 
 	//mapping-related
 	int _map[5][5]; //Y (count) first X (width) second
-	std::vector<int> _mappedCoves;
+	std::vector<int> _mappedCaverns;
 	std::vector<glm::vec2> _positions;
 
 	//various internal map-position control variables (like indexes on an array)
