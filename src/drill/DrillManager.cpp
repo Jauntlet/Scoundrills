@@ -256,6 +256,9 @@ bool DrillManager::DestMatchesRandomPipe(const glm::vec2& worldPos) const {
 	}
 	return false;
 }
+unsigned int DrillManager::BurstPipeCount() const {
+	return _brokenPipeLocations.size();
+}
 
 Holdable* DrillManager::addHoldable(const glm::vec2& position, const HoldableType& type) {
 	switch (type) {
