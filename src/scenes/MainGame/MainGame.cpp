@@ -4,12 +4,12 @@
 #include "MainGame.h"
 #include "UICoordinator.h"
 #include "../PauseMenu.h"
-#include "../../Database.h"
 
 const float PLAYER_HURT_HEAT = 200.0f; // The minimum heat for players to take damage from it.
 
 MainGame::MainGame(int saveID, const std::vector<uint8_t>& playerIDs) :
-	_resources(80,0,0,0)
+	_resources(80,0,0,0),
+	_database(_saveID)
 {
 	_saveID = saveID;
 	
@@ -26,28 +26,20 @@ MainGame::MainGame(int saveID, const std::vector<uint8_t>& playerIDs) :
 	//there isn't currently an intuitive way to get the playerManager into the cavern class so I just put it here. TODO: make this comment sound smart
 	_uiCoordinator.navigation->setCavernPlayerManager(&_players);
 
-	// if theres somehow a save already in this slot, remove it.
-	Database::Delete(_saveID);
-	
-	// create a save here
-	Database database = Database(_saveID);
-
 	// save
-	database.TrySave(_drill, _players);
-
+	_database.TrySave(_drill, _players);
 }
 
-MainGame::MainGame(int saveID) {
+MainGame::MainGame(int saveID) :
+	_database(saveID)
+{
 	_saveID = saveID;
 
 	GlobalContext::window.setBackgroundColor(Jauntlet::Color(97, 60, 47));
 	_uiCoordinator.applyNewScreenSize(glm::ivec2(GlobalContext::screenSize.x, GlobalContext::screenSize.y));
 
-	// create a save here
-	Database database = Database(saveID);
-
 	// load existing data here.
-	database.Load(_drill, _players);
+	_database.Load(_drill, _players);
 
 	//set the cavern's player manager
 	_uiCoordinator.navigation->setCavernPlayerManager(&_players);
@@ -67,6 +59,11 @@ void MainGame::processInput() {
 	if (_players.getAllPlayers().size() == 0) {
 		return;
 	}
+
+	if (_wasDrillMoving && !_drill.navigation.getMoving()) {
+		_database.TrySave(_drill, _players);
+	}
+	_wasDrillMoving = _drill.navigation.getMoving();
 	
 	_players.update(_drill);
 
