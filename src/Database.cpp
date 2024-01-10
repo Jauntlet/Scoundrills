@@ -2,7 +2,6 @@
 #include <Jauntlet/Filesystems/FileManager.h>
 #include <cmath>
 #include <cstddef>
-#include <iostream>
 #include <string>
 #include <vector>
 
@@ -13,20 +12,9 @@
 #include "src/players/Player.h"
 #include "src/players/PlayerManager.h"
 
-// values that would never show up realistically that we can use as placeholders
-#define TEST_INT -69
-#define TEST_FLOAT -69.420
-#define TEST_STRING "sixty nine point four hundred and twenty"
-
 Database::Database(int saveID) {
     _saveID = saveID;
     sqlite3_open("saves.db", &database);
-
-    std::cout << "creating database with saveID " << _saveID << std::endl;
-
-    sqlite3_exec(database, "DROP TABLE Players", nullptr, nullptr, nullptr);
-    sqlite3_exec(database, "DROP TABLE Drills" , nullptr, nullptr, nullptr);
-    sqlite3_exec(database, "DROP TABLE Items"  , nullptr, nullptr, nullptr);
 
     sqlite3_exec(database,
         "CREATE TABLE IF NOT EXISTS Players ("
@@ -60,33 +48,6 @@ Database::Database(int saveID) {
         nullptr, nullptr, nullptr);
 
     sqlite3_close(database);
-
-    std::cout << "database created!" << std::endl;
-}
-
-void Database::Test() {
-    sqlite3_open("saves.db", &database);
-
-    PlayerResources _playerResources;
-
-    _playerResources.heat = 1.0f;
-    _playerResources.water =  2.0f;
-    _playerResources.food = 3;
-    _playerResources.copper = 4;
-
-    if (TrySaveDrill(_playerResources)) {
-        std::cout << "drill saving confirmed" << std::endl;
-    } else {
-        std::cout << "TrySaveDrill FAILED" << std::endl;
-    }
-
-    PlayerResources playerResources;
-
-    //TryLoadInResources(playerResources, drill);
-
-    sqlite3_close(database);
-
-    std::cout << playerResources.heat << ", " << playerResources.water << ", " << playerResources.food << ", " << playerResources.copper << std::endl;
 }
 
 bool Database::TrySave(DrillManager& drill, PlayerManager& playerManager) {
@@ -199,11 +160,11 @@ bool Database::TryLoadInPlayers(PlayerManager& playerManager, DrillManager& dril
     sqlite3_stmt *stmt;
     
     // test values, these should NEVER appear in game.
-    float positionX = TEST_FLOAT;
-    float positionY = TEST_FLOAT;
-    int heldItemID  = TEST_INT;
-    int health      = TEST_INT;
-    int playerID    = TEST_INT;
+    float positionX;
+    float positionY;
+    int heldItemID;
+    int health;
+    int playerID;
 
     // our query
     // grab everything from Players
@@ -249,18 +210,12 @@ bool Database::TryLoadInPlayers(PlayerManager& playerManager, DrillManager& dril
         ++row;
     }
 
-    if (rc == SQLITE_DONE || rc == SQLITE_ROW) {
-        std::cout << "we are done reading DB, searched " << row << " rows" << std::endl;
-    } else {
-        std::cout << "error! query ended with code " << rc << std::endl;
+    if (rc != SQLITE_DONE && rc != SQLITE_ROW) {
+        Jauntlet::error("error! query ended with code " + std::to_string(rc));
     }
 
     // finalize the statement (i still dont know)
     sqlite3_finalize(stmt);
-
-    // replace players
-
-    // TODO:FIXME
 
     // we did it!!!
     return true;
@@ -282,10 +237,10 @@ bool Database::TryLoadInResources(PlayerResources* playerResources) {
         return false;
     }
 
-    float heat  = TEST_FLOAT;
-    float water = TEST_FLOAT;
-    int food    = TEST_INT;
-    int copper  = TEST_INT;
+    float heat;
+    float water;
+    int food;
+    int copper;
 
     int row = 0;
 
@@ -308,10 +263,8 @@ bool Database::TryLoadInResources(PlayerResources* playerResources) {
         break;
     }
 
-    if (rc == SQLITE_DONE || rc == SQLITE_ROW) {
-        std::cout << "we are done reading DB, searched " << row << " rows" << std::endl;
-    } else {
-        std::cout << "error! query ended with code " << rc << std::endl;
+    if (rc != SQLITE_DONE && rc != SQLITE_ROW) {
+        Jauntlet::error("error! query ended with code " + std::to_string(rc));
     }
 
     // finalize the statement (i still dont know)
@@ -368,10 +321,8 @@ std::vector<Holdable*> Database::LoadInItems(DrillManager& drill) {
         ++row;
     }
 
-    if (rc == SQLITE_DONE || rc == SQLITE_ROW) {
-        std::cout << "we are done reading DB, searched " << row << " rows" << std::endl;
-    } else {
-        std::cout << "error! query ended with code " << rc << std::endl;
+    if (rc != SQLITE_DONE && rc != SQLITE_ROW) {
+        Jauntlet::error("error! query ended with code " + std::to_string(rc));
     }
 
     // finalize the statement (i still dont know)
@@ -390,14 +341,49 @@ void Database::Load(DrillManager& drill, PlayerManager& playerManager) {
     result = TryLoadInResources(drill.resources);
     
     if (!result) {
-        std::cout << "tryloadinresources FAILED" << std::endl;
+        Jauntlet::error("tryloadinresources FAILED");
     }
 
     result = TryLoadInPlayers(playerManager, drill);
 
     if (!result) {
-        std::cout << "tryloadinplayers FAILED" << std::endl;
+        Jauntlet::error("tryloadinplayers FAILED");
     }
 
     sqlite3_close(database);
 }
+
+void Database::Delete() {
+    sqlite3_open("saves.db", &database);
+
+	sqlite3_exec(database, ("DELETE FROM Players WHERE saveID = " + std::to_string(_saveID) + ";").c_str(), nullptr, nullptr, nullptr);
+	sqlite3_exec(database, ("DELETE FROM Drills WHERE saveID = " + std::to_string(_saveID) + ";").c_str(), nullptr, nullptr, nullptr);
+	sqlite3_exec(database, ("DELETE FROM Items WHERE saveID = " + std::to_string(_saveID) + ";").c_str(), nullptr, nullptr, nullptr);
+
+    sqlite3_close(database);
+}
+
+void Database::Delete(int saveID) {
+    sqlite3* database;
+    
+    sqlite3_open("saves.db", &database);
+
+	sqlite3_exec(database, ("DELETE FROM Players WHERE saveID = " + std::to_string(saveID) + ";").c_str(), nullptr, nullptr, nullptr);
+	sqlite3_exec(database, ("DELETE FROM Drills WHERE saveID = " + std::to_string(saveID) + ";").c_str(), nullptr, nullptr, nullptr);
+	sqlite3_exec(database, ("DELETE FROM Items WHERE saveID = " + std::to_string(saveID) + ";").c_str(), nullptr, nullptr, nullptr);
+
+    sqlite3_close(database);
+}
+
+// unused, but could have been for removing all data.
+/*void Database::Purge() {
+    sqlite3* database;
+    
+    sqlite3_open("saves.db", &database);
+    
+    sqlite3_exec(database, "DROP TABLE Players", nullptr, nullptr, nullptr);
+    sqlite3_exec(database, "DROP TABLE Drills" , nullptr, nullptr, nullptr);
+    sqlite3_exec(database, "DROP TABLE Items"  , nullptr, nullptr, nullptr);
+
+    sqlite3_close(database);
+}*/

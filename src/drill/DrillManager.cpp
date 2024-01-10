@@ -17,7 +17,7 @@ DrillManager::DrillManager(CameraManager* cameraManager, PlayerResources& resour
 	navigation(camera, &resourceManager),
 	boiler(&boilerWater, "Textures/BoilerTank.png", { 64 * 16, -64 * 1 - 10, 32 * 2, 43 * 2 }, 5, { 64 * 15.5, -64 * 2, 64 * 2, 96 * 2 }, { 16,-64 }),
 	_waterTank(*this, { 64, -64 * 12, 128, 224 }, glm::vec2(0,-96)),
-	_forge(*this, {64 * 15, -64 * 13, 64 * 2, 64 * 2}, glm::vec2(0, -32)),
+	forge(*this, {64 * 15, -64 * 13, 64 * 2, 64 * 2}, glm::vec2(0, -32)),
 	_pipeWorkbench(*this, { 64 * 17, -64 * 20, 128, 128 }, { 64 * 17, -64 * 20, 128, 128 }, glm::vec2(0,-64)),
 	_cameraManager(cameraManager)
 {
@@ -41,7 +41,7 @@ void DrillManager::update() {
 				DisasterEvent();
 			}
 			navigation.updateTravel();
-			_forge.update();
+			forge.update();
 			_fridge.update();
 		}
 	} else {
@@ -79,7 +79,7 @@ void DrillManager::drawLayerOne() {
 	_spriteBatch.begin();
 	boiler.draw(_spriteBatch);
 	_waterTank.draw(_spriteBatch);
-	_forge.draw(_spriteBatch);
+	forge.draw(_spriteBatch);
 	_pipeWorkbench.draw(_spriteBatch);
 	_fridge.draw(_spriteBatch);
 	_spriteBatch.endAndRender();
@@ -104,13 +104,13 @@ void DrillManager::drawLayerTwo() {
 void DrillManager::on() {
 	_drillOn = true;
 	drillAssets.startAnimation();
-	_forge.animation.play(0, 2, 0.3f);
+	forge.animation.play(0, 2, 0.3f);
 }
 
 void DrillManager::off() {
 	_drillOn = false;
 	drillAssets.stopAnimation();
-	_forge.animation.play(3, 5, 0.3f, false);
+	forge.animation.play(3, 5, 0.3f, false);
 }
 
 void DrillManager::toggle() {
@@ -202,8 +202,8 @@ PlayerStation* DrillManager::checkHoveringStation(glm::vec2 position) {
 		return &boiler;
 	} else if (_waterTank.isColliding(position)) {
 		return &_waterTank;
-	} else if (_forge.isColliding(position)) {
-		return &_forge;
+	} else if (forge.isColliding(position)) {
+		return &forge;
 	} else if (_pipeWorkbench.isColliding(position)) {
 		return &_pipeWorkbench;
 	} else if (_fridge.isColliding(position)) {
@@ -217,7 +217,7 @@ bool DrillManager::doesTileOverlapStations(glm::ivec2 tilePos) const  {
 	return drillWalls.doesTileOverlap(tilePos, drillAssets.steeringWheel.getBoundingBox()) ||
 		drillWalls.doesTileOverlap(tilePos, boiler.getBoundingBox()) ||
 		drillWalls.doesTileOverlap(tilePos, _waterTank.getBoundingBox()) ||
-		drillWalls.doesTileOverlap(tilePos, _forge.getBoundingBox()) ||
+		drillWalls.doesTileOverlap(tilePos, forge.getBoundingBox()) ||
 		drillWalls.doesTileOverlap(tilePos, _pipeWorkbench.getBoundingBox()) ||
 		drillWalls.doesTileOverlap(tilePos, _fridge.getBoundingBox());
 }

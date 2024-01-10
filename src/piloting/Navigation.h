@@ -37,7 +37,7 @@ public:
 	Cavern cavern; //event handler
 private:
 	//random -- uses one consistent seed (generated based on system time on class construction)
-	std::mt19937 random;
+	std::mt19937 _random;
 
 	//textures
 	GLuint _navTexture = 0;
@@ -55,7 +55,7 @@ private:
 
 	//mapping-related
 	int _map[5][5]; //Y (count) first X (width) second
-	std::vector<int> _mappedCoves;
+	std::vector<int> _mappedCaverns;
 	std::vector<glm::vec2> _positions;
 
 	//various internal map-position control variables (like indexes on an array)
