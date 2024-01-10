@@ -148,9 +148,10 @@ void SceneManager::queuedSwitchScene() {
 
     if (_gameState == GameState::TUTORIAL) {
         if (_tutorial == nullptr) {
-            if (!_storedPlayerIDs.empty()) 
+            if (!_storedPlayerIDs.empty()) {
                 _tutorial = new Tutorial(_storedPlayerIDs);
                 _storedPlayerIDs.clear();
+            }
         } else {
             Jauntlet::fatalError("Tutorial was loaded in an invalid way! Try loadTutorial()!");
         }
