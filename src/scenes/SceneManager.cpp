@@ -50,6 +50,9 @@ void SceneManager::gameLoop() {
                 case (GameState::TUTORIAL):
                     _tutorial->windowResized();
                     break;
+                default:
+                    Jauntlet::fatalError("im an error that wont exist created to get clangd off my back");
+                    break;
             }
 
             GlobalContext::pauseMenu->windowResized();
@@ -67,6 +70,9 @@ void SceneManager::gameLoop() {
                 break;
             case (GameState::TUTORIAL):
                 _tutorial->gameLoop();
+                break;
+            default:
+                Jauntlet::fatalError("im an error that wont exist created to get clangd off my back");
                 break;
         }
 
