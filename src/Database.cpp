@@ -425,6 +425,8 @@ bool Database::IsSlotFull(int saveID) {
     
     sqlite3_close(database);
 
+    Jauntlet::error(std::to_string(contains));
+
     return contains != 0;
 }
 
