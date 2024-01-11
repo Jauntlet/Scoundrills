@@ -16,14 +16,14 @@ Tutorial::Tutorial(int saveID, const std::vector<uint8_t>& playerIDs) {
 	_uiCoordinator.applyNewScreenSize(GlobalContext::screenSize);
 
 	for (size_t i = 0; i < playerIDs.size(); ++i) {
-		_players.createPlayer(glm::vec2(64 * (i + 1) + 5 * 64, -64 * 24), playerIDs[i], true);
-		_players.getPathRenderer()->createPath(glm::vec2(64 * (i + 1) + 5 * 64, -64 * 24), glm::vec2(64 * (i + 1) + 5 * 64, -64 * 19));
-		_players.getAllPlayers().back()->navigateTo(_drill, *_players.getPathRenderer(), glm::vec2(64 * (i + 1) + 5 * 64, -64 * 19));
+		_players.createPlayer(glm::vec2(64 * (i + 1) + 5 * 64, -64 * 23), playerIDs[i], true);
+		_players.getPathRenderer()->createPath(glm::vec2(64 * (i + 1) + 5 * 64, -64 * 23), glm::vec2(64 * (i + 1) + 5 * 64, -64 * 18));
+		_players.getAllPlayers().back()->navigateTo(_drill, *_players.getPathRenderer(), glm::vec2(64 * (i + 1) + 5 * 64, -64 * 18));
 	}
 	_players.getPathRenderer()->clearPath();
 
 	_camera.setScale(2.75f);
-	_camera.setPosition(glm::vec2(1337.25, -3475.54));
+	_camera.setPosition(glm::vec2(1337.25, -3275.54));
 
 	_drill.boilerWater = 0;
 	_drill.off();
@@ -39,9 +39,6 @@ Tutorial::Tutorial(int saveID, const std::vector<uint8_t>& playerIDs) {
 void Tutorial::windowResized() {
 
 	glm::vec2 newCenter = glm::vec2(GlobalContext::screenSize) / 2.0f - _camera.getSize() / 2.0f;
-
-	//_camera.setScale(_camera.getScale() * (_camera.getSize().y / GlobalContext::screenSize.y));
-	//_camera.setPosition(glm::vec2(_camera.getPosition().x - newCenter.x, _camera.getPosition().y - newCenter.y));
 
 	_camera.updateSize(GlobalContext::screenSize);
 	_hudCamera.updateSize(GlobalContext::screenSize);
@@ -103,7 +100,7 @@ void Tutorial::nextDialogue() {
 			break;
 		case 11:
 			_camera.transitionToScale(2.75f);
-			_camera.transitionToPosition(glm::vec2(1337.25, -3475.54));
+			_camera.transitionToPosition(glm::vec2(1337.25, -3275.54));
 			_dialogue.pushNewText("Lets practice operating the drill.");
 			break;
 		case 12:
@@ -245,7 +242,7 @@ void Tutorial::nextDialogue() {
 			break;
 		case 44:
 			_camera.transitionToScale(2.75f);
-			_camera.transitionToPosition(glm::vec2(1337.25, -3475.54));
+			_camera.transitionToPosition(glm::vec2(1337.25, -3275.54));
 			_dialogue.pushNewText("Thank you for your time.");
 			break;
 		case 45:
@@ -254,6 +251,17 @@ void Tutorial::nextDialogue() {
 		case 46:
 			_dialogue.hide();
 			_officer.walkOffscreen();
+			break;
+		case 47:
+			for (uint8_t i = 0; i < _players.size(); ++i) {
+				_players.getAllPlayers()[i]->forcePosition(glm::vec2(64 * (i + 1) + 5 * 64, -64 * 23));
+				_players.getPathRenderer()->createPath(glm::vec2(64 * (i + 1) + 5 * 64, -64 * 23), glm::vec2(64 * (i + 1) + 5 * 64, -64 * 18));
+				_players.getAllPlayers()[i]->navigateTo(_drill, *_players.getPathRenderer(), glm::vec2(64 * (i + 1) + 5 * 64, -64 * 18));
+			}
+			_players.getPathRenderer()->clearPath();
+			break;
+		case 48:
+			
 			break;
 		default:
 			std::vector<uint8_t> output;
@@ -384,6 +392,10 @@ void Tutorial::processInput() {
 			nextDialogue();
 		}
 		break;
+	case 47:
+		if (!_players.getAllPlayers()[0]->isMoving()) {
+			nextDialogue();
+		}
 	default:
 		if (GlobalContext::inputManager.lastButtonPressed() != SDLK_ESCAPE || GlobalContext::inputManager.isKeyPressed(SDL_BUTTON_LEFT)) {
 			_dialogue.doneReadingText() ? nextDialogue() : _dialogue.pushAllText();
@@ -415,9 +427,12 @@ void Tutorial::drawGame() {
 	_drill.drawLayerOne();
 
 	// Draw the player using a spriteBatch
-	_playerSpriteBatch.begin();
-	_players.draw(_playerSpriteBatch);
-	_playerSpriteBatch.endAndRender();
+	if (_sequence < 48) {
+		_playerSpriteBatch.begin();
+		_players.draw(_playerSpriteBatch);
+		_playerSpriteBatch.endAndRender();
+	}
+
 	if (_sequence < 47) {
 		_officer.draw(_camera);
 	}
