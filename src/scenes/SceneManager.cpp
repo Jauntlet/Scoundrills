@@ -1,4 +1,5 @@
 #include <Jauntlet/Time.h>
+#include <iostream>
 
 #include "GlobalContext.h"
 #include "Jauntlet/Errors.h"
@@ -89,11 +90,12 @@ void SceneManager::gameLoop() {
 void SceneManager::switchScene(GameState newState) {
     _queuedState = newState;
 }
-void SceneManager::loadGame(int ID) {
+void SceneManager::startGame(int saveID) {
     _queuedState = GameState::MAINGAME;
-    _queuedID = ID;
+    _saveID = saveID;
+    _queuedID = _saveID;
 }
-void SceneManager::loadGame(int saveID, const std::vector<uint8_t>& playerIDs) {
+void SceneManager::startGame(int saveID, const std::vector<uint8_t>& playerIDs) {
     _saveID = saveID;
     _queuedState = GameState::MAINGAME;
     _storedPlayerIDs = playerIDs;
@@ -103,7 +105,8 @@ void SceneManager::loadTutorial(int saveID, const std::vector<uint8_t>& playerID
     _queuedState = GameState::TUTORIAL;
     _storedPlayerIDs = playerIDs;
 }
-void SceneManager::loadRoguesGallery(bool tutorialMode) {
+void SceneManager::loadRoguesGallery(int saveID, bool tutorialMode) {
+    _saveID = saveID;
     _queuedState = GameState::ROGUEGALLERY;
     _queuedID = tutorialMode;
 }
@@ -125,10 +128,10 @@ void SceneManager::queuedSwitchScene() {
                 _queuedID = 0;
             }
             else if (!_storedPlayerIDs.empty()) {
-                _mainGame = new MainGame(_queuedID, _storedPlayerIDs);
+                _mainGame = new MainGame(_saveID, _storedPlayerIDs);
                 _storedPlayerIDs.clear();
             } else {
-                Jauntlet::fatalError("MainGame was loaded in an invalid way! Try loadGame()!");
+                Jauntlet::fatalError("MainGame was loaded in an invalid way! Try startGame()!");
             }
         }
     } else if (_mainGame != nullptr) {

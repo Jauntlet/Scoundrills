@@ -1,6 +1,7 @@
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
 #include <SDL2/SDL_keycode.h>
 #include <SDL2/SDL_mouse.h>
+#include <iostream>
 
 #include "../MainGame/UICoordinator.h"
 #include "../PauseMenu.h"
@@ -260,7 +261,7 @@ void Tutorial::nextDialogue() {
 			for (Player* player : _players.getAllPlayers()) {
 				output.push_back(player->getPlayerID());
 			}
-			GlobalContext::sceneManager->loadGame(_saveID, output);
+			GlobalContext::sceneManager->startGame(_saveID, output);
 			break;
 	}
 }

@@ -1,4 +1,5 @@
 #include <Jauntlet/Filesystems/FileManager.h>
+#include <iostream>
 
 #include "../../Database.h"
 #include "MainMenu.h"
@@ -39,7 +40,7 @@ void SaveInfoElement::deleteSave() {
 	Database::Delete(_saveID);
 }
 
-void SaveInfoElement::loadSave() {
+void SaveInfoElement::startGame() {
 	if (_hasSaveInfo) {
 		_mainMenu->startSavedGame(_saveID);
 	}

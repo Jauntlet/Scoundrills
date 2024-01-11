@@ -27,7 +27,7 @@ MainGame::MainGame(int saveID, const std::vector<uint8_t>& playerIDs) :
 	_uiCoordinator.navigation->setCavernPlayerManager(&_players);
 
 	// save
-	_database.TrySave(_drill, _players);
+	std::cout << _database.TrySave(_drill, _players) << " - bruh" << std::endl;
 }
 
 MainGame::MainGame(int saveID) :
