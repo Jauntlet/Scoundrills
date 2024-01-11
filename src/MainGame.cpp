@@ -111,7 +111,7 @@ void MainGame::processInput() {
 		_screenWidth = _window.getWindowWidth();
 		_screenHeight = _window.getWindowHeight();
 		_cameraManager.updateCameraSize(_screenWidth, _screenHeight);
-		_hudCamera.updateCameraSize(_screenWidth, _screenHeight);
+		_hudCamera.updateSize(_screenWidth, _screenHeight);
 	}
 }
 
@@ -129,7 +129,7 @@ void MainGame::drawGame() {
 	
 	_spriteBatch.endAndRender();
 	
-	_hudCamera.setActiveCamera();
+	_hudCamera.setActive();
 
 	_spriteBatch.begin();
 	_spriteBatch.draw({ -_screenWidth/2,-_screenHeight/2, 80,80 }, Jauntlet::ResourceManager::getTexture(_tileHandler.getSelectedTileTexture()).id, 0);

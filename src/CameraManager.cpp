@@ -41,9 +41,9 @@ void CameraManager::Update() {
 }
 
 void CameraManager::ActivateCamera() {
-	camera.setActiveCamera(); 
+	camera.setActive(); 
 }
 
 void CameraManager::updateCameraSize(int width, int height) {
-	camera.updateCameraSize(width, height);
+	camera.updateSize(width, height);
 }
