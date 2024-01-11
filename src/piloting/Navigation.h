@@ -37,6 +37,11 @@ public:
 	void setDepth(int depth);
 	//is the drill moving?
 	bool getMoving();
+	//gets a map for saving (as a comma-separated numbers)
+	std::string getMap();
+	//sets a map from predefined data
+	void setMap(std::string newMap);
+	void setMap(int newMap[5][5]);
 
 	Jauntlet::UIManager* getUIManager();
 	Jauntlet::UIManager* getCavernManager();

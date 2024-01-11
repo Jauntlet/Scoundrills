@@ -9,7 +9,7 @@ const float PLAYER_HURT_HEAT = 200.0f; // The minimum heat for players to take d
 
 MainGame::MainGame(int saveID, const std::vector<uint8_t>& playerIDs) :
 	_resources(80,0,0,0),
-	_database(_saveID)
+	_database(saveID)
 {
 	_saveID = saveID;
 	
@@ -17,7 +17,7 @@ MainGame::MainGame(int saveID, const std::vector<uint8_t>& playerIDs) :
 	_uiCoordinator.applyNewScreenSize(glm::ivec2(GlobalContext::screenSize.x, GlobalContext::screenSize.y));
 
 	for (size_t i = 0; i < playerIDs.size(); ++i) {
-		_players.createPlayer(glm::vec2(64 * (i + 1) + 704, -64 * 10), playerIDs[i]);
+		_players.createPlayer(glm::vec2(64 * (i + 1) + 5 * 64, -64 * 18), playerIDs[i]);
 	}
 
 	_camera.setPosition(glm::vec2(24 * 64 * 0.5f, 30 * 64 * 0.5f * -1));
@@ -27,7 +27,7 @@ MainGame::MainGame(int saveID, const std::vector<uint8_t>& playerIDs) :
 	_uiCoordinator.navigation->setCavernPlayerManager(&_players);
 
 	// save
-	_database.TrySave(_drill, _players);
+	std::cout << _database.TrySave(_drill, _players) << " - bruh" << std::endl;
 }
 
 MainGame::MainGame(int saveID) :

@@ -1,9 +1,12 @@
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
 #include <SDL2/SDL_keycode.h>
 #include <SDL2/SDL_mouse.h>
+#include <iostream>
 
 #include "../MainGame/UICoordinator.h"
 #include "../PauseMenu.h"
+#include "Jauntlet/Rendering/ProgressBar.h"
+#include "Jauntlet/Time.h"
 #include "Tutorial.h"
 #include "src/interactable/Holdable.h"
 #include "src/scenes/GlobalContext.h"
@@ -16,14 +19,17 @@ Tutorial::Tutorial(int saveID, const std::vector<uint8_t>& playerIDs) {
 	_uiCoordinator.applyNewScreenSize(GlobalContext::screenSize);
 
 	for (size_t i = 0; i < playerIDs.size(); ++i) {
-		_players.createPlayer(glm::vec2(64 * (i + 1) + 5 * 64, -64 * 24), playerIDs[i], true);
-		_players.getPathRenderer()->createPath(glm::vec2(64 * (i + 1) + 5 * 64, -64 * 24), glm::vec2(64 * (i + 1) + 5 * 64, -64 * 19));
-		_players.getAllPlayers().back()->navigateTo(_drill, *_players.getPathRenderer(), glm::vec2(64 * (i + 1) + 5 * 64, -64 * 19));
+		_players.createPlayer(glm::vec2(64 * (i + 1) + 5 * 64, -64 * 23), playerIDs[i], true);
+		_players.getPathRenderer()->createPath(glm::vec2(64 * (i + 1) + 5 * 64, -64 * 23), glm::vec2(64 * (i + 1) + 5 * 64, -64 * 18));
+		_players.getAllPlayers().back()->navigateTo(_drill, *_players.getPathRenderer(), glm::vec2(64 * (i + 1) + 5 * 64, -64 * 18));
+
+		_displayPlayers.emplace_back(GlobalContext::playerIDtoTexture(playerIDs[i], true), glm::vec4(0,0,0.03571428571428571f,1), GlobalContext::playerIDtoTexture(playerIDs[i]), glm::vec4(0,0,0.03571428571428571f,1), glm::vec4(64 * (i + 1) + 5 * 64, -64 * 19, 64, 64));
+		_displayPlayers[i].progress = 0;
 	}
 	_players.getPathRenderer()->clearPath();
 
 	_camera.setScale(2.75f);
-	_camera.setPosition(glm::vec2(1337.25, -3475.54));
+	_camera.setPosition(glm::vec2(1337.25, -3275.54));
 
 	_drill.boilerWater = 0;
 	_drill.off();
@@ -34,14 +40,12 @@ Tutorial::Tutorial(int saveID, const std::vector<uint8_t>& playerIDs) {
 	GlobalContext::inputManager.clearLastButtonPressed();
 
 	_cameraManager.cameraUnlocked = false;
+	_sequence = 44;
 }
 
 void Tutorial::windowResized() {
 
 	glm::vec2 newCenter = glm::vec2(GlobalContext::screenSize) / 2.0f - _camera.getSize() / 2.0f;
-
-	//_camera.setScale(_camera.getScale() * (_camera.getSize().y / GlobalContext::screenSize.y));
-	//_camera.setPosition(glm::vec2(_camera.getPosition().x - newCenter.x, _camera.getPosition().y - newCenter.y));
 
 	_camera.updateSize(GlobalContext::screenSize);
 	_hudCamera.updateSize(GlobalContext::screenSize);
@@ -103,7 +107,7 @@ void Tutorial::nextDialogue() {
 			break;
 		case 11:
 			_camera.transitionToScale(2.75f);
-			_camera.transitionToPosition(glm::vec2(1337.25, -3475.54));
+			_camera.transitionToPosition(glm::vec2(1337.25, -3275.54));
 			_dialogue.pushNewText("Lets practice operating the drill.");
 			break;
 		case 12:
@@ -198,7 +202,7 @@ void Tutorial::nextDialogue() {
 
 			_camera.transitionToPosition(glm::vec2(1400, -700));
 			_camera.transitionToScale(1.5f);
-			_drill.burstSpecificPipe(glm::ivec2(23,10));
+			//_drill.burstSpecificPipe(glm::ivec2(23,10));
 			_dialogue.pushNewText("Oh no! A pipe in the drill\nhas burst!");
 			break;
 		case 35:
@@ -245,7 +249,7 @@ void Tutorial::nextDialogue() {
 			break;
 		case 44:
 			_camera.transitionToScale(2.75f);
-			_camera.transitionToPosition(glm::vec2(1337.25, -3475.54));
+			_camera.transitionToPosition(glm::vec2(1337.25, -3275.54));
 			_dialogue.pushNewText("Thank you for your time.");
 			break;
 		case 45:
@@ -255,12 +259,29 @@ void Tutorial::nextDialogue() {
 			_dialogue.hide();
 			_officer.walkOffscreen();
 			break;
+		case 47:
+			for (uint8_t i = 0; i < _players.size(); ++i) {
+				_players.getAllPlayers()[i]->forcePosition(glm::vec2(64 * (i + 1) + 5 * 64, -64 * 23));
+				_players.getPathRenderer()->createPath(glm::vec2(64 * (i + 1) + 5 * 64, -64 * 23), glm::vec2(64 * (i + 1) + 5 * 64, -64 * 18));
+				_players.getAllPlayers()[i]->navigateTo(_drill, *_players.getPathRenderer(), glm::vec2(64 * (i + 1) + 5 * 64, -64 * 18));
+			}
+			_players.getPathRenderer()->clearPath();
+			break;
+		case 48:
+			break;
+		case 49:
+			_dialogue.show();
+			_dialogue.pushNewText("It is time to escape!");
+			break;
+		case 50:
+			_dialogue.pushNewText("Good Luck!");
+			break;
 		default:
 			std::vector<uint8_t> output;
 			for (Player* player : _players.getAllPlayers()) {
 				output.push_back(player->getPlayerID());
 			}
-			GlobalContext::sceneManager->loadGame(_saveID, output);
+			GlobalContext::sceneManager->startGame(_saveID, output);
 			break;
 	}
 }
@@ -384,6 +405,18 @@ void Tutorial::processInput() {
 			nextDialogue();
 		}
 		break;
+	case 47:
+		if (!_players.getAllPlayers()[0]->isMoving()) {
+			nextDialogue();
+		}
+	case 48:
+		for (size_t i = 0; i < _displayPlayers.size(); ++i) {
+			_displayPlayers[i].progress = glm::min(_displayPlayers[i].progress + Jauntlet::Time::getDeltaTime() * 0.25f, 1.0f);
+		}
+		if (_displayPlayers[0].progress == 1) {
+			nextDialogue();
+		}
+		break;
 	default:
 		if (GlobalContext::inputManager.lastButtonPressed() != SDLK_ESCAPE || GlobalContext::inputManager.isKeyPressed(SDL_BUTTON_LEFT)) {
 			_dialogue.doneReadingText() ? nextDialogue() : _dialogue.pushAllText();
@@ -416,8 +449,15 @@ void Tutorial::drawGame() {
 
 	// Draw the player using a spriteBatch
 	_playerSpriteBatch.begin();
-	_players.draw(_playerSpriteBatch);
+	if (_sequence < 48 && !(_sequence > 44 && _sequence < 47)) {
+		_players.draw(_playerSpriteBatch);
+	} else if (!(_sequence > 44 && _sequence < 47)) {
+		for (size_t i = 0; i < _displayPlayers.size(); ++i) {
+		_displayPlayers[i].draw(_playerSpriteBatch);
+		}
+	} 
 	_playerSpriteBatch.endAndRender();
+
 	if (_sequence < 47) {
 		_officer.draw(_camera);
 	}

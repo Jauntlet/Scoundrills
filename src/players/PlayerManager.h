@@ -22,6 +22,9 @@ public:
 	bool processInput(const Jauntlet::Camera2D& activeCamera);
 	// tries to damage the players currently in the drill
 	void damageTick(const int& drillHeat);
+	
+	// returns amount of players
+	uint8_t size();
 
 	// returns true if a player is selected
 	bool isPlayerSelected();
@@ -34,6 +37,10 @@ public:
 
 	// returns true if a player is at the exact specified position.
 	bool posMatchesPlayerDest(const glm::vec2& worldPos);
+
+	void addPlayer(Player player) {
+		_players.push_back(player);
+	}
 
 	// updates the state of players
 	void update(DrillManager& drill);

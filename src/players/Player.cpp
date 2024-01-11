@@ -238,6 +238,13 @@ void Player::forceDropItem() {
 	heldItem = nullptr;
 }
 
+void Player::forcePosition(glm::vec2 newPos) {
+	if (_station != nullptr) {
+		_station->unoccupy();
+	}
+	_position = newPos;
+}
+
 void Player::forceData(float positionX, float positionY, int heldItemID, int health, int playerID) {
 	_position = glm::vec2(positionX, positionY);
 	_health = health;

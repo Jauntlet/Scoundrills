@@ -4,6 +4,7 @@
 #include "../SceneManager.h"
 #include "../PauseMenu.h"
 #include <SDL2/SDL_keycode.h>
+#include <iostream>
 
 MainMenu::MainMenu() :
 	_camera(GlobalContext::screenSize.x, GlobalContext::screenSize.y),
@@ -73,14 +74,14 @@ void MainMenu::promptTutorial(int saveID) {
 }
 
 void MainMenu::startSavedGame(int ID) {
-	GlobalContext::sceneManager->loadGame(ID);
+	GlobalContext::sceneManager->startGame(ID);
 }
 void MainMenu::startGame() {
-	GlobalContext::sceneManager->loadRoguesGallery(false);
+	GlobalContext::sceneManager->loadRoguesGallery(_saveID, false);
 }
 
 void MainMenu::startTutorial() {
-	GlobalContext::sceneManager->loadRoguesGallery(true);
+	GlobalContext::sceneManager->loadRoguesGallery(_saveID, true);
 }
 
 void MainMenu::quitGame() {

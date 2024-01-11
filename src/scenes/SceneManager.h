@@ -17,10 +17,10 @@ public:
     void gameLoop();
 
     void switchScene(GameState newState);
-    void loadGame(int ID);
-    void loadGame(int saveID, const std::vector<uint8_t>& playerIDs);
+    void startGame(int ID);
+    void startGame(int saveID, const std::vector<uint8_t>& playerIDs);
     void loadTutorial(int saveID, const std::vector<uint8_t>& playerIDs);
-    void loadRoguesGallery(bool tutorialMode);
+    void loadRoguesGallery(int saveID, bool tutorialMode);
 
     void quitGame();
 private:

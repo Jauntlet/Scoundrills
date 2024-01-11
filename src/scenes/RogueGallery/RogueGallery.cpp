@@ -1,6 +1,8 @@
 #include "RogueGallery.h"
 #include "../SceneManager.h"
 
+#include <iostream>
+
 RogueGallery::RogueGallery(int saveID, bool tutorialMode) :
 	_crew{SelectableCrew(1, tutorialMode), SelectableCrew(2, tutorialMode), SelectableCrew(3, tutorialMode), SelectableCrew(4, tutorialMode), SelectableCrew(5, tutorialMode)},
 	_goToTutorial(tutorialMode)
@@ -69,6 +71,6 @@ void RogueGallery::loadGame() {
 	if (_goToTutorial) {
 		GlobalContext::sceneManager->loadTutorial(_saveID, IDS);
 	} else {
-		GlobalContext::sceneManager->loadGame(_saveID, IDS);
+		GlobalContext::sceneManager->startGame(_saveID, IDS);
 	}
 }
