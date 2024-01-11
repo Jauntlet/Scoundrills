@@ -85,6 +85,10 @@ void PlayerManager::damageTick(const int& drillHeat) {
 	}
 }
 
+uint8_t PlayerManager::size() {
+	return _players.size();
+}
+
 bool PlayerManager::isPlayerSelected() {
 	return _selectedPlayer != -1;
 }
