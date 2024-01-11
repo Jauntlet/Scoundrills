@@ -16,7 +16,7 @@ MainGame::MainGame(int saveID, const std::vector<uint8_t>& playerIDs) :
 	GlobalContext::window.setBackgroundColor(Jauntlet::Color(97, 60, 47));
 	_uiCoordinator.applyNewScreenSize(glm::ivec2(GlobalContext::screenSize.x, GlobalContext::screenSize.y));
 
-	for (int i = 0; i < playerIDs.size(); ++i) {
+	for (size_t i = 0; i < playerIDs.size(); ++i) {
 		_players.createPlayer(glm::vec2(64 * (i + 1) + 704, -64 * 10), playerIDs[i]);
 	}
 

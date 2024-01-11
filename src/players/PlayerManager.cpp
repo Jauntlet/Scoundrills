@@ -33,7 +33,7 @@ bool PlayerManager::processInput(const Jauntlet::Camera2D& activeCamera) {
 		if (_selectedPlayer == -1) { // we are selecting a player.
 			Jauntlet::Collision2D collision;
 
-			for (int i = 0; i < _players.size(); ++i) {
+			for (size_t i = 0; i < _players.size(); ++i) {
 				if (collision.calcCollision(&_players[i].collider, mousePos)) {
 					_selectedPlayer = i;
 					return true;
@@ -97,7 +97,7 @@ Player* PlayerManager::getSelectedPlayer() {
 }
 std::vector<Player*> PlayerManager::getAllPlayers() {
 	std::vector<Player*> output;
-	for (int i = 0; i < _players.size(); ++i) {
+	for (size_t i = 0; i < _players.size(); ++i) {
 		output.push_back(&_players[i]);
 	}
 	return output;
@@ -107,7 +107,7 @@ PathRenderer* PlayerManager::getPathRenderer() {
 }
 
 bool PlayerManager::posMatchesPlayerDest(const glm::vec2& worldPos) {
-	for (int i = 0; i < _players.size(); i++) {
+	for (size_t i = 0; i < _players.size(); i++) {
 		if (worldPos == _players[i].getDestination() - glm::vec2(0, 64)) {
 			return true;
 		}
@@ -116,13 +116,13 @@ bool PlayerManager::posMatchesPlayerDest(const glm::vec2& worldPos) {
 }
 
 void PlayerManager::update(DrillManager& drill) {
-	for (int i = 0; i < _players.size(); ++i) {
+	for (size_t i = 0; i < _players.size(); ++i) {
 		_players[i].update(drill);
 	}
 }
 
 void PlayerManager::draw(Jauntlet::SpriteBatch& spriteBatch) {
-	for (int i = 0; i < _players.size(); ++i) {
+	for (size_t i = 0; i < _players.size(); ++i) {
 		_players[i].draw(spriteBatch);
 	}
 	_pathRenderer.drawPath();

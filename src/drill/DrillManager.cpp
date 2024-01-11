@@ -90,7 +90,7 @@ void DrillManager::drawLayerOne() {
 void DrillManager::drawLayerTwo() {
 	// draw all holdable items
 	_spriteBatch.begin();
-	for (int i = 0; i < _holdables.size(); ++i) {
+	for (size_t i = 0; i < _holdables.size(); ++i) {
 		if (_holdables[i]->isEmpty()) {
 			removeHoldable(_holdables[i]);
 			--i;
@@ -131,7 +131,7 @@ bool DrillManager::isValidDestination(glm::vec2 worldPos, PlayerManager* playerM
 
 	if (drillWalls.tileHasCollision(pos) || !drillWalls.isValidTilePos(pos)) {
 		// The tile is in a wall, but theres a chance it is a broken pipe, so we loop through all broken pipes.
-		for (int i = 0; i < _brokenPipeLocations.size(); ++i) {
+		for (size_t i = 0; i < _brokenPipeLocations.size(); ++i) {
 			if (pipes.TilePosToWorldPos(_brokenPipeLocations[i]) == worldPos + glm::vec2(0,_brokenPipeLocations[i].y != 0 ? 64 : 0)) {
 				return true;
 			}
@@ -162,7 +162,7 @@ bool DrillManager::isValidPath(glm::vec2 worldPos, PlayerManager* playerManager)
 	}
 	
 	// Prevent pathing through items on the floor.
-	for (int i = 0; i < _holdables.size(); ++i) {	
+	for (size_t i = 0; i < _holdables.size(); ++i) {	
 		if (_holdables[i]->position == worldPos + glm::vec2(0,64)) {
 			return false;
 		}
@@ -183,7 +183,7 @@ bool DrillManager::isValidPath(glm::vec2 worldPos) const {
 	}
 
 	// Prevent pathing through items on the floor.
-	for (int i = 0; i < _holdables.size(); ++i) {
+	for (size_t i = 0; i < _holdables.size(); ++i) {
 		if (_holdables[i]->position == worldPos + glm::vec2(0, 64)) {
 			return false;
 		}
@@ -240,7 +240,7 @@ void DrillManager::burstSpecificPipe(const glm::ivec2& tilePos) {
 }
 
 void DrillManager::repairPipe(const glm::vec2& worldPos) {
-	for (int i = 0; i < _brokenPipeLocations.size(); ++i) {
+	for (size_t i = 0; i < _brokenPipeLocations.size(); ++i) {
 		if (pipes.TilePosToWorldPos(_brokenPipeLocations[i]) == worldPos) {
 			pipes.UpdateTile(_brokenPipeLocations[i], 1);
 			_brokenPipeLocations.erase(_brokenPipeLocations.begin() + i);
@@ -249,10 +249,10 @@ void DrillManager::repairPipe(const glm::vec2& worldPos) {
 	}
 }
 bool DrillManager::DestMatchesRandomPipe(const glm::vec2& worldPos) const {
-	for (int i = 0; i < _brokenPipeLocations.size(); ++i) {
-			if (pipes.TilePosToWorldPos(_brokenPipeLocations[i]) == worldPos) {
-				return true;
-			}
+	for (size_t i = 0; i < _brokenPipeLocations.size(); ++i) {
+		if (pipes.TilePosToWorldPos(_brokenPipeLocations[i]) == worldPos) {
+			return true;
+		}
 	}
 	return false;
 }
@@ -280,7 +280,7 @@ Holdable* DrillManager::addHoldable(const glm::vec2& position, const HoldableTyp
 	return _holdables.back();
 }
 void DrillManager::removeHoldable(Holdable* holdable) {
-	for (int i = 0; i < _holdables.size(); ++i) {
+	for (size_t i = 0; i < _holdables.size(); ++i) {
 		if (_holdables[i] == holdable) {
 			delete _holdables[i];
 			_holdables.erase(_holdables.begin() + i);
@@ -289,7 +289,7 @@ void DrillManager::removeHoldable(Holdable* holdable) {
 	}
 }
 Holdable* DrillManager::getHoldable(glm::vec2 worldPos) {
-	for (int i = 0; i < _holdables.size(); ++i) {
+	for (size_t i = 0; i < _holdables.size(); ++i) {
 		if (_holdables[i]->position == worldPos) {
 			return _holdables[i];
 		}

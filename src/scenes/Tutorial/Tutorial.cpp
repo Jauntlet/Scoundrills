@@ -15,7 +15,7 @@ Tutorial::Tutorial(int saveID, const std::vector<uint8_t>& playerIDs) {
 	GlobalContext::window.setBackgroundColor(Jauntlet::Color(97, 60, 47));
 	_uiCoordinator.applyNewScreenSize(GlobalContext::screenSize);
 
-	for (int i = 0; i < playerIDs.size(); ++i) {
+	for (size_t i = 0; i < playerIDs.size(); ++i) {
 		_players.createPlayer(glm::vec2(64 * (i + 1) + 5 * 64, -64 * 24), playerIDs[i], true);
 		_players.getPathRenderer()->createPath(glm::vec2(64 * (i + 1) + 5 * 64, -64 * 24), glm::vec2(64 * (i + 1) + 5 * 64, -64 * 19));
 		_players.getAllPlayers().back()->navigateTo(_drill, *_players.getPathRenderer(), glm::vec2(64 * (i + 1) + 5 * 64, -64 * 19));

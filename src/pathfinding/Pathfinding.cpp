@@ -27,7 +27,7 @@ std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, glm::vec2 s
 	while (!foundDest && !_openList.empty() && _openList.size() < TIMEOUT_LIMIT) {
 		int bestNodeID = 0;
 		// Search through the list of nodes for the lowest movement cost
-		for (int i = 1; i < _openList.size(); ++i) {
+		for (size_t i = 1; i < _openList.size(); ++i) {
 			if (_openList[i].estimatedDistance < _openList[bestNodeID].estimatedDistance) {
 				bestNodeID = i;
 			}
@@ -70,7 +70,7 @@ std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, glm::vec2 s
 
 				bool isValidNode = true;
 				// Loop through the open list for tiles at the same position, with a lower score. If found, we skip this successor.
-				for (int i = 0; i < _openList.size(); ++i) {
+				for (size_t i = 0; i < _openList.size(); ++i) {
 					if (currentNode.position == _openList[i].position && currentNode.estimatedDistance >= _openList[i].estimatedDistance) {
 						isValidNode = false;
 						break;
@@ -80,7 +80,7 @@ std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, glm::vec2 s
 				if (!isValidNode) continue;
 
 				// Loop through the closed list for tiles at the same position, with a lower score. If found, we skip this successor.
-				for (int i = 0; i < _closedList.size(); ++i) {
+				for (size_t i = 0; i < _closedList.size(); ++i) {
 					if (currentNode.position == _closedList[i].position && currentNode.estimatedDistance >= _closedList[i].estimatedDistance) {
 						isValidNode = false;
 						break;
@@ -100,7 +100,7 @@ std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, glm::vec2 s
 		// Every possible tile has been checked and the destination was not found.
 		// Now we try to find the closest tile to the location and pathfind to there.
 		int bestCellIndex = 1; // 1 to avoid null value
-		for (int i = 2; i < _closedList.size(); ++i) {
+		for (size_t i = 2; i < _closedList.size(); ++i) {
 			if (_closedList[i].estimatedDistance - _closedList[i].pathDistance < _closedList[bestCellIndex].estimatedDistance - _closedList[bestCellIndex].pathDistance) {
 				bestCellIndex = i;
 			}
@@ -166,7 +166,7 @@ std::vector<glm::vec2> Pathfinding::findPath(const DrillManager& drill, PlayerMa
 	while (!foundDest && !_openList.empty() && _openList.size() < TIMEOUT_LIMIT) {
 		int bestNodeID = 0;
 		// Search through the list of nodes for the lowest movement cost
-		for (int i = 1; i < _openList.size(); ++i) {
+		for (size_t i = 1; i < _openList.size(); ++i) {
 			if (_openList[i].estimatedDistance < _openList[bestNodeID].estimatedDistance) {
 				bestNodeID = i;
 			}
@@ -205,7 +205,7 @@ std::vector<glm::vec2> Pathfinding::findPath(const DrillManager& drill, PlayerMa
 
 				bool isValidNode = true;
 				// Loop through the open list for tiles at the same position, with a lower score. If found, we skip this successor.
-				for (int i = 0; i < _openList.size(); ++i) {
+				for (size_t i = 0; i < _openList.size(); ++i) {
 					if (currentNode.position == _openList[i].position && currentNode.estimatedDistance >= _openList[i].estimatedDistance) {
 						isValidNode = false;
 						break;
@@ -214,7 +214,7 @@ std::vector<glm::vec2> Pathfinding::findPath(const DrillManager& drill, PlayerMa
 				if (!isValidNode) continue;
 
 				// Loop through the closed list for tiles at the same position, with a lower score. If found, we skip this successor.
-				for (int i = 0; i < _closedList.size(); ++i) {
+				for (size_t i = 0; i < _closedList.size(); ++i) {
 					if (currentNode.position == _closedList[i].position && currentNode.estimatedDistance >= _closedList[i].estimatedDistance) {
 						isValidNode = false;
 						break;
@@ -233,7 +233,7 @@ std::vector<glm::vec2> Pathfinding::findPath(const DrillManager& drill, PlayerMa
 		// Every possible tile has been checked and the destination was not found.
 		// Now we try to find the closest tile to the location and pathfind to there.
 		int bestCellIndex = 1; // 1 to avoid null value
-		for (int i = 2; i < _closedList.size(); ++i) {
+		for (size_t i = 2; i < _closedList.size(); ++i) {
 			if (_closedList[i].estimatedDistance - _closedList[i].pathDistance < _closedList[bestCellIndex].estimatedDistance - _closedList[bestCellIndex].pathDistance) {
 				bestCellIndex = i;
 			}
@@ -299,7 +299,7 @@ bool Pathfinding::isReachable(const DrillManager& drill, PlayerManager& players,
 	while (!_openList.empty() && _openList.size() < TIMEOUT_LIMIT) {
 		int bestNodeID = 0;
 		// Search through the list of nodes for the lowest movement cost
-		for (int i = 1; i < _openList.size(); ++i) {
+		for (size_t i = 1; i < _openList.size(); ++i) {
 			if (_openList[i].estimatedDistance < _openList[bestNodeID].estimatedDistance) {
 				bestNodeID = i;
 			}
@@ -339,7 +339,7 @@ bool Pathfinding::isReachable(const DrillManager& drill, PlayerManager& players,
 
 				bool isValidNode = true;
 				// Loop through the open list for tiles at the same position, with a lower score. If found, we skip this successor.
-				for (int i = 0; i < _openList.size(); ++i) {
+				for (size_t i = 0; i < _openList.size(); ++i) {
 					if (currentNode.position == _openList[i].position && currentNode.estimatedDistance >= _openList[i].estimatedDistance) {
 						isValidNode = false;
 						break;
@@ -349,7 +349,7 @@ bool Pathfinding::isReachable(const DrillManager& drill, PlayerManager& players,
 				if (!isValidNode) continue;
 
 				// Loop through the closed list for tiles at the same position, with a lower score. If found, we skip this successor.
-				for (int i = 0; i < _closedList.size(); ++i) {
+				for (size_t i = 0; i < _closedList.size(); ++i) {
 					if (currentNode.position == _closedList[i].position && currentNode.estimatedDistance >= _closedList[i].estimatedDistance) {
 						isValidNode = false;
 						break;

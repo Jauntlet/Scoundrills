@@ -62,7 +62,7 @@ bool Database::TrySave(DrillManager& drill, PlayerManager& playerManager) {
     std::vector<Player*> players = playerManager.getAllPlayers();
 
     // loop through all players not holding an item and save them
-    for (int i = 0; i < players.size(); ++i) {
+    for (size_t i = 0; i < players.size(); ++i) {
         if (players[i]->heldItem == nullptr) {
             if (!TrySavePlayer(*players[i], 0)) {
                 Jauntlet::error("Failed to save non-item holding player #" + std::to_string(i));
@@ -73,12 +73,12 @@ bool Database::TrySave(DrillManager& drill, PlayerManager& playerManager) {
         }
     }
 
-    for (int i = 0; i < holdables.size(); ++i) {
+    for (size_t i = 0; i < holdables.size(); ++i) {
         if (!TrySaveItem(*holdables[i], i + 1)) { // ID 0 is reserved for no item, so we add 1 to i
             Jauntlet::error("Failed to save holdable #" + std::to_string(i));
             return false;
         }
-        for (int j = 0; j < players.size(); ++j) {
+        for (size_t j = 0; j < players.size(); ++j) {
             // save players holding items with correct itemID
             if (players[j]->heldItem == holdables[i]) {
                 if (!TrySavePlayer(*players[j], i + 1)) {

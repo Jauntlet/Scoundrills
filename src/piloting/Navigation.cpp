@@ -129,13 +129,13 @@ Jauntlet::UIManager* Navigation::genNav() {
 		}
 	}
 
-	for (int i = 0; i < _points.size(); ++i) {
+	for (size_t i = 0; i < _points.size(); ++i) {
 		_uiManager.addElement(&_points[i], &GlobalContext::normalShader);
 	}
 
 	//update visibility
 	_background.visible = _navOpen;
-	for (int i = 0; i < _points.size(); ++i) {
+	for (size_t i = 0; i < _points.size(); ++i) {
 		_points[i].visible = _navOpen;
 	}
 
@@ -166,7 +166,7 @@ void Navigation::toggleNav() {
 		_caretElement->visible = _navOpen;
 	}
 	
-	for (int i = 0; i < _points.size(); ++i) {
+	for (size_t i = 0; i < _points.size(); ++i) {
 		_points[i].visible = _navOpen;
 	}
 	updateVisibility();
@@ -245,7 +245,7 @@ void Navigation::updateTravel() {
 			_depth++; //increase depth
 
 			//determine cavern type
-			int cavType;
+			int cavType = 0;
 			
 			if (_mappedCaverns[_destination] <= 8) {
 				cavType = 1;
@@ -274,7 +274,7 @@ void Navigation::updateTravel() {
 }
 
 void Navigation::refreshPositions(float shiftX, float shiftY) {
-	for (int i = 0; i < _positions.size(); i++) {
+	for (size_t i = 0; i < _positions.size(); i++) {
 		_positions[i] = glm::vec2(_positions[i].x - shiftX, _positions[i].y - shiftY);
 	}
 	_caretPos = glm::vec2(_caretPos.x - shiftX, _caretPos.y - shiftY);
@@ -326,7 +326,7 @@ void Navigation::recycleMap(int r) {
 		}
 	}
 
-	for (int j = 0; j < _points.size(); j++) {
+	for (size_t j = 0; j < _points.size(); j++) {
 		_points[j].visible = false;
 	}
 
@@ -341,7 +341,7 @@ void Navigation::recycleMap(int r) {
 }
 
 void Navigation::updateVisibility() {
-	for (int i = 0; i < _positions.size(); i++) {
+	for (size_t i = 0; i < _positions.size(); i++) {
 		if (_navOpen)
 			_points[i].visible = !(_positions[i].y < -350 || _positions[i].y > 400) && !(_positions[i].x < -280 || _positions[i].x > 280);
 		else

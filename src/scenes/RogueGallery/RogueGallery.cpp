@@ -62,7 +62,7 @@ void RogueGallery::gameLoop() {
 
 void RogueGallery::loadGame() {
 	std::vector<uint8_t> IDS;
-	for (int i = 0; i < _selectedCrew.size(); ++i) {
+	for (size_t i = 0; i < _selectedCrew.size(); ++i) {
 		IDS.push_back(_selectedCrew[i]->getPlayerID());
 	}
 
