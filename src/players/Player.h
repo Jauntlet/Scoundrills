@@ -43,6 +43,9 @@ public:
 	// forces the player to drop his item; called when the item is destroyed
 	void forceDropItem();
 
+	// forces the player to a specific location; unoccupies any station attached to them
+	void forcePosition(glm::vec2 newPos);
+
 	// forces data onto the player because i'm lazy --- HACK!!!
 	void forceData(float positionX, float positionY, int heldItemID, int health, int playerID);
 
