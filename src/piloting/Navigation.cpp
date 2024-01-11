@@ -377,3 +377,11 @@ void Navigation::setDepth(int depth) {
 bool Navigation::getMoving() {
 	return _destination != -1;
 }
+
+void Navigation::setMap(int newMap[5][5]) {
+	for (int y = 0; y < layerCount; y++) {
+		for (int x = 0; x < layerWidth; x++) {
+			_map[y][x] = newMap[y][x];
+		}
+	}
+}

@@ -37,6 +37,8 @@ public:
 	void setDepth(int depth);
 	//is the drill moving?
 	bool getMoving();
+	//sets a map from predefined data
+	void setMap(int newMap[5][5]);
 
 	Jauntlet::UIManager* getUIManager();
 	Jauntlet::UIManager* getCavernManager();
