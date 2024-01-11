@@ -23,4 +23,5 @@ private:
 	GLuint _textureID;
 
 	bool _walking = false;
+	float _timeWalking = 0;
 };

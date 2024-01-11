@@ -11,7 +11,11 @@ Officer::Officer(const glm::vec2& position, const std::string& texture) :
 
 void Officer::draw(const Jauntlet::Camera2D& camera) {
 	if (_walking) {
-		_position += glm::vec2(300.0f * Jauntlet::Time::getDeltaTime());
+		_position += glm::vec2(150.0f * Jauntlet::Time::getDeltaTime(), 0);
+		_timeWalking += Jauntlet::Time::getDeltaTime();
+		if (_timeWalking > 4) {
+			_walking = false;
+		}
 	}
 
 	_animation.update();
