@@ -131,7 +131,7 @@ bool Database::TrySaveDrill(const PlayerResources& playerResources) {
         + std::to_string(food)   + ", "
 		+ std::to_string(copper) + ");";
 
-	int rc = sqlite3_exec(database, command.c_str(), nullptr, nullptr, nullptr);
+	int rc = sqlite3_exec(database, command.c_str(), nullptr, nullptr, nullptr);        
 
 	return rc == SQLITE_OK;
 }
@@ -212,6 +212,10 @@ bool Database::TryLoadInPlayers(PlayerManager& playerManager, DrillManager& dril
 
     if (rc != SQLITE_DONE && rc != SQLITE_ROW) {
         Jauntlet::error("error! query ended with code " + std::to_string(rc));
+    }
+
+    for (int i = 0; i < players.size(); ++i) {
+        playerManager.addPlayer(players[i]);
     }
 
     // finalize the statement (i still dont know)

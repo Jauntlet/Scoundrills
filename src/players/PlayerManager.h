@@ -38,6 +38,10 @@ public:
 	// returns true if a player is at the exact specified position.
 	bool posMatchesPlayerDest(const glm::vec2& worldPos);
 
+	void addPlayer(Player player) {
+		_players.push_back(player);
+	}
+
 	// updates the state of players
 	void update(DrillManager& drill);
 	// draw all players
