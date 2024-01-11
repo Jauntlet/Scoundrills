@@ -11,6 +11,7 @@
 #include "../GlobalContext.h"
 #include "../MainGame/CameraManager.h"
 #include "Dialogue.h"
+#include "Jauntlet/Rendering/ProgressBar.h"
 #include "Officer.h"
 #include "TutorialUI.h"
 
@@ -53,6 +54,7 @@ private:
 	Dialogue _dialogue = Dialogue(&_hudCamera);
 	bool _hasControl = false;
 	Officer _officer = Officer(glm::vec2(7 * 64, -18 * 64), "Textures/Cops/John Police.png");
+	std::vector<Jauntlet::ProgressBar> _displayPlayers;
 
 	bool _pressedW = false, _pressedA = false, _pressedS = false, _pressedD = false, _scrolledUp = false, _scrolledDown = false;
 
