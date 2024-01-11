@@ -5,7 +5,7 @@
 const float SHAKE_AMOUNT = 20.0f;
 
 DrillAssetRenderer::DrillAssetRenderer(Jauntlet::Camera2D* _UIcamera) :
-	steeringWheel("Textures/missing.png", { 64 * 11.5, -64 * 28, 64, 64 }, { 64 * 11.5, -64 * 28, 64, 64 }, { 0, 0 }),
+	steeringWheel("Textures/steering wheel.png", { 64 * 10.74, -64 * 28, 96 * 2, 32 * 2}, { 64 * 10.74, -64 * 28, 96 * 2, 32 * 2}, { 0, 32 }),
 	_boilerSmoke(_UIcamera, _smokePos, "Textures/smoke.png"),
 	_drillAnimation(3),
 	_boilerAnimation(6),
