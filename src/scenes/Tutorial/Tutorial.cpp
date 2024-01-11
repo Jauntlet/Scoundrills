@@ -12,6 +12,8 @@
 #include "src/scenes/GlobalContext.h"
 #include "src/scenes/Tutorial/Dialogue.h"
 
+#define min min
+
 Tutorial::Tutorial(int saveID, const std::vector<uint8_t>& playerIDs) {
 	_saveID = saveID;
 	
