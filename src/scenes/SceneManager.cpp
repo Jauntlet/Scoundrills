@@ -94,12 +94,12 @@ void SceneManager::loadGame(int ID) {
     _queuedID = ID;
 }
 void SceneManager::loadGame(int saveID, const std::vector<uint8_t>& playerIDs) {
-    _queuedID = saveID;
+    _saveID = saveID;
     _queuedState = GameState::MAINGAME;
     _storedPlayerIDs = playerIDs;
 }
 void SceneManager::loadTutorial(int saveID, const std::vector<uint8_t>& playerIDs) {
-    _queuedID = saveID;
+    _saveID = saveID;
     _queuedState = GameState::TUTORIAL;
     _storedPlayerIDs = playerIDs;
 }
@@ -121,7 +121,7 @@ void SceneManager::queuedSwitchScene() {
     if (_gameState == GameState::MAINGAME) {
         if (_mainGame == nullptr) {
             if (_queuedID != 0) {
-                _mainGame = new MainGame(_queuedID);
+                _mainGame = new MainGame(_saveID);
                 _queuedID = 0;
             }
             else if (!_storedPlayerIDs.empty()) {
@@ -158,7 +158,7 @@ void SceneManager::queuedSwitchScene() {
     if (_gameState == GameState::TUTORIAL) {
         if (_tutorial == nullptr) {
             if (!_storedPlayerIDs.empty()) {
-                _tutorial = new Tutorial(_queuedID, _storedPlayerIDs);
+                _tutorial = new Tutorial(_saveID, _storedPlayerIDs);
                 _storedPlayerIDs.clear();
             }
         } else {
