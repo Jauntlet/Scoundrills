@@ -22,6 +22,9 @@ public:
 	bool processInput(const Jauntlet::Camera2D& activeCamera);
 	// tries to damage the players currently in the drill
 	void damageTick(const int& drillHeat);
+	
+	// returns amount of players
+	uint8_t size();
 
 	// returns true if a player is selected
 	bool isPlayerSelected();
