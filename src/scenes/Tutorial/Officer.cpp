@@ -1,8 +1,9 @@
 #include "Officer.h"
 #include <Jauntlet/Time.h>
 
-Officer::Officer(const glm::vec2& position) :
-	_position(position)
+Officer::Officer(const glm::vec2& position, const std::string& texture) :
+	_position(position),
+	_textureID(Jauntlet::ResourceManager::getTexture(texture).id)
 {
 	_animation.stop(0);
 	_animation.play(0, 1, 0.5f);

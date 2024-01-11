@@ -10,7 +10,7 @@
 
 class Officer {
 public:
-	Officer(const glm::vec2& position);
+	Officer(const glm::vec2& position, const std::string& texture);
 
 	void draw(const Jauntlet::Camera2D& camera);
 
@@ -20,7 +20,7 @@ private:
 	glm::vec2 _position;
 	Jauntlet::Animation _animation = Jauntlet::Animation(8);
 	Jauntlet::SpriteBatch _batch;
-	GLuint _textureID = Jauntlet::ResourceManager::getTexture("Textures/Cops/John Police.png").id;
+	GLuint _textureID;
 
 	bool _walking = false;
 };
