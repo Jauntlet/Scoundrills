@@ -84,10 +84,11 @@ void DrillManager::drawLayerOne() {
 	_fridge.draw(_spriteBatch);
 	_spriteBatch.endAndRender();
 
-	drillAssets.drawLayerThree();
 }
 
 void DrillManager::drawLayerTwo() {
+	drillAssets.drawLayerThree();
+
 	// draw all holdable items
 	_spriteBatch.begin();
 	for (size_t i = 0; i < _holdables.size(); ++i) {

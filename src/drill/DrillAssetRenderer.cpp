@@ -47,16 +47,15 @@ void DrillAssetRenderer::drawLayerOne() {
 void DrillAssetRenderer::drawLayerTwo() {
 	// Layer two renders above the walls / floor of the tilemap
 	_spriteBatch.begin();
-
-	// draw the player stations
-	steeringWheel.draw(_spriteBatch);
-	
 	_spriteBatch.draw(glm::vec4(64 * 15.5, -64 * 2, 64 * 2, 96 * 2), _boilerAnimation.getUV(), _boilerTexture);
-	
 	_spriteBatch.endAndRender();
 }
 
 void DrillAssetRenderer::drawLayerThree() {
+	_spriteBatch.begin();
+	steeringWheel.draw(_spriteBatch);
+	_spriteBatch.endAndRender();
+	
 	_boilerSmoke.update();
 	_boilerSmoke.draw();
 }
