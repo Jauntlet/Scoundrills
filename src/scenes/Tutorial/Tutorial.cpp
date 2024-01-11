@@ -40,7 +40,6 @@ Tutorial::Tutorial(int saveID, const std::vector<uint8_t>& playerIDs) {
 	GlobalContext::inputManager.clearLastButtonPressed();
 
 	_cameraManager.cameraUnlocked = false;
-	_sequence = 44;
 }
 
 void Tutorial::windowResized() {
@@ -202,7 +201,7 @@ void Tutorial::nextDialogue() {
 
 			_camera.transitionToPosition(glm::vec2(1400, -700));
 			_camera.transitionToScale(1.5f);
-			//_drill.burstSpecificPipe(glm::ivec2(23,10));
+			_drill.burstSpecificPipe(glm::ivec2(23,10));
 			_dialogue.pushNewText("Oh no! A pipe in the drill\nhas burst!");
 			break;
 		case 35:
