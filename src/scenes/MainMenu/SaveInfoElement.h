@@ -44,11 +44,11 @@ private:
 	std::string _deleteText = "Delete";
 	Jauntlet::UITextElement _deleteTextElement = Jauntlet::UITextElement(GlobalContext::textRenderer, &_deleteText, &_deleteTextColor, &_deletePos, Jauntlet::UIElement::ORIGIN_PIN::TOP, 0.3f);
 
-	std::string _saveNumText = "Save #";
+	std::string _saveNumText = "Save ";
 	glm::vec2 _saveNumPos;
 	Jauntlet::UITextElement _saveNumElement = Jauntlet::UITextElement(GlobalContext::textRenderer, &_saveNumText, &_textColor, &_saveNumPos, Jauntlet::UIElement::ORIGIN_PIN::TOP, 0.3f);
 
-	std::string _depthCount = "Depth: #";
+	std::string _depthCount = "Depth: ";
 	glm::vec2 _depthCountPos;
 	Jauntlet::UITextElement _depthCountElement = Jauntlet::UITextElement(GlobalContext::textRenderer, &_depthCount, &_textColor, &_depthCountPos, Jauntlet::UIElement::ORIGIN_PIN::TOP, 0.3f);
 };

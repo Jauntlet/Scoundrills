@@ -18,14 +18,16 @@ SaveInfoElement::SaveInfoElement(float yPos, int saveID, MainMenu* mainMenu) :
 	_saveNumPos(-250,yPos),
 	_depthCountPos(-225, yPos + 75)
 {
+	_saveNumText += std::to_string(_saveID);
+	
 	if (Database::IsSlotFull(saveID)) {
 		_hasSaveInfo = true;
 		
 		// Load information here
-		_depthCount = "Depth: 0";
+		_depthCount += std::to_string(0);
 	} else {
 		_hasSaveInfo = false;
-		_depthCount = "Depth: 0";
+		_depthCount += "0";
 	}
 	
 }
@@ -38,7 +40,6 @@ void SaveInfoElement::addToManager(Jauntlet::UIManager& uiManager) {
 		uiManager.addElement(&_deleteTextElement, &Jauntlet::TextRenderer::textShader);
 	}
 	uiManager.addElement(&_playTextElement, &Jauntlet::TextRenderer::textShader);
-	_saveNumText = "Save " + std::to_string(_saveID);
 	uiManager.addElement(&_saveNumElement,&Jauntlet::TextRenderer::textShader);
 	uiManager.addElement(&_depthCountElement, &Jauntlet::TextRenderer::textShader);
 }
