@@ -133,6 +133,10 @@ bool Database::TrySaveDrill(const PlayerResources& playerResources) {
 
 	int rc = sqlite3_exec(database, command.c_str(), nullptr, nullptr, nullptr);        
 
+    if (rc == SQLITE_OK) {
+        this->Delete();
+    }
+
 	return rc == SQLITE_OK;
 }
 
