@@ -58,6 +58,8 @@ Database::Database(int saveID) {
 bool Database::TrySave(DrillManager& drill, PlayerManager& playerManager) {
     sqlite3_open("saves.db", &database);
     
+    this->Delete();
+
     if (!TrySaveDrill(drill)) {
         Jauntlet::error("Failed to save drill!");
         return false;
@@ -132,8 +134,6 @@ bool Database::TrySaveDrill(DrillManager& drill) {
     Jauntlet::error("hey kids " + nav);
     float depth     = drill.navigation.getDepth();
     float playtime  = drill.resources->playtime;
-    
-    this->Delete();
 
     std::string command = "INSERT INTO Drills (saveID, heat, water, food, copper, nav, depth, time) VALUES("
 		+ std::to_string(saveID)   + ", "
