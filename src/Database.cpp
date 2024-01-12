@@ -133,6 +133,8 @@ bool Database::TrySaveDrill(DrillManager& drill) {
     float depth     = drill.navigation.getDepth();
     float playtime  = drill.resources->playtime;
     
+    this->Delete();
+
     std::string command = "INSERT INTO Drills (saveID, heat, water, food, copper, nav, depth, time) VALUES("
 		+ std::to_string(saveID)   + ", "
         + std::to_string(heat)     + ", "
@@ -146,10 +148,6 @@ bool Database::TrySaveDrill(DrillManager& drill) {
     Jauntlet::error(command);
 
 	int rc = sqlite3_exec(database, command.c_str(), nullptr, nullptr, nullptr);        
-
-    if (rc == SQLITE_OK) {
-        this->Delete();
-    }
 
 	return rc == SQLITE_OK;
 }
