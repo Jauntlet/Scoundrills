@@ -81,7 +81,7 @@ private:
 	int _columnsTravelled = 0; //x movement
 
 	// these variables specifically relate to progress towards the next selected destination
-	float _progress = -1; // progress towards next destination
+	float _progress = 0.0f; // progress towards next destination
 	float _speed = 1; // use the constant baseSpeed in Navigation.cpp to adjust speed. Speed determines the seconds it takes to "travel" any distance in the navigation menu
 	int _depth = 0; // higher number means "deeper" underground. May change later.
 
