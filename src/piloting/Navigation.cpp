@@ -396,7 +396,9 @@ void Navigation::setMap(std::string newMap) {
 		for (int x = 0; x < layerWidth; x++) {
 			std::string strNum = strFull.substr(0, strFull.find("|"));
 			strFull = strFull.substr(strFull.find("|"), strFull.length() - 1);
-			_map[y][x] = std::stoi(strNum);
+			if (!strNum.empty()) {
+				_map[y][x] = std::stoi(strNum);
+			}
 		}
 	}
 
