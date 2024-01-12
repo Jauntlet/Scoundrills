@@ -7,6 +7,7 @@
 #include "Jauntlet/Rendering/TextRenderer.h"
 #include "MainMenu.h"
 #include "SaveInfoElement.h"
+#include "src/scenes/GlobalContext.h"
 
 SaveInfoElement::SaveInfoElement(float yPos, int saveID, MainMenu* mainMenu) :
 	_position(0, yPos),
@@ -14,9 +15,7 @@ SaveInfoElement::SaveInfoElement(float yPos, int saveID, MainMenu* mainMenu) :
 	_saveID(saveID),
 	_playPos(250, yPos + 200),
 	_loadPos(250, yPos + 200),
-	_deletePos(-50, yPos + 200),
-	_saveNumPos(-250,yPos),
-	_depthCountPos(-225, yPos + 75)
+	_deletePos(-50, yPos + 200)
 {
 	_saveNumText += std::to_string(_saveID);
 
@@ -32,6 +31,10 @@ SaveInfoElement::SaveInfoElement(float yPos, int saveID, MainMenu* mainMenu) :
 		_playtimeText += "0";
 	}
 	
+	// Correct text positions
+	_saveNumPos = glm::vec2(-375 + GlobalContext::textRenderer->calculateTextSize(_saveNumText, glm::vec2(0.3f)).x /2,yPos);
+	_playtimePos = glm::vec2(-375 + GlobalContext::textRenderer->calculateTextSize(_playtimeText, glm::vec2(0.3f)).x /2,yPos + 75);
+	_depthCountPos =  glm::vec2(-375 + GlobalContext::textRenderer->calculateTextSize(_depthCount, glm::vec2(0.3f)).x /2,yPos + 150);
 }
 
 void SaveInfoElement::addToManager(Jauntlet::UIManager& uiManager) {
