@@ -8,7 +8,6 @@
 #include <string>
 
 #include "drill/DrillManager.h"
-#include "drill/PlayerResources.h"
 #include "players/PlayerManager.h"
 
 class Database {
@@ -29,6 +28,8 @@ public:
 
 	static bool IsSlotFull(int saveID);
 
+	static float* GetSaveData(int saveID);
+
 private:
 	// pointer to our database. needed for any commands.
 	sqlite3* database;
@@ -40,13 +41,13 @@ private:
 
 	bool TrySavePlayer(const Player& player, int itemID);
 
-	bool TrySaveDrill(const PlayerResources& playerResources);
+	bool TrySaveDrill(DrillManager& drill);
 
 	bool TrySaveItem(const Holdable& holdable, int itemID);
 
 	// === loading methods ===
 
-	bool TryLoadInResources(PlayerResources* playerResources); // Trying is used for debugging
+	bool TryLoadInDrill(DrillManager& drill); // Trying is used for debugging
 	
 	// returns holdable pointer list
 	std::vector<Holdable*> LoadInItems(DrillManager& drill);

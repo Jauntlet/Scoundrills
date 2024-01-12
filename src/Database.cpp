@@ -6,11 +6,13 @@
 #include <vector>
 
 #include "Database.h"
-#include "src/drill/DrillManager.h"
-#include "src/drill/PlayerResources.h"
-#include "src/interactable/Holdable.h"
-#include "src/players/Player.h"
-#include "src/players/PlayerManager.h"
+#include "Jauntlet/Time.h"
+#include "drill/DrillManager.h"
+#include "drill/PlayerResources.h"
+#include "interactable/Holdable.h"
+#include "piloting/Navigation.h"
+#include "players/Player.h"
+#include "players/PlayerManager.h"
 
 Database::Database(int saveID) {
     _saveID = saveID;
@@ -33,7 +35,10 @@ Database::Database(int saveID) {
         "heat DOUBLE,"
         "water DOUBLE,"
         "food INTEGER,"
-        "copper INTEGER"
+        "copper INTEGER,"
+        "nav TEXT,"
+        "depth DOUBLE,"
+        "time DOUBLE"
         ");",
         nullptr, nullptr, nullptr);
 
@@ -53,7 +58,7 @@ Database::Database(int saveID) {
 bool Database::TrySave(DrillManager& drill, PlayerManager& playerManager) {
     sqlite3_open("saves.db", &database);
     
-    if (!TrySaveDrill(*drill.resources)) {
+    if (!TrySaveDrill(drill)) {
         Jauntlet::error("Failed to save drill!");
         return false;
     }
@@ -117,19 +122,28 @@ bool Database::TrySavePlayer(const Player& player, int itemID) {
 	return rc == SQLITE_OK;
 }
 
-bool Database::TrySaveDrill(const PlayerResources& playerResources) {
-    int saveID  = _saveID;
-    float heat  = playerResources.heat;
-    float water = playerResources.water;
-    int food    = playerResources.food;
-    int copper  = playerResources.copper;
+bool Database::TrySaveDrill(DrillManager& drill) {
+    int saveID      = _saveID;
+    float heat      = drill.resources->heat;
+    float water     = drill.resources->water;
+    int food        = drill.resources->food;
+    int copper      = drill.resources->copper;
+    std::string nav = drill.navigation.getMap();
+    Jauntlet::error("hey kids " + nav);
+    float depth     = drill.navigation.getDepth();
+    float playtime  = drill.resources->playtime;
     
-    std::string command = "INSERT INTO Drills (saveID, heat, water, food, copper) VALUES("
-		+ std::to_string(saveID) + ", "
-        + std::to_string(heat)   + ", "
-		+ std::to_string(water)  + ", "
-        + std::to_string(food)   + ", "
-		+ std::to_string(copper) + ");";
+    std::string command = "INSERT INTO Drills (saveID, heat, water, food, copper, nav, depth, time) VALUES("
+		+ std::to_string(saveID)   + ", "
+        + std::to_string(heat)     + ", "
+		+ std::to_string(water)    + ", "
+        + std::to_string(food)     + ", "
+		+ std::to_string(copper)   + ", "
+        + "\"" + nav + "\""        + ", "
+        + std::to_string(depth)    + ", "
+        + std::to_string(playtime) + ");";
+
+    Jauntlet::error(command);
 
 	int rc = sqlite3_exec(database, command.c_str(), nullptr, nullptr, nullptr);        
 
@@ -229,7 +243,7 @@ bool Database::TryLoadInPlayers(PlayerManager& playerManager, DrillManager& dril
     return true;
 }
 
-bool Database::TryLoadInResources(PlayerResources* playerResources) {
+bool Database::TryLoadInDrill(DrillManager& drill) {
     // prepared sqlite "statement" (idk)
     sqlite3_stmt *stmt;
     
@@ -249,6 +263,9 @@ bool Database::TryLoadInResources(PlayerResources* playerResources) {
     float water;
     int food;
     int copper;
+    std::string nav;
+    float depth;
+    float playTime;
 
     int row = 0;
 
@@ -265,6 +282,9 @@ bool Database::TryLoadInResources(PlayerResources* playerResources) {
         water  = sqlite3_column_double(stmt, 2);
         food   = sqlite3_column_int(stmt, 3);
         copper = sqlite3_column_int(stmt, 4);
+        nav    = reinterpret_cast< char const* >(sqlite3_column_text(stmt, 5)); // unsigned to signed char
+        depth = sqlite3_column_double(stmt, 7);
+        playTime = sqlite3_column_double(stmt, 8);
         
         ++row;
 
@@ -279,10 +299,15 @@ bool Database::TryLoadInResources(PlayerResources* playerResources) {
     sqlite3_finalize(stmt);
 
     // replace playerResources
-    playerResources->heat = heat;
-    playerResources->water = water;
-    playerResources->food = food;
-    playerResources->copper = copper;
+    drill.resources->heat = heat;
+    drill.resources->water = water;
+    drill.resources->food = food;
+    drill.resources->copper = copper;
+
+    drill.navigation.setMap(nav);
+
+    drill.navigation.setDepth(depth);
+    drill.resources->playtime = playTime;
 
     // we did it!!!
     return true;
@@ -346,7 +371,7 @@ void Database::Load(DrillManager& drill, PlayerManager& playerManager) {
 
     bool result;
     
-    result = TryLoadInResources(drill.resources);
+    result = TryLoadInDrill(drill);
     
     if (!result) {
         Jauntlet::error("tryloadinresources FAILED");
@@ -450,3 +475,34 @@ bool Database::IsSlotFull(int saveID) {
 
     sqlite3_close(database);
 }*/
+
+float* Database::GetSaveData(int saveID) {
+    static float bruh[2];
+
+    bruh[0] = -1;
+    bruh[1] = -1;
+
+    sqlite3* database;
+    sqlite3_stmt *stmt;
+
+    sqlite3_open("saves.db", &database);
+
+    const char* query = "SELECT * FROM Drills";
+    int rc = sqlite3_prepare_v2(database, query, -1, &stmt, nullptr);
+    while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+        if (sqlite3_column_int(stmt, 0) == saveID) {
+            bruh[0] = sqlite3_column_double(stmt, 7);
+            bruh[1] = sqlite3_column_double(stmt, 8);
+            break;
+        }
+    }
+    if (rc != SQLITE_DONE && rc != SQLITE_ROW) {
+        Jauntlet::error("error! query ended with code " + std::to_string(rc));
+        Jauntlet::error("bruhhh" + std::to_string(rc) + sqlite3_errmsg(database));
+    }
+    sqlite3_finalize(stmt);
+    
+    sqlite3_close(database);
+
+    return bruh;
+}
