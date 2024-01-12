@@ -222,6 +222,10 @@ bool Database::TryLoadInPlayers(PlayerManager& playerManager, DrillManager& dril
             player.heldItem = items[heldItemID];
         }
 
+        if (drill.doesPosMatchStationDest(player.getPosition()) != nullptr) {
+            player.forceOccupyStation(drill.doesPosMatchStationDest(player.getPosition()));
+        }
+
         players.push_back(player);
 
         ++row;

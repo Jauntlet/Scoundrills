@@ -48,6 +48,7 @@ public:
 
 	PlayerStation* checkHoveringStation(glm::vec2 position);
 	bool doesTileOverlapStations(glm::ivec2 tilePos) const;
+	PlayerStation* doesPosMatchStationDest(glm::vec2 pos);
 
 	void burstRandomPipe();
 	void burstSpecificPipe(const glm::ivec2& tilePos);

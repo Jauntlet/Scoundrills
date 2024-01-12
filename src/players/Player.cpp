@@ -247,6 +247,11 @@ void Player::forcePosition(glm::vec2 newPos) {
 	_position = newPos;
 }
 
+void Player::forceOccupyStation(PlayerStation* station) {
+	_station = station;
+	station->occupy();
+}
+
 void Player::forceData(float positionX, float positionY, int heldItemID, int health, int playerID) {
 	_position = glm::vec2(positionX, positionY);
 	_health = health;

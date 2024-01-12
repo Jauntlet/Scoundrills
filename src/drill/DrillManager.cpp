@@ -229,6 +229,24 @@ bool DrillManager::doesTileOverlapStations(glm::ivec2 tilePos) const  {
 		drillWalls.doesTileOverlap(tilePos, _fridge.getBoundingBox());
 }
 
+PlayerStation* DrillManager::doesPosMatchStationDest(glm::vec2 pos) {
+	if (drillAssets.steeringWheel.getAnchorPoint() == pos) {
+		return &drillAssets.steeringWheel;
+	} else if (boiler.getAnchorPoint() == pos) {
+		return &boiler;
+	} else if (_waterTank.getAnchorPoint() == pos) {
+		return &_waterTank;
+	} else if (forge.getAnchorPoint() == pos) {
+		return &forge;
+	} else if (_pipeWorkbench.getAnchorPoint() == pos) {
+		return &_pipeWorkbench;
+	} else if (_fridge.getAnchorPoint() == pos) {
+		return &_fridge;
+	} else {
+		return nullptr;
+	}
+}
+
 void DrillManager::burstRandomPipe() {
 	_cameraManager->doExplosionShake();
 	// changes a random pipe of ID 1 (normal pipe) to a pipe of ID 2 (broken pipe)

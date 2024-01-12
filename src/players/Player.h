@@ -46,7 +46,9 @@ public:
 	// forces the player to a specific location; unoccupies any station attached to them
 	void forcePosition(glm::vec2 newPos);
 
-	// forces data onto the player because i'm lazy --- HACK!!!
+	void forceOccupyStation(PlayerStation* station);
+
+	// forces data onto the player
 	void forceData(float positionX, float positionY, int heldItemID, int health, int playerID);
 
 	Jauntlet::BoxCollider2D collider;
