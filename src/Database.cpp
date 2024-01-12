@@ -490,8 +490,8 @@ float* Database::GetSaveData(int saveID) {
     int rc = sqlite3_prepare_v2(database, query, -1, &stmt, nullptr);
     while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
         if (sqlite3_column_int(stmt, 0) == saveID) {
-            bruh[0] = sqlite3_column_double(stmt, 7);
-            bruh[1] = sqlite3_column_double(stmt, 8);
+            bruh[0] = sqlite3_column_double(stmt, 6);
+            bruh[1] = sqlite3_column_double(stmt, 7);
             break;
         }
     }
