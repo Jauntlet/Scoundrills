@@ -62,6 +62,7 @@ bool Database::TrySave(DrillManager& drill, PlayerManager& playerManager) {
 
     if (!TrySaveDrill(drill)) {
         Jauntlet::error("Failed to save drill!");
+        Jauntlet::error(sqlite3_errmsg(database));
         return false;
     }
 
