@@ -1,7 +1,10 @@
 #include <Jauntlet/Filesystems/FileManager.h>
 #include <iostream>
+#include <iterator>
+#include <string>
 
 #include "../../Database.h"
+#include "Jauntlet/Rendering/TextRenderer.h"
 #include "MainMenu.h"
 #include "SaveInfoElement.h"
 
@@ -11,9 +14,20 @@ SaveInfoElement::SaveInfoElement(float yPos, int saveID, MainMenu* mainMenu) :
 	_saveID(saveID),
 	_playPos(250, yPos + 200),
 	_loadPos(250, yPos + 200),
-	_deletePos(-50, yPos + 200)
+	_deletePos(-50, yPos + 200),
+	_saveNumPos(-250,yPos),
+	_depthCountPos(-225, yPos + 75)
 {
-	_hasSaveInfo = Database::IsSlotFull(saveID);
+	if (Database::IsSlotFull(saveID)) {
+		_hasSaveInfo = true;
+		
+		// Load information here
+		_depthCount = "Depth: 0";
+	} else {
+		_hasSaveInfo = false;
+		_depthCount = "Depth: 0";
+	}
+	
 }
 
 void SaveInfoElement::addToManager(Jauntlet::UIManager& uiManager) {
@@ -24,12 +38,17 @@ void SaveInfoElement::addToManager(Jauntlet::UIManager& uiManager) {
 		uiManager.addElement(&_deleteTextElement, &Jauntlet::TextRenderer::textShader);
 	}
 	uiManager.addElement(&_playTextElement, &Jauntlet::TextRenderer::textShader);
+	_saveNumText = "Save " + std::to_string(_saveID);
+	uiManager.addElement(&_saveNumElement,&Jauntlet::TextRenderer::textShader);
+	uiManager.addElement(&_depthCountElement, &Jauntlet::TextRenderer::textShader);
 }
 
 void SaveInfoElement::setVisibility(bool visible) {
 	_background.visible = visible;
 	_playButton.visible = visible;
 	_playTextElement.visible = visible;
+	_saveNumElement.visible = visible;
+	_depthCountElement.visible = visible;
 	_deleteButton.visible = _hasSaveInfo ? visible : false;
 	_deleteTextElement.visible = _hasSaveInfo ? visible : false;
 }
