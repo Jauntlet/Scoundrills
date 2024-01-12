@@ -56,9 +56,9 @@ Database::Database(int saveID) {
 }
 
 bool Database::TrySave(DrillManager& drill, PlayerManager& playerManager) {
-    sqlite3_open("saves.db", &database);
-    
     this->Delete();
+
+    sqlite3_open("saves.db", &database);
 
     if (!TrySaveDrill(drill)) {
         Jauntlet::error("Failed to save drill!");
