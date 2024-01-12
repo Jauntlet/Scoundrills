@@ -384,7 +384,7 @@ std::string Navigation::getMap() {
 	std::string output = "";
 	for (int y = 0; y < layerCount; y++) {
 		for (int x = 0; x < layerWidth; x++) {
-			output += std::to_string(_map[y][x]) + ",";
+			output += std::to_string(_map[y][x]) + "|";
 		}
 	}
 	return output;
@@ -394,8 +394,8 @@ void Navigation::setMap(std::string newMap) {
 	std::string strFull = newMap;
 	for (int y = 0; y < layerCount; y++) {
 		for (int x = 0; x < layerWidth; x++) {
-			std::string strNum = strFull.substr(0, strFull.find(","));
-			strFull = strFull.substr(strFull.find(","), strFull.length() - 1);
+			std::string strNum = strFull.substr(0, strFull.find("|"));
+			strFull = strFull.substr(strFull.find("|"), strFull.length() - 1);
 			_map[y][x] = std::stoi(strNum);
 		}
 	}
