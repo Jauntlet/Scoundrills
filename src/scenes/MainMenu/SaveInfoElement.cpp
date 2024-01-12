@@ -33,8 +33,8 @@ SaveInfoElement::SaveInfoElement(float yPos, int saveID, MainMenu* mainMenu) :
 	
 	// Correct text positions
 	_saveNumPos = glm::vec2(-375 + GlobalContext::textRenderer->calculateTextSize(_saveNumText, glm::vec2(0.3f)).x /2,yPos);
-	_playtimePos = glm::vec2(-375 + GlobalContext::textRenderer->calculateTextSize(_playtimeText, glm::vec2(0.3f)).x /2,yPos + 75);
-	_depthCountPos =  glm::vec2(-375 + GlobalContext::textRenderer->calculateTextSize(_depthCount, glm::vec2(0.3f)).x /2,yPos + 150);
+	_playtimePos = glm::vec2(-375 + GlobalContext::textRenderer->calculateTextSize(_playtimeText, glm::vec2(0.2f)).x /2,yPos + 75);
+	_depthCountPos =  glm::vec2(-375 + GlobalContext::textRenderer->calculateTextSize(_depthCount, glm::vec2(0.2f)).x /2,yPos + 125);
 }
 
 void SaveInfoElement::addToManager(Jauntlet::UIManager& uiManager) {
