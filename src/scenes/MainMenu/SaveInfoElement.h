@@ -51,4 +51,8 @@ private:
 	std::string _depthCount = "Depth: ";
 	glm::vec2 _depthCountPos;
 	Jauntlet::UITextElement _depthCountElement = Jauntlet::UITextElement(GlobalContext::textRenderer, &_depthCount, &_textColor, &_depthCountPos, Jauntlet::UIElement::ORIGIN_PIN::TOP, 0.3f);
+
+	std::string _playtimeText = "Playtime: ";
+	glm::vec2 _playtimePos;
+	Jauntlet::UITextElement _playtimeElement = Jauntlet::UITextElement(GlobalContext::textRenderer, &_playtimeText, &_textColor, &_playtimePos, Jauntlet::UIElement::ORIGIN_PIN::TOP, 0.3f);
 };

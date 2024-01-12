@@ -19,15 +19,17 @@ SaveInfoElement::SaveInfoElement(float yPos, int saveID, MainMenu* mainMenu) :
 	_depthCountPos(-225, yPos + 75)
 {
 	_saveNumText += std::to_string(_saveID);
-	
+
 	if (Database::IsSlotFull(saveID)) {
 		_hasSaveInfo = true;
 		
 		// Load information here
 		_depthCount += std::to_string(0);
+		_playtimeText += std::to_string(0);
 	} else {
 		_hasSaveInfo = false;
 		_depthCount += "0";
+		_playtimeText += "0";
 	}
 	
 }
@@ -42,6 +44,7 @@ void SaveInfoElement::addToManager(Jauntlet::UIManager& uiManager) {
 	uiManager.addElement(&_playTextElement, &Jauntlet::TextRenderer::textShader);
 	uiManager.addElement(&_saveNumElement,&Jauntlet::TextRenderer::textShader);
 	uiManager.addElement(&_depthCountElement, &Jauntlet::TextRenderer::textShader);
+	uiManager.addElement(&_playtimeElement, &Jauntlet::TextRenderer::textShader);
 }
 
 void SaveInfoElement::setVisibility(bool visible) {
@@ -50,6 +53,7 @@ void SaveInfoElement::setVisibility(bool visible) {
 	_playTextElement.visible = visible;
 	_saveNumElement.visible = visible;
 	_depthCountElement.visible = visible;
+	_playtimeElement.visible = visible;
 	_deleteButton.visible = _hasSaveInfo ? visible : false;
 	_deleteTextElement.visible = _hasSaveInfo ? visible : false;
 }
