@@ -58,8 +58,11 @@ void RogueGallery::gameLoop() {
 		
 		inmate.draw(_batch);
 	}
-
 	_batch.endAndRender();
+
+	if (GlobalContext::inputManager.isKeyPressed(SDLK_ESCAPE)) {
+		GlobalContext::sceneManager->switchScene(GameState::MAINMENU);
+	}
 }
 
 void RogueGallery::loadGame() {
