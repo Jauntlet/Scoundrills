@@ -6,9 +6,10 @@
 class PlayerResources {
 public:
 	PlayerResources();
-	PlayerResources(float water, unsigned int food, unsigned int copper, float heat); //with starting resources
+	PlayerResources(float water, unsigned int food, unsigned int copper, float heat, float prevPlaytime = 0.0f); //with starting resources
 
 	unsigned int food = 0, copper = 0;
 	float water = 0.0f, heat = 0.0f;
+	float playtime = 0.0f;
 private:
 };
