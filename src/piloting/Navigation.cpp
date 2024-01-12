@@ -5,6 +5,7 @@
 
 #include <Jauntlet/JMath.h>
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
+#include <string>
 
 const int layerCount = 5; //amt of layers (Y axis)
 const int layerWidth = 5; //amt of destinations on each layer (X axis)
@@ -382,7 +383,7 @@ std::string Navigation::getMap() {
 	std::string output = "";
 	for (int y = 0; y < layerCount; y++) {
 		for (int x = 0; x < layerWidth; x++) {
-			output += _map[y][x] + ",";
+			output += std::to_string(_map[y][x]) + ",";
 		}
 	}
 	return output;
