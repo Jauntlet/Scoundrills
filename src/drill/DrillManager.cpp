@@ -65,6 +65,8 @@ void DrillManager::update() {
 		off();
 	}
 
+	resources->playtime += Jauntlet::Time::getDeltaTime();
+
 	_waterTank.update();
 }
 
