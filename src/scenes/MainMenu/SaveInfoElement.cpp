@@ -21,10 +21,10 @@ SaveInfoElement::SaveInfoElement(float yPos, int saveID, MainMenu* mainMenu) :
 
 	if (Database::IsSlotFull(saveID)) {
 		_hasSaveInfo = true;
-		
+
 		// Load information from database here
-		_depthCount += std::to_string(0);
-		_playtimeText += std::to_string(0);
+		_depthCount += std::to_string(Database::GetSaveData(saveID)[0]);
+		_playtimeText += std::to_string(Database::GetSaveData(saveID)[1]);
 	} else {
 		_hasSaveInfo = false;
 		_depthCount += "0";
