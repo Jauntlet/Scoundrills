@@ -16,6 +16,7 @@
 
 class PlayerManager;
 class CameraManager;
+class UICoordinator;
 
 const float DISASTER_INTERVAL = 10.0f;
 
@@ -24,7 +25,7 @@ public:
 	DrillManager(CameraManager* cameraManager, PlayerResources& resourceManager, Jauntlet::Camera2D* camera);
 	
 	// update parts of the drill
-	void update();
+	void update(UICoordinator* uiCoordinator);
 
 	// draw elements that appear beneath the players
 	void drawLayerOne();

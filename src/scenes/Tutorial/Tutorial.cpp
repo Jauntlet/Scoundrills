@@ -61,7 +61,7 @@ void Tutorial::gameLoop() {
  
 	_camera.update();
 	_hudCamera.update();
-	_drill.update();
+	_drill.update(&_uiCoordinator);
 
 	drawGame();
 }

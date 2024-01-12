@@ -1,10 +1,11 @@
+#include <Jauntlet/JMath.h>
 #include <Jauntlet/Time.h>
 #include "DrillManager.h"
 #include "../players/PlayerManager.h"
 #include "Jauntlet/Errors.h"
 #include "src/interactable/Holdable.h"
 #include "../scenes/MainGame/CameraManager.h"
-#include <Jauntlet/JMath.h>
+#include "../scenes/MainGame/UICoordinator.h"
 
 const float HEAT_RISE_SCALE = .3f; //1 heat every ~3 seconds.
 const float HEAT_FALL_SCALE = .1f; //1 heat every 10 seconds.
@@ -30,7 +31,7 @@ DrillManager::DrillManager(CameraManager* cameraManager, PlayerResources& resour
 	navigation.genNav();
 }
 
-void DrillManager::update() {
+void DrillManager::update(UICoordinator* uiCoordinator) {
 	// calculate the change in water/heat
 	if (_drillOn && navigation.getMoving()) {
 		if (boilerWater > 0) {
@@ -63,6 +64,9 @@ void DrillManager::update() {
 		boilerWater = 0;
 		boiler.animation.stop(0);
 		off();
+		if (uiCoordinator->isButtonOn()) {
+			uiCoordinator->toggleButtonDisplay();
+		}
 	}
 
 	resources->playtime += Jauntlet::Time::getDeltaTime();
