@@ -27,6 +27,9 @@ public:
 	
 	void showLoseScreen();
 
+	void toggleButtonDisplay();
+	bool isButtonOn();
+
 	Navigation* navigation;
 	std::string waterIconText = "0", foodIconText = "0", partsIconText = "0";
 protected:

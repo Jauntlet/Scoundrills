@@ -101,6 +101,13 @@ void UICoordinator::showLoseScreen() {
 	_restartTextElement.visible = true;
 }
 
+void UICoordinator::toggleButtonDisplay() {
+	_button->setClicked(!_button->isClicked());
+}
+bool UICoordinator::isButtonOn() {
+	return !_button->isClicked();
+}
+
 void UICoordinator::restartGame() {
 	Jauntlet::Time::setTimeScale(1);
 	GlobalContext::sceneManager->switchScene(GameState::ROGUEGALLERY);
