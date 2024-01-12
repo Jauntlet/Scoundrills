@@ -2,6 +2,8 @@
 #include "../../players/Player.h"
 #include "../../drill/DrillManager.h"
 
+#define min min
+
 WaterTank::WaterTank(DrillManager& drill, glm::vec4 destination, glm::vec2 anchorPointOffset)
 : AnimatedPlayerStation("Textures/Water tank.png", destination, 4, destination, anchorPointOffset),
   _drill(&drill)
@@ -39,6 +41,7 @@ void WaterTank::update() {
 	float waterIncrease = std::min(_icedWater, Jauntlet::Time::getDeltaTime() * _drill->resources->heat / 200);
 	_icedWater -= waterIncrease;
 	_drill->resources->water += waterIncrease;
+	updateAnimation();
 }
 
 void WaterTank::updateAnimation() {
