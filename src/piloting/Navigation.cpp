@@ -268,6 +268,7 @@ void Navigation::updateTravel() {
 			spawnCavern(cavType);
 			
 			_destination = -1; //set dest
+			_progress = 0.0f;
 		}
 	} else {
 		_progress = 0.0f; //no destination is set -- reset progress (to next dest)
@@ -398,6 +399,11 @@ void Navigation::setMap(std::string newMap) {
 			_map[y][x] = std::stoi(strNum);
 		}
 	}
+
+	//reset visuals
+	_uiManager.removeAllElements();
+	genNav();
+	updateVisibility();
 }
 
 void Navigation::setMap(int newMap[5][5]) {
