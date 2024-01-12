@@ -2,6 +2,8 @@
 #include "src/interactable/Holdable.h"
 #include "../scenes/GlobalContext.h"
 
+// we overwrite the defined min by windows because windows *really* likes its own min function that is not used elsewhere
+#pragma warning (disable:4005)
 #define min min
 
 Player::Player(const glm::vec2& position, uint8_t playerID, bool isCop) :

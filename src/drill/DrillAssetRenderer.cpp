@@ -5,7 +5,7 @@
 const float SHAKE_AMOUNT = 20.0f;
 
 DrillAssetRenderer::DrillAssetRenderer(Jauntlet::Camera2D* _UIcamera) :
-	steeringWheel("Textures/missing.png", { 64 * 11.5, -64 * 28, 64, 64 }, { 64 * 11.5, -64 * 28, 64, 64 }, { 0, 0 }),
+	steeringWheel("Textures/steering wheel.png", { 64 * 10.74, -64 * 28, 96 * 2, 32 * 2}, { 64 * 10.74, -64 * 28, 96 * 2, 32 * 2}, { 0, 32 }),
 	_boilerSmoke(_UIcamera, _smokePos, "Textures/smoke.png"),
 	_drillAnimation(3),
 	_boilerAnimation(6),
@@ -47,16 +47,15 @@ void DrillAssetRenderer::drawLayerOne() {
 void DrillAssetRenderer::drawLayerTwo() {
 	// Layer two renders above the walls / floor of the tilemap
 	_spriteBatch.begin();
-
-	// draw the player stations
-	steeringWheel.draw(_spriteBatch);
-	
 	_spriteBatch.draw(glm::vec4(64 * 15.5, -64 * 2, 64 * 2, 96 * 2), _boilerAnimation.getUV(), _boilerTexture);
-	
 	_spriteBatch.endAndRender();
 }
 
 void DrillAssetRenderer::drawLayerThree() {
+	_spriteBatch.begin();
+	steeringWheel.draw(_spriteBatch);
+	_spriteBatch.endAndRender();
+	
 	_boilerSmoke.update();
 	_boilerSmoke.draw();
 }

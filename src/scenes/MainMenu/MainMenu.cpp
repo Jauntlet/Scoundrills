@@ -52,6 +52,9 @@ void MainMenu::gameLoop() {
 	if (GlobalContext::inputManager.isKeyPressed(SDLK_ESCAPE) && GlobalContext::pauseMenu->inSettings()) {
 		toggleSettingsMenu();
 	}
+	if (GlobalContext::inputManager.isKeyPressed(SDLK_ESCAPE) && !GlobalContext::pauseMenu->isPaused() && _startButton.visible == false) {
+		toggleSavesMenu();
+	}
 }
 
 void MainMenu::windowResized() {
