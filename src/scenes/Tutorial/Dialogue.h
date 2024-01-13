@@ -1,3 +1,6 @@
+/* Purpose: Handles the dialogue box and the text that renders within it.
+ * Main Contributer(s): Xander Mooney
+ */
 #pragma once
 
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>

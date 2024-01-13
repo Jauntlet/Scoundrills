@@ -1,3 +1,6 @@
+/* Purpose: Overrides the Main Games UICoordinator to be able to hide specific UI systems as needed.
+ * Main Contributer(s): Xander Mooney
+ */
 #pragma once
 
 #include "../MainGame/UICoordinator.h"
