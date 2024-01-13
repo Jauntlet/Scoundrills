@@ -64,7 +64,7 @@ void MainGame::processInput() {
 		_database.TrySave(_drill, _players);
 	}
 	_wasDrillMoving = _drill.navigation.getMoving();
-	
+
 	_players.update(_drill);
 
 	if (_resources.heat > PLAYER_HURT_HEAT) {

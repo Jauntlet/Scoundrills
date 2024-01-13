@@ -132,7 +132,6 @@ bool Database::TrySaveDrill(DrillManager& drill) {
     int food        = drill.resources->food;
     int copper      = drill.resources->copper;
     std::string nav = drill.navigation.getMap();
-    Jauntlet::error("hey kids " + nav);
     float depth     = drill.navigation.getDepth();
     float playtime  = drill.resources->playtime;
 
@@ -145,8 +144,6 @@ bool Database::TrySaveDrill(DrillManager& drill) {
         + "\"" + nav + "\""        + ", "
         + std::to_string(depth)    + ", "
         + std::to_string(playtime) + ");";
-
-    Jauntlet::error(command);
 
 	int rc = sqlite3_exec(database, command.c_str(), nullptr, nullptr, nullptr);        
 
@@ -500,7 +497,7 @@ float* Database::GetSaveData(int saveID) {
     }
     if (rc != SQLITE_DONE && rc != SQLITE_ROW) {
         Jauntlet::error("error! query ended with code " + std::to_string(rc));
-        Jauntlet::error("bruhhh" + std::to_string(rc) + sqlite3_errmsg(database));
+        Jauntlet::error("error message: " + std::to_string(rc) + " " + sqlite3_errmsg(database));
     }
     sqlite3_finalize(stmt);
     
