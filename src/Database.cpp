@@ -197,8 +197,6 @@ bool Database::TryLoadInPlayers(PlayerManager& playerManager, DrillManager& dril
 
     int row = 0;
 
-    std::vector<Player> players;
-
     std::vector<Holdable*> items = Database::LoadInItems(drill);
 
     // process query
@@ -216,27 +214,28 @@ bool Database::TryLoadInPlayers(PlayerManager& playerManager, DrillManager& dril
         health     = sqlite3_column_int(stmt, 4);
         playerID   = sqlite3_column_int(stmt, 5);
 
-        Player player(glm::vec2(positionX,positionY), playerID, health, false);
+        // Originally Jack had us creating the player, adding them to a vector, initalizing all its data, and then pushing it to the player manager.
+        // This however, led to the instance of the player being created and destroyed multiple time as the data is copied to new instances and locations in memory.
+        // This led to some issues such as the player not occupying stations because the destructor for players unoccupies any stations they are occupying. -xm
 
-        if (heldItemID != 0) {
-            player.heldItem = items[heldItemID];
+        Player* player = playerManager.createPlayer(glm::vec2(positionX, positionY), playerID, health);
+
+        if (player != nullptr) {
+            if (heldItemID != 0) {
+                player->heldItem = items[heldItemID];
+            }
+
+            // see if the player destination matches the anchor point of a station, and if it does, occupy the station.
+            if (drill.doesPosMatchStationDest(player->getPosition()) != nullptr) {
+                player->forceOccupyStation(drill.doesPosMatchStationDest(player->getPosition()));
+            }
         }
-
-        if (drill.doesPosMatchStationDest(player.getPosition()) != nullptr) {
-            player.forceOccupyStation(drill.doesPosMatchStationDest(player.getPosition()));
-        }
-
-        players.push_back(player);
 
         ++row;
     }
 
     if (rc != SQLITE_DONE && rc != SQLITE_ROW) {
         Jauntlet::error("error! query ended with code " + std::to_string(rc));
-    }
-
-    for (int i = 0; i < players.size(); ++i) {
-        playerManager.addPlayer(players[i]);
     }
 
     // finalize the statement (i still dont know)

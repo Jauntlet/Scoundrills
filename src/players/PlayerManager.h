@@ -14,9 +14,9 @@ class PlayerManager {
 public: 
 	PlayerManager(DrillManager* drill);
 	// creates a new player and places it into the player manager
-	void createPlayer(const glm::vec2& position, uint8_t playerID, bool isCop = false);
+	Player* createPlayer(const glm::vec2& position, uint8_t playerID, bool isCop = false);
 	// creates a new player and places it into the player manager
-	void createPlayer(const glm::vec2& position, uint8_t playerID, int health, bool isCop = false);
+	Player* createPlayer(const glm::vec2& position, uint8_t playerID, int health, bool isCop = false);
 	
 	// processes a click to see if we operate on the players, returns true if we are, false if we arent.
 	bool processInput(const Jauntlet::Camera2D& activeCamera);
@@ -37,10 +37,6 @@ public:
 
 	// returns true if a player is at the exact specified position.
 	bool posMatchesPlayerDest(const glm::vec2& worldPos);
-
-	void addPlayer(Player player) {
-		_players.push_back(player);
-	}
 
 	// updates the state of players
 	void update(DrillManager& drill);

@@ -11,19 +11,21 @@ PlayerManager::PlayerManager(DrillManager* drill) :
 	_players.reserve(sizeof(Player) * 5);
 }
 
-void PlayerManager::createPlayer(const glm::vec2& position, uint8_t playerID, bool isCop) {
+Player* PlayerManager::createPlayer(const glm::vec2& position, uint8_t playerID, bool isCop) {
 	if (_players.size() == 5) {
 		Jauntlet::error("Player size is already maxed out!");
-		return;
+		return nullptr;
 	}
 	_players.emplace_back(position, playerID, isCop);
+	return &_players.back();
 }
-void PlayerManager::createPlayer(const glm::vec2& position, uint8_t playerID, int health, bool isCop) {
+Player* PlayerManager::createPlayer(const glm::vec2& position, uint8_t playerID, int health, bool isCop) {
 	if (_players.size() == 5) {
 		Jauntlet::error("Player size is already maxed out!");
-		return;
+		return nullptr;
 	}
 	_players.emplace_back(position, playerID, health, isCop);
+	return &_players.back();
 }
 
 bool PlayerManager::processInput(const Jauntlet::Camera2D& activeCamera) {
