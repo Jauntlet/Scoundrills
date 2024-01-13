@@ -222,7 +222,7 @@ bool Database::TryLoadInPlayers(PlayerManager& playerManager, DrillManager& dril
 
         if (player != nullptr) {
             if (heldItemID != 0) {
-                player->heldItem = items[heldItemID];
+                player->heldItem = items[heldItemID - 1];
             }
 
             // see if the player destination matches the anchor point of a station, and if it does, occupy the station.
