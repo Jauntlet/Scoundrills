@@ -24,6 +24,7 @@ public:
 private:
 	bool _hasSaveInfo;
 	int _saveID;
+	float _yDisplacement;
 	MainMenu* _mainMenu;
 
 	Jauntlet::Color _textColor = Jauntlet::Color(250, 250, 250);

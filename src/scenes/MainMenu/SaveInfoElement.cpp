@@ -14,6 +14,7 @@ SaveInfoElement::SaveInfoElement(float yPos, int saveID, MainMenu* mainMenu) :
 	_position(0, yPos),
 	_mainMenu(mainMenu),
 	_saveID(saveID),
+	_yDisplacement(yPos),
 	_playPos(250, yPos + 200),
 	_loadPos(250, yPos + 200),
 	_deletePos(-50, yPos + 200)
@@ -25,11 +26,16 @@ SaveInfoElement::SaveInfoElement(float yPos, int saveID, MainMenu* mainMenu) :
 
 		// Load information from database here
 		_depthCount += JMath::Split(std::to_string(Database::GetSaveData(saveID)[0]), '.')[0];
-		_playtimeText += JMath::Split(std::to_string(Database::GetSaveData(saveID)[1]), '.')[0];
+		if (Database::GetSaveData(saveID)[1] > 60) {
+			_playtimeText += JMath::Split(std::to_string(Database::GetSaveData(saveID)[1] / 60), '.')[0] + "m";
+		}
+		else {
+			_playtimeText += JMath::Split(std::to_string(Database::GetSaveData(saveID)[1]), '.')[0] + "s";
+		}
 	} else {
 		_hasSaveInfo = false;
 		_depthCount += "0";
-		_playtimeText += "0";
+		_playtimeText += "0s";
 	}
 	
 	// Correct text positions
@@ -66,6 +72,12 @@ void SaveInfoElement::deleteSave() {
 	_hasSaveInfo = false;
 	setVisibility(_playTextElement.visible);
 	Database::Delete(_saveID);
+
+	_depthCount = "Depth: 0";
+	_playtimeText = "Playtime: 0s";
+
+	_playtimePos = glm::vec2(-375 + GlobalContext::textRenderer->calculateTextSize(_playtimeText, glm::vec2(0.2f)).x / 2, _yDisplacement + 75);
+	_depthCountPos = glm::vec2(-375 + GlobalContext::textRenderer->calculateTextSize(_depthCount, glm::vec2(0.2f)).x / 2, _yDisplacement + 125);
 }
 
 void SaveInfoElement::startGame() {
