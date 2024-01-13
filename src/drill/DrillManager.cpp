@@ -230,17 +230,17 @@ bool DrillManager::doesTileOverlapStations(glm::ivec2 tilePos) const  {
 }
 
 PlayerStation* DrillManager::doesPosMatchStationDest(glm::vec2 pos) {
-	if (drillAssets.steeringWheel.getAnchorPoint() == pos) {
+	if (drillAssets.steeringWheel.getAnchorPoint() - glm::vec2(32) == pos) {
 		return &drillAssets.steeringWheel;
-	} else if (boiler.getAnchorPoint() == pos) {
+	} else if (boiler.getAnchorPoint() - glm::vec2(32) == pos) {
 		return &boiler;
-	} else if (_waterTank.getAnchorPoint() == pos) {
+	} else if (_waterTank.getAnchorPoint() - glm::vec2(32) == pos) {
 		return &_waterTank;
-	} else if (forge.getAnchorPoint() == pos) {
+	} else if (forge.getAnchorPoint() - glm::vec2(32) == pos) {
 		return &forge;
-	} else if (_pipeWorkbench.getAnchorPoint() == pos) {
+	} else if (_pipeWorkbench.getAnchorPoint() - glm::vec2(32) == pos) {
 		return &_pipeWorkbench;
-	} else if (_fridge.getAnchorPoint() == pos) {
+	} else if (_fridge.getAnchorPoint() - glm::vec2(32) == pos) {
 		return &_fridge;
 	} else {
 		return nullptr;
