@@ -10,12 +10,8 @@ Holdable::Holdable(const std::string& texture, const glm::vec2& position, const 
 	_size(size),
 	itemType(type)
 {
-	switch (type) {
-		case HoldableType::WATER:
-			_waterAmount = Boiler::BOILER_MAX_WATER;
-			break;
-		default:
-			break;
+	if (type == HoldableType::WATER) {
+		_waterAmount = Boiler::BOILER_MAX_WATER / 2;
 	}
 }
 
