@@ -303,6 +303,7 @@ void Player::onDestination(DrillManager& drill) {
 			_pipeDest = nullptr;
 			// destroy the held item
 			drill.removeHoldable(heldItem);
+			heldItem = nullptr;
 		}
 	}
 
