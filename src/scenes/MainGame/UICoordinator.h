@@ -52,7 +52,9 @@ protected:
 	glm::vec2 _partsIconTextPosition = glm::vec2(485, _partsIconPosition.y + (120 - GlobalContext::textRenderer->calculateTextSize(partsIconText, glm::vec2(0.4f)).y) * 0.5);
 	Jauntlet::UITextElement _partsIconTextElement = Jauntlet::UITextElement(GlobalContext::textRenderer, &partsIconText, &_textColor, &_partsIconTextPosition, 0.4f);
 	Jauntlet::UIProgressBarElement _tempProgressBar = Jauntlet::UIProgressBarElement("Textures/TempBar.png", glm::vec4(0.5,0,0.5,1), glm::vec4(0,0,0.5,1), glm::vec4(615, 15, 3.125 * 120, 120));
-
+	std::string _drillMovingText = "Drill is not moving!";
+	glm::vec2 _drillMovingTextPos = glm::vec2(0, -275);
+	Jauntlet::UITextElement _drillMovingElement = Jauntlet::UITextElement(GlobalContext::textRenderer, &_drillMovingText, &_textColor, &_drillMovingTextPos, Jauntlet::UIElement::ORIGIN_PIN::BOTTOM_LEFT, 0.2f);
 	// Game over screen
 	glm::vec2 _loseBcgPos = glm::vec2(0);
 	Jauntlet::UISpriteElement _lostBcgElemet = Jauntlet::UISpriteElement(Jauntlet::ResourceManager::getTexture("Textures/savebcg.png").id, &_loseBcgPos, glm::vec2(1600, 600), Jauntlet::UIElement::ORIGIN_PIN::CENTER);

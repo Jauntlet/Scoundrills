@@ -3,7 +3,8 @@
 TutorialUI::TutorialUI(Jauntlet::Camera2D* hudCamera, DrillManager* drillManager) :
 	UICoordinator(hudCamera, drillManager)
 {
-	// Empty
+	// empty the moving text so that it never renders during the tutorial
+	_drillMovingText = "";
 }
 
 void TutorialUI::hideAll() {

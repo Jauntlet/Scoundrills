@@ -42,6 +42,7 @@ UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, DrillManager* drillM
 	_UIManager.addElement(&_partsIconTextElement, &Jauntlet::TextRenderer::textShader);
 	_UIManager.addElement(&_loseTitleElement, &Jauntlet::TextRenderer::textShader);
 	_UIManager.addElement(&_restartTextElement, &Jauntlet::TextRenderer::textShader);
+	_UIManager.addElement(&_drillMovingElement, &Jauntlet::TextRenderer::textShader);
 	_loseTitleElement.visible = false;
 	_restartTextElement.visible = false;
 
@@ -77,6 +78,8 @@ void UICoordinator::draw() {
 
 	_tempProgressBar.progress = glm::min((_drill->resources->heat / 300.0f) * 0.7f + 0.3f, 1.0f);
 	
+	_drillMovingElement.visible = !_drill->navigation.getMoving() || !_drill->isOn();
+
 	_UIManager.draw();
 	navigation->update();
 	_NavManager->draw();
