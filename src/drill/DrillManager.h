@@ -18,7 +18,7 @@ class PlayerManager;
 class CameraManager;
 class UICoordinator;
 
-const float DISASTER_INTERVAL = 10.0f;
+const float DISASTER_INTERVAL = 8.0f;
 
 class DrillManager {
 public:
