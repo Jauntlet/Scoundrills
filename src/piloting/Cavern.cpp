@@ -13,7 +13,7 @@ Cavern::Cavern(PlayerResources* resourceManager, Jauntlet::Camera2D* Camera) :
 	_backgroundTexture = Jauntlet::ResourceManager::getTexture("Textures/Caverns/cavernBackground.png").id;
 	_backgroundElement = Jauntlet::UISpriteElement(_backgroundTexture, &_backgroundPos, glm::vec2(1200, 900), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
 	_confirmTexture = Jauntlet::ResourceManager::getTexture("Textures/UIbutton.png").id; //temporary texture
-	_confirmButton = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&]() -> void { updateResources(); }, _confirmTexture, &_confirmPos, glm::vec2(100), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+	_confirmButton = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&]() -> void { updateResources(); }, _confirmTexture, &_confirmPos, glm::vec2(300, 100), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
 	_uiManager.addElement(&_backgroundElement, &GlobalContext::normalShader);
 	_uiManager.addElement(&_confirmButton, &GlobalContext::normalShader);
 	_uiManager.addElement(&_descriptionElement, &Jauntlet::TextRenderer::textShader);
