@@ -28,6 +28,9 @@ MainGame::MainGame(int saveID, const std::vector<uint8_t>& playerIDs) :
 
 	// save
 	//_database.TrySave(_drill, _players);
+	// put camera at default positon
+	_camera.setPosition(glm::vec2(24 * 64 * 0.5f, 30 * 64 * 0.5f * -1));
+	_camera.setScale(0.5f);
 }
 
 MainGame::MainGame(int saveID) :
@@ -43,6 +46,9 @@ MainGame::MainGame(int saveID) :
 
 	//set the cavern's player manager
 	_uiCoordinator.navigation->setCavernPlayerManager(&_players);
+	// put camera at default positon
+	_camera.setPosition(glm::vec2(24 * 64 * 0.5f, 30 * 64 * 0.5f * -1));
+	_camera.setScale(0.5f);
 }
 
 void MainGame::gameLoop() {
