@@ -65,6 +65,9 @@ public:
 	// Returns all holdable items
 	std::vector<Holdable*> getAllHoldables() const;
 
+	// Commits a random disaster
+	void DisasterEvent();
+	
 	Jauntlet::TileMap drillWalls = Jauntlet::TileMap(_textureCache, 64);
 	Jauntlet::TileMap drillFloor = Jauntlet::TileMap(_textureCache, 64);
 	Jauntlet::TileMap pipes = Jauntlet::TileMap(_textureCache, 64);
@@ -76,8 +79,6 @@ public:
 	DrillAssetRenderer drillAssets;
 	Forge forge;
 private:
-	// Commits a random disaster
-	void DisasterEvent();
 	// places an ice item on the ground
 	void placeIce();
 	// places scrap on the ground

@@ -26,11 +26,14 @@ MainGame::MainGame(int saveID, const std::vector<uint8_t>& playerIDs) :
 	//there isn't currently an intuitive way to get the playerManager into the cavern class so I just put it here. TODO: make this comment sound smart
 	_uiCoordinator.navigation->setCavernPlayerManager(&_players);
 
-	// save
-	//_database.TrySave(_drill, _players);
 	// put camera at default positon
 	_camera.setPosition(glm::vec2(24 * 64 * 0.5f, 30 * 64 * 0.5f * -1));
 	_camera.setScale(0.5f);
+
+	// place 3 random items at start, just to keep the player occupied a bit.
+	_drill.DisasterEvent();
+	_drill.DisasterEvent();
+	_drill.DisasterEvent();
 }
 
 MainGame::MainGame(int saveID) :
