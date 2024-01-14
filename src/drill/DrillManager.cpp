@@ -7,7 +7,7 @@
 #include "../scenes/MainGame/CameraManager.h"
 #include "../scenes/MainGame/UICoordinator.h"
 
-const float HEAT_RISE_SCALE = .3f; //1 heat every ~3 seconds.
+const float HEAT_RISE_SCALE = .333f; //1 heat every ~3 seconds.
 const float HEAT_FALL_SCALE = .1f; //1 heat every 10 seconds.
 
 const float PIPE_BURST_HEAT = 30.0f; // The minimum heat for pipes to be able to burst.
