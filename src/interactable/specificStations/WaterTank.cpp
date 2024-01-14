@@ -15,12 +15,12 @@ void WaterTank::onPlayerArrival(Player& player) {
 	if (player.heldItem == nullptr && _drill->resources->water > 0) {
 		Holdable* water = _drill->addHoldable(glm::vec2(64 * 7, -64 * 6), HoldableType::WATER);
 		
-		if (_drill->resources->water < Boiler::BOILER_MAX_WATER) {
-			water->requestWater(Boiler::BOILER_MAX_WATER - _drill->resources->water);
+		if (_drill->resources->water < Boiler::BOILER_MAX_WATER * 0.5) {
+			water->requestWater(Boiler::BOILER_MAX_WATER * 0.5 - _drill->resources->water);
 			_drill->resources->water = 0;
 		}
 		else {
-			_drill->resources->water -= Boiler::BOILER_MAX_WATER;
+			_drill->resources->water -= Boiler::BOILER_MAX_WATER * 0.5;
 		}
 		
 		water->pickup(&player);
