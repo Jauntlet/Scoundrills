@@ -5,7 +5,7 @@
 #include "UICoordinator.h"
 #include "../PauseMenu.h"
 
-const float PLAYER_HURT_HEAT = 200.0f; // The minimum heat for players to take damage from it.
+const float PLAYER_HURT_HEAT = 300.0f; // The minimum heat for players to take damage from it.
 
 MainGame::MainGame(int saveID, const std::vector<uint8_t>& playerIDs) :
 	_resources(80,0,0,0),
