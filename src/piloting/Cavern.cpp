@@ -32,7 +32,7 @@ void Cavern::setType(int type) {
 		_description = "Your crew stumbles upon\nuncharted terrain...\n"; //base text
 
 		//determine resources to add/remove
-		_addHeat = -10 * (_random() % 3);
+		_addHeat = -15 * (_random() % 3);
 		_addWater = 10 * (_random() % 3);
 		_addFood = 5 * (_random() % 5);
 		_addCopper = 3 * (_random() % 2);
@@ -61,7 +61,7 @@ void Cavern::setType(int type) {
 		_description = "An underground lake...\nIt almost glows with\na mysterious energy!\n";
 
 		//determine resources to add/remove
-		_addHeat = -10 * (_random() % 3);
+		_addHeat = -15 * (_random() % 3);
 		_addWater = 15 * (_random() % 4);
 
 		//display resources in description
@@ -115,7 +115,7 @@ void Cavern::setType(int type) {
 		_description = "It's time to pilfer the depths\nof ALL its glorious ores!";
 
 		//determine resources to add/remove
-		_addHeat = -10 * (_random() % 3);
+		_addHeat = -15 * (_random() % 3);
 		_addWater = 5 * (_random() % 3);
 		_addFood = 5 * (_random() % 3);
 		_addCopper = 3 * (_random() % 3+1);
