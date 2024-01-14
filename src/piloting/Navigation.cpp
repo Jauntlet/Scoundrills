@@ -9,7 +9,7 @@
 
 const int layerCount = 5; //amt of layers (Y axis)
 const int layerWidth = 5; //amt of destinations on each layer (X axis)
-const float baseSpeed = 1.5; //This over distance determines the speed the drill moves to any destination; more is faster, less is slower
+const float baseSpeed = 2.5; //This over distance determines the speed the drill moves to any destination; more is faster, less is slower
 
 const std::string bgTextures[] = {"Textures/NavBackgroundPrototype.png"};
 
