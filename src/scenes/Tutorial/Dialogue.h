@@ -5,8 +5,8 @@
 
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
 #include <Jauntlet/UI/UIManager.h>
-#include <Jauntlet/UI/UISpriteElement.h>
-#include <Jauntlet/UI/UITextElement.h>
+#include <Jauntlet/UI/UISprite.h>
+#include <Jauntlet/UI/UIText.h>
 #include <deque>
 
 #include "../GlobalContext.h"
@@ -16,7 +16,7 @@ const float TEXT_SPEED = 0.025f;
 class Dialogue
 {
 public:
-	Dialogue(Jauntlet::Camera2D* camera);
+	Dialogue(Camera2D* camera);
 
 	void hide();
 	void show();
@@ -34,20 +34,20 @@ public:
 	void update();
 private:
 	// UI Manager
-	Jauntlet::UIManager _uiManager;
+	UIManager _uiManager;
 
 	// Dialogue box
 	glm::vec2 _dialogueBoxPos = glm::vec2(0);
-	Jauntlet::UISpriteElement _dialogueBox = Jauntlet::UISpriteElement(Jauntlet::ResourceManager::getTexture("Textures/savebcg.png").id, &_dialogueBoxPos, glm::vec2(1000, 375), Jauntlet::UIElement::ORIGIN_PIN::BOTTOM);
+	UISprite _dialogueBox = UISprite(Jauntlet::ResourceManager::getTexture("Textures/savebcg.png").id, &_dialogueBoxPos, glm::vec2(1000, 375), UIElement::ORIGIN_PIN::BOTTOM);
 	
 	// Timer
 	float _timer = 0.0f;
 
 	// Text
 	glm::vec2 _textPos = glm::vec2(0, -275);
-	Jauntlet::Color _textColor = Jauntlet::Color();
+	Color _textColor = Color();
 	std::string _dialogueText = "";
 	std::deque<char> _storedText;
-	Jauntlet::UITextElement _dialogueTextElement = Jauntlet::UITextElement(GlobalContext::textRenderer, &_dialogueText, &_textColor, &_textPos, Jauntlet::UIElement::ORIGIN_PIN::BOTTOM, 0.225f);
+	UIText _dialogueTextElement = UIText(GlobalContext::textRenderer, &_dialogueText, &_textColor, &_textPos, UIElement::ORIGIN_PIN::BOTTOM, 0.225f);
 };
 

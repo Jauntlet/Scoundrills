@@ -1,19 +1,17 @@
 #include "RogueGallery.h"
 #include "../SceneManager.h"
 
-#include <iostream>
-
 RogueGallery::RogueGallery(int saveID, bool tutorialMode) :
 	_crew{SelectableCrew(1, tutorialMode), SelectableCrew(2, tutorialMode), SelectableCrew(3, tutorialMode), SelectableCrew(4, tutorialMode), SelectableCrew(5, tutorialMode)},
 	_goToTutorial(tutorialMode)
 {
 	_saveID = saveID;
-	GlobalContext::window.setBackgroundColor(Jauntlet::Color(200,200,200));
+	GlobalContext::window.setBackgroundColor(Color(200,200,200));
 
 	_uiManager.addElement(&_confirmButton, &GlobalContext::normalShader);
-	_uiManager.addElement(&_titleElement, &Jauntlet::TextRenderer::textShader);
-	_uiManager.addElement(&_subtitleElement, &Jauntlet::TextRenderer::textShader);
-	_uiManager.addElement(&_confirmTextElement, &Jauntlet::TextRenderer::textShader);
+	_uiManager.addElement(&_titleElement, &TextRenderer::textShader);
+	_uiManager.addElement(&_subtitleElement, &TextRenderer::textShader);
+	_uiManager.addElement(&_confirmTextElement, &TextRenderer::textShader);
 	
 	_selectedCrew.push_back(&_crew[0]);
 	_selectedCrew.push_back(&_crew[1]);

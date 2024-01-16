@@ -19,7 +19,7 @@ public:
 	Player* createPlayer(const glm::vec2& position, uint8_t playerID, int health, bool isCop = false);
 	
 	// processes a click to see if we operate on the players, returns true if we are, false if we arent.
-	bool processInput(const Jauntlet::Camera2D& activeCamera);
+	bool processInput(const Camera2D& activeCamera);
 	// tries to damage the players currently in the drill
 	void damageTick(const int& drillHeat);
 	
@@ -41,7 +41,7 @@ public:
 	// updates the state of players
 	void update(DrillManager& drill);
 	// draw all players
-	void draw(Jauntlet::SpriteBatch& spriteBatch);
+	void draw(SpriteBatch& spriteBatch);
 private:
 	std::vector<Player> _players;
 	int _selectedPlayer = -1;

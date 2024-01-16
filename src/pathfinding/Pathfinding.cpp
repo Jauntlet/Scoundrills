@@ -11,7 +11,7 @@ Pathfinding::Pathfinding() {
 	// Empty
 }
 
-std::vector<glm::vec2> Pathfinding::findPath(Jauntlet::TileMap* map, glm::vec2 start, glm::vec2 destination) {	
+std::vector<glm::vec2> Pathfinding::findPath(TileMap* map, glm::vec2 start, glm::vec2 destination) {	
 	// translate world coords to tilemap coords.
 	destination = map->WorldPosToTilePos(destination);
 	start = map->WorldPosToTilePos(start);

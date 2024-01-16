@@ -1,6 +1,6 @@
 #include "TutorialUI.h"
 
-TutorialUI::TutorialUI(Jauntlet::Camera2D* hudCamera, DrillManager* drillManager) :
+TutorialUI::TutorialUI(Camera2D* hudCamera, DrillManager* drillManager) :
 	UICoordinator(hudCamera, drillManager)
 {
 	// empty the moving text so that it never renders during the tutorial

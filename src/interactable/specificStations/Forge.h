@@ -13,7 +13,7 @@ public:
 
     void onPlayerArrival(Player& player) override;
 
-    void draw(Jauntlet::SpriteBatch& spriteBatch) override;
+    void draw(SpriteBatch& spriteBatch) override;
 
     void update();
 
@@ -23,7 +23,7 @@ public:
 private:
     DrillManager* _drill;
 
-    Jauntlet::ProgressBar _meltingBar;
+    ProgressBar _meltingBar;
     int _heldScrap = 0;
 
     bool _playerAt = false;

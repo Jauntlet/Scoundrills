@@ -28,12 +28,12 @@ Player* PlayerManager::createPlayer(const glm::vec2& position, uint8_t playerID,
 	return &_players.back();
 }
 
-bool PlayerManager::processInput(const Jauntlet::Camera2D& activeCamera) {
+bool PlayerManager::processInput(const Camera2D& activeCamera) {
 	glm::vec2 mousePos = activeCamera.convertScreenToWorld(GlobalContext::inputManager.getMouseCoords());
 	// if we click
 	if (GlobalContext::inputManager.isKeyPressed(SDL_BUTTON_LEFT)) {
 		if (_selectedPlayer == -1) { // we are selecting a player.
-			Jauntlet::Collision2D collision;
+			Collision2D collision;
 
 			for (size_t i = 0; i < _players.size(); ++i) {
 				if (collision.calcCollision(&_players[i].collider, mousePos)) {
@@ -127,7 +127,7 @@ void PlayerManager::update(DrillManager& drill) {
 	}
 }
 
-void PlayerManager::draw(Jauntlet::SpriteBatch& spriteBatch) {
+void PlayerManager::draw(SpriteBatch& spriteBatch) {
 	for (size_t i = 0; i < _players.size(); ++i) {
 		_players[i].draw(spriteBatch);
 	}

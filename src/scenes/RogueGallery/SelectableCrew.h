@@ -3,9 +3,9 @@
  */
 #pragma once
 
-#include <Jauntlet/Rendering/Animation/Animation.h>
+#include <Jauntlet/Rendering/Animation/SpriteAnimation.h>
 #include <Jauntlet/Rendering/Textures/SpriteBatch.h>
-#include <Jauntlet/UI/UIButtonElement.h>
+#include <Jauntlet/UI/UIButton.h>
 #include <Jauntlet/UI/UIManager.h>
 
 class SelectableCrew
@@ -17,19 +17,19 @@ public:
 	void Select();
 	bool isSelected();
 
-	bool wasClicked(Jauntlet::Camera2D& camera);
+	bool wasClicked(Camera2D& camera);
 
 	uint8_t getPlayerID();
 
-	void draw(Jauntlet::SpriteBatch& spriteBatch);
+	void draw(SpriteBatch& spriteBatch);
 	
 	glm::vec2 position;
 private:
 	bool _selected = false;
-	Jauntlet::Color _color = Jauntlet::Color(255, 255, 255);
+	Color _color = Color(255, 255, 255);
 
 	int _playerID;
 	GLuint _texture;
-	Jauntlet::Animation _animation = Jauntlet::Animation(28);
+	SpriteAnimation _animation = SpriteAnimation(28);
 };
 

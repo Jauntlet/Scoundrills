@@ -4,7 +4,7 @@
 
 const float SHAKE_AMOUNT = 20.0f;
 
-DrillAssetRenderer::DrillAssetRenderer(Jauntlet::Camera2D* _UIcamera) :
+DrillAssetRenderer::DrillAssetRenderer(Camera2D* _UIcamera) :
 	steeringWheel("Textures/steering wheel.png", { 64 * 10.74, -64 * 28, 96 * 2, 32 * 2}, { 64 * 10.74, -64 * 28, 96 * 2, 32 * 2}, { 0, 32 }),
 	_boilerSmoke(_UIcamera, _smokePos, "Textures/smoke.png"),
 	_drillAnimation(3),
@@ -15,7 +15,7 @@ DrillAssetRenderer::DrillAssetRenderer(Jauntlet::Camera2D* _UIcamera) :
 	_boilerAnimation.play(0, 2, 0.1f);
 	_drillAnimation.stop(0);
 
-	Jauntlet::ParticleGrow grow = Jauntlet::ParticleGrow(0.0f, 10.0f);
+	ParticleGrow grow = ParticleGrow(0.0f, 10.0f);
 
 	_boilerSmoke.addProperty(grow);
 

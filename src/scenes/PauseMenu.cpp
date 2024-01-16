@@ -8,14 +8,14 @@
 #include "src/scenes/SceneManager.h"
 
 PauseMenu::PauseMenu() :
-	_resumeButton(&GlobalContext::inputManager, std::bind(&PauseMenu::switchState, this, PauseState::HIDDEN), Jauntlet::ResourceManager::getTexture("Textures/UIbutton.png").id, &_resumeButtonPos, glm::vec2(600, 200), Jauntlet::UIElement::ORIGIN_PIN::CENTER),
-	_settingsButton(&GlobalContext::inputManager, std::bind(&PauseMenu::switchState, this, PauseState::SETTINGS), Jauntlet::ResourceManager::getTexture("Textures/UIbutton.png").id, &_settingsButtonPos, glm::vec2(600, 200), Jauntlet::UIElement::ORIGIN_PIN::CENTER),
-	_quitButton(&GlobalContext::inputManager, std::bind(&PauseMenu::toMainMenu, this), Jauntlet::ResourceManager::getTexture("Textures/UIbutton.png").id, &_quitButtonPos, glm::vec2(600, 200), Jauntlet::UIElement::ORIGIN_PIN::CENTER),
-	_resumeTextElement(GlobalContext::textRenderer, &_resumeText, &_buttonTextColor, &_resumeButtonPos, Jauntlet::UIElement::ORIGIN_PIN::CENTER, 0.5f),
-	_settingsTextElement(GlobalContext::textRenderer, &_settingsText, &_buttonTextColor, &_settingsButtonPos, Jauntlet::UIElement::ORIGIN_PIN::CENTER, 0.5f),
-	_quitTextElement(GlobalContext::textRenderer, &_quitText, &_buttonTextColor, &_quitButtonPos, Jauntlet::UIElement::ORIGIN_PIN::CENTER, 0.5f),
-	_fullscreenButton(&GlobalContext::inputManager, std::bind(&PauseMenu::toggleFullscreen, this), Jauntlet::ResourceManager::getTexture("Textures/CheckBox.png").id, &_fullscreenButtonPos, glm::vec2(180), Jauntlet::UIElement::ORIGIN_PIN::TOP_LEFT),
-	_fullscreenTextElement(GlobalContext::textRenderer, &_fullscreenText, &_textColor, &_fullscreenTextPos, Jauntlet::UIElement::ORIGIN_PIN::TOP_LEFT, 0.5f)
+	_resumeButton(&GlobalContext::inputManager, std::bind(&PauseMenu::switchState, this, PauseState::HIDDEN), Jauntlet::ResourceManager::getTexture("Textures/UIbutton.png").id, &_resumeButtonPos, glm::vec2(600, 200), UIElement::ORIGIN_PIN::CENTER),
+	_settingsButton(&GlobalContext::inputManager, std::bind(&PauseMenu::switchState, this, PauseState::SETTINGS), Jauntlet::ResourceManager::getTexture("Textures/UIbutton.png").id, &_settingsButtonPos, glm::vec2(600, 200), UIElement::ORIGIN_PIN::CENTER),
+	_quitButton(&GlobalContext::inputManager, std::bind(&PauseMenu::toMainMenu, this), Jauntlet::ResourceManager::getTexture("Textures/UIbutton.png").id, &_quitButtonPos, glm::vec2(600, 200), UIElement::ORIGIN_PIN::CENTER),
+	_resumeTextElement(GlobalContext::textRenderer, &_resumeText, &_buttonTextColor, &_resumeButtonPos, UIElement::ORIGIN_PIN::CENTER, 0.5f),
+	_settingsTextElement(GlobalContext::textRenderer, &_settingsText, &_buttonTextColor, &_settingsButtonPos, UIElement::ORIGIN_PIN::CENTER, 0.5f),
+	_quitTextElement(GlobalContext::textRenderer, &_quitText, &_buttonTextColor, &_quitButtonPos, UIElement::ORIGIN_PIN::CENTER, 0.5f),
+	_fullscreenButton(&GlobalContext::inputManager, std::bind(&PauseMenu::toggleFullscreen, this), Jauntlet::ResourceManager::getTexture("Textures/CheckBox.png").id, &_fullscreenButtonPos, glm::vec2(180), UIElement::ORIGIN_PIN::TOP_LEFT),
+	_fullscreenTextElement(GlobalContext::textRenderer, &_fullscreenText, &_textColor, &_fullscreenTextPos, UIElement::ORIGIN_PIN::TOP_LEFT, 0.5f)
 {
 	_uiManager.setScale(GlobalContext::screenSize.y / 1080.0f);
 
@@ -26,12 +26,12 @@ PauseMenu::PauseMenu() :
 	
 	_uiManager.addElement(&_fullscreenButton, &GlobalContext::normalShader);
 	
-	_uiManager.addElement(&_resumeTextElement, &Jauntlet::TextRenderer::textShader);
-	_uiManager.addElement(&_settingsTextElement, &Jauntlet::TextRenderer::textShader);
-	_uiManager.addElement(&_quitTextElement, &Jauntlet::TextRenderer::textShader);
-	_uiManager.addElement(&_settingsTitle,&Jauntlet::TextRenderer::textShader);
+	_uiManager.addElement(&_resumeTextElement, &TextRenderer::textShader);
+	_uiManager.addElement(&_settingsTextElement, &TextRenderer::textShader);
+	_uiManager.addElement(&_quitTextElement, &TextRenderer::textShader);
+	_uiManager.addElement(&_settingsTitle,&TextRenderer::textShader);
 	
-	_uiManager.addElement(&_fullscreenTextElement, &Jauntlet::TextRenderer::textShader);
+	_uiManager.addElement(&_fullscreenTextElement, &TextRenderer::textShader);
 	
 	_uiManager.resolvePositions();
 	_uiManager.optimize();

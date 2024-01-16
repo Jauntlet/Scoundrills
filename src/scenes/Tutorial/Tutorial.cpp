@@ -19,7 +19,7 @@
 Tutorial::Tutorial(int saveID, const std::vector<uint8_t>& playerIDs) {
 	_saveID = saveID;
 	
-	GlobalContext::window.setBackgroundColor(Jauntlet::Color(97, 60, 47));
+	GlobalContext::window.setBackgroundColor(Color(97, 60, 47));
 	_uiCoordinator.applyNewScreenSize(GlobalContext::screenSize);
 
 	for (size_t i = 0; i < playerIDs.size(); ++i) {

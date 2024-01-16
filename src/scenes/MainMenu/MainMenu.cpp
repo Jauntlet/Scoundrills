@@ -10,7 +10,7 @@ MainMenu::MainMenu() :
 	_camera(GlobalContext::screenSize.x, GlobalContext::screenSize.y),
 	_uiManager(&_camera)
 {
-	GlobalContext::window.setBackgroundColor(Jauntlet::Color("6B7973"));
+	GlobalContext::window.setBackgroundColor(Color("6B7973"));
 	
 	GlobalContext::listener.setPosition(glm::vec3(0, 0, 0));
 	_music.playWAV("Sounds/Menu Music.wav", true);
@@ -23,14 +23,14 @@ MainMenu::MainMenu() :
 	_uiManager.addElement(&_yesButton, &GlobalContext::normalShader);
 	_yesButton.visible = false;
 
-	_uiManager.addElement(&_titleTextElement, &Jauntlet::TextRenderer::textShader);
-	_uiManager.addElement(&_settingsTextElement, &Jauntlet::TextRenderer::textShader);
-	_uiManager.addElement(&_quitTextElement, &Jauntlet::TextRenderer::textShader);
-	_uiManager.addElement(&_tutTextElement, &Jauntlet::TextRenderer::textShader);
+	_uiManager.addElement(&_titleTextElement, &TextRenderer::textShader);
+	_uiManager.addElement(&_settingsTextElement, &TextRenderer::textShader);
+	_uiManager.addElement(&_quitTextElement, &TextRenderer::textShader);
+	_uiManager.addElement(&_tutTextElement, &TextRenderer::textShader);
 	_tutTextElement.visible = false;
-	_uiManager.addElement(&_noTextElement, &Jauntlet::TextRenderer::textShader);
+	_uiManager.addElement(&_noTextElement, &TextRenderer::textShader);
 	_noTextElement.visible = false;
-	_uiManager.addElement(&_yesTextElement, &Jauntlet::TextRenderer::textShader);
+	_uiManager.addElement(&_yesTextElement, &TextRenderer::textShader);
 	_yesTextElement.visible = false;
 
 	for (int i = 0; i < 3; ++i) {
@@ -38,7 +38,7 @@ MainMenu::MainMenu() :
 		_saveInfoElements[i].setVisibility(false);
 	}
 	_uiManager.addElement(&_startButton, &GlobalContext::normalShader);
-	_uiManager.addElement(&_startButtonText, &Jauntlet::TextRenderer::textShader);
+	_uiManager.addElement(&_startButtonText, &TextRenderer::textShader);
 
 	_uiManager.optimize();
 	_uiManager.resolvePositions();

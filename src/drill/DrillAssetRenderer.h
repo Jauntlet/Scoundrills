@@ -2,16 +2,16 @@
  * Main Contributer(s): Xander Mooney / Jack Kennedy
  */
 #pragma once
-#include <Jauntlet/Rendering/Animation/Animation.h>
+#include <Jauntlet/Rendering/Animation/SpriteAnimation.h>
 #include <Jauntlet/Rendering/Cameras/Camera2D.h>
-#include <Jauntlet/Rendering/Particles/Particle.h>
+#include <Jauntlet/Rendering/Particles/ParticleEmitter.h>
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
 #include <Jauntlet/Rendering/Textures/SpriteBatch.h>
 #include "../interactable/AnimatedPlayerStation.h"
 
 class DrillAssetRenderer {
 public:
-	DrillAssetRenderer(Jauntlet::Camera2D* _UIcamera);
+	DrillAssetRenderer(Camera2D* _UIcamera);
 	// draw the first layer of assets; this renders beneath the walls/floor of the drill
 	void drawLayerOne();
 	// draw the second layer of assets; this renders above the walls/floor of the drill
@@ -25,11 +25,11 @@ public:
 	
 	PlayerStation steeringWheel;
 private:
-	Jauntlet::SpriteBatch _spriteBatch;
-	Jauntlet::Animation _drillAnimation, _boilerAnimation;
+	SpriteBatch _spriteBatch;
+	SpriteAnimation _drillAnimation, _boilerAnimation;
 	bool _shake = false, _boilerPlaying = true;
 	glm::vec2 _smokePos = glm::vec2(64 * 16.5f, -32 + 10 + 16 + 3);
 
-	Jauntlet::Particle _boilerSmoke;
+	ParticleEmitter _boilerSmoke;
 	GLuint _boilerTexture;
 };

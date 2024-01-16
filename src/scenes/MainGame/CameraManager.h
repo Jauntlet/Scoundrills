@@ -10,7 +10,7 @@
 
 class CameraManager {
 public:
-	CameraManager(Jauntlet::Camera2D* camera, PlayerManager* players, DrillManager* drill);
+	CameraManager(Camera2D* camera, PlayerManager* players, DrillManager* drill);
 
 	void processInput();
 
@@ -21,15 +21,15 @@ public:
 
 	bool cameraUnlocked = true;
 private:
-	Jauntlet::Camera2D* _camera;
+	Camera2D* _camera;
 
 	PlayerManager* _players;
 	DrillManager* _drill;
 
-	Jauntlet::InputKey _moveLeft;
-	Jauntlet::InputKey _moveRight;
-	Jauntlet::InputKey _moveUp;
-	Jauntlet::InputKey _moveDown;
+	InputKey _moveLeft;
+	InputKey _moveRight;
+	InputKey _moveUp;
+	InputKey _moveDown;
 
 	glm::vec2 _oldMouse = glm::vec2(0);
 	glm::vec2 _deltaMouse = glm::vec2(0);

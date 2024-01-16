@@ -14,12 +14,12 @@ public:
 	SelectedTileRenderer(DrillManager* drill, PlayerManager* playerManager);
 
 	// draw the selected tile to screen
-	void draw(Jauntlet::Camera2D* activeCamera);
+	void draw(Camera2D* activeCamera);
 private:
 	GLuint _textureID;
 
-	Jauntlet::SpriteBatch _spriteBatch;
-	Jauntlet::Color _drawColor;
+	SpriteBatch _spriteBatch;
+	Color _drawColor;
 
 	PlayerManager* _players;
 	DrillManager* _drill;

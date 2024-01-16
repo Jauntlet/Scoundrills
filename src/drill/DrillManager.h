@@ -22,7 +22,7 @@ const float DISASTER_INTERVAL = 8.0f;
 
 class DrillManager {
 public:
-	DrillManager(CameraManager* cameraManager, PlayerResources& resourceManager, Jauntlet::Camera2D* camera);
+	DrillManager(CameraManager* cameraManager, PlayerResources& resourceManager, Camera2D* camera);
 	
 	// update parts of the drill
 	void update(UICoordinator* uiCoordinator);
@@ -68,9 +68,9 @@ public:
 	// Commits a random disaster
 	void DisasterEvent();
 	
-	Jauntlet::TileMap drillWalls = Jauntlet::TileMap(_textureCache, 64);
-	Jauntlet::TileMap drillFloor = Jauntlet::TileMap(_textureCache, 64);
-	Jauntlet::TileMap pipes = Jauntlet::TileMap(_textureCache, 64);
+	TileMap drillWalls = TileMap(_textureCache, 64);
+	TileMap drillFloor = TileMap(_textureCache, 64);
+	TileMap pipes = TileMap(_textureCache, 64);
 
 	float boilerWater = Boiler::BOILER_MAX_WATER;
 	Navigation navigation;
@@ -90,7 +90,7 @@ private:
 	Fridge _fridge = Fridge(glm::vec2(8*64, -64), resources);
 
 	// Texture cache for tilemaps
-	Jauntlet::TextureCache _textureCache;
+	TextureCache _textureCache;
 
 	// Drill States
 	bool _drillOn = true;
@@ -98,7 +98,7 @@ private:
 
 	// Holdable Item management
 	std::vector<Holdable*> _holdables;
-	Jauntlet::SpriteBatch _spriteBatch;
+	SpriteBatch _spriteBatch;
 
 	// Broken pipes
 	std::vector<glm::ivec2> _brokenPipeLocations;

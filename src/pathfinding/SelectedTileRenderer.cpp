@@ -11,7 +11,7 @@ SelectedTileRenderer::SelectedTileRenderer(DrillManager* drill, PlayerManager* p
 	// Empty
 }
 
-void SelectedTileRenderer::draw(Jauntlet::Camera2D* activeCamera) {
+void SelectedTileRenderer::draw(Camera2D* activeCamera) {
 	if (_lastPosition != activeCamera->convertScreenToWorld(GlobalContext::inputManager.getMouseCoords()) || GlobalContext::inputManager.isKeyPressed(SDL_BUTTON_LEFT)) {
 		_lastPosition = activeCamera->convertScreenToWorld(GlobalContext::inputManager.getMouseCoords());
 		glm::vec2 _selectedTilePos = _drill->drillWalls.RoundWorldPos(_lastPosition);
@@ -20,13 +20,13 @@ void SelectedTileRenderer::draw(Jauntlet::Camera2D* activeCamera) {
 		if (_players->isPlayerSelected()) {
 			PlayerStation* station;
 			if (_drill->isValidDestination(_selectedTilePos, _players) || ((station = _drill->checkHoveringStation(_lastPosition)) != nullptr && !station->isOccupied())) {
-				_drawColor = Jauntlet::Color(0, 255, 0);
+				_drawColor = Color(0, 255, 0);
 			} else {
-				_drawColor = Jauntlet::Color(255, 0, 0);
+				_drawColor = Color(255, 0, 0);
 			}
 		} else {
 			// player is not selected, tile is white.
-			_drawColor = Jauntlet::Color(255, 255, 255);
+			_drawColor = Color(255, 255, 255);
 		}
 
 		_spriteBatch.begin();

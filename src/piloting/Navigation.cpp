@@ -1,5 +1,5 @@
 #include "Navigation.h"
-#include "Jauntlet/UI/UIButtonElement.h"
+#include "Jauntlet/UI/UIButton.h"
 #include "src/scenes/GlobalContext.h"
 #include "Cavern.h"
 
@@ -13,7 +13,7 @@ const float baseSpeed = 2.5; //This over distance determines the speed the drill
 
 const std::string bgTextures[] = {"Textures/NavBackgroundPrototype.png"};
 
-Navigation::Navigation(Jauntlet::Camera2D* camera, PlayerResources* resourceManager) : 
+Navigation::Navigation(Camera2D* camera, PlayerResources* resourceManager) : 
 	_navTexture(Jauntlet::ResourceManager::getTexture(bgTextures[0]).id),
 	_xTure(Jauntlet::ResourceManager::getTexture("Textures/Nav Icon/NavIcon1.png").id), 
 	_waTure(Jauntlet::ResourceManager::getTexture("Textures/Nav Icon/NavIcon2.png").id), 
@@ -22,7 +22,7 @@ Navigation::Navigation(Jauntlet::Camera2D* camera, PlayerResources* resourceMana
 	_coppTure(Jauntlet::ResourceManager::getTexture("Textures/Nav Icon/NavIcon5.png").id), 
 	_caret(Jauntlet::ResourceManager::getTexture("Textures/caret.png").id),
 	_drillIcon(Jauntlet::ResourceManager::getTexture("Textures/drillNav.png").id),
-	_background(Jauntlet::UISpriteAnimatedElement(_navTexture, &_bgPos, glm::vec2(640, 1024), Jauntlet::UIElement::ORIGIN_PIN::CENTER, &_backgroundAnimation)),
+	_background(UISpriteAnimated(_navTexture, &_bgPos, glm::vec2(640, 1024), UIElement::ORIGIN_PIN::CENTER, &_backgroundAnimation)),
 	_uiManager(camera),
 	cavern(resourceManager, camera)
 {
@@ -47,7 +47,7 @@ Navigation::~Navigation() {
 	_drillIconElement = nullptr;
 }
 
-Jauntlet::UIManager* Navigation::genNav() {
+UIManager* Navigation::genNav() {
 	////clear stuff
 	_points.clear();
 	_positions.clear();
@@ -55,7 +55,7 @@ Jauntlet::UIManager* Navigation::genNav() {
 	size_t sizeSum = layerCount * layerWidth;
 
 	_positions.reserve(sizeof(glm::vec2) * sizeSum);
-	_points.reserve(sizeof(Jauntlet::UIButtonElement) * sizeSum);
+	_points.reserve(sizeof(UIButton) * sizeSum);
 
 	//read in textures
 	//_navTexture = Jauntlet::ResourceManager::getTexture(bgTextures[0]).id;
@@ -68,7 +68,7 @@ Jauntlet::UIManager* Navigation::genNav() {
 
 	//draw drill icon
 	if (_drillIconElement == nullptr)
-		_drillIconElement = new Jauntlet::UISpriteElement(_drillIcon, &_iconPos, glm::vec2(60), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+		_drillIconElement = new UISprite(_drillIcon, &_iconPos, glm::vec2(60), UIElement::ORIGIN_PIN::CENTER);
 	_uiManager.addElement(_drillIconElement, &GlobalContext::normalShader);
 	_drillIconElement->visible = _navOpen;
 
@@ -90,7 +90,7 @@ Jauntlet::UIManager* Navigation::genNav() {
 
 			if (point <= 8) { // question mark (1 in 4)
 				int destID = _positions.size() - 1;
-				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID, x, y]() -> void { selectNav(destID, glm::ivec2(x, y)); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+				UIButton button = UIButton(&GlobalContext::inputManager, [&, destID, x, y]() -> void { selectNav(destID, glm::ivec2(x, y)); }, _xTure, &_positions[_positions.size() - 1], glm::vec2(40), UIElement::ORIGIN_PIN::CENTER);
 				button.visible = visible;
 				_points.push_back(button);
 				continue;
@@ -98,7 +98,7 @@ Jauntlet::UIManager* Navigation::genNav() {
 
 			if (point <= 10) { // water icon (1 in 10)
 				int destID = _positions.size() - 1;
-				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID, x, y]() -> void { selectNav(destID, glm::ivec2(x, y)); }, _waTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+				UIButton button = UIButton(&GlobalContext::inputManager, [&, destID, x, y]() -> void { selectNav(destID, glm::ivec2(x, y)); }, _waTure, &_positions[_positions.size() - 1], glm::vec2(40), UIElement::ORIGIN_PIN::CENTER);
 				button.visible = false;
 				_points.push_back(button);
 				continue;
@@ -106,7 +106,7 @@ Jauntlet::UIManager* Navigation::genNav() {
 
 			if (point <= 13) { // approacher icon (1 in 20)
 				int destID = _positions.size() - 1;
-				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID, x, y]() -> void { selectNav(destID, glm::ivec2(x, y)); }, _approaTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+				UIButton button = UIButton(&GlobalContext::inputManager, [&, destID, x, y]() -> void { selectNav(destID, glm::ivec2(x, y)); }, _approaTure, &_positions[_positions.size() - 1], glm::vec2(40), UIElement::ORIGIN_PIN::CENTER);
 				button.visible = false;
 				_points.push_back(button);
 				continue;
@@ -114,7 +114,7 @@ Jauntlet::UIManager* Navigation::genNav() {
 
 			if (point <= 16) { // danger icon (3 in 20)
 				int destID = _positions.size() - 1;
-				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID, x, y]() -> void { selectNav(destID, glm::ivec2(x, y)); }, _dangTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+				UIButton button = UIButton(&GlobalContext::inputManager, [&, destID, x, y]() -> void { selectNav(destID, glm::ivec2(x, y)); }, _dangTure, &_positions[_positions.size() - 1], glm::vec2(40), UIElement::ORIGIN_PIN::CENTER);
 				button.visible = false;
 				_points.push_back(button);
 				continue;
@@ -122,7 +122,7 @@ Jauntlet::UIManager* Navigation::genNav() {
 
 			if (point <= 19) { // copper icon (3 in 20)
 				int destID = _positions.size() - 1;
-				Jauntlet::UIButtonElement button = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&, destID, x, y]() -> void { selectNav(destID, glm::ivec2(x, y)); }, _coppTure, &_positions[_positions.size() - 1], glm::vec2(40), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+				UIButton button = UIButton(&GlobalContext::inputManager, [&, destID, x, y]() -> void { selectNav(destID, glm::ivec2(x, y)); }, _coppTure, &_positions[_positions.size() - 1], glm::vec2(40), UIElement::ORIGIN_PIN::CENTER);
 				button.visible = false;
 				_points.push_back(button);
 				continue;
@@ -142,7 +142,7 @@ Jauntlet::UIManager* Navigation::genNav() {
 
 	//create caret (selector icon)
 	if (_caretElement == nullptr)
-		_caretElement = new Jauntlet::UISpriteElement(_caret, &_caretPos, glm::vec2(31.25, 18.75), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+		_caretElement = new UISprite(_caret, &_caretPos, glm::vec2(31.25, 18.75), UIElement::ORIGIN_PIN::CENTER);
 	_uiManager.addElement(_caretElement, &GlobalContext::normalShader);
 	_caretElement->visible = false;
 
@@ -351,11 +351,11 @@ void Navigation::updateVisibility() {
 	}
 }
 
-Jauntlet::UIManager* Navigation::getUIManager() {
+UIManager* Navigation::getUIManager() {
 	return &_uiManager;
 }
 
-Jauntlet::UIManager* Navigation::getCavernManager() {
+UIManager* Navigation::getCavernManager() {
 	return cavern.getUIManager();
 }
 

@@ -1,10 +1,10 @@
 #include "Dialogue.h"
 
-Dialogue::Dialogue(Jauntlet::Camera2D* camera) :
+Dialogue::Dialogue(Camera2D* camera) :
 	_uiManager(camera)
 {
 	_uiManager.addElement(&_dialogueBox, &GlobalContext::normalShader);
-	_uiManager.addElement(&_dialogueTextElement, &Jauntlet::TextRenderer::textShader);
+	_uiManager.addElement(&_dialogueTextElement, &TextRenderer::textShader);
 
 	_uiManager.setScale(GlobalContext::screenSize.y / 1080.0f);
 

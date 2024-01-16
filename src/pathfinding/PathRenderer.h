@@ -21,7 +21,7 @@ private:
 	DrillManager* _drill;
 	PlayerManager* _players;
 
-	Jauntlet::SpriteBatch _spriteBatch;
+	SpriteBatch _spriteBatch;
 	GLuint _textureID;
 };
 

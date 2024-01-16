@@ -6,17 +6,17 @@
 
 const int maxInmates = 5;
 
-Cavern::Cavern(PlayerResources* resourceManager, Jauntlet::Camera2D* Camera) :
+Cavern::Cavern(PlayerResources* resourceManager, Camera2D* Camera) :
 	_uiManager(Camera), _resources(resourceManager), _camera(Camera),
-	_descriptionElement(GlobalContext::textRenderer, &_description, &_descriptionColor, &_descriptionPos, Jauntlet::UIElement::ORIGIN_PIN::TOP, 0.3f)
+	_descriptionElement(GlobalContext::textRenderer, &_description, &_descriptionColor, &_descriptionPos, UIElement::ORIGIN_PIN::TOP, 0.3f)
 {
 	_backgroundTexture = Jauntlet::ResourceManager::getTexture("Textures/Caverns/cavernBackground.png").id;
-	_backgroundElement = Jauntlet::UISpriteElement(_backgroundTexture, &_backgroundPos, glm::vec2(1200, 900), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+	_backgroundElement = UISprite(_backgroundTexture, &_backgroundPos, glm::vec2(1200, 900), UIElement::ORIGIN_PIN::CENTER);
 	_confirmTexture = Jauntlet::ResourceManager::getTexture("Textures/UIbutton.png").id; //temporary texture
-	_confirmButton = Jauntlet::UIButtonElement(&GlobalContext::inputManager, [&]() -> void { updateResources(); }, _confirmTexture, &_confirmPos, glm::vec2(300, 100), Jauntlet::UIElement::ORIGIN_PIN::CENTER);
+	_confirmButton = UIButton(&GlobalContext::inputManager, [&]() -> void { updateResources(); }, _confirmTexture, &_confirmPos, glm::vec2(300, 100), UIElement::ORIGIN_PIN::CENTER);
 	_uiManager.addElement(&_backgroundElement, &GlobalContext::normalShader);
 	_uiManager.addElement(&_confirmButton, &GlobalContext::normalShader);
-	_uiManager.addElement(&_descriptionElement, &Jauntlet::TextRenderer::textShader);
+	_uiManager.addElement(&_descriptionElement, &TextRenderer::textShader);
 	_backgroundElement.visible = false;
 	_confirmButton.visible = false;
 	_descriptionElement.visible = false;
@@ -178,7 +178,7 @@ void Cavern::updateResources() {
 	_open = false;
 }
 
-Jauntlet::UIManager* Cavern::getUIManager() {
+UIManager* Cavern::getUIManager() {
 	return &_uiManager;
 }
 

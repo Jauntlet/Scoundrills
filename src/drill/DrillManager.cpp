@@ -12,7 +12,7 @@ const float HEAT_FALL_SCALE = .1f; //1 heat every 10 seconds.
 
 const float PIPE_BURST_HEAT = 45.0f; // The minimum heat for pipes to be able to burst.
 
-DrillManager::DrillManager(CameraManager* cameraManager, PlayerResources& resourceManager, Jauntlet::Camera2D* camera) :
+DrillManager::DrillManager(CameraManager* cameraManager, PlayerResources& resourceManager, Camera2D* camera) :
 	drillAssets(camera),
 	resources(&resourceManager),
 	navigation(camera, &resourceManager),

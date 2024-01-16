@@ -1,6 +1,4 @@
-#include <Jauntlet/UI/UIButtonToggleableElement.h>
-
-//#include "Jauntlet/Rendering/Textures/SpriteBatch.h"
+#include <Jauntlet/UI/UIButtonToggleable.h>
 #include "UICoordinator.h"
 #include <Jauntlet/Rendering/TextRenderer.h>
 #include <Jauntlet/JMath.h>
@@ -9,7 +7,7 @@
 #include "../GlobalContext.h"
 #include "../SceneManager.h"
 
-UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, DrillManager* drillManager) :
+UICoordinator::UICoordinator(Camera2D* hudCamera, DrillManager* drillManager) :
 	_hudCamera(hudCamera),
 	_UIManager(hudCamera),
 	_drill(drillManager),
@@ -33,16 +31,16 @@ UICoordinator::UICoordinator(Jauntlet::Camera2D* hudCamera, DrillManager* drillM
 	// conversion from `void` to `std::function<void ()>` -jk
 	std::function<void()> _buttonMethod = std::bind(&DrillManager::toggle, drillManager);
 
-	_button = new Jauntlet::UIButtonToggleableElement(&GlobalContext::inputManager, _buttonMethod, _buttonTexture, buttonPos, glm::vec2(256, 256), Jauntlet::UIElement::ORIGIN_PIN::BOTTOM_LEFT);
+	_button = new UIButtonToggleable(&GlobalContext::inputManager, _buttonMethod, _buttonTexture, buttonPos, glm::vec2(256, 256), UIElement::ORIGIN_PIN::BOTTOM_LEFT);
 	_UIManager.addElement(_button, &GlobalContext::normalShader);
 	
 	// add text elements
-	_UIManager.addElement(&_waterIconTextElement, &Jauntlet::TextRenderer::textShader);
-	_UIManager.addElement(&_foodIconTextElement, &Jauntlet::TextRenderer::textShader);
-	_UIManager.addElement(&_partsIconTextElement, &Jauntlet::TextRenderer::textShader);
-	_UIManager.addElement(&_loseTitleElement, &Jauntlet::TextRenderer::textShader);
-	_UIManager.addElement(&_restartTextElement, &Jauntlet::TextRenderer::textShader);
-	_UIManager.addElement(&_drillMovingElement, &Jauntlet::TextRenderer::textShader);
+	_UIManager.addElement(&_waterIconTextElement, &TextRenderer::textShader);
+	_UIManager.addElement(&_foodIconTextElement, &TextRenderer::textShader);
+	_UIManager.addElement(&_partsIconTextElement, &TextRenderer::textShader);
+	_UIManager.addElement(&_loseTitleElement, &TextRenderer::textShader);
+	_UIManager.addElement(&_restartTextElement, &TextRenderer::textShader);
+	_UIManager.addElement(&_drillMovingElement, &TextRenderer::textShader);
 	_loseTitleElement.visible = false;
 	_restartTextElement.visible = false;
 

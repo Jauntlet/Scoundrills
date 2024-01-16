@@ -7,7 +7,7 @@
 #define min min
 
 Player::Player(const glm::vec2& position, uint8_t playerID, bool isCop) :
-	collider(Jauntlet::BoxCollider2D(glm::vec2(64), position)),
+	collider(BoxCollider2D(glm::vec2(64), position)),
 	_position(position),
 	_healthBar("Textures/healthbar.png", glm::vec4(0, 0, 0.5, 1), glm::vec4(0.5,0,0.5,1), glm::vec4(_position.x + 8, _position.y + 68, 48, 8)),
 	_playerID(playerID),
@@ -17,7 +17,7 @@ Player::Player(const glm::vec2& position, uint8_t playerID, bool isCop) :
 	_animation.play(0,1,0.5f);
 }
 Player::Player(const glm::vec2& position, uint8_t playerID, int health, bool isCop) :
-	collider(Jauntlet::BoxCollider2D(glm::vec2(64), position)),
+	collider(BoxCollider2D(glm::vec2(64), position)),
 	_position(position),
 	_healthBar("Textures/healthbar.png", glm::vec4(0, 0, 0.5, 1), glm::vec4(0.5, 0, 0.5, 1), glm::vec4(_position.x + 8, _position.y + 68, 48, 8)),
 	_playerID(playerID),
@@ -109,7 +109,7 @@ void Player::update(DrillManager& drill) {
 	_healthBar.position = _position + glm::vec2(8, 68);
 }
 
-void Player::draw(Jauntlet::SpriteBatch& spriteBatch) {
+void Player::draw(SpriteBatch& spriteBatch) {
 	if (_flipped) {
 		spriteBatch.draw({ _position.x + 64, _position.y, -64, 64 }, _animation.getUV(), _texture, 0);
 	}

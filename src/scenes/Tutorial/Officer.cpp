@@ -9,7 +9,7 @@ Officer::Officer(const glm::vec2& position, const std::string& texture) :
 	_animation.play(0, 1, 0.5f);
 }
 
-void Officer::draw(const Jauntlet::Camera2D& camera) {
+void Officer::draw(const Camera2D& camera) {
 	if (_walking) {
 		_position += glm::vec2(150.0f * Jauntlet::Time::getDeltaTime(), 0);
 		_timeWalking += Jauntlet::Time::getDeltaTime();

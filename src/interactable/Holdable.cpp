@@ -25,12 +25,12 @@ void Holdable::pickup(Player* player) {
 	_player = player;
 }
 
-void Holdable::drop(Jauntlet::TileMap* tilemap) {
+void Holdable::drop(TileMap* tilemap) {
 	position = tilemap->RoundWorldPos(position) + glm::vec2(0, 64);
 	_player = nullptr;
 }
 
-void Holdable::draw(Jauntlet::SpriteBatch& spriteBatch) {
+void Holdable::draw(SpriteBatch& spriteBatch) {
 	                          //this weird position math always centers the object on tile regardless of size -xm
 	spriteBatch.draw(glm::vec4(position + ((glm::vec2(64) - _size) * 0.5f), _size), _textureID);
 }

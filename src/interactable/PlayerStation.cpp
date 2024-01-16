@@ -2,20 +2,20 @@
 
 PlayerStation::PlayerStation(std::string texture, glm::vec4 destination, glm::vec4 boundingBox, glm::vec2 anchorPointOffset) : 
 	_textureID(Jauntlet::ResourceManager::getTexture(texture).id),
-	_collider(Jauntlet::BoxCollider2D(glm::vec2(boundingBox.z, boundingBox.w), glm::vec2(boundingBox.x, boundingBox.y))),
+	_collider(BoxCollider2D(glm::vec2(boundingBox.z, boundingBox.w), glm::vec2(boundingBox.x, boundingBox.y))),
 	_destination(destination),
 	_anchorPoint(glm::vec2(boundingBox.x + (boundingBox.z * 0.5f) + anchorPointOffset.x, boundingBox.y + (boundingBox.w * 0.5f) + anchorPointOffset.y)) 
 {
 	// Empty
 }
 
-void PlayerStation::draw(Jauntlet::SpriteBatch& spriteBatch) {
+void PlayerStation::draw(SpriteBatch& spriteBatch) {
 	spriteBatch.draw(_destination, _textureID);
 }
 
 bool PlayerStation::isColliding(glm::vec2 position) {
 	// consider creating the Collision2D in the header
-	Jauntlet::Collision2D collision;
+	Collision2D collision;
 	return collision.calcCollision(&_collider, position);
 }
 

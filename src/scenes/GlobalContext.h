@@ -15,7 +15,7 @@ class SceneManager;
 
  class GlobalContext {
 private:
-    static Jauntlet::TextureCache _textureCache;
+    static TextureCache _textureCache;
 public:
     static void initContext();
     static void destroyContext();
@@ -23,11 +23,11 @@ public:
     static std::string playerIDtoTexture(uint8_t playerID, bool policeOutfit = false);
 
     static SceneManager* sceneManager;
-    static Jauntlet::GLSLProgram normalShader;
-    static Jauntlet::InputManager inputManager;
+    static GLSLProgram normalShader;
+    static InputManager inputManager;
     static glm::ivec2 screenSize;
-    static Jauntlet::Window window;
-    static Jauntlet::TextRenderer* textRenderer;
+    static Window window;
+    static TextRenderer* textRenderer;
     static PauseMenu* pauseMenu;
-    static Jauntlet::AudioListener listener;
+    static AudioListener listener;
  };

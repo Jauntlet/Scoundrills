@@ -4,14 +4,14 @@
 #include "SceneManager.h"
 
 SceneManager* GlobalContext::sceneManager;
-Jauntlet::TextureCache GlobalContext::_textureCache;
-Jauntlet::GLSLProgram GlobalContext::normalShader;
-Jauntlet::InputManager GlobalContext::inputManager;
+TextureCache GlobalContext::_textureCache;
+GLSLProgram GlobalContext::normalShader;
+InputManager GlobalContext::inputManager;
 glm::ivec2 GlobalContext::screenSize = glm::ivec2(1024, 768);
-Jauntlet::Window GlobalContext::window = Jauntlet::Window("Scoundrills", screenSize.x, screenSize.y, Jauntlet::WindowFlags::RESIZEABLE);
-Jauntlet::TextRenderer* GlobalContext::textRenderer;
+Window GlobalContext::window = Window("Scoundrills", screenSize.x, screenSize.y, WindowFlags::RESIZEABLE);
+TextRenderer* GlobalContext::textRenderer;
 PauseMenu* GlobalContext::pauseMenu;
-Jauntlet::AudioListener GlobalContext::listener;
+AudioListener GlobalContext::listener;
 
 void GlobalContext::initContext() {
 	window.setWindowIcon("Textures/Icon.png");
@@ -22,7 +22,7 @@ void GlobalContext::initContext() {
 	normalShader.addAttribute("vertexUV");
 	normalShader.linkShaders();
 
-	textRenderer = new Jauntlet::TextRenderer("Fonts/HandelGo.ttf", 256);
+	textRenderer = new TextRenderer("Fonts/HandelGo.ttf", 256);
 	sceneManager = new SceneManager();
 	sceneManager->gameLoop();
 }

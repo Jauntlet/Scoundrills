@@ -21,10 +21,10 @@ public:
 
 	void pickup(Player* player);
 	// drops the object, putting it ontop of a tile.
-	void drop(Jauntlet::TileMap* tilemap);
+	void drop(TileMap* tilemap);
 
 	// draws the object
-	void draw(Jauntlet::SpriteBatch& spriteBatch);
+	void draw(SpriteBatch& spriteBatch);
 
 	bool isHeld() const;
 	

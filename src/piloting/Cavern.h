@@ -6,23 +6,23 @@
 #include "src/drill/PlayerResources.h"
 
 #include <Jauntlet/Rendering/GLSLProgram.h>
-#include <Jauntlet/UI/UIButtonElement.h>
+#include <Jauntlet/UI/UIButton.h>
 #include <Jauntlet/UI/UIManager.h>
-#include <Jauntlet/UI/UISpriteElement.h>
-#include <Jauntlet/UI/UITextElement.h>
+#include <Jauntlet/UI/UISprite.h>
+#include <Jauntlet/UI/UIText.h>
 #include <random>
 
 class PlayerManager;
 
 class Cavern {
 public:
-	Cavern(PlayerResources* resourceManager, Jauntlet::Camera2D* Camera);
+	Cavern(PlayerResources* resourceManager, Camera2D* Camera);
 
 	void setType(int type);
 	void display();
 	void updateResources();
 
-	Jauntlet::UIManager* getUIManager();
+	UIManager* getUIManager();
 
 	bool isOpen();
 
@@ -34,10 +34,10 @@ private:
 	std::mt19937 _random;
 
 	//camera
-	Jauntlet::Camera2D* _camera;
+	Camera2D* _camera;
 
 	//necessary managers
-	Jauntlet::UIManager _uiManager;
+	UIManager _uiManager;
 	PlayerResources* _resources;
 	PlayerManager* _playerManager;
 	
@@ -45,12 +45,12 @@ private:
 	GLuint _backgroundTexture = 0;
 	GLuint _confirmTexture = 0;
 	std::string _description = "";
-	Jauntlet::Color _descriptionColor = Jauntlet::Color("FFFFFF");
+	Color _descriptionColor = Color("FFFFFF");
 	
 	//UI elements
-	Jauntlet::UISpriteElement _backgroundElement;
-	Jauntlet::UIButtonElement _confirmButton;
-	Jauntlet::UITextElement _descriptionElement;
+	UISprite _backgroundElement;
+	UIButton _confirmButton;
+	UIText _descriptionElement;
 	
 	//UI positions
 	glm::vec2 _backgroundPos = glm::vec2(0);

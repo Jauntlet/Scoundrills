@@ -44,17 +44,17 @@ SaveInfoElement::SaveInfoElement(float yPos, int saveID, MainMenu* mainMenu) :
 	_depthCountPos =  glm::vec2(-375 + GlobalContext::textRenderer->calculateTextSize(_depthCount, glm::vec2(0.2f)).x /2,yPos + 125);
 }
 
-void SaveInfoElement::addToManager(Jauntlet::UIManager& uiManager) {
+void SaveInfoElement::addToManager(UIManager& uiManager) {
 	uiManager.addElement(&_background, &GlobalContext::normalShader);
 	uiManager.addElement(&_playButton, &GlobalContext::normalShader);
 	if (_hasSaveInfo) {
 		uiManager.addElement(&_deleteButton, &GlobalContext::normalShader);
-		uiManager.addElement(&_deleteTextElement, &Jauntlet::TextRenderer::textShader);
+		uiManager.addElement(&_deleteTextElement, &TextRenderer::textShader);
 	}
-	uiManager.addElement(&_playTextElement, &Jauntlet::TextRenderer::textShader);
-	uiManager.addElement(&_saveNumElement,&Jauntlet::TextRenderer::textShader);
-	uiManager.addElement(&_depthCountElement, &Jauntlet::TextRenderer::textShader);
-	uiManager.addElement(&_playtimeElement, &Jauntlet::TextRenderer::textShader);
+	uiManager.addElement(&_playTextElement, &TextRenderer::textShader);
+	uiManager.addElement(&_saveNumElement,&TextRenderer::textShader);
+	uiManager.addElement(&_depthCountElement, &TextRenderer::textShader);
+	uiManager.addElement(&_playtimeElement, &TextRenderer::textShader);
 }
 
 void SaveInfoElement::setVisibility(bool visible) {

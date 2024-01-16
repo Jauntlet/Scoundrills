@@ -8,7 +8,7 @@
 #include "../interactable/Holdable.h"
 #include "../pathfinding/PathRenderer.h"
 #include <Jauntlet/Rendering/ProgressBar.h>
-#include <Jauntlet/Rendering/Animation/Animation.h>
+#include <Jauntlet/Rendering/Animation/SpriteAnimation.h>
 #include <Jauntlet/Audio/AudioSource.h>
 
 class Player
@@ -19,7 +19,7 @@ public:
 	~Player();
 
 	void update(DrillManager& drill);
-	void draw(Jauntlet::SpriteBatch& spriteBatch);
+	void draw(SpriteBatch& spriteBatch);
 	// Navigate through a tilemap to a position.
 	// this function expects a world position not rounded to a tile, so that it can check what player stations it may be connected to.
 	void navigateTo(DrillManager& drill, PathRenderer& pathRenderer, glm::vec2 position);
@@ -51,7 +51,7 @@ public:
 	// forces data onto the player
 	void forceData(float positionX, float positionY, int heldItemID, int health, int playerID);
 
-	Jauntlet::BoxCollider2D collider;
+	BoxCollider2D collider;
 	Holdable* heldItem = nullptr;
 private:
 	// runs when player reaches destination
@@ -68,13 +68,13 @@ private:
 
 	// Rendering
 	GLuint _texture;
-	Jauntlet::Animation _animation = Jauntlet::Animation(28);
-	Jauntlet::ProgressBar _healthBar;
+	SpriteAnimation _animation = SpriteAnimation(28);
+	ProgressBar _healthBar;
 	glm::vec2 _moveDir = glm::vec2(0);
 	bool _flipped = false, _moving = false;
 
 	// Sounds
-	Jauntlet::AudioSource _soundSource = Jauntlet::AudioSource(glm::vec3(_position, 0));
+	AudioSource _soundSource = AudioSource(glm::vec3(_position, 0));
 
 	// data stored specifically for saving
 	uint8_t _playerID = 0;	

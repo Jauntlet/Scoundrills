@@ -5,8 +5,8 @@
 
 #include <Jauntlet/Rendering/GLSLProgram.h>
 #include <Jauntlet/UI/UIManager.h>
-#include <Jauntlet/UI/UIButtonElement.h>
-#include <Jauntlet/UI/UISpriteAnimatedElement.h>
+#include <Jauntlet/UI/UIButton.h>
+#include <Jauntlet/UI/UISpriteAnimated.h>
 #include <random>
 #include <vector>
 #include "../drill/PlayerResources.h"
@@ -14,10 +14,10 @@
 
 class Navigation {
 public:
-	Navigation(Jauntlet::Camera2D* camera, PlayerResources* resourceManager);
+	Navigation(Camera2D* camera, PlayerResources* resourceManager);
 	~Navigation(); //deletes hanging references
 
-	Jauntlet::UIManager* genNav(); //new nav positions
+	UIManager* genNav(); //new nav positions
 
 	void update();
 
@@ -43,8 +43,8 @@ public:
 	void setMap(std::string newMap);
 	void setMap(int newMap[5][5]);
 
-	Jauntlet::UIManager* getUIManager();
-	Jauntlet::UIManager* getCavernManager();
+	UIManager* getUIManager();
+	UIManager* getCavernManager();
 
 	void setCavernPlayerManager(PlayerManager* manager);
 
@@ -91,16 +91,16 @@ private:
 	glm::vec2 _iconPos = glm::vec2(0, -365);
 	glm::vec2 _shiftPos = glm::vec2(0); // position determining how to move nav points when a destination is selected
 
-	Jauntlet::UIManager _uiManager;
+	UIManager _uiManager;
 
 	// UI Elements -- individual
-	Jauntlet::Animation _backgroundAnimation = Jauntlet::Animation(3);
-	Jauntlet::UISpriteAnimatedElement _background;
-	Jauntlet::UISpriteElement* _caretElement = nullptr;
-	Jauntlet::UISpriteElement* _drillIconElement = nullptr;
+	SpriteAnimation _backgroundAnimation = SpriteAnimation(3);
+	UISpriteAnimated _background;
+	UISprite* _caretElement = nullptr;
+	UISprite* _drillIconElement = nullptr;
 
 	// UI Elements -- vectors
-	std::vector<Jauntlet::UIButtonElement> _points;
+	std::vector<UIButton> _points;
 
 	//private methods
 	void refreshPositions(float shiftX, float shiftY); // moves every "point" on the nav by shiftX, shiftY units respectively

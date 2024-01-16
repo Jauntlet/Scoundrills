@@ -4,7 +4,7 @@
 
 const float CAMERA_SPEED = 500;
 
-CameraManager::CameraManager(Jauntlet::Camera2D* camera, PlayerManager* players, DrillManager* drill) :
+CameraManager::CameraManager(Camera2D* camera, PlayerManager* players, DrillManager* drill) :
 	_moveDown(&GlobalContext::inputManager),
 	_moveLeft(&GlobalContext::inputManager),
 	_moveUp(&GlobalContext::inputManager),
@@ -41,28 +41,28 @@ void CameraManager::processInput() {
 
 		if (_moveLeft.isDown()) {
 			_camera->translate(glm::vec2(-CAMERA_SPEED * Jauntlet::Time::getDeltaTime(), 0));
-			_camera->clearTransition(Jauntlet::Camera2D::TRANSITION_TYPE::POSITION);
+			_camera->clearTransition(Camera2D::TRANSITION_TYPE::POSITION);
 		}
 		
 		if (_moveRight.isDown()) {
 			_camera->translate(glm::vec2(CAMERA_SPEED * Jauntlet::Time::getDeltaTime(), 0));
-			_camera->clearTransition(Jauntlet::Camera2D::TRANSITION_TYPE::POSITION);
+			_camera->clearTransition(Camera2D::TRANSITION_TYPE::POSITION);
 		}
 		
 		if (_moveUp.isDown()) {
 			_camera->translate(glm::vec2(0, CAMERA_SPEED * Jauntlet::Time::getDeltaTime()));
-			_camera->clearTransition(Jauntlet::Camera2D::TRANSITION_TYPE::POSITION);
+			_camera->clearTransition(Camera2D::TRANSITION_TYPE::POSITION);
 		}
 		
 		if (_moveDown.isDown()) {
 			_camera->translate(glm::vec2(0, -CAMERA_SPEED * Jauntlet::Time::getDeltaTime()));
-			_camera->clearTransition(Jauntlet::Camera2D::TRANSITION_TYPE::POSITION);
+			_camera->clearTransition(Camera2D::TRANSITION_TYPE::POSITION);
 		}
 
 
 		_camera->translate(_deltaMouse * Jauntlet::Time::getTimeScale());
 
-		glm::vec2 rStick = GlobalContext::inputManager.getControllerAxis(Jauntlet::Axis::RightStick);
+		glm::vec2 rStick = GlobalContext::inputManager.getControllerAxis(Axis::RightStick);
 		if (glm::abs(rStick.x) > .2 || glm::abs(rStick.y) > .2) {
 			_camera->translate(glm::vec2(rStick.x, -rStick.y) * (250.0f * Jauntlet::Time::getDeltaTime()));
 		}

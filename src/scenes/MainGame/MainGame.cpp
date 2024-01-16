@@ -13,7 +13,7 @@ MainGame::MainGame(int saveID, const std::vector<uint8_t>& playerIDs) :
 {
 	_saveID = saveID;
 	
-	GlobalContext::window.setBackgroundColor(Jauntlet::Color(97, 60, 47));
+	GlobalContext::window.setBackgroundColor(Color(97, 60, 47));
 	_uiCoordinator.applyNewScreenSize(glm::ivec2(GlobalContext::screenSize.x, GlobalContext::screenSize.y));
 
 	for (size_t i = 0; i < playerIDs.size(); ++i) {
@@ -41,7 +41,7 @@ MainGame::MainGame(int saveID) :
 {
 	_saveID = saveID;
 
-	GlobalContext::window.setBackgroundColor(Jauntlet::Color(97, 60, 47));
+	GlobalContext::window.setBackgroundColor(Color(97, 60, 47));
 	_uiCoordinator.applyNewScreenSize(glm::ivec2(GlobalContext::screenSize.x, GlobalContext::screenSize.y));
 
 	// load existing data here.

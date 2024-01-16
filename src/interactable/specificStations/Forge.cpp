@@ -19,7 +19,7 @@ void Forge::onPlayerArrival(Player& player) {
 	_playerAt = true;
 }
 
-void Forge::draw(Jauntlet::SpriteBatch& spriteBatch) {
+void Forge::draw(SpriteBatch& spriteBatch) {
 	animation.update();
 	spriteBatch.draw(_destination, animation.getUV(), _textureID);
 

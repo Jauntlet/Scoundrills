@@ -29,8 +29,7 @@ private:
 	void drawGame();
 	void drawHUD();
 
-	Jauntlet::Camera2D _camera = Jauntlet::Camera2D(GlobalContext::screenSize),
-		_hudCamera = Jauntlet::Camera2D(GlobalContext::screenSize);
+	Camera2D _camera = Camera2D(GlobalContext::screenSize), _hudCamera = Camera2D(GlobalContext::screenSize);
 
 	PlayerResources _resources = PlayerResources(100,0,0,0);
 
@@ -44,7 +43,7 @@ private:
 
 	SelectedTileRenderer _selectedTile = SelectedTileRenderer(&_drill, &_players);
 
-	Jauntlet::SpriteBatch _playerSpriteBatch;
+	SpriteBatch _playerSpriteBatch;
 
 	// defines scale of movement for the camera. if set to 1, the camera will follow the mouse, if set to 0, the mouse has no control over the camera.
 	const float _CAMERA_MOVEMENT_SCALE = 0.5f;
@@ -54,7 +53,7 @@ private:
 	Dialogue _dialogue = Dialogue(&_hudCamera);
 	bool _hasControl = false;
 	Officer _officer = Officer(glm::vec2(7 * 64, -18 * 64), "Textures/Cops/John Police.png");
-	std::vector<Jauntlet::ProgressBar> _displayPlayers;
+	std::vector<ProgressBar> _displayPlayers;
 
 	bool _pressedW = false, _pressedA = false, _pressedS = false, _pressedD = false, _scrolledUp = false, _scrolledDown = false;
 

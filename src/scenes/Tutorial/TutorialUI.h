@@ -7,7 +7,7 @@
 
 class TutorialUI : public UICoordinator {
 public:
-	TutorialUI(Jauntlet::Camera2D* hudCamera, DrillManager* drillManager);
+	TutorialUI(Camera2D* hudCamera, DrillManager* drillManager);
 
 	void hideAll();
 

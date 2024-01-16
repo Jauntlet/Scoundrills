@@ -5,7 +5,7 @@ AnimatedPlayerStation::AnimatedPlayerStation(std::string texture, glm::vec4 dest
 {
 }
 
-void AnimatedPlayerStation::draw(Jauntlet::SpriteBatch& spriteBatch) {
+void AnimatedPlayerStation::draw(SpriteBatch& spriteBatch) {
 	animation.update();
 	spriteBatch.draw(_destination, animation.getUV(), _textureID);
 }
