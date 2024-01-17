@@ -40,4 +40,4 @@ the executable is called "scoundrills", so run this command to launch it
 
 <h3>MacOS</h3>
 
-macOS is currently unsupported, although eventually CMake will be changed to work with mac as well. none of us currently own a computer running macOS, so this may take some time.
+macOS is currently unsupported, although eventually CMake will be changed to work with mac as well. One of us own a computer running macOS, so this may take some time.
