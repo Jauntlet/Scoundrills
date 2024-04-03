@@ -184,15 +184,15 @@ void Navigation::selectNav(int id, glm::ivec2 xy) {
 		int tempX = xy.x;
 		for (int y = xy.y-1; y > _drillRow; y--) { //loop for amount of layers to traverse
 			if (_columnOver == xy.x) { //straight up/down
-				if (_map[y][xy.x] != 0) return;
+				if (_map[y][xy.x] > 3) return;
 			}
 			else if (_columnOver < tempX) { //drill to left
 				tempX--;
-				if (_map[y][tempX] != 0) return;
+				if (_map[y][tempX] > 3) return;
 			}
 			else if (_columnOver > tempX) { //drill to right
 				tempX++;
-				if (_map[y][tempX] != 0) return;
+				if (_map[y][tempX] > 3) return;
 			}
 		}
 	}
@@ -226,24 +226,13 @@ void Navigation::updateTravel() {
 			//remove selector caret
 			_caretElement->visible = false;
 			
-			//adjust for rows travelled
-			//std::cout << _rowsTravelled << std::endl;
-			
 			//remap caverns linearly
 			_mappedCaverns.clear();
 			for (int y = 0; y < layerCount; y++) {
 				for (int x = 0; x < layerWidth; x++) {
-					if (_map[y][x] != 0) _mappedCaverns.push_back(_map[y][x]);
+					if (_map[y][x] > 3) _mappedCaverns.push_back(_map[y][x]);
 				}
 			}
-			
-			//recycle map (spawn new points and remove old ones
-			recycleMap(_rowsTravelled);
-			_rowsTravelled = 0; //reset rows travelled
-			_columnsTravelled = 0; //reset columns travelled
-			_columnOver = layerWidth/2; //reset to middle
-			_drillRow = -1; //reset drill's row
-			_depth++; //increase depth
 
 			//determine cavern type
 			int cavType = 0;
@@ -266,6 +255,17 @@ void Navigation::updateTravel() {
 
 			//Call cavern event
 			spawnCavern(cavType);
+			
+			//adjust for rows travelled
+			//std::cout << _rowsTravelled << std::endl;
+			
+			//recycle map (spawn new points and remove old ones
+			recycleMap(_rowsTravelled);
+			_rowsTravelled = 0; //reset rows travelled
+			_columnsTravelled = 0; //reset columns travelled
+			_columnOver = layerWidth/2; //reset to middle
+			_drillRow = -1; //reset drill's row
+			_depth++; //increase depth
 			
 			_destination = -1; //set dest
 			_progress = 0.0f;
