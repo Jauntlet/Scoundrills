@@ -1,4 +1,5 @@
 #include "SelectedTileRenderer.h"
+#include "Jauntlet/Inputs/InputManager.h"
 #include "src/interactable/PlayerStation.h"
 #include <src/scenes/GlobalContext.h>
 
@@ -12,8 +13,7 @@ SelectedTileRenderer::SelectedTileRenderer(DrillManager* drill, PlayerManager* p
 }
 
 void SelectedTileRenderer::draw(Camera2D* activeCamera) {
-	if (_lastPosition != activeCamera->convertScreenToWorld(GlobalContext::inputManager.getMouseCoords()) || GlobalContext::inputManager.isKeyPressed(SDL_BUTTON_LEFT)) {
-		_lastPosition = activeCamera->convertScreenToWorld(GlobalContext::inputManager.getMouseCoords());
+	if (changedPosition(activeCamera) || GlobalContext::inputManager.isKeyPressed(SDL_CONTROLLER_BUTTON_A)) {
 		glm::vec2 _selectedTilePos = _drill->drillWalls.RoundWorldPos(_lastPosition);
 
 		// if a player is selected, we highlight the tile if its a valid pathfind pos or not
@@ -41,4 +41,20 @@ void SelectedTileRenderer::draw(Camera2D* activeCamera) {
 	} else {
 		_spriteBatch.render();
 	}
+}
+
+bool SelectedTileRenderer::changedPosition(Camera2D* activeCamera) {
+	if (GlobalContext::usingController) {
+		if (_lastPosition != activeCamera->getPosition() * (1.0f /activeCamera->getScale())) {
+			_lastPosition = activeCamera->getPosition() * (1.0f /activeCamera->getScale());
+			return true;
+		}
+	}
+	else {
+		if (_lastPosition != activeCamera->convertScreenToWorld(GlobalContext::inputManager.getMouseCoords()) || GlobalContext::inputManager.isKeyPressed(SDL_BUTTON_LEFT)) {
+			_lastPosition = activeCamera->convertScreenToWorld(GlobalContext::inputManager.getMouseCoords());
+			return true;
+		}
+	}
+	return false;
 }

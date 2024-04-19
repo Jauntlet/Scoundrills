@@ -7,6 +7,7 @@
 #include <Jauntlet/Inputs/InputManager.h>
 #include <Jauntlet/Rendering/Cameras/Camera2D.h>
 #include <Jauntlet/Rendering/Textures/SpriteBatch.h>
+#include <Jauntlet/Inputs/InputKey.h>
 
 class DrillManager;
 
@@ -51,4 +52,6 @@ private:
 
 	PathRenderer _pathRenderer;
 	glm::vec2 _storedMousePos = glm::vec2(0);
+
+	InputKey _selectButton;
 };

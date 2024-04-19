@@ -12,6 +12,7 @@ Window GlobalContext::window = Window("Scoundrills", screenSize.x, screenSize.y,
 TextRenderer* GlobalContext::textRenderer;
 PauseMenu* GlobalContext::pauseMenu;
 AudioListener GlobalContext::listener;
+bool GlobalContext::usingController = false;
 
 void GlobalContext::initContext() {
 	window.setWindowIcon("Textures/Icon.png");

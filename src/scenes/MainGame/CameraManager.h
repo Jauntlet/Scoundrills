@@ -4,6 +4,7 @@
 #pragma once
 
 #include "src/drill/DrillManager.h"
+#include "src/pathfinding/SelectedTileRenderer.h"
 #include "src/players/PlayerManager.h"
 #include <Jauntlet/Rendering/Cameras/Camera2D.h>
 #include <Jauntlet/Inputs/InputKey.h>
@@ -30,6 +31,8 @@ private:
 	InputKey _moveRight;
 	InputKey _moveUp;
 	InputKey _moveDown;
+
+	bool _rightAxisPressed = false;
 
 	glm::vec2 _oldMouse = glm::vec2(0);
 	glm::vec2 _deltaMouse = glm::vec2(0);

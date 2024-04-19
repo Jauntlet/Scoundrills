@@ -30,4 +30,5 @@ public:
     static TextRenderer* textRenderer;
     static PauseMenu* pauseMenu;
     static AudioListener listener;
+    static bool usingController;
  };

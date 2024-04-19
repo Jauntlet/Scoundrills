@@ -1,4 +1,6 @@
 #include <Jauntlet/Collision/Collision2D.h>
+#include <SDL2/SDL_keycode.h>
+#include <SDL2/SDL_mouse.h>
 #include "../scenes/GlobalContext.h"
 #include "PlayerManager.h"
 #include "src/players/Player.h"
@@ -6,9 +8,11 @@
 
 PlayerManager::PlayerManager(DrillManager* drill) :
 	_pathRenderer(drill, this),
-	_drill(drill)
+	_drill(drill),
+	_selectButton(&GlobalContext::inputManager)
 {
 	_players.reserve(sizeof(Player) * 5);
+	_selectButton.addKey((SDL_KeyCode)SDL_BUTTON_LEFT, (SDL_KeyCode)SDL_CONTROLLER_BUTTON_A);
 }
 
 Player* PlayerManager::createPlayer(const glm::vec2& position, uint8_t playerID, bool isCop) {
@@ -29,9 +33,9 @@ Player* PlayerManager::createPlayer(const glm::vec2& position, uint8_t playerID,
 }
 
 bool PlayerManager::processInput(const Camera2D& activeCamera) {
-	glm::vec2 mousePos = activeCamera.convertScreenToWorld(GlobalContext::inputManager.getMouseCoords());
+	glm::vec2 mousePos = GlobalContext::usingController ? activeCamera.getPosition() * (1.0f / activeCamera.getScale()) : activeCamera.convertScreenToWorld(GlobalContext::inputManager.getMouseCoords());
 	// if we click
-	if (GlobalContext::inputManager.isKeyPressed(SDL_BUTTON_LEFT)) {
+	if (_selectButton.isPressed()) {
 		if (_selectedPlayer == -1) { // we are selecting a player.
 			Collision2D collision;
 

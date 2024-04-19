@@ -16,6 +16,8 @@ public:
 	// draw the selected tile to screen
 	void draw(Camera2D* activeCamera);
 private:
+	bool changedPosition(Camera2D* activeCamera);
+
 	GLuint _textureID;
 
 	SpriteBatch _spriteBatch;
