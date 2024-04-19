@@ -1,11 +1,10 @@
-#include <Jauntlet/JMath.h>
-#include <Jauntlet/Time.h>
 #include "DrillManager.h"
 #include "../players/PlayerManager.h"
 #include "Jauntlet/Errors.h"
 #include "src/interactable/Holdable.h"
 #include "../scenes/MainGame/CameraManager.h"
 #include "../scenes/MainGame/UICoordinator.h"
+#include "src/interactable/PlayerStation.h"
 
 const float HEAT_RISE_SCALE = .333f; //1 heat every ~3 seconds.
 const float HEAT_FALL_SCALE = .1f; //1 heat every 10 seconds.
@@ -245,6 +244,19 @@ PlayerStation* DrillManager::doesPosMatchStationDest(glm::vec2 pos) {
 	} else {
 		return nullptr;
 	}
+}
+
+std::vector<PlayerStation*> DrillManager::getAllStations() const {
+	std::vector<PlayerStation*> stations(5);
+
+	stations.push_back((PlayerStation*)&boiler);
+	stations.push_back((PlayerStation*)&forge);
+	stations.push_back((PlayerStation*)&_waterTank);
+	stations.push_back((PlayerStation*)&_pipeWorkbench);
+	stations.push_back((PlayerStation*)&_fridge);
+	stations.push_back((PlayerStation*)&drillAssets.steeringWheel);
+
+	return std::move(stations);
 }
 
 void DrillManager::burstRandomPipe() {

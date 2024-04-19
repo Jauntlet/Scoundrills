@@ -4,6 +4,7 @@
 #pragma once
 #include <Jauntlet/Tiles/TileMap.h>
 #include <Jauntlet/Inputs/InputManager.h>
+#include <vector>
 #include "DrillAssetRenderer.h"
 #include "PlayerResources.h"
 #include "../piloting/Navigation.h"
@@ -13,6 +14,7 @@
 #include "../interactable/specificStations/Forge.h"
 #include "../interactable/specificStations/PipeWorkbench.h"
 #include "../interactable/specificStations/Fridge.h"
+#include "src/interactable/PlayerStation.h"
 
 class PlayerManager;
 class CameraManager;
@@ -49,6 +51,8 @@ public:
 	PlayerStation* checkHoveringStation(glm::vec2 position);
 	bool doesTileOverlapStations(glm::ivec2 tilePos) const;
 	PlayerStation* doesPosMatchStationDest(glm::vec2 pos);
+
+	std::vector<PlayerStation*> getAllStations() const;
 
 	void burstRandomPipe();
 	void burstSpecificPipe(const glm::ivec2& tilePos);
