@@ -8,6 +8,8 @@
 #include "src/scenes/GlobalContext.h"
 #include "../PauseMenu.h"
 
+#undef max
+
 const float CAMERA_SPEED = 500;
 
 CameraManager::CameraManager(Camera2D* camera, PlayerManager* players, DrillManager* drill) :
