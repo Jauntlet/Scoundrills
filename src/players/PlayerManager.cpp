@@ -2,6 +2,7 @@
 #include <SDL2/SDL_keycode.h>
 #include <SDL2/SDL_mouse.h>
 #include "../scenes/GlobalContext.h"
+#include "Jauntlet/Inputs/InputManager.h"
 #include "PlayerManager.h"
 #include "src/players/Player.h"
 #include "../drill/DrillManager.h"
@@ -12,7 +13,7 @@ PlayerManager::PlayerManager(DrillManager* drill) :
 	_selectButton(&GlobalContext::inputManager)
 {
 	_players.reserve(sizeof(Player) * 5);
-	_selectButton.addKey((SDL_KeyCode)SDL_BUTTON_LEFT, (SDL_KeyCode)SDL_CONTROLLER_BUTTON_A);
+	_selectButton.addKey(SDL_BUTTON_LEFT, CONTROLLER_FACE_EAST);
 }
 
 Player* PlayerManager::createPlayer(const glm::vec2& position, uint8_t playerID, bool isCop) {

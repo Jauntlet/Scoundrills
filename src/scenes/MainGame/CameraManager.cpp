@@ -8,14 +8,6 @@
 #include "src/scenes/GlobalContext.h"
 #include "../PauseMenu.h"
 
-// remove
-#include <SDL2/SDL_gamecontroller.h>
-#include <SDL2/SDL_keycode.h>
-#include <glm/ext/vector_float2.hpp>
-#include <iostream>
-#include <Jauntlet/JMath.h>
-#include <limits>
-
 const float CAMERA_SPEED = 500;
 
 CameraManager::CameraManager(Camera2D* camera, PlayerManager* players, DrillManager* drill) :
@@ -27,10 +19,10 @@ CameraManager::CameraManager(Camera2D* camera, PlayerManager* players, DrillMana
 	_players(players),
 	_drill(drill)
 {
-	_moveDown.addKey(SDLK_s, SDLK_DOWN);
-	_moveLeft.addKey(SDLK_a, SDLK_LEFT);
-	_moveUp.addKey(SDLK_w, SDLK_UP);
-	_moveRight.addKey(SDLK_d, SDLK_RIGHT);
+	_moveDown.addKey({SDLK_s, SDLK_DOWN, CONTROLLER_DPAD_DOWN});
+	_moveLeft.addKey({SDLK_a, SDLK_LEFT, CONTROLLER_DPAD_LEFT});
+	_moveUp.addKey({SDLK_w, SDLK_UP, CONTROLLER_DPAD_UP});
+	_moveRight.addKey({SDLK_d, SDLK_RIGHT, CONTROLLER_DPAD_RIGHT});
 }
 
 void CameraManager::processInput() {
