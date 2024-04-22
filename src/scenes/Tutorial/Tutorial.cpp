@@ -423,7 +423,7 @@ void Tutorial::processInput() {
 		}
 		break;
 	default:
-		if (GlobalContext::inputManager.lastButtonPressed() != SDLK_ESCAPE || GlobalContext::inputManager.isKeyPressed(SDL_BUTTON_LEFT)) {
+		if (GlobalContext::inputManager.lastButtonPressed() != SDLK_UNKNOWN || GlobalContext::inputManager.isKeyPressed(SDL_BUTTON_LEFT)) {
 			_dialogue.doneReadingText() ? nextDialogue() : _dialogue.pushAllText();
 			GlobalContext::inputManager.clearLastButtonPressed();
 		}
