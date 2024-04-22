@@ -1,6 +1,9 @@
 #include "../GlobalContext.h"
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
+#include <SDL2/SDL_gamecontroller.h>
+#include <SDL2/SDL_keycode.h>
 #include <iostream>
+#include "Jauntlet/Inputs/InputManager.h"
 #include "MainGame.h"
 #include "UICoordinator.h"
 #include "../PauseMenu.h"
@@ -34,6 +37,8 @@ MainGame::MainGame(int saveID, const std::vector<uint8_t>& playerIDs) :
 	_drill.DisasterEvent();
 	_drill.DisasterEvent();
 	_drill.DisasterEvent();
+
+	_toggleNavButton.addKey(SDLK_TAB, CONTROLLER_START);
 }
 
 MainGame::MainGame(int saveID) :
@@ -52,6 +57,8 @@ MainGame::MainGame(int saveID) :
 	// put camera at default positon
 	_camera.setPosition(glm::vec2(24 * 64 * 0.5f, 30 * 64 * 0.5f * -1));
 	_camera.setScale(0.5f);
+
+	_toggleNavButton.addKey(SDLK_TAB, CONTROLLER_START);
 }
 
 void MainGame::gameLoop() {
@@ -89,7 +96,7 @@ void MainGame::processInput() {
 	_cameraManager.processInput();
 
 	//open nav
-	if (GlobalContext::inputManager.isKeyPressed(SDLK_TAB) && _drill.isSteeringWheelOccupied()) {
+	if (_toggleNavButton.isPressed() && _drill.isSteeringWheelOccupied()) {
 		_uiCoordinator.navigation->toggleNav();
 	}
 

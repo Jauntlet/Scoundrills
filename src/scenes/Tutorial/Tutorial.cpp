@@ -44,6 +44,8 @@ Tutorial::Tutorial(int saveID, const std::vector<uint8_t>& playerIDs) {
 	GlobalContext::inputManager.clearLastButtonPressed();
 
 	_cameraManager.cameraUnlocked = false;
+
+	_toggleNavButton.addKey(SDLK_TAB, CONTROLLER_START);
 }
 
 void Tutorial::windowResized() {
@@ -428,7 +430,7 @@ void Tutorial::processInput() {
 	}
 
 	//open nav
-	if (GlobalContext::inputManager.isKeyPressed(SDLK_TAB)) {
+	if (_toggleNavButton.isPressed()) {
 		_uiCoordinator.navigation->toggleNav();
 	}
 
