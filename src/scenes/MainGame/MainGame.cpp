@@ -38,7 +38,7 @@ MainGame::MainGame(int saveID, const std::vector<uint8_t>& playerIDs) :
 	_drill.DisasterEvent();
 	_drill.DisasterEvent();
 
-	_toggleNavButton.addKey(SDLK_TAB, CONTROLLER_START);
+	_toggleNavButton.addKey({SDLK_TAB, CONTROLLER_FACE_WEST, CONTROLLER_FACE_NORTH});
 }
 
 MainGame::MainGame(int saveID) :
@@ -98,9 +98,10 @@ void MainGame::processInput() {
 	//open nav
 	if (_toggleNavButton.isPressed() && _drill.isSteeringWheelOccupied()) {
 		_uiCoordinator.navigation->toggleNav();
+		_cameraManager.cameraUnlocked = !_cameraManager.cameraUnlocked;
 	}
 
-	if (GlobalContext::inputManager.isKeyPressed(SDLK_ESCAPE)) {
+	if (GlobalContext::inputManager.isKeyPressed(SDLK_ESCAPE) || GlobalContext::inputManager.isKeyPressed(CONTROLLER_START) || GlobalContext::inputManager.isKeyPressed(CONTROLLER_SELECT)) {
 		GlobalContext::pauseMenu->togglePauseMenu();	
 	}
 

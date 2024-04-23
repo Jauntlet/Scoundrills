@@ -75,8 +75,6 @@ protected:
 	UIManager* _NavManager;
 	UIManager* _CavernManager;
 
-
-
 	// Drill state Button
 	GLuint _buttonTexture = 0;
 	glm::vec2* buttonPos = nullptr;

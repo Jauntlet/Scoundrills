@@ -32,7 +32,7 @@ void CameraManager::processInput() {
 
 	// ~ KEYBOARD MOVEMENT
 
-	if (GlobalContext::inputManager.isKeyDown(SDLK_r)) {
+	if (GlobalContext::inputManager.isKeyDown(SDLK_r) || GlobalContext::inputManager.isKeyDown(CONTROLLER_RIGHTSHOULDER)) {
 		_camera->transitionToPosition(glm::vec2(24 * 64 * 0.5f, 30 * 64 * 0.5f * -1));
 		_camera->transitionToScale(0.5f);
 	}
@@ -41,7 +41,7 @@ void CameraManager::processInput() {
 	
 	if (cameraUnlocked) {
 		if (GlobalContext::inputManager.isKeyDown(SDL_BUTTON_LEFT)) {
-			//GlobalContext::usingController = false;
+			GlobalContext::usingController = false;
 			if (!clickOnPlayers) {
 				_camera->clearTransitions();
 				_deltaMouse = Jauntlet::Time::getTimeScale() * glm::vec2(_oldMouse.x - GlobalContext::inputManager.getMouseCoords().x, GlobalContext::inputManager.getMouseCoords().y - _oldMouse.y);
@@ -53,25 +53,25 @@ void CameraManager::processInput() {
 		if (_moveLeft.isDown()) {
 			_camera->translate(glm::vec2(-CAMERA_SPEED * Jauntlet::Time::getDeltaTime(), 0));
 			_camera->clearTransition(Camera2D::TRANSITION_TYPE::POSITION);
-			GlobalContext::usingController = false;
+			GlobalContext::usingController = GlobalContext::inputManager.isKeyDown(CONTROLLER_DPAD_LEFT);
 		}
 		
 		if (_moveRight.isDown()) {
 			_camera->translate(glm::vec2(CAMERA_SPEED * Jauntlet::Time::getDeltaTime(), 0));
 			_camera->clearTransition(Camera2D::TRANSITION_TYPE::POSITION);
-			GlobalContext::usingController = false;
+			GlobalContext::usingController = GlobalContext::inputManager.isKeyDown(CONTROLLER_DPAD_RIGHT);
 		}
 		
 		if (_moveUp.isDown()) {
 			_camera->translate(glm::vec2(0, CAMERA_SPEED * Jauntlet::Time::getDeltaTime()));
 			_camera->clearTransition(Camera2D::TRANSITION_TYPE::POSITION);
-			GlobalContext::usingController = false;
+			GlobalContext::usingController = GlobalContext::inputManager.isKeyDown(CONTROLLER_DPAD_UP);
 		}
 		
 		if (_moveDown.isDown()) {
 			_camera->translate(glm::vec2(0, -CAMERA_SPEED * Jauntlet::Time::getDeltaTime()));
 			_camera->clearTransition(Camera2D::TRANSITION_TYPE::POSITION);
-			GlobalContext::usingController = false;
+			GlobalContext::usingController = GlobalContext::inputManager.isKeyDown(CONTROLLER_DPAD_DOWN);
 		}
 
 		_camera->translate(_deltaMouse * Jauntlet::Time::getTimeScale());
@@ -199,7 +199,7 @@ void CameraManager::processInput() {
 				GlobalContext::usingController = true;
 				_camera->clearTransitions();
 
-				float zoom = pow(1.001f, glm::sign(triggerAxis.x - triggerAxis.y));
+				float zoom = pow(1.001f, glm::sign(triggerAxis.y - triggerAxis.x));
 				if (zoom != 0) {
 					_camera->multiply(zoom);
 				}

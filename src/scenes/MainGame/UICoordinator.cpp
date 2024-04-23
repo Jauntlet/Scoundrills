@@ -1,4 +1,5 @@
 #include <Jauntlet/UI/UIButtonToggleable.h>
+#include "Jauntlet/Inputs/InputManager.h"
 #include "UICoordinator.h"
 #include <Jauntlet/Rendering/TextRenderer.h>
 #include <Jauntlet/JMath.h>
@@ -27,13 +28,13 @@ UICoordinator::UICoordinator(Camera2D* hudCamera, DrillManager* drillManager) :
 
 	GLuint _buttonTexture = Jauntlet::ResourceManager::getTexture("Textures/DrillButton.png").id;
 	glm::vec2* buttonPos = new glm::vec2(10, 10);
-
+	
 	// conversion from `void` to `std::function<void ()>` -jk
 	std::function<void()> _buttonMethod = std::bind(&DrillManager::toggle, drillManager);
 
 	_button = new UIButtonToggleable(&GlobalContext::inputManager, _buttonMethod, _buttonTexture, buttonPos, glm::vec2(256, 256), UIElement::ORIGIN_PIN::BOTTOM_LEFT);
 	_UIManager.addElement(_button, &GlobalContext::normalShader);
-	
+
 	// add text elements
 	_UIManager.addElement(&_waterIconTextElement, &TextRenderer::textShader);
 	_UIManager.addElement(&_foodIconTextElement, &TextRenderer::textShader);
@@ -55,7 +56,10 @@ UICoordinator::~UICoordinator() {
 }
 
 void UICoordinator::draw() {
-	
+	if (GlobalContext::inputManager.isKeyPressed(CONTROLLER_LEFTSHOULDER)) {
+		_button->click();
+	}
+
 	if (waterIconText != JMath::Split(std::to_string(_drill->resources->water), '.')[0]) {
 		waterIconText = JMath::Split(std::to_string(_drill->resources->water), '.')[0];
 		_waterIconTextPosition.x = _waterIconPosition.x + (120 - GlobalContext::textRenderer->calculateTextSize(waterIconText, glm::vec2(0.4f)).x) * 0.5f;

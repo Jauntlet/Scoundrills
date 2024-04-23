@@ -13,7 +13,8 @@ PlayerManager::PlayerManager(DrillManager* drill) :
 	_selectButton(&GlobalContext::inputManager)
 {
 	_players.reserve(sizeof(Player) * 5);
-	_selectButton.addKey(SDL_BUTTON_LEFT, CONTROLLER_FACE_EAST);
+	_selectButton.addKey(SDL_BUTTON_LEFT);
+	_selectButton.addKey(CONTROLLER_FACE_EAST, CONTROLLER_FACE_SOUTH);
 }
 
 Player* PlayerManager::createPlayer(const glm::vec2& position, uint8_t playerID, bool isCop) {
