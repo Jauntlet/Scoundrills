@@ -13,7 +13,7 @@ SelectedTileRenderer::SelectedTileRenderer(DrillManager* drill, PlayerManager* p
 }
 
 void SelectedTileRenderer::draw(Camera2D* activeCamera) {
-	if (changedPosition(activeCamera) || GlobalContext::inputManager.isKeyPressed(SDL_CONTROLLER_BUTTON_A)) {
+	if (changedPosition(activeCamera) || GlobalContext::inputManager.isKeyPressed(CONTROLLER_FACE_EAST) || GlobalContext::inputManager.isKeyPressed(CONTROLLER_FACE_SOUTH)) {
 		glm::vec2 _selectedTilePos = _drill->drillWalls.RoundWorldPos(_lastPosition);
 
 		// if a player is selected, we highlight the tile if its a valid pathfind pos or not
