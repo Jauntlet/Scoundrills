@@ -102,6 +102,13 @@ private:
 	// UI Elements -- vectors
 	std::vector<UIButton> _points;
 
+	//controller-specific
+	glm::vec2 _dir;
+	int _highlighted = 0;
+	int _highlightedLayer = 0;
+	int _selectDB = 0; //debounce
+	std::vector<int> _perRow; //each LAST value in a layer (in points)
+
 	//private methods
 	void refreshPositions(float shiftX, float shiftY); // moves every "point" on the nav by shiftX, shiftY units respectively
 	void recycleMap(int rows); // uses the points we see on the map to determine how many rows/columns to remove from the old map, basically making space for new points

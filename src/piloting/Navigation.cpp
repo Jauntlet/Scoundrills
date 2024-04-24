@@ -3,8 +3,11 @@
 #include "src/scenes/GlobalContext.h"
 #include "Cavern.h"
 
+#include <Jauntlet/Inputs/InputKey.h>
+#include <Jauntlet/Inputs/InputManager.h>
 #include <Jauntlet/JMath.h>
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
+
 #include <string>
 
 const int layerCount = 5; //amt of layers (Y axis)
@@ -51,6 +54,7 @@ UIManager* Navigation::genNav() {
 	////clear stuff
 	_points.clear();
 	_positions.clear();
+	_perRow.clear();
 
 	size_t sizeSum = layerCount * layerWidth;
 
@@ -72,12 +76,15 @@ UIManager* Navigation::genNav() {
 	_uiManager.addElement(_drillIconElement, &GlobalContext::normalShader);
 	_drillIconElement->visible = _navOpen;
 
+	int skipped = 0;
+
 	//loop to generate points
 	for (int y = 0; y < layerCount; y++) {
 		for (int x = 0; x < layerWidth; x++) {
 			int point = _map[y][x]; //The point type according to the generated "map," will determine the chance of encountering water, ores, etc. when arriving there.
 			
 			if (point <= 3) { //1 in 5
+				skipped++;
 				continue; // no icon
 			}
 			
@@ -128,6 +135,8 @@ UIManager* Navigation::genNav() {
 				continue;
 			}
 		}
+		_perRow.push_back(layerWidth - skipped);
+		skipped = 0;
 	}
 
 	for (size_t i = 0; i < _points.size(); ++i) {
@@ -156,6 +165,113 @@ UIManager* Navigation::genNav() {
 
 void Navigation::update() {
 	_backgroundAnimation.update();
+
+	//get input
+	_dir = GlobalContext::inputManager.getControllerAxis(Axis::LeftStick);
+
+	_points[_highlighted].highlighted = false;
+
+	//check if nav is even open lmao
+	if (_navOpen) {
+		if (_destination == -1) {
+			//update the selection
+			if ((glm::abs(_dir.x) + glm::abs(_dir.y)) / 2 >= .3f) {
+				_selectDB++;
+				if (_selectDB == 1) {
+					glm::vec2 norm = glm::normalize(_dir);
+					if (glm::abs(norm.x) > glm::abs(norm.y)) { //x is greater
+						int min = 0;
+						int max = 0;
+
+						for (int i = 0; i < _highlightedLayer; i++) {
+							min += _perRow[_highlightedLayer];
+							max += _perRow[_highlightedLayer];
+						}
+
+						if (_highlightedLayer == layerCount - 1) {
+							max = _points.size();
+						}
+						else {
+							max += _perRow[_highlightedLayer];
+						}
+
+						if (norm.x > 0) {
+							_highlighted = glm::clamp(_highlighted + 1, min, max-1);
+						}
+						else {
+							_highlighted = glm::clamp(_highlighted - 1, min, max-1);
+						}
+					}
+					else { //y is greater
+						if (norm.y > 0) {
+							_highlightedLayer++;
+
+							int min = 0;
+							int max = 0;
+
+							for (int i = 0; i < _highlightedLayer; i++) {
+								min += _perRow[_highlightedLayer];
+								max += _perRow[_highlightedLayer];
+							}
+
+							if (_highlightedLayer == layerCount - 1) {
+								max = _points.size();
+							}
+							else {
+								max += _perRow[_highlightedLayer];
+							}
+
+							_highlighted = glm::clamp(_highlighted + _perRow[_highlightedLayer - 1], min, max - 1);
+						}
+						else {
+							_highlightedLayer--;
+
+							if (_highlightedLayer < 0) {
+								_highlightedLayer = 0;
+							}
+
+							int min = 0;
+							int max = 0;
+
+							for (int i = 0; i < _highlightedLayer; i++) {
+								min += _perRow[_highlightedLayer];
+								max += _perRow[_highlightedLayer];
+							}
+
+							if (_highlightedLayer == layerCount - 1) {
+								max = _points.size();
+							}
+							else {
+								max += _perRow[_highlightedLayer];
+							}
+
+							_highlighted = glm::clamp(_highlighted - _perRow[_highlightedLayer], min, max - 1);
+						}
+					}
+				}
+				else { //on debounce
+					if ((float)_selectDB >= .7f / Jauntlet::Time::getDeltaTime()) {
+						_selectDB = 0;
+					}
+				}
+			}
+			else {
+				_selectDB = 0;
+			}
+
+			//inside if ( navOpen )
+			//user confirms selection with either east or south button(s)
+			if (GlobalContext::inputManager.isKeyPressed(CONTROLLER_FACE_EAST) || GlobalContext::inputManager.isKeyPressed(CONTROLLER_FACE_SOUTH)) {
+				_points[_highlighted].click();
+			}
+		}
+	}
+
+
+	//highlight based on highlighted variable
+	if (GlobalContext::inputManager.getControllerCount() > 0) {
+		_points[_highlighted].highlighted = true;
+	}
 }
 
 void Navigation::toggleNav() {
