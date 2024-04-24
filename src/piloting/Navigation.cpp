@@ -173,46 +173,97 @@ void Navigation::update() {
 
 	//check if nav is even open lmao
 	if (_navOpen) {
-		//update the selection
-		if ((glm::abs(_dir.x) + glm::abs(_dir.y)) / 2 >= .3f) {
-			_selectDB++;
-			if (_selectDB == 1) {
-				glm::vec2 norm = glm::normalize(_dir);
-				if (glm::abs(norm.x) > glm::abs(norm.y)) { //x is greater
-					int min = 0;
-					int max = 0;
+		if (_destination == -1) {
+			//update the selection
+			if ((glm::abs(_dir.x) + glm::abs(_dir.y)) / 2 >= .3f) {
+				_selectDB++;
+				if (_selectDB == 1) {
+					glm::vec2 norm = glm::normalize(_dir);
+					if (glm::abs(norm.x) > glm::abs(norm.y)) { //x is greater
+						int min = 0;
+						int max = 0;
 
-					for (int i = 0; i < _highlightedLayer; i++) {
-						min += _perRow[_highlightedLayer];
-						max += _perRow[_highlightedLayer];
-					}
+						for (int i = 0; i < _highlightedLayer; i++) {
+							min += _perRow[_highlightedLayer];
+							max += _perRow[_highlightedLayer];
+						}
 
-					if (_highlightedLayer == layerCount - 1) {
-						max = _points.size();
-					}
-					else {
-						max += _perRow[_highlightedLayer];
-					}
+						if (_highlightedLayer == layerCount - 1) {
+							max = _points.size();
+						}
+						else {
+							max += _perRow[_highlightedLayer];
+						}
 
-					if (norm.x > 0) {
-						_highlighted = glm::clamp(_highlighted + 1, min, max-1);
+						if (norm.x > 0) {
+							_highlighted = glm::clamp(_highlighted + 1, min, max-1);
+						}
+						else {
+							_highlighted = glm::clamp(_highlighted - 1, min, max-1);
+						}
 					}
-					else {
-						_highlighted = glm::clamp(_highlighted - 1, min, max-1);
+					else { //y is greater
+						if (norm.y > 0) {
+							_highlightedLayer++;
+
+							int min = 0;
+							int max = 0;
+
+							for (int i = 0; i < _highlightedLayer; i++) {
+								min += _perRow[_highlightedLayer];
+								max += _perRow[_highlightedLayer];
+							}
+
+							if (_highlightedLayer == layerCount - 1) {
+								max = _points.size();
+							}
+							else {
+								max += _perRow[_highlightedLayer];
+							}
+
+							_highlighted = glm::clamp(_highlighted + _perRow[_highlightedLayer - 1], min, max - 1);
+						}
+						else {
+							_highlightedLayer--;
+
+							if (_highlightedLayer < 0) {
+								_highlightedLayer = 0;
+							}
+
+							int min = 0;
+							int max = 0;
+
+							for (int i = 0; i < _highlightedLayer; i++) {
+								min += _perRow[_highlightedLayer];
+								max += _perRow[_highlightedLayer];
+							}
+
+							if (_highlightedLayer == layerCount - 1) {
+								max = _points.size();
+							}
+							else {
+								max += _perRow[_highlightedLayer];
+							}
+
+							_highlighted = glm::clamp(_highlighted - _perRow[_highlightedLayer], min, max - 1);
+						}
 					}
 				}
-				else { //y is greater
-					//
+				else { //on debounce
+					if ((float)_selectDB >= .7f / Jauntlet::Time::getDeltaTime()) {
+						_selectDB = 0;
+					}
 				}
 			}
-			else { //on debounce
-				if ((float)_selectDB >= .7f / Jauntlet::Time::getDeltaTime()) {
-					_selectDB = 0;
-				}
+			else {
+				_selectDB = 0;
 			}
-		}
-		else {
-			_selectDB = 0;
+
+			//inside if ( navOpen )
+			//user confirms selection with either east or south button(s)
+			if (GlobalContext::inputManager.isKeyPressed(CONTROLLER_FACE_EAST) || GlobalContext::inputManager.isKeyPressed(CONTROLLER_FACE_SOUTH)) {
+				_points[_highlighted].click();
+			}
 		}
 	}
 
