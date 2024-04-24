@@ -30,8 +30,8 @@ void Fridge::update() {
         _eatTimer += Jauntlet::Time::getDeltaTime();    
         if (_eatTimer > TIME_TO_EAT) {
         _eatTimer = 0;
-        _currentPlayer->heal(1);
-        _resources->food -= 1;
+        _currentPlayer->heal(std::min((unsigned int)2, _resources->food));
+        _resources->food -= std::min((unsigned int)2, _resources->food);
         }
     } else {
         animation.stop(0);
