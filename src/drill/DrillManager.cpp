@@ -40,6 +40,12 @@ void DrillManager::update(UICoordinator* uiCoordinator) {
 			if (_disasterTime < 0) {
 				DisasterEvent();
 			}
+
+			// If there are no broken pipes or holdables on screen, we add one as to keep the game going.
+			if (_brokenPipeLocations.size() == 0 && _holdables.size() == 0) {
+				DisasterEvent();
+			}
+
 			navigation.updateTravel();
 			forge.update();
 			_fridge.update();
