@@ -5,6 +5,7 @@
 
 #include "../MainGame/UICoordinator.h"
 #include "../PauseMenu.h"
+#include "Jauntlet/Inputs/InputManager.h"
 #include "Jauntlet/Rendering/ProgressBar.h"
 #include "Jauntlet/Time.h"
 #include "Tutorial.h"
@@ -12,7 +13,7 @@
 #include "src/scenes/GlobalContext.h"
 #include "src/scenes/Tutorial/Dialogue.h"
 
-// we overwrite the defined min by windows because windows *really* likes its own min function that is not used elsewhere
+// we overwrite the defined min by windows because windows *really* likes its own min function that is not used elsewhere. -xm
 #pragma warning (disable:4005)
 #define min min
 
@@ -31,6 +32,7 @@ Tutorial::Tutorial(int saveID, const std::vector<uint8_t>& playerIDs) {
 		_displayPlayers[i].progress = 0;
 	}
 	_players.getPathRenderer()->clearPath();
+	_players.lockInteraction = true;
 
 	_camera.setScale(2.75f);
 	_camera.setPosition(glm::vec2(1337.25, -3275.54));
@@ -45,7 +47,7 @@ Tutorial::Tutorial(int saveID, const std::vector<uint8_t>& playerIDs) {
 
 	_cameraManager.cameraUnlocked = false;
 
-	_toggleNavButton.addKey(SDLK_TAB, CONTROLLER_START);
+	_toggleNavButton.addKey({SDLK_TAB, CONTROLLER_FACE_WEST, CONTROLLER_FACE_NORTH});
 }
 
 void Tutorial::windowResized() {
@@ -82,10 +84,10 @@ void Tutorial::nextDialogue() {
 			break;
 		case 3:
 			_cameraManager.cameraUnlocked = true;
-			_dialogue.pushNewText("Try moving around your view\nby using WASD.");
+			_dialogue.pushNewText(useControllerPrompts ? "Try moving around with\nleft stick." : "Try moving around your view\nby using WASD.");
 			break;
 		case 4:
-			_dialogue.pushNewText("Great! Now use your scroll\nwheel to zoom in and out!");
+			_dialogue.pushNewText(useControllerPrompts ? "Great! Now use the left and\nright triggers to\nzoom in and out!" : "Great! Now use your scroll\nwheel to zoom in and out!");
 			break;
 		case 5:
 			_cameraManager.cameraUnlocked = false;
@@ -119,39 +121,44 @@ void Tutorial::nextDialogue() {
 			_camera.transitionToScale(0.6f);
 			_camera.transitionToPosition(glm::vec2(200, -675));
 			_hasControl = true;
-			_cameraManager.cameraUnlocked = false;
-			_dialogue.pushNewText("First click on a player!");
+			_players.lockInteraction = false;
+			_cameraManager.cameraUnlocked = useControllerPrompts;
+			_dialogue.pushNewText(useControllerPrompts ? "First select a player!\nUse the right or\nbottom face button." :"First click on a player!");
 			break;
 		case 13:
-			_dialogue.pushNewText("Now click on the water tank!");
+			_dialogue.pushNewText(useControllerPrompts ? "Now select the water tank!" : "Now click on the water tank!");
 			break;
 		case 14:
+			_cameraManager.cameraUnlocked = false;
 			_camera.transitionToScale(2.0f);
 			_camera.transitionToPosition(glm::vec2(437, -1425));
 			_dialogue.pushNewText("Great! You have collected water!");
 			break;
 		case 15:
 			_camera.transitionToScale(0.45f);
-			_camera.transitionToPosition(glm::vec2(450, -350));
+			_camera.transitionToPosition(glm::vec2(450, -150));
+			_cameraManager.cameraUnlocked = useControllerPrompts;
 			_dialogue.pushNewText("Now lets fill the boiler\nwith that water!");
 			break;
 		case 16:
+			_cameraManager.cameraUnlocked = false;
 			_camera.transitionToScale(2.0f);
 			_camera.transitionToPosition(glm::vec2(2037, -200));
 			_dialogue.pushNewText("The drill can now run with\nthe supply of water!");
+			_players.lockInteraction = true;
 			break;
 		case 17:
 			_uiCoordinator.showDrillButton();
-			_dialogue.pushNewText("Click this button to start\nthe drill!");
+			_dialogue.pushNewText(useControllerPrompts ? "Use the left bumper to\nstart the drill!" : "Click this button to start\nthe drill!");
 			break;
 		case 18:
-			_uiCoordinator.hideAll();
-			_uiCoordinator.showWater();
 			_camera.transitionToScale(0.25f);
 			_camera.transitionToPosition(glm::vec2(275, -480));
 			_dialogue.pushNewText("The drill is now running!");
 			break;
 		case 19:
+			_uiCoordinator.hideAll();
+			_uiCoordinator.showWater();
 			_dialogue.pushNewText("But now we need to figure out\nwhere to take the drill.");
 			break;
 		case 20:
@@ -159,19 +166,23 @@ void Tutorial::nextDialogue() {
 			break;
 		case 21:
 			_camera.transitionToScale(1.5f);
-			_camera.transitionToPosition(glm::vec2(1100, -2500));
+			_camera.transitionToPosition(glm::vec2(1100, -2750));
 			_dialogue.pushNewText("Here is the steering wheel.\nThis is how we get the drill\nto move.");
 			break;
 		case 22:
+			_cameraManager.cameraUnlocked = useControllerPrompts;
+			_players.lockInteraction = false;
 			_camera.transitionToScale(0.75f);
 			_camera.transitionToPosition(glm::vec2(450, -1250));
 			_dialogue.pushNewText("Move another member to the\nsteering wheel!");
 			break;
 		case 23:
+			_cameraManager.cameraUnlocked = false;
+			_players.lockInteraction = true;
 			_dialogue.pushNewText("Now that someone is piloting\nthe drill you can view\nNavigation!");
 			break;
 		case 24:
-			_dialogue.pushNewText("Press TAB to open\nNavigation!");
+			_dialogue.pushNewText(useControllerPrompts ? "Press the top or left face button\n to open Navigation!" : "Press TAB to open\nNavigation!");
 			break;
 		case 25:
 			_dialogue.pushNewText("Navigation is how we\ndetermine where the drill\ngoes");
@@ -186,7 +197,7 @@ void Tutorial::nextDialogue() {
 			_dialogue.pushNewText("You can only travel to\nunobstructed caverns.");
 			break;
 		case 29:
-			_dialogue.pushNewText("Try clicking on a point\nto travel to it!");
+			_dialogue.pushNewText(useControllerPrompts ? "Try selecting a cavern\nto travel to it!" : "Try clicking on a point\nto travel to it!");
 			break;
 		case 30:
 			_dialogue.pushNewText("Great work!");
@@ -232,6 +243,8 @@ void Tutorial::nextDialogue() {
 			_dialogue.pushNewText("First lets pick up that scrap!");
 			_camera.transitionToPosition(glm::vec2(1200, -500));
 			_camera.transitionToScale(0.5f);
+			_cameraManager.cameraUnlocked = useControllerPrompts;
+			_players.lockInteraction = false;
 			break;
 		case 40:
 			_dialogue.pushNewText("Now we take it to the forge!");
@@ -241,11 +254,13 @@ void Tutorial::nextDialogue() {
 		case 41:
 			_uiCoordinator.showParts();
 			_dialogue.pushNewText("Now we wait a moment\nfor the scrap to melt!");
+			_players.lockInteraction = true;
 			break;
 		case 42:
 			_dialogue.pushNewText("And finally we can\nmake a pipe at the\nworkbench!");
 			_camera.transitionToScale(0.6f);
 			_camera.transitionToPosition(glm::vec2(700, -700));
+			_players.lockInteraction = false;
 			break;
 		case 43:
 			_dialogue.pushNewText("Last step now!\ntake the pipe to the burst pipe\n to repair it!");
@@ -256,6 +271,8 @@ void Tutorial::nextDialogue() {
 			_camera.transitionToScale(2.75f);
 			_camera.transitionToPosition(glm::vec2(1337.25, -3275.54));
 			_dialogue.pushNewText("Thank you for your time.");
+			_cameraManager.cameraUnlocked = false;
+			_players.lockInteraction = true;
 			break;
 		case 45:
 			_dialogue.pushNewText("This covers all basic operations\nof the drill.");
@@ -310,16 +327,16 @@ void Tutorial::processInput() {
 	// in which there are special instructions to move onto the next dialogue.
 	switch (_sequence) {
 	case 3:
-		if (GlobalContext::inputManager.isKeyPressed(SDLK_w)) {
+		if (GlobalContext::inputManager.isKeyPressed(SDLK_w) || GlobalContext::inputManager.getControllerAxis(Axis::LeftStick).y > 0.5) {
 			_pressedW = true;
 		}
-		if (GlobalContext::inputManager.isKeyPressed(SDLK_a)) {
+		if (GlobalContext::inputManager.isKeyPressed(SDLK_a) || GlobalContext::inputManager.getControllerAxis(Axis::LeftStick).x > 0.5) {
 			_pressedA = true;
 		}
-		if (GlobalContext::inputManager.isKeyPressed(SDLK_s)) {
+		if (GlobalContext::inputManager.isKeyPressed(SDLK_s) || GlobalContext::inputManager.getControllerAxis(Axis::LeftStick).y < -0.5) {
 			_pressedS = true;
 		}
-		if (GlobalContext::inputManager.isKeyPressed(SDLK_d)) {
+		if (GlobalContext::inputManager.isKeyPressed(SDLK_d) || GlobalContext::inputManager.getControllerAxis(Axis::LeftStick).x < -0.5) {
 			_pressedD = true;
 		}
 		if (_pressedW && _pressedA && _pressedS && _pressedD) {
@@ -327,10 +344,10 @@ void Tutorial::processInput() {
 		}
 		break;
 	case 4:
-		if (GlobalContext::inputManager.deltaScroll > 0) {
+		if (GlobalContext::inputManager.deltaScroll > 0 || GlobalContext::inputManager.getControllerAxis(Axis::Triggers).x > 0.5) {
 			_scrolledUp = true;
 		}
-		else if (GlobalContext::inputManager.deltaScroll < 0) {
+		else if (GlobalContext::inputManager.deltaScroll < 0 || GlobalContext::inputManager.getControllerAxis(Axis::Triggers).y > 0.5) {
 			_scrolledDown = true;
 		}
 		else if (_scrolledUp && _scrolledDown) {
@@ -424,6 +441,7 @@ void Tutorial::processInput() {
 		break;
 	default:
 		if (GlobalContext::inputManager.lastButtonPressed() != SDLK_UNKNOWN || GlobalContext::inputManager.isKeyPressed(SDL_BUTTON_LEFT)) {
+			useControllerPrompts = GlobalContext::inputManager.lastButtonPressed() > 199 && GlobalContext::inputManager.lastButtonPressed() < 300;
 			_dialogue.doneReadingText() ? nextDialogue() : _dialogue.pushAllText();
 			GlobalContext::inputManager.clearLastButtonPressed();
 		}
@@ -434,7 +452,7 @@ void Tutorial::processInput() {
 		_uiCoordinator.navigation->toggleNav();
 	}
 
-	if (GlobalContext::inputManager.isKeyPressed(SDLK_ESCAPE)) {
+	if (GlobalContext::inputManager.isKeyPressed(SDLK_ESCAPE) || GlobalContext::inputManager.isKeyPressed(CONTROLLER_SELECT) || GlobalContext::inputManager.isKeyPressed(CONTROLLER_START)) {
 		GlobalContext::pauseMenu->togglePauseMenu();
 	}
 

@@ -57,6 +57,7 @@ private:
 	Officer _officer = Officer(glm::vec2(7 * 64, -18 * 64), "Textures/Cops/John Police.png");
 	std::vector<ProgressBar> _displayPlayers;
 
+	bool useControllerPrompts = false;
 	bool _pressedW = false, _pressedA = false, _pressedS = false, _pressedD = false, _scrolledUp = false, _scrolledDown = false;
 
 	int _saveID;
