@@ -27,7 +27,8 @@ Navigation::Navigation(Camera2D* camera, PlayerResources* resourceManager) :
 	_drillIcon(Jauntlet::ResourceManager::getTexture("Textures/drillNav.png").id),
 	_background(UISpriteAnimated(_navTexture, &_bgPos, glm::vec2(640, 1024), UIElement::ORIGIN_PIN::CENTER, &_backgroundAnimation)),
 	_uiManager(camera),
-	cavern(resourceManager, camera)
+	cavern(resourceManager, camera),
+	_resources(resourceManager)
 {
 	//generate some randomness
 	_random = std::mt19937(Jauntlet::Time::getTime());
@@ -336,7 +337,7 @@ void Navigation::selectNav(int id, glm::ivec2 xy) {
 
 void Navigation::updateTravel() {
 	if (_destination != -1) {
-		_progress += Jauntlet::Time::getDeltaTime() * _speed;
+		_progress += Jauntlet::Time::getDeltaTime() * (_speed + _resources->heat / 30000.0f);
 		refreshPositions(_shiftPos.x * Jauntlet::Time::getDeltaTime() * _speed, _shiftPos.y * Jauntlet::Time::getDeltaTime() * _speed);
 		if (_progress >= 1.0f) {
 			//remove selector caret

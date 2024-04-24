@@ -64,6 +64,9 @@ private:
 	GLuint _caret = 0;
 	GLuint _drillIcon = 0;
 
+	// Player resources, used to speed the drill up based on heat -xm
+	PlayerResources* _resources;
+
 	// boolean toggles
 	bool _navOpen = false; //visibility of menu
 	bool _caretSet = false;
