@@ -43,6 +43,8 @@ public:
 	void update(DrillManager& drill);
 	// draw all players
 	void draw(SpriteBatch& spriteBatch);
+
+	bool lockInteraction = false;
 private:
 	std::vector<Player> _players;
 	int _selectedPlayer = -1;

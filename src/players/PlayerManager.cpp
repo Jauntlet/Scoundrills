@@ -37,7 +37,7 @@ Player* PlayerManager::createPlayer(const glm::vec2& position, uint8_t playerID,
 bool PlayerManager::processInput(const Camera2D& activeCamera) {
 	glm::vec2 mousePos = GlobalContext::usingController ? activeCamera.getPosition() * (1.0f / activeCamera.getScale()) : activeCamera.convertScreenToWorld(GlobalContext::inputManager.getMouseCoords());
 	// if we click
-	if (_selectButton.isPressed()) {
+	if (_selectButton.isPressed() && !lockInteraction) {
 		if (_selectedPlayer == -1) { // we are selecting a player.
 			Collision2D collision;
 
