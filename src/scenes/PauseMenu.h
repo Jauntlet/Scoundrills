@@ -3,7 +3,7 @@
  */
 #pragma once
 #include <Jauntlet/UI/UIManager.h>
-#include <Jauntlet/UI/UIButton.h>
+#include "../buttons/ControllerButton.h"
 #include <Jauntlet/UI/UIText.h>
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
 #include "GlobalContext.h"
@@ -29,13 +29,14 @@ public:
 	void hideAll();
 
 	void windowResized();
+
+	// Toggle fullscreen
+	void toggleFullscreen();
 private:
 	void switchState(PauseState state);
 
 	// For the quit button to exit to main menu.
 	void toMainMenu();
-	// Toggle fullscreen
-	void toggleFullscreen();
 
 	// Default UI parameters
 	PauseState _state = PauseState::HIDDEN;
@@ -49,9 +50,9 @@ private:
 	glm::vec2 _resumeButtonPos = glm::vec2(0, -200);
 	glm::vec2 _settingsButtonPos = glm::vec2(0, 50);
 	glm::vec2 _quitButtonPos = glm::vec2(0, 300);
-	UIButton _resumeButton;
-	UIButton _settingsButton;
-	UIButton _quitButton;
+	ControllerButton _resumeButton;
+	ControllerButton _settingsButton;
+	ControllerButton _quitButton;
 	std::string _resumeText = "Resume";
 	std::string _settingsText = "Settings";
 	std::string _quitText = "Quit";
@@ -69,5 +70,9 @@ private:
 	std::string _fullscreenText = "Fullscreened";
 	UIText _fullscreenTextElement;
 	bool _quitting = false;
+
+	// Controller support
+	ControllerButton* _selectedButton = nullptr;
+	bool _moving = false;
 };
 

@@ -1,5 +1,7 @@
 #include "RogueGallery.h"
 #include "../SceneManager.h"
+#include "Jauntlet/Inputs/InputManager.h"
+#include "src/scenes/GlobalContext.h"
 
 RogueGallery::RogueGallery(int saveID, bool tutorialMode) :
 	_crew{SelectableCrew(1, tutorialMode), SelectableCrew(2, tutorialMode), SelectableCrew(3, tutorialMode), SelectableCrew(4, tutorialMode), SelectableCrew(5, tutorialMode)},
@@ -43,9 +45,41 @@ void RogueGallery::gameLoop() {
 
 	_uiManager.draw();
 
+	glm::vec2 controllerAxis = GlobalContext::inputManager.getControllerAxis(Axis::LeftStick);
+
+	if (abs(controllerAxis.x) > 0.5 || abs(controllerAxis.y) > 0.5) {
+		if (!_moving) {
+			if (controllerAxis.y > 0.5) {
+				_controllerOnCrew = !_controllerOnCrew;
+			} else if (controllerAxis.y < -0.5) {
+				_controllerOnCrew = !_controllerOnCrew;
+			}
+
+			_confirmButton.highlighted = !_controllerOnCrew;
+
+			if (_controllerOnCrew) {
+				if (controllerAxis.x > 0.5) {
+					++_controllerSelectedIndex;
+					if (_controllerSelectedIndex == INMATE_COUNT ) {
+						_controllerSelectedIndex = 0;
+					}
+				} else if (controllerAxis.x < -0.5) {
+					if (_controllerSelectedIndex == 0) {
+						_controllerSelectedIndex = INMATE_COUNT - 1;
+					} else {
+						--_controllerSelectedIndex;
+					}
+				}
+			}
+			_moving = true;
+		} 
+	} else {
+		_moving = false;
+	}
+
 	_batch.begin();
 	for (SelectableCrew& inmate : _crew) {
-		if (!inmate.isSelected() && inmate.wasClicked(_camera)) {
+		if ((!inmate.isSelected() && inmate.wasClicked(_camera)) || (_controllerOnCrew && GlobalContext::inputManager.isKeyPressed(CONTROLLER_FACE_EAST) && &_crew[_controllerSelectedIndex] == &inmate)) {
 			inmate.Select();
 			_selectedCrew.push_back(&inmate);
 			
@@ -53,13 +87,20 @@ void RogueGallery::gameLoop() {
 			_selectedCrew.pop_front();
 
 		}
-		
 		inmate.draw(_batch);
 	}
+	
+	if (_controllerOnCrew) {
+		_batch.draw(glm::vec4(_crew[_controllerSelectedIndex].position, 240, 240), _selectionTextureID);	
+	}
+	
 	_batch.endAndRender();
 
 	if (GlobalContext::inputManager.isKeyPressed(SDLK_ESCAPE)) {
 		GlobalContext::sceneManager->switchScene(GameState::MAINMENU);
+	}
+	if (!_controllerOnCrew && GlobalContext::inputManager.isKeyPressed(CONTROLLER_FACE_EAST)) {
+		_confirmButton.click();
 	}
 }
 

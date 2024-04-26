@@ -1,5 +1,6 @@
 #include <SDL2/SDL_keycode.h>
 
+#include "Jauntlet/Inputs/InputManager.h"
 #include "Jauntlet/Rendering/Textures/ResourceManager.h"
 #include "Jauntlet/Time.h"
 #include "Jauntlet/UI/UIElement.h"
@@ -24,6 +25,10 @@ PauseMenu::PauseMenu() :
 	_uiManager.addElement(&_settingsButton, &GlobalContext::normalShader);
 	_uiManager.addElement(&_quitButton, &GlobalContext::normalShader);
 	
+	_resumeButton.setButtons(nullptr, nullptr, &_settingsButton, &_quitButton);
+	_settingsButton.setButtons(nullptr, nullptr, &_quitButton, &_resumeButton);
+	_quitButton.setButtons(nullptr, nullptr, &_resumeButton, &_settingsButton);
+
 	_uiManager.addElement(&_fullscreenButton, &GlobalContext::normalShader);
 	
 	_uiManager.addElement(&_resumeTextElement, &TextRenderer::textShader);
@@ -42,6 +47,49 @@ void PauseMenu::update() {
 		GlobalContext::sceneManager->switchScene(GameState::MAINMENU);
 		_quitting = false;
 	}
+
+	if (_state != PauseState::HIDDEN) {
+		glm::vec2 controllerAxis = GlobalContext::inputManager.getControllerAxis(Axis::LeftStick);
+
+		if (abs(controllerAxis.x) > 0.5 || abs(controllerAxis.y) > 0.5) {
+			if (_moving) {
+				return;
+			}
+			if (_selectedButton == nullptr) {
+				_selectedButton = &_resumeButton;
+				_moving = true;
+				return;
+			}
+			if (controllerAxis.y > 0.5) {
+				_selectedButton = _selectedButton->selectDownButton();
+			} else if (controllerAxis.y < -0.5) {
+				_selectedButton = _selectedButton->selectUpButton();
+			}
+			_moving = true;
+		} else {
+			_moving = false;
+		}
+
+		if (!_moving && GlobalContext::inputManager.isKeyPressed(CONTROLLER_FACE_EAST)) {
+			if (_state == PauseState::PAUSED) {
+				if (_selectedButton != nullptr) {
+					_selectedButton->click();
+				}
+			} else if (_state == PauseState::SETTINGS) {
+				_fullscreenButton.click();
+			}
+		}
+		if (GlobalContext::inputManager.isKeyPressed(CONTROLLER_FACE_SOUTH)) {
+			if (_state == PauseState::PAUSED) {
+				togglePauseMenu();
+			} else if (_state == PauseState::SETTINGS) {
+				switchState(PauseState::PAUSED);
+			}
+		}
+
+
+	}
+
 	_camera.update();
 }
 void PauseMenu::draw() {
@@ -98,10 +146,15 @@ void PauseMenu::switchState(PauseState state) {
 		_settingsTextElement.visible = true;
 		_quitButton.visible = true;
 		_quitTextElement.visible = true;
+		
+		_selectedButton = &_resumeButton;
+		_resumeButton.select();
 	} else if (_state == PauseState::SETTINGS) {
 		_fullscreenButton.visible = true;
 		_fullscreenTextElement.visible = true;
 		_settingsTitle.visible = true;
+
+		_selectedButton = nullptr;
 	}
 }
 

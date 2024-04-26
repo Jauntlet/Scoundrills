@@ -1,5 +1,6 @@
 #include "MainMenu.h"
 #include "../GlobalContext.h"
+#include "Jauntlet/Inputs/InputManager.h"
 #include "Jauntlet/Rendering/TextRenderer.h"
 #include "../SceneManager.h"
 #include "../PauseMenu.h"
@@ -17,10 +18,14 @@ MainMenu::MainMenu() :
 
 	_uiManager.setScale(GlobalContext::screenSize.y / 1080.0f);
 	_uiManager.addElement(&_settingsButton, &GlobalContext::normalShader);
+	_settingsButton.setButtons(nullptr, nullptr, &_quitButton, &_startButton);
 	_uiManager.addElement(&_quitButton, &GlobalContext::normalShader);
+	_quitButton.setButtons(nullptr, nullptr, &_startButton, &_settingsButton);
 	_uiManager.addElement(&_noButton, &GlobalContext::normalShader);
+	_noButton.setButtons(&_yesButton, &_yesButton, nullptr, nullptr);
 	_noButton.visible = false;
 	_uiManager.addElement(&_yesButton, &GlobalContext::normalShader);
+	_yesButton.setButtons(&_noButton, &_noButton, nullptr, nullptr);
 	_yesButton.visible = false;
 
 	_uiManager.addElement(&_titleTextElement, &TextRenderer::textShader);
@@ -38,10 +43,14 @@ MainMenu::MainMenu() :
 		_saveInfoElements[i].setVisibility(false);
 	}
 	_uiManager.addElement(&_startButton, &GlobalContext::normalShader);
+	_startButton.setButtons(nullptr, nullptr, &_settingsButton, &_quitButton);
 	_uiManager.addElement(&_startButtonText, &TextRenderer::textShader);
 
 	_uiManager.optimize();
 	_uiManager.resolvePositions();
+
+	_selectedButton = &_startButton;
+	_startButton.highlighted = true;
 }
 
 void MainMenu::gameLoop() {
@@ -49,11 +58,45 @@ void MainMenu::gameLoop() {
 	_uiManager.draw();
 	_music.update();
 
-	if (GlobalContext::inputManager.isKeyPressed(SDLK_ESCAPE) && GlobalContext::pauseMenu->inSettings()) {
+	if ((GlobalContext::inputManager.isKeyPressed(SDLK_ESCAPE) || GlobalContext::inputManager.isKeyPressed(CONTROLLER_FACE_SOUTH)) && GlobalContext::pauseMenu->inSettings()) {
 		toggleSettingsMenu();
 	}
-	if (GlobalContext::inputManager.isKeyPressed(SDLK_ESCAPE) && !GlobalContext::pauseMenu->isPaused() && _startButton.visible == false) {
+	if ((GlobalContext::inputManager.isKeyPressed(SDLK_ESCAPE) || GlobalContext::inputManager.isKeyPressed(CONTROLLER_FACE_SOUTH)) && !GlobalContext::pauseMenu->isPaused() && _startButton.visible == false) {
 		toggleSavesMenu();
+	}
+
+	glm::vec2 controllerAxis = GlobalContext::inputManager.getControllerAxis(Axis::LeftStick);
+
+	if (abs(controllerAxis.x) > 0.5 || abs(controllerAxis.y) > 0.5) {
+		if (_moving) {
+			return;
+		}
+		if (_selectedButton == nullptr) {
+			if (!GlobalContext::pauseMenu->isPaused()) {
+				_selectedButton = &_startButton;
+				_moving = true;
+			}
+			return;
+		}
+		if (controllerAxis.x > 0.5) {
+			_selectedButton = _selectedButton->selectRightButton();
+		} else if (controllerAxis.x < -0.5) {
+			_selectedButton = _selectedButton->selectLeftButton();
+		}
+		if (controllerAxis.y > 0.5) {
+			_selectedButton = _selectedButton->selectDownButton();
+		} else if (controllerAxis.y < -0.5) {
+			_selectedButton = _selectedButton->selectUpButton();
+		}
+		_moving = true;
+	} else {
+		_moving = false;
+	}
+
+	if (GlobalContext::inputManager.isKeyPressed(CONTROLLER_FACE_EAST)) {
+		if (_selectedButton != nullptr) {
+			_selectedButton->click();
+		}
 	}
 }
 
@@ -74,6 +117,12 @@ void MainMenu::promptTutorial(int saveID) {
 	_noTextElement.visible = true;
 	_yesButton.visible = true;
 	_yesTextElement.visible = true;
+
+	if (_selectedButton != nullptr) {
+		_selectedButton->highlighted = false;
+	}
+	_yesButton.select();
+	_selectedButton = &_yesButton;
 }
 
 void MainMenu::startSavedGame(int ID) {
@@ -92,7 +141,7 @@ void MainMenu::quitGame() {
 }
 
 void MainMenu::toggleSettingsMenu() {
-	GlobalContext::pauseMenu->togglePauseMenu();
+	GlobalContext::pauseMenu->toggleSettingsMenu();
 
 	if (!_startButton.visible) {
 		_uiManager.hideAllElements();
@@ -103,8 +152,19 @@ void MainMenu::toggleSettingsMenu() {
 		_quitButton.visible = true;
 		_quitTextElement.visible = true;
 		_titleTextElement.visible = true;
+		
+		if (_selectedButton != nullptr) {
+			_selectedButton->highlighted = false;
+		}
+		_settingsButton.select();
+		_selectedButton = &_settingsButton;
+
 	} else {
 		_uiManager.hideAllElements();
+		if (_selectedButton != nullptr) {
+		 	_selectedButton->highlighted = false;
+		 	_selectedButton = nullptr;
+		} 
 	}
 
 }
@@ -115,6 +175,7 @@ void MainMenu::toggleSavesMenu() {
 		for (int i = 0; i < 3; ++i) {
 			_saveInfoElements[i].setVisibility(true);
 		}
+		_selectedButton = _saveInfoElements[0].select();
 	}
 	else {
 		_uiManager.hideAllElements();
@@ -125,5 +186,11 @@ void MainMenu::toggleSavesMenu() {
 		_quitButton.visible = true;
 		_quitTextElement.visible = true;
 		_titleTextElement.visible = true;
+
+		if (_selectedButton != nullptr) {
+			_selectedButton->highlighted = false;
+		}
+		_selectedButton = &_startButton;
+		_startButton.select();
 	}
 }

@@ -8,16 +8,19 @@
 #include "Jauntlet/Rendering/TextRenderer.h"
 #include "MainMenu.h"
 #include "SaveInfoElement.h"
+#include "src/buttons/ControllerButton.h"
 #include "src/scenes/GlobalContext.h"
 
-SaveInfoElement::SaveInfoElement(float yPos, int saveID, MainMenu* mainMenu) :
+SaveInfoElement::SaveInfoElement(float yPos, int saveID, MainMenu* mainMenu, SaveInfoElement* prevSaveElement, SaveInfoElement* nextSaveElement) :
 	_position(0, yPos),
 	_mainMenu(mainMenu),
 	_saveID(saveID),
 	_yDisplacement(yPos),
 	_playPos(250, yPos + 200),
 	_loadPos(250, yPos + 200),
-	_deletePos(-50, yPos + 200)
+	_deletePos(-50, yPos + 200),
+	_prevElement(prevSaveElement),
+	_nextElement(nextSaveElement)
 {
 	_saveNumText += std::to_string(_saveID);
 
@@ -42,6 +45,9 @@ SaveInfoElement::SaveInfoElement(float yPos, int saveID, MainMenu* mainMenu) :
 	_saveNumPos = glm::vec2(-375 + GlobalContext::textRenderer->calculateTextSize(_saveNumText, glm::vec2(0.3f)).x /2,yPos);
 	_playtimePos = glm::vec2(-375 + GlobalContext::textRenderer->calculateTextSize(_playtimeText, glm::vec2(0.2f)).x /2,yPos + 75);
 	_depthCountPos =  glm::vec2(-375 + GlobalContext::textRenderer->calculateTextSize(_depthCount, glm::vec2(0.2f)).x /2,yPos + 125);
+
+	// Load controller support
+	changeControllerButtons();
 }
 
 void SaveInfoElement::addToManager(UIManager& uiManager) {
@@ -78,6 +84,11 @@ void SaveInfoElement::deleteSave() {
 
 	_playtimePos = glm::vec2(-375 + GlobalContext::textRenderer->calculateTextSize(_playtimeText, glm::vec2(0.2f)).x / 2, _yDisplacement + 75);
 	_depthCountPos = glm::vec2(-375 + GlobalContext::textRenderer->calculateTextSize(_depthCount, glm::vec2(0.2f)).x / 2, _yDisplacement + 125);
+
+	// update all corresponding controller inputs for buttons.
+	_prevElement->changeControllerButtons();
+	changeControllerButtons();
+	_nextElement->changeControllerButtons();
 }
 
 void SaveInfoElement::startGame() {
@@ -87,4 +98,14 @@ void SaveInfoElement::startGame() {
 	else {
 		_mainMenu->promptTutorial(_saveID);
 	}
+}
+
+ControllerButton* SaveInfoElement::select() {
+	_playButton.select();
+	return &_playButton;
+}
+
+void SaveInfoElement::changeControllerButtons() {
+	_deleteButton.setButtons(nullptr, &_playButton, _nextElement->_hasSaveInfo ? &_nextElement->_deleteButton : &_nextElement->_playButton, _prevElement->_hasSaveInfo ? &_prevElement->_deleteButton : &_prevElement->_playButton);
+	_playButton.setButtons(_hasSaveInfo ? &_deleteButton : nullptr, nullptr, &_nextElement->_playButton, &_prevElement->_playButton);
 }

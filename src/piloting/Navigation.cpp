@@ -172,6 +172,11 @@ void Navigation::update() {
 
 	_points[_highlighted].highlighted = false;
 
+	// Close cavern if player is using controller and presses the correct button
+	if (cavern.isOpen() && GlobalContext::inputManager.isKeyPressed(CONTROLLER_FACE_EAST) || GlobalContext::inputManager.isKeyPressed(CONTROLLER_FACE_SOUTH)) {
+		cavern.updateResources();
+	}
+
 	//check if nav is even open lmao
 	if (_navOpen) {
 		if (_destination == -1) {

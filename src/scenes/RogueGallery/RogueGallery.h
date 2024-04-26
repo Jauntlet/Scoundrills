@@ -5,7 +5,7 @@
 
 #include <Jauntlet/Audio/AudioSource.h>
 #include <Jauntlet/Rendering/Textures/ResourceManager.h>
-#include <Jauntlet/UI/UIButton.h>
+#include "../../buttons/ControllerButton.h"
 #include <Jauntlet/UI/UIManager.h>
 #include <Jauntlet/UI/UIText.h>
 #include <deque>
@@ -47,11 +47,17 @@ private:
 	UIText _subtitleElement = UIText(GlobalContext::textRenderer, &_subTitle, &_textColor, &_subTitlePos, UIElement::ORIGIN_PIN::TOP, 0.4f);
 
 	// Confirm Text/Button
-	UIButton _confirmButton = UIButton(&GlobalContext::inputManager, std::bind(&RogueGallery::loadGame, this), Jauntlet::ResourceManager::getTexture("Textures/UIbutton.png").id, &_titlePos, glm::vec2(600, 200), UIElement::ORIGIN_PIN::BOTTOM);
+	ControllerButton _confirmButton = ControllerButton(&GlobalContext::inputManager, std::bind(&RogueGallery::loadGame, this), Jauntlet::ResourceManager::getTexture("Textures/UIbutton.png").id, &_titlePos, glm::vec2(600, 200), UIElement::ORIGIN_PIN::BOTTOM);
 	std::string _confirmText = "Confirm";
 	glm::vec2 _confirmTextPos = glm::vec2(0, -50);
 	UIText _confirmTextElement = UIText(GlobalContext::textRenderer, &_confirmText, &_textColor, &_confirmTextPos, UIElement::ORIGIN_PIN::BOTTOM, 0.4f);
 
 	int _saveID;
+
+	// Controller Support
+	bool _moving = false;
+	uint8_t _controllerSelectedIndex = 0;
+	bool _controllerOnCrew = true;
+	GLuint _selectionTextureID = Jauntlet::ResourceManager::getTexture("Textures/WhiteSquare.png").id;
 };
 
