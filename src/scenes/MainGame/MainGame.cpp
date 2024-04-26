@@ -58,7 +58,7 @@ MainGame::MainGame(int saveID) :
 	_camera.setPosition(glm::vec2(24 * 64 * 0.5f, 30 * 64 * 0.5f * -1));
 	_camera.setScale(0.5f);
 
-	_toggleNavButton.addKey(SDLK_TAB, CONTROLLER_START);
+	_toggleNavButton.addKey({SDLK_TAB, CONTROLLER_FACE_WEST, CONTROLLER_FACE_NORTH});
 }
 
 void MainGame::gameLoop() {
