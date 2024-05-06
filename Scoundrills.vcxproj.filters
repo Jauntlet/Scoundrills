@@ -99,6 +99,9 @@
     <ClCompile Include="src\interactable\specificStations\Fridge.cpp">
       <Filter>interactable\specificStations</Filter>
     </ClCompile>
+    <ClCompile Include="src\buttons\ControllerButton.cpp">
+      <Filter>Buttons</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\players\Player.h">
@@ -201,6 +204,9 @@
     <ClInclude Include="src\interactable\specificStations\Fridge.h">
       <Filter>interactable\specificStations</Filter>
     </ClInclude>
+    <ClInclude Include="src\buttons\ControllerButton.h">
+      <Filter>Buttons</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="players">
@@ -238,6 +244,9 @@
     </Filter>
     <Filter Include="scenes\Tutorial">
       <UniqueIdentifier>{d3b8cf0e-72bc-425e-a83b-72a7b4dbf22f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Buttons">
+      <UniqueIdentifier>{f309fb94-34a7-4667-837c-2f0ebde2e715}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

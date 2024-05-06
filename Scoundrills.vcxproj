@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\buttons\ControllerButton.cpp" />
     <ClCompile Include="src\Database.cpp" />
     <ClCompile Include="src\drill\DrillAssetRenderer.cpp" />
     <ClCompile Include="src\drill\DrillManager.cpp" />
@@ -56,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="src\buttons\ControllerButton.h" />
     <ClInclude Include="src\Database.h" />
     <ClInclude Include="src\drill\DrillAssetRenderer.h" />
     <ClInclude Include="src\drill\DrillManager.h" />

@@ -1,3 +1,5 @@
+#define NOMINMAX true;
+
 #include "DrillManager.h"
 #include "../players/PlayerManager.h"
 #include "Jauntlet/Errors.h"
